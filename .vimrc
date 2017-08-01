@@ -1,7 +1,9 @@
 set nocompatible
+set hidden
 "To show keys pressed in normal mode; useful for completing Vim sentences
 set showcmd 
 filetype plugin on
+filetype on
 
 call plug#begin('~/.vim/plugged')
 "Not needed as I am not using terminalguicolors, as downgrade solarzied is ok
@@ -18,6 +20,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 "Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 "Terminal Interactions
 Plug 'benmills/vimux'
 Plug 'jpalardy/vim-slime'
@@ -39,10 +42,10 @@ Plug 'iamcco/markdown-preview.vim'
 "Plug 'gabrielelana/vim-markdown'
 "Undo
 Plug 'mbbill/undotree'
-Plug 'chrisbra/histwin.vim'
+"Plug 'chrisbra/histwin.vim'idk what extra features this has over undotree
 "Python
-Plug 'davidhalter/jedi-vim'
-
+"Plug 'davidhalter/jedi-vim' "Only needed for neovim deoplete
+"Plug 'Valloric/YouCompleteMe'
 "Misc
 Plug 'tpope/vim-obsession'
 "Plug 'kannokanno/previm'
@@ -54,6 +57,11 @@ Plug 'tpope/vim-obsession'
 "Plug 'reedes/vim-wordy'
 "Plug 'rhysd/vim-grammarous'
 "Plug 'tpope/vim-dispatch'
+
+if !has('nvim')
+	Plug 'simnalamburt/vim-mundo'
+	Plug 'vimlab/split-term.vim'
+endif
 call plug#end()
 
 "Making ALt usable on Linux
@@ -68,6 +76,8 @@ let mapleader=" "
 let maplocalleader="-"
 
 nnoremap <leader>p :FZF<CR>
+nnoremap <leader>h :FZF ~<CR>
+cnoremap FF FZF
 "For some reason, I had to use W instead of w to get this mapping to work"
 nnoremap <localleader>t <C-W>T
 vnoremap <localleader>y "+y
@@ -102,13 +112,13 @@ syntax on
 "Makes a solarized approximation for vim
 let g:solarized_termcolors=256
 color seoul256
-autocmd FileType text color seoul256
-autocmd FileType vim color seoul256
-autocmd FileType python color Tomorrow-Night-Eighties
-autocmd FileType markdown set background=light
-autocmd FileType markdown color gruvbox
-autocmd FileType latex color solarized
-
+autocmd BufRead,FileType text color seoul256
+autocmd BufRead,FileType vim color seoul256
+autocmd BufRead,FileType matlab color seoul256
+autocmd BufRead,FileType python color Tomorrow-Night-Eighties
+autocmd BufRead,FileType markdown set background=light
+autocmd BufRead,FileType markdown color gruvbox
+autocmd BufRead,FileType latex color solarized
 
 "autocomplete with spellcheck
 set complete+=kspell
@@ -136,6 +146,8 @@ nnoremap <F4> :setlocal spell  spelllang=en_us<CR>
 nnoremap <F3> :set nospell<CR>
 nnoremap <F5> :GrammarousCheck<CR>
 nnoremap <F7> :UndotreeToggle<CR>
+nnoremap <F6> :MundoToggle<CR>
+nnoremap <A-f> @f 
 nnoremap ;n :bn<CR>
 nnoremap ;N :bp<CR>
 nnoremap ;d :bd<CR>
@@ -168,6 +180,7 @@ nnoremap <Space> <Nop>
 nnoremap <silent> <F8> :NERDTreeToggle<CR>
 "nnoremap <silent> <C[> :CtrlP<CR>
 nnoremap <M-v> :e ~/.vimrc<CR>
+nnoremap <M-b> :e ~/.bashrc<CR>
 
 nnoremap w W
 nnoremap W w
@@ -175,6 +188,23 @@ nnoremap b B
 nnoremap B b
 
 "Plugin related variables
+let g:ycm_python_binary_path = '/usr/bin/python3'
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+	\ 'bg':      ['bg', 'Normal'],
+	\ 'hl':      ['fg', 'Comment'],
+	\ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+	\ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+	\ 'hl+':     ['fg', 'Statement'],
+	\ 'info':    ['fg', 'PreProc'],
+	\ 'prompt':  ['fg', 'Conditional'],
+	\ 'pointer': ['fg', 'Exception'],
+	\ 'marker':  ['fg', 'Keyword'],
+	\ 'spinner': ['fg', 'Label'],
+	\ 'header':  ['fg', 'Comment'] }
+
 let g:vimtex_view_method = 'zathura'
 let g:slime_target = "tmux"
 let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane": ":0.1"}
@@ -184,7 +214,7 @@ let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane"
 "autocmd BufWritePost *.md !markdown-pdf % -o %.pdf
 "let g:vimwiki_hl_headers = 1
 
-let g:UltiSnipsExpandTrigger = "<Tab>" 
+let g:UltiSnipsExpandTrigger = ";;" 
 let g:UltiSnipsJumpForwardTrigger = "<leader><leader>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-j>"
 

@@ -1,0 +1,21 @@
+[user]
+	email = bensonbinbinli@gmail.com
+	name = Benson Li
+[core]
+	editor = vim
+[color "status"]
+	untracked = cyan normal bold
+	changed = cyan normal bold
+[color "diff"]
+	old = red normal bold
+	new = green normal bold
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[alias]
+	d = difftool
+	p = push origin master
+	com = commit -m 
+	mod = add -u
+	vim = config --global -e
