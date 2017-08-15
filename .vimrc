@@ -25,6 +25,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'benmills/vimux'
 Plug 'jpalardy/vim-slime'
 Plug 'tpope/vim-fugitive'
+Plug 'jreybert/vimagit'
 "Snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -89,12 +90,15 @@ nnoremap <localleader>vs :VimuxInterruptRunner<CR>
 nnoremap <localleader>ww :MarkdownPreview<CR>
 nnoremap <localleader>wc :MarkdownPreviewStop<CR>
 
+nnoremap <leader>l 25l
+nnoremap <leader>h 25h
+
 "To move lines intuitively
 nnoremap <M-j> :m .+1<CR>==
 nnoremap <M-k> :m .-2<CR>==
 vnoremap <M-j> :m '>+1<CR>gv=gv
 vnoremap <M-k> :m '<-2<CR>gv=gv
-nnoremap <M-a> A
+nnoremap <M-m> @m
 "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 "set cindent
@@ -151,6 +155,7 @@ nnoremap <A-f> @f
 nnoremap ;n :bn<CR>
 nnoremap ;N :bp<CR>
 nnoremap ;d :bd<CR>
+nnoremap ;; ;
 cnoremap tc tabc
 set foldmethod=manual
 set wrap
@@ -188,6 +193,9 @@ nnoremap b B
 nnoremap B b
 
 "Plugin related variables
+
+let g:airline#extensions#vimagit#enabled = 1
+nnoremap <A-m> :Magit<CR>
 let g:ycm_python_binary_path = '/usr/bin/python3'
 
 " Customize fzf colors to match your color scheme
