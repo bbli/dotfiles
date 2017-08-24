@@ -116,13 +116,28 @@ syntax on
 "Makes a solarized approximation for vim
 let g:solarized_termcolors=256
 color seoul256
-autocmd BufRead,FileType text color seoul256
-autocmd BufRead,FileType vim color seoul256
-autocmd BufRead,FileType matlab color seoul256
-autocmd BufRead,FileType python color Tomorrow-Night-Eighties
-autocmd BufRead,FileType markdown set background=light
-autocmd BufRead,FileType markdown color gruvbox
-autocmd BufRead,FileType latex color solarized
+augroup filetype_color
+	autocmd!
+	autocmd FileType text color seoul256
+	autocmd FileType vim color seoul256
+	autocmd FileType matlab color seoul256
+	autocmd FileType python color Tomorrow-Night-Eighties
+	autocmd FileType markdown set background=light
+	autocmd FileType markdown color gruvbox
+	autocmd FileType latex color solarized
+augroup END
+
+augroup buffer_color
+	autocmd!
+	autocmd BufEnter vim colorscheme seoul256
+	autocmd BufEnter *.txt colorscheme seoul256
+	autocmd BufEnter *.py colorscheme Tomorrow-Night-Eighties
+	autocmd BufEnter *.m colorscheme seoul256
+	autocmd BufEnter *.md set background=light
+	autocmd BufEnter *.md colorscheme gruvbox
+	autocmd BufEnter *.tex colorscheme solarized
+augroup END
+" Makes folds persistent through vim sessions
 
 "autocomplete with spellcheck
 set complete+=kspell

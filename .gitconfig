@@ -18,8 +18,13 @@
 	p = push origin master
 	pu = push -u origin master
 	com = commit -m 
+	cob = checkout -b
 	mod = add -u
 	vim = config --global -e
 	tree2 = log --graph --pretty=oneline --abbrev-commit
 	tree = log --oneline --decorate --all --graph
 	recover = log --diff-filter=D --summary
+	show = cat-file -p
+	type = cat-file -t
+[merge]
+	conflictstyle = diff3
