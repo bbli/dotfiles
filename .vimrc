@@ -77,7 +77,7 @@ let mapleader=" "
 let maplocalleader="-"
 
 nnoremap <leader>p :FZF<CR>
-nnoremap <leader>h :FZF ~<CR>
+nnoremap <leader><leader>p :FZF<space>/home/benson<CR>
 cnoremap FF FZF
 "For some reason, I had to use W instead of w to get this mapping to work"
 nnoremap <localleader>t <C-W>T
