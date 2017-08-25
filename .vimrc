@@ -137,6 +137,8 @@ augroup buffer_color
 	autocmd BufEnter *.md colorscheme gruvbox
 	autocmd BufEnter *.tex colorscheme solarized
 augroup END
+
+autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
 " Makes folds persistent through vim sessions
 
 "autocomplete with spellcheck
@@ -183,6 +185,11 @@ set shiftwidth=4
 set autoindent
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
+if has("persistent_undo")
+    set undodir=~/.undodir/
+    set undofile
+endif
+
 
 nnoremap ;e :!python % <CR>
 inoremap ;c <C-c>
