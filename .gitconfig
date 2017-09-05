@@ -14,15 +14,18 @@
 [difftool]
 	prompt = false
 [alias]
+	stat = status -sb
 	d = difftool
 	p = push origin master
 	pu = push -u origin master
 	com = commit -m 
 	cob = checkout -b
+	chk = checkout
 	mod = add -u
 	vim = config --global -e
 	tree2 = log --graph --pretty=oneline --abbrev-commit
 	tree = log --oneline --decorate --all --graph
+	lol = log --graph --oneline --decorate --pretty=format:\"%C(yellow)%h%Creset%C(red)%C(bold)%d%Creset %C(cyan)(%cr)%Creset %s\"
 	recover = log --diff-filter=D --summary
 	show = cat-file -p
 	type = cat-file -t

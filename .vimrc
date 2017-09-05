@@ -110,6 +110,10 @@ set ruler
 set splitright
 set nu
 set title
+set cursorline
+set autoread
+"/g is used in command mode substitution by default
+set gdefault 
 syntax on
 "makes vim colorscheme the same as the terminal
 "set termguicolors 
@@ -170,6 +174,8 @@ nnoremap <F7> :UndotreeToggle<CR>
 nnoremap <F6> :MundoToggle<CR>
 nnoremap <A-f> @f 
 nnoremap ;n :bn<CR>
+nnoremap ;;n :2bn<CR>
+nnoremap ;;N :2bp<CR>
 nnoremap ;N :bp<CR>
 nnoremap ;d :bd<CR>
 nnoremap ;; ;
@@ -185,10 +191,8 @@ set shiftwidth=4
 set autoindent
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
-if has("persistent_undo")
-    set undodir=~/.undodir/
-    set undofile
-endif
+set undofile
+set undodir=~/.undodir/
 
 
 nnoremap ;e :!python % <CR>
