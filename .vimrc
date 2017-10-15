@@ -1,15 +1,43 @@
 set nocompatible
 set hidden
-"To show keys pressed in normal mode; useful for completing Vim sentences
-set showcmd 
+set showcmd "To show keys pressed in normal mode; useful for completing Vim sentences
 filetype plugin on
 filetype on
+syntax on
+"set cindent
+set hlsearch
+set incsearch
+set laststatus=2
+set t_Co=256
+set foldenable
+set foldlevel=0
+set foldmethod=manual
+set ruler
+set splitright
+set number ""relativenumber
+set title
+set cursorline
+set autoread "doesn't work in terminal atm
+set gdefault "/g is used in command mode substitution by default
+"autocomplete with spellcheck
+set complete+=kspell
+"set clipboard=unamedplus
+set wrap
+set mouse=a
+set tabstop=4
+set expandtab "Tabs are now spaces, whatever that means
+set wildmenu "This is default in Neovim
+set showmatch "Will highlight matching parantheses, brackets, etc"
+set shiftwidth=4
+set autoindent
+set undofile
+set undodir=~/.undodir/
 
+""""""""Plugins""""""""
 call plug#begin('~/.vim/plugged')
 "Not needed as I am not using terminalguicolors, as downgrade solarzied is ok
 "for me
 "Plug 'godlygeek/csapprox' 
-"Display
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
@@ -17,7 +45,7 @@ Plug 'edkolev/promptline.vim'
 "Files
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-"Plug 'ctrlpvim/ctrlp.vim'
+""Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -33,37 +61,45 @@ Plug 'honza/vim-snippets'
 Plug 'lervag/vimtex'
 Plug 'brennier/quicktex'
 "Motion
-Plug 'easymotion/vim-easymotion'
-Plug 'tpope/vim-repeat'
+"Plug 'easymotion/vim-easymotion'
+"Plug 'tpope/vim-repeat'
 "Markdown stuff
 Plug 'mmai/vim-markdown-wiki'
 Plug 'jtratner/vim-flavored-markdown'
 Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.vim'
-"Plug 'gabrielelana/vim-markdown'
+""Plug 'gabrielelana/vim-markdown'
 "Undo
 Plug 'mbbill/undotree'
-"Plug 'chrisbra/histwin.vim'idk what extra features this has over undotree
-"Python
-"Plug 'davidhalter/jedi-vim' "Only needed for neovim deoplete
-"Plug 'Valloric/YouCompleteMe'
-"Misc
-Plug 'tpope/vim-obsession'
+""Plug 'chrisbra/histwin.vim'idk what extra features this has over undotree
+""Python
+""Plug 'davidhalter/jedi-vim' "Only needed for neovim deoplete
+""Plug 'Valloric/YouCompleteMe'
+""Misc
+"Plug 'tpope/vim-obsession'
 "Plug 'kannokanno/previm'
 "Plug 'tyru/open-browser.vim'
 "Plug 'vim-scripts/Gundo' Requires vim to be compile with python2
 "Plug 'vimwiki/vimwiki'
 
+"Syntax
 "Plug 'suan/vim-instant-markdown'
 "Plug 'reedes/vim-wordy'
 "Plug 'rhysd/vim-grammarous'
 "Plug 'tpope/vim-dispatch'
+Plug 'jiangmiao/auto-pairs'
+Plug 'metakirby5/codi.vim'
 
-if !has('nvim')
+if has('nvim')
 	Plug 'simnalamburt/vim-mundo'
 	Plug 'vimlab/split-term.vim'
+"Plug 'Shougo/denite.nvim'
 endif
 call plug#end()
+
+if !has('nvim')
+	set ttymouse=xterm2
+endif
 
 "Making ALt usable on Linux
 for i in range(97,122)
@@ -72,17 +108,35 @@ for i in range(97,122)
 		  exec "map! \e".c." <M-".c.">"
 	  endfor
 
-"ALL Leader maps must be defined after this command.
+"""Leader maps must be defined after this command.
 let mapleader=" "
 let maplocalleader="-"
 
+""""""""Leader Keys""""""""
+nnoremap <leader>v :e ~/.vimrc<CR>
+nnoremap <leader>b :e ~/.bashrc<CR>
+nnoremap <leader>m :Magit<CR>
+nnoremap <leader>g :e ~/.gitconfig<CR>
+
+nnoremap <leader>zz :nohlsearch<CR>
+nnoremap <leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=0<CR>
+nnoremap <leader>o :set foldlevel=5<CR>
+nnoremap <leader><leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=1<CR>
+
+"To move to next sentence
+nnoremap <leader>s )
+nnoremap <leader>S (
+
 nnoremap <leader>p :FZF<CR>
-nnoremap <leader><leader>p :FZF /home/benson<CR>
+nnoremap <leader><leader>p :FZF ../<CR>
+nnoremap <leader>h :FZF /home/benson<CR>
 cnoremap FF FZF
 "For some reason, I had to use W instead of w to get this mapping to work"
-nnoremap <localleader>t <C-W>T
-vnoremap <localleader>y "+y
+vnoremap <leader>y "+y
 
+autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
+autocmd BufEnter *.m  nnoremap <buffer> <leader>c I%<esc>
+""""""""Local Leader Keys""""""""
 nnoremap <localleader>vp :VimuxPromptCommand<CR>
 nnoremap <localleader>r :VimuxRunLastCommand<CR>
 nnoremap <localleader>vs :VimuxInterruptRunner<CR>
@@ -90,31 +144,89 @@ nnoremap <localleader>vs :VimuxInterruptRunner<CR>
 nnoremap <localleader>ww :MarkdownPreview<CR>
 nnoremap <localleader>wc :MarkdownPreviewStop<CR>
 
-nnoremap <leader>l 25l
-nnoremap <leader>h 25h
+nnoremap <localleader>e :!python % <CR>
 
+nnoremap <localleader>t <C-W>T
+""""""""Meta Keys""""""""
 "To move lines intuitively
 nnoremap <M-j> :m .+1<CR>==
 nnoremap <M-k> :m .-2<CR>==
 vnoremap <M-j> :m '>+1<CR>gv=gv
 vnoremap <M-k> :m '<-2<CR>gv=gv
-nnoremap <M-m> @m
-"Make vim recognize .md as markdown file
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-"set cindent
-set hlsearch
-set incsearch
-set laststatus=2
-set t_Co=256
-set ruler
-set splitright
-set nu
-set title
-set cursorline
-set autoread
-"/g is used in command mode substitution by default
-set gdefault 
-syntax on
+
+
+nnoremap <M-m> qh
+nnoremap <M-h> @h 
+"nnoremap <C-n> @m 
+"nnoremap <M-n> dd
+
+
+""""""""Fn Keys""""""""
+nnoremap <F2> :AirlineToggleWhitespace<CR>
+nnoremap <F3> :set nospell<CR>
+nnoremap <F4> :setlocal spell  spelllang=en_us<CR>
+nnoremap <F5> :GrammarousCheck<CR>
+nnoremap <F6> :MundoToggle<CR>
+nnoremap <F7> :UndotreeToggle<CR>
+nnoremap <silent> <F8> :NERDTreeToggle<CR>
+
+""""""""Semi Colon Keys""""""""
+inoremap ;c <C-c>
+vnoremap ;c <C-c>
+nnoremap ;q :q<CR>
+nnoremap ;w <C-c>:w<CR>
+inoremap ;w <C-c>:w<CR>
+vnoremap ;w <C-c>:w<CR>
+nnoremap ;n :bn<CR>
+"nnoremap ;;n :2bn<CR>
+"nnoremap ;;N :2bp<CR>
+nnoremap ;N :bp<CR>
+nnoremap ;d :bwipeout<CR>
+nnoremap ;; ;
+
+nnoremap ;r @:
+
+""""""""Normal Mode maps""""""""
+nnoremap k gk
+nnoremap j gj
+nnoremap gk k
+nnoremap gj j
+nnoremap EE @
+nnoremap C c$
+nnoremap D d$
+nnoremap Y y$
+nnoremap gb gi
+nnoremap w W
+nnoremap W w
+nnoremap b B
+nnoremap B b
+
+
+""""""""Command Mode maps""""""""
+cnoremap sE %s
+"For grep
+cnoremap cn cnext
+cnoremap cN cprev
+cnoremap SB set scrollbind
+cnoremap NSB set noscrollbind
+cnoremap tc tabc
+cnoremap vsb vertical sb
+
+
+""""""""Operator Mode maps""""""""
+"onoremap w W
+"onoremap W w
+"onoremap b B
+"onoremap B b
+"onoremap ) i)
+"onoremap ] i]
+""""""""Insert Mode maps""""""""
+" To be honest, I don't think this is nesscary. Those keys are not awkward,
+" and I only mapped it because I was fixated on insert normal mode
+inoremap ]] <C-c>A
+
+
+""""""""Colors""""""""
 "makes vim colorscheme the same as the terminal
 "set termguicolors 
 "Makes a solarized approximation for vim
@@ -142,87 +254,23 @@ augroup buffer_color
 	autocmd BufEnter *.tex colorscheme solarized
 augroup END
 
-autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
-" Makes folds persistent through vim sessions
+""""""""Other Autocommands""""""""
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown "Make vim recognize .md as markdown file
+" Makes folds persistent through vim sessions. Note this will cause a warning
 
-"autocomplete with spellcheck
-set complete+=kspell
-"set clipboard=unamedplus
-cnoremap sE %s
-nnoremap k gk
-nnoremap j gj
-nnoremap gk k
-nnoremap gj j
-nnoremap EE @
-nnoremap C c$
-nnoremap D d$
-nnoremap Y y$
-nnoremap gb gi
-" To be honest, I don't think this is nesscary. Those keys are not awkward,
-" and I only mapped it because I was fixated on insert normal mode
-inoremap [[ <C-c>A 
-"For grep
-cnoremap cn cnext
-cnoremap cN cprev
-cnoremap SB set scrollbind
-cnoremap NSB set noscrollbind
-
-nnoremap <F4> :setlocal spell  spelllang=en_us<CR>
-nnoremap <F3> :set nospell<CR>
-nnoremap <F5> :GrammarousCheck<CR>
-nnoremap <F7> :UndotreeToggle<CR>
-nnoremap <F6> :MundoToggle<CR>
-nnoremap <A-f> @f 
-nnoremap ;n :bn<CR>
-nnoremap ;;n :2bn<CR>
-nnoremap ;;N :2bp<CR>
-nnoremap ;N :bp<CR>
-nnoremap ;d :bd<CR>
-nnoremap ;; ;
-cnoremap tc tabc
-set foldmethod=manual
-set wrap
-if !has('nvim')
-	set ttymouse=xterm2
-endif
-set mouse=a
-set tabstop=4
-set shiftwidth=4
-set autoindent
+""""""""Misc""""""""
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
-set undofile
-set undodir=~/.undodir/
-
-
-nnoremap ;e :!python % <CR>
-inoremap ;c <C-c>
-vnoremap ;c <C-c>
-nnoremap ;q :q<CR>
-nnoremap ;w <C-c>:w<CR>
-inoremap ;w <C-c>:w<CR>
-vnoremap ;w <C-c>:w<CR>
-
 nnoremap <Space> <Nop>
 " nnoremap <Up> <Nop>
 " nnoremap <Down> <Nop>
 " nnoremap <Left> <Nop>
 " nnoremap <Right> <Nop>
-nnoremap <silent> <F8> :NERDTreeToggle<CR>
 "nnoremap <silent> <C[> :CtrlP<CR>
-nnoremap <M-v> :e ~/.vimrc<CR>
-nnoremap <M-b> :e ~/.bashrc<CR>
 
-nnoremap w W
-nnoremap W w
-nnoremap b B
-nnoremap B b
 
-"Plugin related variables
-
-let g:airline#extensions#vimagit#enabled = 1
-nnoremap <A-m> :Magit<CR>
-let g:ycm_python_binary_path = '/usr/bin/python3'
+""""""""Plugin related variables""""""""
+"let g:ycm_python_binary_path = '/usr/bin/python3'
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
@@ -257,19 +305,25 @@ let g:mkdp_auto_start = 0
 let g:mkdp_auto_close = 0
 let g:mkdp_refresh_slow = 1
 
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+"let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
-let g:airline_theme='serene'
-let g:airline#extensions#tagbar#enabled=0
+let g:airline_theme='distinguished'
+"Makes it so actual buffer number shows up in the tabline. Not nesscary since idx mode works now
+let g:airline#extensions#tabline#buffer_nr_show = 0
 let g:airline#extensions#tabline#enabled = 1
+"Just show the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#vimtex#enabled = 1
 let g:airline#extensions#tabline#show_tabs = 1
 let g:airline#extensions#tabline#tab_nr_type = 1
+" This should allow me to select buffers by their numbers. But is currently not working
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#show_buffers = 1
 "Do not draw separators for empty sections (only for the active window) >
+"This is for a tag outline, to be used with majutsushi/tagbar
+let g:airline#extensions#tagbar#enabled=0
 let g:airline_skip_empty_sections = 1
+let g:airline#extensions#vimagit#enabled = 1
 "let g:airline_symbols.maxlinenr
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
@@ -287,6 +341,7 @@ let g:mkdp_refresh_slow = 1
 let g:undotree_WindowLayout = 2
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_DiffCommand = "diff"
+
 
 "nnoremap <C-j> <C-W><C-j>
 "nnoremap <C-k> <C-W><C-k>
@@ -317,9 +372,10 @@ let g:undotree_DiffCommand = "diff"
 "	\'z'       : '#H',
 "	\'options' : {'status-justify' : 'left'}}
 "
+"Use this one for custom thing on left
+"     \'b'    : '#(df -h| head -n 4 | tail -n 1)',
 let g:tmuxline_preset = {
      \'a'    : '#S',
-     \'b'    : '#(df -h| head -n 4 | tail -n 1)',
      \'win'  : ['#I', '#W'],
      \'cwin' : ['#I', '#W', '#F'],
      \'y'    : ['%R', '%a', '%m', '%d', '%Y'],
