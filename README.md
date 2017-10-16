@@ -1,6 +1,6 @@
 # Dotfiles
 
-In an effort to reach even greater heights in vim, I have invented a theory for assigning mappings
+In an effort to become a hotkey spammer like Emacs users/become better at vim, I have created the following guideline for assigning hotkeys.
 * **F1-10 Keys**: Toggles(NERDTREE, spellcheck)
 * **Semi-Colon**: Short command mode stuff in which I don't need to see the input(:w)
 * **Meta**: Repeated actions(moving lines, macros)

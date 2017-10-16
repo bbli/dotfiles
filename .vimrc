@@ -240,7 +240,7 @@ augroup filetype_color
 	autocmd FileType python color Tomorrow-Night-Eighties
 	autocmd FileType markdown set background=light
 	autocmd FileType markdown color gruvbox
-	autocmd FileType latex color solarized
+	autocmd FileType latex color seoul256
 augroup END
 
 augroup buffer_color
@@ -251,7 +251,7 @@ augroup buffer_color
 	autocmd BufEnter *.m colorscheme seoul256
 	autocmd BufEnter *.md set background=light
 	autocmd BufEnter *.md colorscheme gruvbox
-	autocmd BufEnter *.tex colorscheme solarized
+	autocmd BufEnter *.tex colorscheme seoul256
 augroup END
 
 """"""""Other Autocommands""""""""
@@ -270,6 +270,9 @@ nnoremap <Space> <Nop>
 
 
 """"""""Plugin related variables""""""""
+"Makes sure tex files are read as latex type
+let g:tex_flavor = 'latex'
+let g:vimtex_mappings_enabled=0
 "let g:ycm_python_binary_path = '/usr/bin/python3'
 
 " Customize fzf colors to match your color scheme
