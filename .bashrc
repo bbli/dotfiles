@@ -143,10 +143,9 @@ alias home='cd ~/Documents/'
 alias code='cd ~/Desktop/Code'
 alias notes='cd ~/Desktop/Notes'
 alias vi='vim'
-alias vim='nvim'
 
-if [ -f $HOME/.promptrc ]; then
-	    . $HOME/.promptrc
+if [ -f $HOME/.shell_prompt.sh ]; then
+	    . $HOME/.shell_prompt.sh
     fi
 alias seegit='git log --graph --full-history --all --color \
 	        --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s"'
@@ -164,7 +163,7 @@ function readm {
 }
 alias alg='cd /home/benson/Desktop/Books\ for\ Future/Textbooks/Math/Geometric\ Algebra'
 alias textb='cd /home/benson/Desktop/Books\ for\ Future/Textbooks/'
-alias tkill='tmux kill-ses'
+alias tkill='tmux kill-ses -t'
 
 alias ptime='python -m cProfile -s cumulative'
 
@@ -176,7 +175,26 @@ alias pstree='ps axjf'
 alias ps='ps aux'
 alias p3='python3'
 alias du='du -sh'
-alias df='df -sh'
+alias df='df -h'
 alias snip='cd /home/benson/.vim/plugged/vim-snippets/snippets'
 alias imsane='cd /home/benson/Software/imsaneV1.2/examples'
-alias jup='/home/benson/Software/anaconda3/bin/jupyter'
+alias jup='/home/benson/Software/anaconda3/bin/jupyter notebook'
+alias jup2='/home/benson/Software/anaconda3/bin/jupyter'
+alias pip6='/home/benson/Software/anaconda3/bin/pip'
+alias ipy='/home/benson/Software/anaconda3/bin/ipython'
+alias sE='find . -print | grep'
+alias act='source activate'
+alias deact='source deactivate'
+alias tigall='tig --all'
+alias pytest3='python3.6 -m pytest'
+alias py='python3.6'
+alias rsync='rsync -avHe ssh'
+alias ilastik='/home/benson/Software/ilastik-1.2.2-Linux/run_ilastik.sh'
+alias attach='tmux a -t'
+alias switch='tmux switch-client -t'
+
+alias npm='/home/benson/Software/node-v8.6.0-linux-x64/bin/npm'
+alias node='/home/benson/Software/node-v8.6.0-linux-x64/bin/node'
+alias swap='cd /home/benson/.local/share/nvim/swap'
+
+alias nv='nvim'
