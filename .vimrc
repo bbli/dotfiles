@@ -59,7 +59,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 "Latex
 Plug 'lervag/vimtex'
-Plug 'brennier/quicktex'
+"Plug 'brennier/quicktex'
 "Motion
 "Plug 'easymotion/vim-easymotion'
 "Plug 'tpope/vim-repeat'
@@ -99,6 +99,7 @@ call plug#end()
 
 if !has('nvim')
 	set ttymouse=xterm2
+    Plug 'Shougo/neocomplete.vim'
 endif
 
 "Making ALt usable on Linux
@@ -183,6 +184,7 @@ nnoremap ;n :bn<CR>
 nnoremap ;N :bp<CR>
 nnoremap ;d :bwipeout<CR>
 nnoremap ;; ;
+nnoremap <leader>; ,
 
 nnoremap ;r @:
 
@@ -246,7 +248,9 @@ augroup END
 augroup buffer_color
 	autocmd!
 	autocmd BufEnter vim colorscheme seoul256
-	autocmd BufEnter *.txt colorscheme seoul256
+	"autocmd BufEnter *.txt colorscheme seoul256
+	autocmd BufEnter *.txt set background=light
+	autocmd BufEnter *.txt colorscheme gruvbox
 	autocmd BufEnter *.py colorscheme Tomorrow-Night-Eighties
 	autocmd BufEnter *.m colorscheme seoul256
 	autocmd BufEnter *.md set background=light
@@ -256,6 +260,7 @@ augroup END
 
 """"""""Other Autocommands""""""""
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown "Make vim recognize .md as markdown file
+autocmd BufNewFile,BufReadPost *.txt set filetype=markdown "Make vim recognize .md as markdown file
 " Makes folds persistent through vim sessions. Note this will cause a warning
 
 """"""""Misc""""""""
@@ -270,9 +275,10 @@ nnoremap <Space> <Nop>
 
 
 """"""""Plugin related variables""""""""
+let g:gruvbox_italic=1
 "Makes sure tex files are read as latex type
 let g:tex_flavor = 'latex'
-let g:vimtex_mappings_enabled=0
+let g:vimtex_mappings_enabled=1
 "let g:ycm_python_binary_path = '/usr/bin/python3'
 
 " Customize fzf colors to match your color scheme
@@ -333,6 +339,8 @@ nmap <leader>2 <Plug>AirlineSelectTab2
 nmap <leader>3 <Plug>AirlineSelectTab3
 nmap <leader>4 <Plug>AirlineSelectTab4
 nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
 
 let g:ackprg = 'ag --vimgrep'
 
@@ -351,29 +359,6 @@ let g:undotree_DiffCommand = "diff"
 "nnoremap <C-l> <C-W><C-l>
 "nnoremap <C-h> <C-W><C-h>
 
-"let g:previm_open_cmd='open -a Firefox'
-"augroup PrevimSettings
-"        autocmd!
-"	autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
-"augroup END
-
-
-" vimwiki: Note I really didn't use the attributes 
-"let wiki_1 = {}
-"let wiki_1.path = '~/Desktop/Notes/Math/Abstract_Algebra'
-"let wiki_2 = {}
-"let wiki_2.path = '~/Desktop/Notes'
-"let g:vimwiki_list = [{'path': '~/Desktop/Notes/', 'auto_toc': 1,'syntax': 'markdown','ext': '.md'},{'path': '~/Desktop/Notes/Math/Abstract_Algebra', 'auto_toc': 1,'syntax': 'markdown','ext': '.md'}]
-
-"let g:tmuxline_preset = {
-"	\'a'       : '#S',
-"	\'b'       : '#W',
-"	\'win'     : '#I #W',
-"	\'cwin'    : '#I #W',
-"	\'x'       : '%a',
-"	\'y'       : '#W %R',
-"	\'z'       : '#H',
-"	\'options' : {'status-justify' : 'left'}}
 "
 "Use this one for custom thing on left
 "     \'b'    : '#(df -h| head -n 4 | tail -n 1)',
@@ -392,210 +377,5 @@ let g:tmuxline_preset = {
 "     \'x'    : '#(date)',
 "     \'y'    : ['%R', '%a', '%Y'],
 "     \'z'    : '#H'}
-"
+
 "autocmd BufWritePost *.tex Dispatch! latexmk -pdf %
-let g:quicktex_tex = {
-    \' '   : "\<ESC>/<+.*+>\<CR>\"_c/+>/e\<CR>",
-    \'maa'   : '\( <+++> \) <++>',
-    \'prf' : "\\begin{proof}\<CR><+++>\<CR>\\end{proof}",
-    \}
-
-let g:quicktex_math = {
-    \' ' : "\<ESC>/<+.*+>\<CR>\"_c/+>/e\<CR>",
-\'Section: Lowercase Greek Letters' : 'COMMENT',
-    \'alpha'   : '\alpha ',
-    \'ga'      : '\alpha ',
-    \'beta'    : '\beta ',
-    \'gamma'   : '\gamma ',
-    \'delta'   : '\delta ',
-    \'epsilon' : '\epsilon ',
-    \'ge'      : '\varepsilon ',
-    \'zeta'    : '\zeta ',
-    \'eta'     : '\eta ',
-    \'theta'   : '\theta ',
-    \'iota'    : '\iota ',
-    \'kappa'   : '\kappa ',
-    \'lambda'  : '\lambda ',
-    \'gl'      : '\lambda ',
-    \'mu'      : '\mu ',
-    \'nu'      : '\nu ',
-    \'xi'      : '\xi ',
-    \'omega'   : '\omega ',
-    \'pi'      : '\pi ',
-    \'rho'     : '\rho ',
-    \'sigma'   : '\sigma ',
-    \'tau'     : '\tau ',
-    \'upsilon' : '\upsilon ',
-    \'gu'      : '\upsilon ',
-    \'phi'     : '\varphi ',
-    \'chi'     : '\chi ',
-    \'psi'     : '\psi ',
-    \
-\'Section: Uppercase Greek Letters' : 'COMMENT',
-    \'Alpha'   : '\Alpha ',
-    \'Beta'    : '\Beta ',
-    \'Gamma'   : '\Gamma ',
-    \'Delta'   : '\Delta ',
-    \'Epsilon' : '\Epsilon ',
-    \'Zeta'    : '\Zeta ',
-    \'Eta'     : '\Eta ',
-    \'Theta'   : '\Theta ',
-    \'Iota'    : '\Iota ',
-    \'Kappa'   : '\Kappa ',
-    \'Lambda'  : '\Lambda ',
-    \'Mu'      : '\Mu ',
-    \'Nu'      : '\Nu ',
-    \'Xi'      : '\Xi ',
-    \'Omega'   : '\Omega ',
-    \'Pi'      : '\Pi ',
-    \'Rho'     : '\Rho ',
-    \'Sigma'   : '\Sigma ',
-    \'Tau'     : '\Tau ',
-    \'Upsilon' : '\Upsilon ',
-    \'Phi'     : '\Phi ',
-    \'Chi'     : '\Chi ',
-    \'Psi'     : '\Psi ',
-    \
-\'Section: Set Theory' : 'COMMENT',
-    \'bn'    : '\mathbb{N} ',
-    \'bz'    : '\mathbb{Z} ',
-    \'bq'    : '\mathbb{Q} ',
-    \'br'    : '\mathbb{R} ',
-    \'bc'    : '\mathbb{C} ',
-    \'ba'    : '\mathbb{A} ',
-    \'bf'    : '\mathbb{F} ',
-    \'subs'  : '\subseteq ',
-    \'in'    : '\in ',
-    \'nin'   : '\not\in ',
-    \'cup'   : '\cup ',
-    \'cap'   : '\cap ',
-    \'union' : '\cup ',
-    \'sect'  : '\cap ',
-    \'smin'  : '\setminus ',
-    \'set'   : '\{<+++>\} <++>',
-    \'empty' : '\varnothing ',
-    \'pair'  : '(<+++>, <++>) <++>',
-    \'dots'  : '\dots ',
-    \
-\'Section: Logic' : 'COMMENT',
-    \'exists'  : '\exists ',
-    \'nexists' : '\nexists ',
-    \'forall'  : '\forall ',
-    \'implies' : '\implies ',
-    \'iff'     : '\iff ',
-    \
-\'Section: Relations' : 'COMMENT',
-    \'lt'      : '< ',
-    \'gt'      : '> ',
-    \'leq'     : '\leq ',
-    \'geq'     : '\geq ',
-    \'eq'      : '= ',
-    \'nl'      : '\nless ',
-    \'ng'      : '\ngtr ',
-    \'nleq'    : '\nleq ',
-    \'ngeq'    : '\ngeq ',
-    \'neq'     : '\neq ',
-    \'neg'     : '\neg ',
-    \
-\'Section: Operations' : 'COMMENT',
-    \'add'   : '+ ',
-    \'min'   : '- ',
-    \'frac'  : '\frac{<+++>}{<++>} <++>',
-    \'recip' : '\frac{1}{<+++>} <++>',
-    \'dot'   : '\cdot ',
-    \'mult'  : '* ',
-    \'exp'   : "\<BS>^{<+++>} <++>",
-    \'pow'   : "\<BS>^{<+++>} <++>",
-    \'sq'    : "\<BS>^2 ",
-    \'inv'   : "\<BS>^{-1} ",
-    \'cross' : '\times ',
-    \
-\'Section: Delimiters' : 'COMMENT',
-    \'bpara' : '\left( <+++> \right) <++>',
-    \'para'  : '(<+++>) <++>',
-    \'bsb'   : '\left[ <+++> \right] <++>',
-    \'sb'    : '[<+++>] <++>',
-    \'bbra'  : '\left\{ <+++> \right\} <++>',
-    \'bra'   : '\{<+++>\} <++>',
-    \
-\'Section: Group Theory' : 'COMMENT',
-    \'sdp'   : '\rtimes ',
-    \'niso'  : '\niso ',
-    \'subg'  : '\leq ',
-    \'nsubg' : '\trianglelefteq ',
-    \'mod'   : '/ ',
-    \
-\'Section: Functions' : 'COMMENT',
-    \'to'     : '\to ',
-    \'mapsto' : '\mapsto ',
-    \'comp'   : '\circ ',
-    \'of'     : "\<BS>(<+++>) <++>",
-    \'sin'    : '\sin{<+++>} <++>',
-    \'cos'    : '\cos{<+++>} <++>',
-    \'tan'    : '\tan{<+++>} <++>',
-    \'gcd'    : '\gcd(<+++> ,<++>) <++>',
-    \'ln'     : '\ln{<+++>} <++>',
-    \'log'    : '\log{<+++>} <++>',
-    \'df'     : '<+++> : <++> \to <++>',
-    \'sqrt'   : '\sqrt{<+++>} <++>',
-    \'case'   : '\begin{cases} <+++> \end{cases} <++>',
-    \
-\'Section: LaTeX commands' : 'COMMENT',
-    \'sub'    : "\<BS>_{<+++>} <++>",
-    \'sone'   : "\<BS>_1 ",
-    \'stwo'   : "\<BS>_2 ",
-    \'sthree' : "\<BS>_3 ",
-    \'sfour'  : "\<BS>_4 ",
-    \'text'   : '\text{<+++>} <++>',
-    \
-\'Section: Fancy Variables' : 'COMMENT',
-    \'fA' : '\mathcal{A} ',
-    \'fo' : '\mathcal{O} ',
-    \'fn' : '\mathcal{N} ',
-    \'fp' : '\mathcal{P} ',
-    \'ft' : '\mathcal{T} ',
-    \'fc' : '\mathcal{C} ',
-    \'fm' : '\mathcal{M} ',
-    \'ff' : '\mathcal{F} ',
-    \'fz' : '\mathcal{Z} ',
-    \'fi' : '\mathcal{I} ',
-    \'fb' : '\mathcal{B} ',
-    \'fl' : '\mathcal{L} ',
-    \'fv' : '\mathcal{V} ',
-    \
-\'Section: Encapsulating keywords' : 'COMMENT',
-    \'bar'  : "\<ESC>F a\\overline{\<ESC>f i} ",
-    \'tild' : "\<ESC>F a\\tilde{\<ESC>f i} ",
-    \'hat'  : "\<ESC>F a\\hat{\<ESC>f i} ",
-    \'star' : "\<BS>^* ",
-    \'vec'  : "\<ESC>F a\\vec{\<ESC>f i} ",
-    \
-\'Section: Linear Algebra' : 'COMMENT',
-    \'GL'     : '\text{GL} ',
-    \'SL'     : '\text{SL} ',
-    \'com'    : "\<BS>^c ",
-    \'matrix' : "\<CR>\\begin{bmatrix}\<CR><+++>\<CR>\\end{bmatrix}\<CR><++>",
-    \'vdots'  : '\vdots & ',
-    \'ddots'  : '\ddots & ',
-    \
-\'Section: Constants' : 'COMMENT',
-    \'aleph' : '\aleph ',
-    \'inf'   : '\infty ',
-    \'one'   : '1 ',
-    \'zero'  : '0 ',
-    \'two'   : '2 ',
-    \'three' : '3 ',
-    \'four'  : '4 ',
-    \
-\'Section: Operators' : 'COMMENT',
-    \'int'    : '\int <+++> \mathop{d <++>} <++>',
-    \'dev'    : '\frac{d}{d <+++>} <++>',
-    \'lim'    : '\lim_{<+++>} <++>',
-    \'sum'    : '\sum ',
-    \'prod'   : '\prod ',
-    \'limsup' : '\limsup ',
-    \'liminf' : '\liminf ',
-    \'sup'    : '\sup ',
-    \'sinf'   : '\inf ',
-\}
-
