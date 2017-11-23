@@ -72,6 +72,10 @@ Plug 'iamcco/markdown-preview.vim'
 "Undo
 Plug 'mbbill/undotree'
 ""Plug 'chrisbra/histwin.vim'idk what extra features this has over undotree
+"Text Objects 
+"Plug 'coderifous/textobj-word-column.vim'
+Plug 'glts/vim-textobj-indblock'
+Plug 'kana/vim-textobj-user'
 ""Python
 ""Plug 'davidhalter/jedi-vim' "Only needed for neovim deoplete
 ""Plug 'Valloric/YouCompleteMe'

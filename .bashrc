@@ -152,22 +152,17 @@ alias seegit='git log --graph --full-history --all --color \
 export EDITOR='vim'
 export VISUAL='vim'
 
-alias vimp='cd /home/benson/.vim/plugged'
 alias matlab='matlab -nodesktop -logfile output.log'
 alias matlab2='matlab -nojvm -nodisplay -nosplash'
 alias matlabgui='~/Software/Matlab/bin/matlab'
 alias lab='cd /home/benson/Software/imsaneV1.2'
+alias ilastik='/home/benson/Software/ilastik-1.2.2-Linux/run_ilastik.sh'
 
 function readm {
     markdown-pdf $1.md -o $1.pdf | zathura $1.pdf
 }
-alias alg='cd /home/benson/Desktop/Books\ for\ Future/Textbooks/Math/Geometric\ Algebra'
-alias textb='cd /home/benson/Desktop/Books\ for\ Future/Textbooks/'
-alias tkill='tmux kill-ses -t'
 
-alias ptime='python -m cProfile -s cumulative'
 
-alias nvimp="cd /home/benson/.nvim/plugged/repos/github.com/"
 #alias ipython="/home/benson/Software/anaconda3/bin/ipython"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
@@ -176,25 +171,38 @@ alias ps='ps aux'
 alias p3='python3'
 alias du='du -sh'
 alias df='df -h'
-alias snip='cd /home/benson/.vim/plugged/vim-snippets/snippets'
-alias imsane='cd /home/benson/Software/imsaneV1.2/examples'
+alias sE='find . -print | grep'
+alias tigall='tig --all'
+alias rsync='rsync -avHe ssh'
+alias port='ssh -N -f -L'
+
+## Python
+alias act='source activate'
+alias deact='source deactivate'
+alias pytest3='python3.6 -m pytest'
+alias py='python3.6'
+alias ptime='python -m cProfile -s cumulative'
+
+## Tmux
+alias attach='tmux a -t'
+alias switch='tmux switch-client -t'
+alias tkill='tmux kill-ses -t'
+alias nv='nvim'
+
+## Redirecting COmmands
+alias npm='/home/benson/Software/node-v8.6.0-linux-x64/bin/npm'
+alias node='/home/benson/Software/node-v8.6.0-linux-x64/bin/node'
+
 alias jup='/home/benson/Software/anaconda3/bin/jupyter notebook'
 alias jup2='/home/benson/Software/anaconda3/bin/jupyter'
 alias pip6='/home/benson/Software/anaconda3/bin/pip'
 alias ipy='/home/benson/Software/anaconda3/bin/ipython'
-alias sE='find . -print | grep'
-alias act='source activate'
-alias deact='source deactivate'
-alias tigall='tig --all'
-alias pytest3='python3.6 -m pytest'
-alias py='python3.6'
-alias rsync='rsync -avHe ssh'
-alias ilastik='/home/benson/Software/ilastik-1.2.2-Linux/run_ilastik.sh'
-alias attach='tmux a -t'
-alias switch='tmux switch-client -t'
 
-alias npm='/home/benson/Software/node-v8.6.0-linux-x64/bin/npm'
-alias node='/home/benson/Software/node-v8.6.0-linux-x64/bin/node'
+## Folders
 alias swap='cd /home/benson/.local/share/nvim/swap'
-
-alias nv='nvim'
+alias nvimp="cd /home/benson/.nvim/plugged/repos/github.com/"
+alias snip='cd /home/benson/.vim/plugged/vim-snippets/snippets'
+alias imsane='cd /home/benson/Software/imsaneV1.2/examples'
+alias alg='cd /home/benson/Desktop/Books\ for\ Future/Textbooks/Math/Geometric\ Algebra'
+alias textb='cd /home/benson/Desktop/Books\ for\ Future/Textbooks/'
+alias vimp='cd /home/benson/.vim/plugged'
