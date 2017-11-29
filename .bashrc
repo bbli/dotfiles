@@ -123,15 +123,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-#Interactive options
-alias ls='ls -F --color'
-alias rm='rm -i'
-
-alias df='df -h'
-alias du='du -h'
-
-alias grep='grep --color'
-alias egrep='egrep --color=auto'
 
 # added by Anaconda3 4.3.1 installer
 export PATH="$PATH:/home/benson/Software/anaconda3/bin"
@@ -139,18 +130,9 @@ export PATH="$PATH:/home/benson"
 export PATH="$PATH:/home/benson/Software/Matlab/bin"
 export PATH="$PATH:/home/benson/Software/usr/local/lib/light"
 #export PATH="$PATH:/home/benson/.cabal/bin"
-alias home='cd ~/Documents/'
-alias code='cd ~/Desktop/Code'
-alias notes='cd ~/Desktop/Notes'
-alias vi='vim'
 
-if [ -f $HOME/.shell_prompt.sh ]; then
-	    . $HOME/.shell_prompt.sh
-    fi
 alias seegit='git log --graph --full-history --all --color \
 	        --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s"'
-export EDITOR='vim'
-export VISUAL='vim'
 
 alias matlab='matlab -nodesktop -logfile output.log'
 alias matlab2='matlab -nojvm -nodisplay -nosplash'
@@ -166,28 +148,7 @@ function readm {
 #alias ipython="/home/benson/Software/anaconda3/bin/ipython"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-alias pstree='ps axjf'
-alias ps='ps aux'
-alias p3='python3'
-alias du='du -sh'
-alias df='df -h'
-alias sE='find . -print | grep'
-alias tigall='tig --all'
-alias rsync='rsync -avHe ssh'
-alias port='ssh -N -f -L'
 
-## Python
-alias act='source activate'
-alias deact='source deactivate'
-alias pytest3='python3.6 -m pytest'
-alias py='python3.6'
-alias ptime='python -m cProfile -s cumulative'
-
-## Tmux
-alias attach='tmux a -t'
-alias switch='tmux switch-client -t'
-alias tkill='tmux kill-ses -t'
-alias nv='nvim'
 
 ## Redirecting COmmands
 alias npm='/home/benson/Software/node-v8.6.0-linux-x64/bin/npm'
