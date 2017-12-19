@@ -1,8 +1,8 @@
 set nocompatible
 set hidden
 set showcmd "To show keys pressed in normal mode; useful for completing Vim sentences
-filetype plugin on
 filetype on
+filetype plugin on
 syntax on
 "set cindent
 set hlsearch
@@ -45,6 +45,7 @@ Plug 'edkolev/promptline.vim'
 "Files
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'scrooloose/nerdcommenter'
 ""Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -75,7 +76,8 @@ Plug 'mbbill/undotree'
 "Text Objects 
 "Plug 'coderifous/textobj-word-column.vim'
 Plug 'glts/vim-textobj-indblock'
-Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-user' "Nesscary for indblock objects
+Plug 'wellle/targets.vim'
 ""Python
 ""Plug 'davidhalter/jedi-vim' "Only needed for neovim deoplete
 ""Plug 'Valloric/YouCompleteMe'
@@ -95,15 +97,15 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'metakirby5/codi.vim'
 
 if has('nvim')
-	Plug 'simnalamburt/vim-mundo'
+	"Plug 'simnalamburt/vim-mundo'
 	Plug 'vimlab/split-term.vim'
-"Plug 'Shougo/denite.nvim'
+    "Plug 'Shougo/denite.nvim'
 endif
 call plug#end()
 
 if !has('nvim')
 	set ttymouse=xterm2
-    Plug 'Shougo/neocomplete.vim'
+    "Plug 'Shougo/neocomplete.vim'
 endif
 
 "Making ALt usable on Linux
@@ -122,6 +124,7 @@ nnoremap <leader>v :e ~/.vimrc<CR>
 nnoremap <leader>b :e ~/.bashrc<CR>
 nnoremap <leader>m :Magit<CR>
 nnoremap <leader>g :e ~/.gitconfig<CR>
+nnoremap <leader>n :e ~/.config/nvim/init.vim<CR>
 
 nnoremap <leader>zz :nohlsearch<CR>
 nnoremap <leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=0<CR>
@@ -136,11 +139,10 @@ nnoremap <leader>p :FZF<CR>
 nnoremap <leader><leader>p :FZF ../<CR>
 nnoremap <leader>h :FZF /home/benson<CR>
 cnoremap FF FZF
-"For some reason, I had to use W instead of w to get this mapping to work"
 vnoremap <leader>y "+y
 
-autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
-autocmd BufEnter *.m  nnoremap <buffer> <leader>c I%<esc>
+"autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
+"autocmd BufEnter *.m  nnoremap <buffer> <leader>c I%<esc>
 """"""""Local Leader Keys""""""""
 nnoremap <localleader>vp :VimuxPromptCommand<CR>
 nnoremap <localleader>r :VimuxRunLastCommand<CR>
@@ -151,14 +153,17 @@ nnoremap <localleader>wc :MarkdownPreviewStop<CR>
 
 nnoremap <localleader>e :!python % <CR>
 
-nnoremap <localleader>t <C-W>T
+"nnoremap <localleader>t <C-W>T
 """"""""Meta Keys""""""""
 "To move lines intuitively
 nnoremap <M-j> :m .+1<CR>==
 nnoremap <M-k> :m .-2<CR>==
 vnoremap <M-j> :m '>+1<CR>gv=gv
 vnoremap <M-k> :m '<-2<CR>gv=gv
-
+vnoremap <M-y> "0
+"vnoremap <M-u> "+
+nnoremap <M-y> "0
+"nnoremap <M-u> "+
 
 nnoremap <M-m> qh
 nnoremap <M-h> @h 
@@ -234,32 +239,30 @@ inoremap ]] <C-c>A
 
 """"""""Colors""""""""
 "makes vim colorscheme the same as the terminal
-"set termguicolors 
+set termguicolors 
 "Makes a solarized approximation for vim
-let g:solarized_termcolors=256
-color seoul256
+"let g:solarized_termcolors=256
+colorscheme neodark
+set background=dark
 augroup filetype_color
 	autocmd!
-	autocmd FileType text color seoul256
+	autocmd FileType text color nova
 	autocmd FileType vim color seoul256
 	autocmd FileType matlab color seoul256
 	autocmd FileType python color Tomorrow-Night-Eighties
-	autocmd FileType markdown set background=light
-	autocmd FileType markdown color gruvbox
-	autocmd FileType latex color seoul256
+	autocmd FileType markdown color nova
+	autocmd FileType latex color nova
 augroup END
 
 augroup buffer_color
 	autocmd!
 	autocmd BufEnter vim colorscheme seoul256
 	"autocmd BufEnter *.txt colorscheme seoul256
-	autocmd BufEnter *.txt set background=light
-	autocmd BufEnter *.txt colorscheme gruvbox
+	autocmd BufEnter *.txt colorscheme nova
 	autocmd BufEnter *.py colorscheme Tomorrow-Night-Eighties
 	autocmd BufEnter *.m colorscheme seoul256
-	autocmd BufEnter *.md set background=light
-	autocmd BufEnter *.md colorscheme gruvbox
-	autocmd BufEnter *.tex colorscheme seoul256
+	autocmd BufEnter *.md colorscheme nova
+	autocmd BufEnter *.tex colorscheme nova
 augroup END
 
 """"""""Other Autocommands""""""""
@@ -280,6 +283,8 @@ nnoremap <Space> <Nop>
 
 """"""""Plugin related variables""""""""
 let g:gruvbox_italic=1
+let g:gruvbox_contrast_dark = 'soft'
+let g:gruvbox_contrast_light = 'soft'
 "Makes sure tex files are read as latex type
 let g:tex_flavor = 'latex'
 let g:vimtex_mappings_enabled=1

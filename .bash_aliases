@@ -21,8 +21,8 @@ if [ -f $HOME/.shell_prompt.sh ]; then
     fi
 ## Directory shortcuts
 alias home='cd ~/Documents/'
-alias code='cd ~/Documents/Code'
-alias notes='cd ~/Documents/Notes'
+alias code='cd ~/Dropbox/Code'
+alias notes='cd ~/Dropbox/Notes'
 alias swap='cd /home/benson/.local/share/nvim/swap'
 alias nvimp="cd /home/benson/.nvim/plugged/repos/github.com/"
 alias vimp='cd /home/benson/.vim/plugged'
@@ -34,11 +34,12 @@ alias ps='ps aux'
 alias p3='python3'
 alias du='du -sh'
 alias df='df -h'
-alias sE='find . -print | grep'
+alias search='find . -print | grep'
 alias tigall='tig --all'
-alias rsync='rsync -avHe ssh'
+alias rssh='rsync -avHe ssh'
 alias port='ssh -N -f -L'
-alias install='sudo pacman -S'
+alias pac='sudo pacman -S'
+alias yao='yaourt -S'
 
 ## Python
 alias act='source activate'
