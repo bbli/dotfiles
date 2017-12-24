@@ -121,7 +121,7 @@ let maplocalleader="-"
 
 """"""""Leader Keys""""""""
 nnoremap <leader>v :e ~/.vimrc<CR>
-nnoremap <leader>b :e ~/.bashrc<CR>
+nnoremap <leader>b :e ~/.bash_aliases<CR>
 nnoremap <leader>m :Magit<CR>
 nnoremap <leader>g :e ~/.gitconfig<CR>
 nnoremap <leader>n :e ~/.config/nvim/init.vim<CR>
