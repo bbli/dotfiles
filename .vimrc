@@ -35,77 +35,77 @@ set undodir=~/.undodir/
 
 """"""""Plugins""""""""
 call plug#begin('~/.vim/plugged')
-"Not needed as I am not using terminalguicolors, as downgrade solarzied is ok
-"for me
-"Plug 'godlygeek/csapprox' 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 Plug 'edkolev/promptline.vim'
+
 "Files
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/nerdcommenter'
-""Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
 "Terminal Interactions
 Plug 'benmills/vimux'
 Plug 'jpalardy/vim-slime'
+
+"Git
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
+Plug 'airblade/vim-gitgutter'
+
 "Snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 "Latex
 Plug 'lervag/vimtex'
 "Plug 'brennier/quicktex'
-"Motion
-"Plug 'easymotion/vim-easymotion'
-"Plug 'tpope/vim-repeat'
+"
 "Markdown stuff
 Plug 'mmai/vim-markdown-wiki'
-Plug 'jtratner/vim-flavored-markdown'
 Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.vim'
-""Plug 'gabrielelana/vim-markdown'
+"Plug 'jtratner/vim-flavored-markdown'
+"Plug 'rhysd/vim-gfm-syntax'
 "Undo
 Plug 'mbbill/undotree'
-""Plug 'chrisbra/histwin.vim'idk what extra features this has over undotree
+
 "Text Objects 
 "Plug 'coderifous/textobj-word-column.vim'
-Plug 'glts/vim-textobj-indblock'
-Plug 'kana/vim-textobj-user' "Nesscary for indblock objects
+"Plug 'glts/vim-textobj-indblock'
+"Plug 'kana/vim-textobj-user' 
 Plug 'wellle/targets.vim'
-""Python
-""Plug 'davidhalter/jedi-vim' "Only needed for neovim deoplete
-""Plug 'Valloric/YouCompleteMe'
-""Misc
-"Plug 'tpope/vim-obsession'
-"Plug 'kannokanno/previm'
-"Plug 'tyru/open-browser.vim'
-"Plug 'vim-scripts/Gundo' Requires vim to be compile with python2
-"Plug 'vimwiki/vimwiki'
 
 "Syntax
-"Plug 'suan/vim-instant-markdown'
 "Plug 'reedes/vim-wordy'
 "Plug 'rhysd/vim-grammarous'
-"Plug 'tpope/vim-dispatch'
 Plug 'jiangmiao/auto-pairs'
 Plug 'metakirby5/codi.vim'
+"Language pack for a lot of things
+"Plug 'sheerun/vim-polyglot'
+Plug 'majutsushi/tagbar'
+
+""Misc
 
 if has('nvim')
 	"Plug 'simnalamburt/vim-mundo'
 	Plug 'vimlab/split-term.vim'
     "Plug 'Shougo/denite.nvim'
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'wellle/tmux-complete.vim'
+    Plug 'zchee/deoplete-jedi'
 endif
 call plug#end()
 
 if !has('nvim')
 	set ttymouse=xterm2
     "Plug 'Shougo/neocomplete.vim'
+endif
+if has('nvim')
+    call deoplete#custom#set('ultisnips', 'rank', 9999)
 endif
 
 "Making ALt usable on Linux
@@ -114,7 +114,10 @@ for i in range(97,122)
 	    exec "map \e".c." <M-".c.">"
 		  exec "map! \e".c." <M-".c.">"
 	  endfor
-
+augroup markdown
+    au!
+    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+augroup END
 """Leader maps must be defined after this command.
 let mapleader=" "
 let maplocalleader="-"
@@ -172,11 +175,12 @@ nnoremap <M-h> @h
 
 
 """"""""Fn Keys""""""""
-nnoremap <F2> :AirlineToggleWhitespace<CR>
-nnoremap <F3> :set nospell<CR>
+nnoremap <F2> :TagbarToggle<CR>
+nnoremap <F3> :AirlineToggleWhitespace<CR>
+
 nnoremap <F4> :setlocal spell  spelllang=en_us<CR>
-nnoremap <F5> :GrammarousCheck<CR>
-nnoremap <F6> :MundoToggle<CR>
+nnoremap <F5> :set nospell<CR>
+
 nnoremap <F7> :UndotreeToggle<CR>
 nnoremap <silent> <F8> :NERDTreeToggle<CR>
 
@@ -184,6 +188,7 @@ nnoremap <silent> <F8> :NERDTreeToggle<CR>
 inoremap ;c <C-c>
 vnoremap ;c <C-c>
 nnoremap ;q :q<CR>
+nnoremap ;z :q!<CR>
 nnoremap ;w <C-c>:w<CR>
 inoremap ;w <C-c>:w<CR>
 vnoremap ;w <C-c>:w<CR>
@@ -193,6 +198,7 @@ nnoremap ;n :bn<CR>
 nnoremap ;N :bp<CR>
 nnoremap ;d :bwipeout<CR>
 nnoremap ;; ;
+inoremap ;; ;
 nnoremap <leader>; ,
 
 nnoremap ;r @:
@@ -282,6 +288,9 @@ nnoremap <Space> <Nop>
 
 
 """"""""Plugin related variables""""""""
+"let g:cm_matcher={'module': 'cm_matchers.abbrev_matcher', 'case':'smartcase'}
+let g:asyncomplete_auto_popup = 1
+
 let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark = 'soft'
 let g:gruvbox_contrast_light = 'soft'
