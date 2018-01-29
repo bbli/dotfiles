@@ -54,3 +54,6 @@ alias switch='tmux switch-client -t'
 alias tkill='tmux kill-ses -t'
 alias nv='nvim'
 alias vi='vim'
+
+## Docker
+alias doc='docker run -it'

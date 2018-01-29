@@ -51,6 +51,8 @@ Plug 'junegunn/fzf.vim'
 "Terminal Interactions
 Plug 'benmills/vimux'
 Plug 'jpalardy/vim-slime'
+"Plug 'NLKNguyen/pipe.vim'
+"Plug 'NLKNguyen/pipe-mysql.vim'
 
 "Git
 Plug 'tpope/vim-fugitive'
@@ -83,10 +85,25 @@ Plug 'wellle/targets.vim'
 "Plug 'reedes/vim-wordy'
 "Plug 'rhysd/vim-grammarous'
 Plug 'jiangmiao/auto-pairs'
-Plug 'metakirby5/codi.vim'
+"Plug 'metakirby5/codi.vim'
 "Language pack for a lot of things
 "Plug 'sheerun/vim-polyglot'
 Plug 'majutsushi/tagbar'
+
+"Front End Development
+Plug 'pangloss/vim-javascript'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'carlitux/deoplete-ternjs'
+Plug 'tpope/vim-surround'
+Plug 'Valloric/MatchTagAlways'
+Plug 'alvan/vim-closetag'
+Plug 'mattn/emmet-vim'
+"Plug 'jaxbot/browserlink.vim'
+Plug 'w0rp/ale'
+Plug 'posva/vim-vue'
+" Beautify is kinda weird when acting on html,
+" and benefit for javascript seems to be minimal
+"Plug 'maksimr/vim-jsbeautify'
 
 ""Misc
 
@@ -137,6 +154,8 @@ nnoremap <leader><leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=1<CR>
 "To move to next sentence
 nnoremap <leader>s )
 nnoremap <leader>S (
+
+nmap <leader>j :call JsBeautify()<CR>
 
 nnoremap <leader>p :FZF<CR>
 nnoremap <leader><leader>p :FZF ../<CR>
@@ -198,8 +217,8 @@ nnoremap ;n :bn<CR>
 nnoremap ;N :bp<CR>
 nnoremap ;d :bwipeout<CR>
 nnoremap ;; ;
-inoremap ;; ;
 nnoremap <leader>; ,
+nnoremap ;t :MtaJumpToOtherTag<CR>
 
 nnoremap ;r @:
 
@@ -258,6 +277,9 @@ augroup filetype_color
 	autocmd FileType python color Tomorrow-Night-Eighties
 	autocmd FileType markdown color nova
 	autocmd FileType latex color nova
+    autocmd FileType html color Tomorrow-Night-Eighties
+    autocmd FileType javascript color Tomorrow-Night-Eighties
+    autocmd FileType css color Tomorrow-Night-Eighties
 augroup END
 
 augroup buffer_color
@@ -269,12 +291,15 @@ augroup buffer_color
 	autocmd BufEnter *.m colorscheme seoul256
 	autocmd BufEnter *.md colorscheme nova
 	autocmd BufEnter *.tex colorscheme nova
+    autocmd FileType *.html color Tomorrow-Night-Eighties
+    autocmd FileType *.js color Tomorrow-Night-Eighties
+    autocmd FileType *.css color Tomorrow-Night-Eighties
 augroup END
 
 """"""""Other Autocommands""""""""
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost *.txt set filetype=markdown "Make vim recognize .md as markdown file
-" Makes folds persistent through vim sessions. Note this will cause a warning
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 
 """"""""Misc""""""""
 " Allow saving of files as sudo when I forgot to start vim using sudo.
@@ -288,8 +313,33 @@ nnoremap <Space> <Nop>
 
 
 """"""""Plugin related variables""""""""
+let g:mta_filetypes = {
+    \ 'html' : 1,
+    \ 'xhtml' : 1,
+    \ 'xml' : 1,
+    \ 'jinja' : 1,
+    \ 'vue' : 1,
+    \}
+
+" Put this in vimrc or a plugin file of your own.
+" After this is configured, :ALEFix will try and fix your JS code with ESLint.
+let g:ale_fixers = {
+\   'javascript': ['prettier-eslint','eslint'],
+\}
+" Enable completion where available.
+let g:ale_completion_enabled = 1
+" Put this in vimrc or a plugin file of your own.
+ " Set this setting in vimrc if you want to fix files automatically on save.
+ " This is off by default.
+ let g:ale_fix_on_save = 1
+ 
+
+
+
+let g:used_javascript_libs = 'd3,vue'
 "let g:cm_matcher={'module': 'cm_matchers.abbrev_matcher', 'case':'smartcase'}
-let g:asyncomplete_auto_popup = 1
+"let g:asyncomplete_auto_popup = 1
+"let g:spacegray_low_contrast = 1
 
 let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark = 'soft'
