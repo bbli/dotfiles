@@ -447,3 +447,4 @@ let g:tmuxline_preset = {
 "     \'z'    : '#H'}
 
 "autocmd BufWritePost *.tex Dispatch! latexmk -pdf %
+source ~/.vim_config

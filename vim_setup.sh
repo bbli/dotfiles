@@ -3,8 +3,8 @@
 ## This part installs the nesscary software
 apt update 
 apt --assume-yes install vim
-# For clipboard support
-apt --assume-yes install vim-gtk
+# For clipboard support. Not nesscary on server
+#apt --assume-yes install vim-gtk
 apt --assume-yes install git
 apt --assume-yes install ctags
 apt --assume-yes install silversearcher-ag
@@ -21,6 +21,7 @@ ln -s ~/dotfiles/.inputrc ~/.inputrc
 ln -s ~/dotfiles/.bash_aliases ~/.bash_aliases
 ln -s ~/dotfiles/.gitconfig ~/.gitconfig
 ln -s ~/dotfiles/.shell_prompt.sh ~/.shell_prompt.sh
+ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
 
 ## If neovim enabled
 #ln -s ~/dotfiles/init.vim ~/.config/nvim/init.vim
