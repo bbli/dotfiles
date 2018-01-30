@@ -157,6 +157,9 @@ nnoremap <leader>S (
 
 nmap <leader>j :call JsBeautify()<CR>
 
+nnoremap <leader>t :Term<CR>
+nnoremap <localleader>t :VTerm<CR>
+
 nnoremap <leader>p :FZF<CR>
 nnoremap <leader><leader>p :FZF ../<CR>
 nnoremap <leader>h :FZF /home/benson<CR>
