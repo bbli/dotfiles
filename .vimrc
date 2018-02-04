@@ -108,6 +108,7 @@ Plug 'sophacles/vim-processing'
 
 ""Misc
 
+Plug 'wellle/tmux-complete.vim'
 if has('nvim')
 	"Plug 'simnalamburt/vim-mundo'
 	Plug 'vimlab/split-term.vim'
@@ -115,9 +116,9 @@ if has('nvim')
 endif
 if $SSH_CONNECTION
     Plug 'prabirshrestha/asyncomplete.vim'
+    Plug 'prabirshrestha/asyncomplete-buffer.vim'
 elseif has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'wellle/tmux-complete.vim'
     Plug 'zchee/deoplete-jedi'
 endif
 call plug#end()
