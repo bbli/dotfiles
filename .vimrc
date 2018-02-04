@@ -114,7 +114,7 @@ if has('nvim')
     "Plug 'Shougo/denite.nvim'
 endif
 if $SSH_CONNECTION
-    Plug 'maralla/completor.vim'
+    Plug 'prabirshrestha/asyncomplete.vim'
 elseif has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'wellle/tmux-complete.vim'
@@ -126,7 +126,8 @@ if !has('nvim')
 	set ttymouse=xterm2
     "Plug 'Shougo/neocomplete.vim'
 endif
-if has('nvim')
+if $SSH_CONNECTION
+elseif has('nvim')
     call deoplete#custom#set('ultisnips', 'rank', 9999)
 endif
 
