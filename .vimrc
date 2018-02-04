@@ -104,6 +104,7 @@ Plug 'posva/vim-vue'
 " Beautify is kinda weird when acting on html,
 " and benefit for javascript seems to be minimal
 "Plug 'maksimr/vim-jsbeautify'
+Plug 'sophacles/vim-processing'
 
 ""Misc
 
@@ -111,6 +112,10 @@ if has('nvim')
 	"Plug 'simnalamburt/vim-mundo'
 	Plug 'vimlab/split-term.vim'
     "Plug 'Shougo/denite.nvim'
+endif
+if $SSH_CONNECTION
+    Plug 'maralla/completor.vim'
+elseif has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'wellle/tmux-complete.vim'
     Plug 'zchee/deoplete-jedi'
@@ -151,6 +156,7 @@ nnoremap <leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=0<CR>
 nnoremap <leader>o :set foldlevel=5<CR>
 nnoremap <leader><leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=1<CR>
 
+
 "To move to next sentence
 nnoremap <leader>s )
 nnoremap <leader>S (
@@ -176,7 +182,8 @@ nnoremap <localleader>vs :VimuxInterruptRunner<CR>
 nnoremap <localleader>ww :MarkdownPreview<CR>
 nnoremap <localleader>wc :MarkdownPreviewStop<CR>
 
-nnoremap <localleader>e :!python % <CR>
+"nnoremap <localleader>e :!python % <CR>
+nmap <localleader>e <Plug>(processing-run)
 
 "nnoremap <localleader>t <C-W>T
 """"""""Meta Keys""""""""
@@ -270,7 +277,7 @@ inoremap ]] <C-c>A
 set termguicolors 
 "Makes a solarized approximation for vim
 "let g:solarized_termcolors=256
-colorscheme neodark
+colorscheme nova
 set background=dark
 augroup filetype_color
 	autocmd!
@@ -316,6 +323,12 @@ nnoremap <Space> <Nop>
 
 
 """"""""Plugin related variables""""""""
+let g:neodark#use_256color = 1
+
+let g:processing_no_default_mappings = 1
+
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
 let g:mta_filetypes = {
     \ 'html' : 1,
     \ 'xhtml' : 1,
