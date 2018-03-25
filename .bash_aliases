@@ -20,7 +20,7 @@ if [ -f $HOME/.shell_prompt.sh ]; then
 	    . $HOME/.shell_prompt.sh
     fi
 ## Directory shortcuts
-alias home='cd ~/Documents/'
+alias home='cd ~'
 alias code='cd ~/Dropbox/Code'
 alias notes='cd ~/Dropbox/Notes'
 alias swap='cd /home/benson/.local/share/nvim/swap'
@@ -36,7 +36,7 @@ alias du='du -sh'
 alias df='df -h'
 alias search='find . -print | grep'
 alias tigall='tig --all'
-alias rssh='rsync -avHe ssh'
+alias rssh='rsync -avHeh ssh --progress'
 alias port='ssh -N -f -L'
 alias pac='sudo pacman -S'
 alias yao='yaourt -S'
@@ -49,7 +49,7 @@ alias py='python3.6'
 alias ptime='python -m cProfile -s cumulative'
 
 ## Tmux
-alias attach='tmux a -t'
+alias attach='tmux a -t -2'
 alias switch='tmux switch-client -t'
 alias tkill='tmux kill-ses -t'
 alias nv='nvim'
@@ -57,3 +57,6 @@ alias vi='vim'
 
 ## Docker
 alias doc='docker run -it'
+
+## Remote Sync
+alias syncML='rsync -avHeh ssh --progress bbli@qbio-vip4.physics.ucsb.edu:~/ML_Code/ ~/Documents/Server_Code/'
