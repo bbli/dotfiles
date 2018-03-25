@@ -264,7 +264,6 @@ nnoremap W w
 nnoremap b B
 nnoremap B b
 
-
 """"""""Command Mode maps""""""""
 cnoremap sE %s
 "For grep
@@ -274,6 +273,7 @@ cnoremap SB set scrollbind
 cnoremap NSB set noscrollbind
 cnoremap tc tabc
 cnoremap vsb vertical sb
+cnoremap tj tjump
 
 
 """"""""Operator Mode maps""""""""
@@ -288,6 +288,10 @@ cnoremap vsb vertical sb
 " and I only mapped it because I was fixated on insert normal mode
 inoremap ]] <C-c>A
 
+""""""""Control Maps""""""""
+"This may be dangerous as vim has a lot of built in control key maps
+"Only do to overide
+nnoremap <C-]> :vs<CR><C-]>
 
 """"""""Colors""""""""
 "makes vim colorscheme the same as the terminal
@@ -304,9 +308,9 @@ augroup filetype_color
 	autocmd FileType python color Tomorrow-Night-Eighties
 	autocmd FileType markdown color nova
 	autocmd FileType latex color nova
-    autocmd FileType html color Tomorrow-Night-Eighties
-    autocmd FileType javascript color Tomorrow-Night-Eighties
-    autocmd FileType css color Tomorrow-Night-Eighties
+    autocmd FileType html color palenight
+    autocmd FileType javascript color palenight
+    autocmd FileType css color palenight
 augroup END
 
 augroup buffer_color
@@ -316,11 +320,11 @@ augroup buffer_color
 	autocmd BufEnter *.txt colorscheme nova
 	autocmd BufEnter *.py colorscheme Tomorrow-Night-Eighties
 	autocmd BufEnter *.m colorscheme seoul256
-	autocmd BufEnter *.md colorscheme nova
+    autocmd BufEnter *.md colorscheme nova
 	autocmd BufEnter *.tex colorscheme nova
-    autocmd FileType *.html color Tomorrow-Night-Eighties
-    autocmd FileType *.js color Tomorrow-Night-Eighties
-    autocmd FileType *.css color Tomorrow-Night-Eighties
+    autocmd BufEnter *.html color palenight
+    autocmd BufEnter *.js color palenight
+    autocmd BufEnter *.css color palenight
 augroup END
 
 """"""""Other Autocommands""""""""
@@ -340,7 +344,12 @@ nnoremap <Space> <Nop>
 
 
 """"""""Plugin related variables""""""""
-let g:neodark#use_256color = 1
+"let g:gitgutter_sign_added = 'a'
+"let g:gitgutter_sign_modified = 'm'
+"let g:gitgutter_sign_removed = 'r'
+"let g:gitgutter_sign_modified_removed = 'mr'
+
+"let g:neodark#use_256color = 1
 
 let g:processing_no_default_mappings = 1
 
@@ -481,3 +490,9 @@ let g:tmuxline_preset = {
 
 "autocmd BufWritePost *.tex Dispatch! latexmk -pdf %
 source ~/.vim_config
+"this only works when calling vimdiff from command line
+"so its useless for comparing different versions with git
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
