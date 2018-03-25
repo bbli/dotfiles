@@ -1,9 +1,10 @@
+syntax enable
 set nocompatible
 set hidden
+set number relativenumber
 set showcmd "To show keys pressed in normal mode; useful for completing Vim sentences
 filetype on
 filetype plugin on
-syntax on
 "set cindent
 set hlsearch
 set incsearch
@@ -44,6 +45,7 @@ Plug 'edkolev/promptline.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/nerdcommenter'
+"Plug 'tpope/vim-commentary'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -80,6 +82,9 @@ Plug 'mbbill/undotree'
 "Plug 'glts/vim-textobj-indblock'
 "Plug 'kana/vim-textobj-user' 
 Plug 'wellle/targets.vim'
+"I don't think this is that useful because
+"I need 4 keystrokes: griw, which is basically the same as visual mode
+"Plug 'vim-scripts/ReplaceWithRegister' 
 
 "Syntax
 "Plug 'reedes/vim-wordy'
@@ -88,6 +93,8 @@ Plug 'jiangmiao/auto-pairs'
 "Plug 'metakirby5/codi.vim'
 "Language pack for a lot of things
 "Plug 'sheerun/vim-polyglot'
+"May not be needed with vs+<C-]> combo
+"Still may be good for looking at a codebase for the first time
 Plug 'majutsushi/tagbar'
 
 "Front End Development
@@ -105,6 +112,7 @@ Plug 'posva/vim-vue'
 " and benefit for javascript seems to be minimal
 "Plug 'maksimr/vim-jsbeautify'
 Plug 'sophacles/vim-processing'
+Plug 'drewtempelmeyer/palenight.vim'
 
 ""Misc
 
@@ -115,8 +123,10 @@ if has('nvim')
     "Plug 'Shougo/denite.nvim'
 endif
 if $SSH_CONNECTION
+    Plug 'prabirshrestha/async.vim'
     Plug 'prabirshrestha/asyncomplete.vim'
     Plug 'prabirshrestha/asyncomplete-buffer.vim'
+    Plug 'prabirshrestha/asyncomplete-file.vim'
 elseif has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'zchee/deoplete-jedi'
@@ -147,6 +157,7 @@ let mapleader=" "
 let maplocalleader="-"
 
 """"""""Leader Keys""""""""
+nnoremap <C-[> <C-T>
 nnoremap <leader>v :e ~/.vimrc<CR>
 nnoremap <leader>b :e ~/.bash_aliases<CR>
 nnoremap <leader>m :Magit<CR>
@@ -154,25 +165,27 @@ nnoremap <leader>g :e ~/.gitconfig<CR>
 nnoremap <leader>n :e ~/.config/nvim/init.vim<CR>
 
 nnoremap <leader>zz :nohlsearch<CR>
-nnoremap <leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=0<CR>
-nnoremap <leader>o :set foldlevel=5<CR>
-nnoremap <leader><leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=1<CR>
+"nnoremap <leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=0<CR>
+"nnoremap <leader>o :set foldlevel=5<CR>
+"nnoremap <leader><leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=1<CR>
+
+nmap <leader>gp <Plug>GitGutterPreviewHunk
+nmap <leader>gs <Plug>GitGutterStageHunk
+nmap <leader>gu <Plug>GitGutterUndoHunk
 
 
-"To move to next sentence
-nnoremap <leader>s )
-nnoremap <leader>S (
 
 nmap <leader>j :call JsBeautify()<CR>
 
 nnoremap <leader>t :Term<CR>
 nnoremap <localleader>t :VTerm<CR>
 
-nnoremap <leader>p :FZF<CR>
-nnoremap <leader><leader>p :FZF ../<CR>
+nnoremap <leader>o :FZF<CR>
+nnoremap <leader><leader>o :FZF ../<CR>
 nnoremap <leader>h :FZF /home/benson<CR>
 cnoremap FF FZF
 vnoremap <leader>y "+y
+nnoremap <leader>p "0p
 
 "autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
 "autocmd BufEnter *.m  nnoremap <buffer> <leader>c I%<esc>
@@ -204,6 +217,7 @@ nnoremap <M-h> @h
 "nnoremap <C-n> @m 
 "nnoremap <M-n> dd
 
+map <M-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 """"""""Fn Keys""""""""
 nnoremap <F2> :TagbarToggle<CR>
@@ -214,6 +228,7 @@ nnoremap <F5> :set nospell<CR>
 
 nnoremap <F7> :UndotreeToggle<CR>
 nnoremap <silent> <F8> :NERDTreeToggle<CR>
+nnoremap <F9> :!ctags -R<CR>
 
 """"""""Semi Colon Keys""""""""
 inoremap ;c <C-c>
