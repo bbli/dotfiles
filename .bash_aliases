@@ -49,7 +49,7 @@ alias py='python3.6'
 alias ptime='python -m cProfile -s cumulative'
 
 ## Tmux
-alias attach='tmux a -t -2'
+alias attach='tmux -2 a -t'
 alias switch='tmux switch-client -t'
 alias tkill='tmux kill-ses -t'
 alias nv='nvim'
@@ -59,4 +59,8 @@ alias vi='vim'
 alias doc='docker run -it'
 
 ## Remote Sync
-alias syncML='rsync -avHeh ssh --progress bbli@qbio-vip4.physics.ucsb.edu:~/ML_Code/ ~/Documents/Server_Code/'
+alias syncML='rsync -avzHh --progress bbli@qbio-vip4.physics.ucsb.edu:/home/bbli/ML_Code/ ~/Documents/Server_Code/'
+# z = compress, v = verbose, H = hardlinks, h = human readable
+# a = archive-copies recursively and perserves timestamps
+
+alias tb='tensorboard --logdir='

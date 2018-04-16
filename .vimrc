@@ -43,6 +43,8 @@ Plug 'edkolev/promptline.vim'
 
 "Files
 Plug 'scrooloose/nerdtree'
+"didn't seem that useful
+"Plug 'dhruvasagar/vim-vinegar'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/nerdcommenter'
 "Plug 'tpope/vim-commentary'
@@ -157,7 +159,7 @@ let mapleader=" "
 let maplocalleader="-"
 
 """"""""Leader Keys""""""""
-nnoremap <C-[> <C-T>
+nnoremap <C-[> <C-t>
 nnoremap <leader>v :e ~/.vimrc<CR>
 nnoremap <leader>b :e ~/.bash_aliases<CR>
 nnoremap <leader>m :Magit<CR>
@@ -229,6 +231,7 @@ nnoremap <F5> :set nospell<CR>
 nnoremap <F7> :UndotreeToggle<CR>
 nnoremap <silent> <F8> :NERDTreeToggle<CR>
 nnoremap <F9> :!ctags -R<CR>
+nnoremap <F10> :set nopaste
 
 """"""""Semi Colon Keys""""""""
 inoremap ;c <C-c>

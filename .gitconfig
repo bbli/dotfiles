@@ -14,10 +14,10 @@
 [difftool]
 	prompt = false
 [alias]
+    g = git
 	stat = status -sb
 	d = difftool
 	p = push origin master
-	pu = push -u origin master
 	com = commit -m 
 	cob = checkout -b
 	chk = checkout
