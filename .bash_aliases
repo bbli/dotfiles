@@ -56,11 +56,11 @@ alias nv='nvim'
 alias vi='vim'
 
 ## Docker
-alias doc='docker run -it'
+alias doc='docker run -it -v /home/benson/Dropbox/Code/dotfiles:/root/dotfiles'
 
 ## Remote Sync
 alias syncML='rsync -avzHh --progress bbli@qbio-vip4.physics.ucsb.edu:/home/bbli/ML_Code/ ~/Documents/Server_Code/'
 # z = compress, v = verbose, H = hardlinks, h = human readable
 # a = archive-copies recursively and perserves timestamps
 
-alias tb='tensorboard --logdir='
+alias tb='tensorboard'
