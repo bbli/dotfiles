@@ -181,7 +181,7 @@ nmap <leader>gp <Plug>GitGutterPreviewHunk
 nmap <leader>gs <Plug>GitGutterStageHunk
 nmap <leader>gu <Plug>GitGutterUndoHunk
 
-nnoremap <leader>s :OverCommandLine<CR>
+nnoremap <leader>s :OverCommandLine<CR> %s/
 
 nmap <leader>j :call JsBeautify()<CR>
 
