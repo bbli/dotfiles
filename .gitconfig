@@ -9,6 +9,7 @@
 #[color "diff"]
 #	old = red normal bold
 #	new = green normal bold
+	excludesfile = ~/.gitignore
 [diff]
 	tool = vimdiff
 [difftool]
@@ -31,7 +32,6 @@
 	type = cat-file -t
 [merge]
 	conflictstyle = diff3
-
 
 [color]
   pager = true
