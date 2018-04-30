@@ -41,6 +41,12 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 Plug 'edkolev/promptline.vim'
 
+"Doesn't seem to work
+"Plug 'markonm/traces.vim'
+Plug 'osyo-manga/vim-over'
+Plug 'justinmk/vim-sneak'
+"Don't really need all search highlighted as I am typing
+"Plug 'haya14busa/incsearch.vim'
 "Files
 Plug 'scrooloose/nerdtree'
 "didn't seem that useful
@@ -175,7 +181,7 @@ nmap <leader>gp <Plug>GitGutterPreviewHunk
 nmap <leader>gs <Plug>GitGutterStageHunk
 nmap <leader>gu <Plug>GitGutterUndoHunk
 
-
+nnoremap <leader>s :OverCommandLine<CR>
 
 nmap <leader>j :call JsBeautify()<CR>
 
@@ -353,6 +359,8 @@ nnoremap <Space> <Nop>
 "let g:gitgutter_sign_modified_removed = 'mr'
 
 "let g:neodark#use_256color = 1
+let g:sneak#s_next = 1
+
 
 let g:processing_no_default_mappings = 1
 
