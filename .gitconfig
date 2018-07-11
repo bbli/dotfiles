@@ -18,6 +18,7 @@
     g = git
 	stat = status -sb
 	d = difftool
+    t = tag -n
 	p = push origin master
 	com = commit -m 
 	cob = checkout -b

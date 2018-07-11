@@ -51,7 +51,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'scrooloose/nerdtree'
 "didn't seem that useful
 "Plug 'dhruvasagar/vim-vinegar'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+"Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/nerdcommenter'
 "Plug 'tpope/vim-commentary'
 Plug 'mileszs/ack.vim'
@@ -59,21 +59,22 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 "Terminal Interactions
-Plug 'benmills/vimux'
+"Plug 'benmills/vimux'
 Plug 'jpalardy/vim-slime'
-"Plug 'NLKNguyen/pipe.vim'
-"Plug 'NLKNguyen/pipe-mysql.vim'
 
 "Git
+"For Gvsplit and co
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
 Plug 'airblade/vim-gitgutter'
+"Plug 'lambdalisue/gina.vim'
+"Plug 'cohama/agit.vim'
 
 "Snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 "Latex
-Plug 'lervag/vimtex'
+"Plug 'lervag/vimtex'
 "Plug 'brennier/quicktex'
 "
 "Markdown stuff
@@ -106,21 +107,21 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'majutsushi/tagbar'
 
 "Front End Development
-Plug 'pangloss/vim-javascript'
-Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'carlitux/deoplete-ternjs'
+"Plug 'pangloss/vim-javascript'
+"Plug 'othree/javascript-libraries-syntax.vim'
+"Plug 'carlitux/deoplete-ternjs'
 Plug 'tpope/vim-surround'
 Plug 'Valloric/MatchTagAlways'
-Plug 'alvan/vim-closetag'
-Plug 'mattn/emmet-vim'
+"Plug 'alvan/vim-closetag'
+"Plug 'mattn/emmet-vim'
 "Plug 'jaxbot/browserlink.vim'
 Plug 'w0rp/ale'
-Plug 'posva/vim-vue'
+"Plug 'posva/vim-vue'
 " Beautify is kinda weird when acting on html,
 " and benefit for javascript seems to be minimal
 "Plug 'maksimr/vim-jsbeautify'
-Plug 'sophacles/vim-processing'
-Plug 'drewtempelmeyer/palenight.vim'
+"Plug 'sophacles/vim-processing'
+"Plug 'drewtempelmeyer/palenight.vim'
 
 ""Misc
 
@@ -165,12 +166,7 @@ let mapleader=" "
 let maplocalleader="-"
 
 """"""""Leader Keys""""""""
-nnoremap <C-[> <C-t>
-nnoremap <leader>v :e ~/.vimrc<CR>
-nnoremap <leader>b :e ~/.bash_aliases<CR>
 nnoremap <leader>m :Magit<CR>
-nnoremap <leader>g :e ~/.gitconfig<CR>
-nnoremap <leader>n :e ~/.config/nvim/init.vim<CR>
 
 nnoremap <leader>zz :nohlsearch<CR>
 "nnoremap <leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=0<CR>
@@ -180,8 +176,9 @@ nnoremap <leader>zz :nohlsearch<CR>
 nmap <leader>gp <Plug>GitGutterPreviewHunk
 nmap <leader>gs <Plug>GitGutterStageHunk
 nmap <leader>gu <Plug>GitGutterUndoHunk
+nmap <leader>gl :VTerm<CR>git tree<CR>
 
-nnoremap <leader>s :OverCommandLine<CR> %s/
+nnoremap <leader>s :OverCommandLine<CR>
 
 nmap <leader>j :call JsBeautify()<CR>
 
@@ -252,9 +249,11 @@ nnoremap ;n :bn<CR>
 "nnoremap ;;N :2bp<CR>
 nnoremap ;N :bp<CR>
 nnoremap ;d :bwipeout<CR>
+nnoremap ;D :bwipeout!<CR>
 nnoremap ;; ;
 nnoremap <leader>; ,
 nnoremap ;t :MtaJumpToOtherTag<CR>
+nnoremap ;o <C-^>
 
 nnoremap ;r @:
 
@@ -268,10 +267,10 @@ nnoremap C c$
 nnoremap D d$
 nnoremap Y y$
 nnoremap gb gi
-nnoremap w W
-nnoremap W w
-nnoremap b B
-nnoremap B b
+"nnoremap w W
+"nnoremap W w
+"nnoremap b B
+"nnoremap B b
 
 """"""""Command Mode maps""""""""
 cnoremap sE %s
