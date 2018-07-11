@@ -187,17 +187,23 @@ nnoremap <localleader>t :VTerm<CR>
 
 nnoremap <leader>o :FZF<CR>
 nnoremap <leader><leader>o :FZF ../<CR>
-nnoremap <leader>h :FZF /home/benson<CR>
+nnoremap <leader>h :FZF ~<CR>
 cnoremap FF FZF
-vnoremap <leader>y "+y
 nnoremap <leader>p "0p
+nnoremap <leader>d "0d
+vnoremap <leader>d "0d
 
 "autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
 "autocmd BufEnter *.m  nnoremap <buffer> <leader>c I%<esc>
 """"""""Local Leader Keys""""""""
-nnoremap <localleader>vp :VimuxPromptCommand<CR>
-nnoremap <localleader>r :VimuxRunLastCommand<CR>
-nnoremap <localleader>vs :VimuxInterruptRunner<CR>
+nnoremap <localleader>v :e ~/.vimrc<CR>
+nnoremap <localleader>b :e ~/.bash_aliases<CR>
+nnoremap <localleader>g :e ~/.gitconfig<CR>
+nnoremap <localleader>n :e ~/.config/nvim/init.vim<CR>
+
+"nnoremap <localleader>vp :VimuxPromptCommand<CR>
+"nnoremap <localleader>r :VimuxRunLastCommand<CR>
+"nnoremap <localleader>vs :VimuxInterruptRunner<CR>
 
 nnoremap <localleader>ww :MarkdownPreview<CR>
 nnoremap <localleader>wc :MarkdownPreviewStop<CR>
@@ -206,6 +212,8 @@ nnoremap <localleader>wc :MarkdownPreviewStop<CR>
 nmap <localleader>e <Plug>(processing-run)
 
 "nnoremap <localleader>t <C-W>T
+vnoremap <localleader>y "+y
+nnoremap <localleader>y "+y
 """"""""Meta Keys""""""""
 "To move lines intuitively
 nnoremap <M-j> :m .+1<CR>==
@@ -299,7 +307,10 @@ inoremap ]] <C-c>A
 """"""""Control Maps""""""""
 "This may be dangerous as vim has a lot of built in control key maps
 "Only do to overide
-nnoremap <C-]> :vs<CR><C-]>
+"nnoremap <C-]> :vs<CR><C-]>
+nnoremap <C-[> <C-t>
+nnoremap <C-j> :vs<CR><C-]>
+nnoremap <C-n> <C-^>
 
 """"""""Colors""""""""
 "makes vim colorscheme the same as the terminal
@@ -316,9 +327,9 @@ augroup filetype_color
 	autocmd FileType python color Tomorrow-Night-Eighties
 	autocmd FileType markdown color nova
 	autocmd FileType latex color nova
-    autocmd FileType html color palenight
-    autocmd FileType javascript color palenight
-    autocmd FileType css color palenight
+    autocmd FileType html color nova
+    autocmd FileType javascript color nova
+    autocmd FileType css color nova
 augroup END
 
 augroup buffer_color
@@ -330,9 +341,9 @@ augroup buffer_color
 	autocmd BufEnter *.m colorscheme seoul256
     autocmd BufEnter *.md colorscheme nova
 	autocmd BufEnter *.tex colorscheme nova
-    autocmd BufEnter *.html color palenight
-    autocmd BufEnter *.js color palenight
-    autocmd BufEnter *.css color palenight
+    autocmd BufEnter *.html color nova
+    autocmd BufEnter *.js color nova
+    autocmd BufEnter *.css color nova
 augroup END
 
 """"""""Other Autocommands""""""""
