@@ -8,6 +8,7 @@ filetype plugin on
 "set cindent
 set hlsearch
 set incsearch
+set lazyredraw
 set laststatus=2
 set t_Co=256
 set foldenable
@@ -40,18 +41,14 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 Plug 'edkolev/promptline.vim'
+Plug 'mhinz/vim-startify'
 
-"Doesn't seem to work
-"Plug 'markonm/traces.vim'
 Plug 'osyo-manga/vim-over'
-Plug 'justinmk/vim-sneak'
+"Plug 'unblevable/quick-scope'
+"Plug 'justinmk/vim-sneak' "didn't really find myself using this
 "Don't really need all search highlighted as I am typing
-"Plug 'haya14busa/incsearch.vim'
 "Files
 Plug 'scrooloose/nerdtree'
-"didn't seem that useful
-"Plug 'dhruvasagar/vim-vinegar'
-"Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/nerdcommenter'
 "Plug 'tpope/vim-commentary'
 Plug 'mileszs/ack.vim'
@@ -67,6 +64,9 @@ Plug 'jpalardy/vim-slime'
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
 Plug 'airblade/vim-gitgutter'
+"Plug 'Shougo/denite.nvim'
+"Plug 'chemzqm/denite-git'
+"Plug 'gregsexton/gitv', {'on': ['Gitv']}
 "Plug 'lambdalisue/gina.vim'
 "Plug 'cohama/agit.vim'
 
@@ -79,8 +79,8 @@ Plug 'honza/vim-snippets'
 "
 "Markdown stuff
 Plug 'mmai/vim-markdown-wiki'
-Plug 'iamcco/mathjax-support-for-mkdp'
-Plug 'iamcco/markdown-preview.vim'
+"Plug 'iamcco/mathjax-support-for-mkdp'
+"Plug 'iamcco/markdown-preview.vim'
 "Plug 'jtratner/vim-flavored-markdown'
 "Plug 'rhysd/vim-gfm-syntax'
 "Undo
@@ -91,17 +91,13 @@ Plug 'mbbill/undotree'
 "Plug 'glts/vim-textobj-indblock'
 "Plug 'kana/vim-textobj-user' 
 Plug 'wellle/targets.vim'
-"I don't think this is that useful because
-"I need 4 keystrokes: griw, which is basically the same as visual mode
-"Plug 'vim-scripts/ReplaceWithRegister' 
 
 "Syntax
-"Plug 'reedes/vim-wordy'
-"Plug 'rhysd/vim-grammarous'
+Plug 'w0rp/ale'
 Plug 'jiangmiao/auto-pairs'
-"Plug 'metakirby5/codi.vim'
 "Language pack for a lot of things
 "Plug 'sheerun/vim-polyglot'
+"
 "May not be needed with vs+<C-]> combo
 "Still may be good for looking at a codebase for the first time
 Plug 'majutsushi/tagbar'
@@ -110,21 +106,17 @@ Plug 'majutsushi/tagbar'
 "Plug 'pangloss/vim-javascript'
 "Plug 'othree/javascript-libraries-syntax.vim'
 "Plug 'carlitux/deoplete-ternjs'
-Plug 'tpope/vim-surround'
+Plug 'tpope/vim-surround' "Why do I need this plugin again?
 Plug 'Valloric/MatchTagAlways'
-"Plug 'alvan/vim-closetag'
 "Plug 'mattn/emmet-vim'
-"Plug 'jaxbot/browserlink.vim'
-Plug 'w0rp/ale'
-"Plug 'posva/vim-vue'
 " Beautify is kinda weird when acting on html,
 " and benefit for javascript seems to be minimal
 "Plug 'maksimr/vim-jsbeautify'
-"Plug 'sophacles/vim-processing'
+"
+"Colors
 "Plug 'drewtempelmeyer/palenight.vim'
 
 ""Misc
-
 Plug 'wellle/tmux-complete.vim'
 if has('nvim')
 	"Plug 'simnalamburt/vim-mundo'
@@ -146,10 +138,10 @@ if !has('nvim')
 	set ttymouse=xterm2
     "Plug 'Shougo/neocomplete.vim'
 endif
-if $SSH_CONNECTION
-elseif has('nvim')
-    call deoplete#custom#set('ultisnips', 'rank', 9999)
-endif
+"if $SSH_CONNECTION
+"elseif has('nvim')
+    "call deoplete#custom#set('ultisnips', 'rank', 9999)
+"endif
 
 "Making ALt usable on Linux
 for i in range(97,122)
@@ -166,32 +158,49 @@ let mapleader=" "
 let maplocalleader="-"
 
 """"""""Leader Keys""""""""
-nnoremap <leader>m :Magit<CR>
 
 nnoremap <leader>zz :nohlsearch<CR>
 "nnoremap <leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=0<CR>
 "nnoremap <leader>o :set foldlevel=5<CR>
 "nnoremap <leader><leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=1<CR>
 
+nnoremap <leader>gm :Magit<CR>
 nmap <leader>gp <Plug>GitGutterPreviewHunk
 nmap <leader>gs <Plug>GitGutterStageHunk
 nmap <leader>gu <Plug>GitGutterUndoHunk
+nmap <leader>gn <Plug>GitGutterNextHunk
+nmap <leader>gN <Plug>GitGutterPrevHunk
 nmap <leader>gl :VTerm<CR>git tree<CR>
+nnoremap <leader>gd :Gvdiff 
 
-nnoremap <leader>s :OverCommandLine<CR>
+nnoremap <leader>c :OverCommandLine<CR>
 
-nmap <leader>j :call JsBeautify()<CR>
+"nmap <leader>j :call JsBeautify()<CR>
 
-nnoremap <leader>t :Term<CR>
-nnoremap <localleader>t :VTerm<CR>
+nnoremap <leader>s :VTerm<CR>
+nnoremap <localleader>s :Term<CR>
 
 nnoremap <leader>o :FZF<CR>
 nnoremap <leader><leader>o :FZF ../<CR>
-nnoremap <leader>h :FZF ~<CR>
+nnoremap <leader><leader>h :FZF ~<CR>
+nnoremap <leader>ff :OverCommandLine<CR>Ack 
+nnoremap <leader>fw :OverCommandLine<CR>AckWindow 
 cnoremap FF FZF
-nnoremap <leader>p "0p
-nnoremap <leader>d "0d
-vnoremap <leader>d "0d
+
+nnoremap <leader>tu :UndotreeToggle<CR>
+nnoremap <leader>tt :TagbarToggle<CR>
+nnoremap <leader>tw :AirlineToggleWhitespace<CR>
+nnoremap <leader>ts :set spell!
+nnoremap <leader>tn :NERDTreeToggle<CR>
+nnoremap <leader>tp :set nopaste
+
+nnoremap <F9> :!ctags -R<CR>
+
+nnoremap <leader>p "pp
+nnoremap <leader>d "pd
+vnoremap <leader>d "pd
+nnoremap <leader>y "py
+vnoremap <leader>y "py
 
 "autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
 "autocmd BufEnter *.m  nnoremap <buffer> <leader>c I%<esc>
@@ -239,10 +248,9 @@ nnoremap <F3> :AirlineToggleWhitespace<CR>
 nnoremap <F4> :setlocal spell  spelllang=en_us<CR>
 nnoremap <F5> :set nospell<CR>
 
-nnoremap <F7> :UndotreeToggle<CR>
-nnoremap <silent> <F8> :NERDTreeToggle<CR>
+"nnoremap <silent> <F8> :NERDTreeToggle<CR>
 nnoremap <F9> :!ctags -R<CR>
-nnoremap <F10> :set nopaste
+"nnoremap <F10> :set nopaste
 
 """"""""Semi Colon Keys""""""""
 inoremap ;c <C-c>
@@ -317,7 +325,7 @@ nnoremap <C-n> <C-^>
 set termguicolors 
 "Makes a solarized approximation for vim
 "let g:solarized_termcolors=256
-colorscheme nova
+colorscheme Tomorrow-Night-Eighties
 set background=dark
 augroup filetype_color
 	autocmd!
@@ -328,7 +336,7 @@ augroup filetype_color
 	autocmd FileType markdown color nova
 	autocmd FileType latex color nova
     autocmd FileType html color nova
-    autocmd FileType javascript color nova
+    autocmd FileType javascript color Tomorrow-Night-Eighties
     autocmd FileType css color nova
 augroup END
 
@@ -342,7 +350,7 @@ augroup buffer_color
     autocmd BufEnter *.md colorscheme nova
 	autocmd BufEnter *.tex colorscheme nova
     autocmd BufEnter *.html color nova
-    autocmd BufEnter *.js color nova
+    autocmd BufEnter *.js color Tomorrow-Night-Eighties
     autocmd BufEnter *.css color nova
 augroup END
 
@@ -367,9 +375,11 @@ nnoremap <Space> <Nop>
 "let g:gitgutter_sign_modified = 'm'
 "let g:gitgutter_sign_removed = 'r'
 "let g:gitgutter_sign_modified_removed = 'mr'
+let g:gitgutter_map_keys = 0
 
 "let g:neodark#use_256color = 1
 let g:sneak#s_next = 1
+let g:enable_bold_font = 1
 
 
 let g:processing_no_default_mappings = 1
