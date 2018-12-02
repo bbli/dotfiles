@@ -22,6 +22,8 @@ ln -s ~/dotfiles/.bash_aliases ~/.bash_aliases
 ln -s ~/dotfiles/.gitconfig ~/.gitconfig
 ln -s ~/dotfiles/.shell_prompt.sh ~/.shell_prompt.sh
 ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
+ln -s ~/dotfiles/plug.vim ~/.vim/autoload/plug.vim
+ln -s ~/dotfiles/colors ~/.vim/colors
 
 ## If neovim enabled
 #ln -s ~/dotfiles/init.vim ~/.config/nvim/init.vim
