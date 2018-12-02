@@ -533,6 +533,13 @@ let g:tmuxline_preset = {
 "     \'z'    : '#H'}
 
 "autocmd BufWritePost *.tex Dispatch! latexmk -pdf %
+"function! SourceIfExists(file)
+  "if filereadable(expand(a:file))
+    "exe 'source' a:file
+  "endif
+"endfunction
+" }
+"SourceIfExists(~/.vim_config)
 source ~/.vim_config
 "this only works when calling vimdiff from command line
 "so its useless for comparing different versions with git

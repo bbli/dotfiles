@@ -28,6 +28,8 @@ mkdir ~/.vim/autoload
 ln -s ~/dotfiles/plug.vim ~/.vim/autoload/plug.vim
 ln -s ~/dotfiles/colors ~/.vim/colors
 
+touch ~/.vim_config
+
 ## If neovim enabled
 #ln -s ~/dotfiles/init.vim ~/.config/nvim/init.vim
 
