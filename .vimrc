@@ -57,7 +57,7 @@ Plug 'junegunn/fzf.vim'
 
 "Terminal Interactions
 "Plug 'benmills/vimux'
-Plug 'jpalardy/vim-slime'
+Plug 'jpalardy/vim-slime' "useful for creating specific state in script for profiling
 
 "Git
 "For Gvsplit and co
@@ -123,15 +123,15 @@ if has('nvim')
 	Plug 'vimlab/split-term.vim'
     "Plug 'Shougo/denite.nvim'
 endif
-if $SSH_CONNECTION
-    Plug 'prabirshrestha/async.vim'
-    Plug 'prabirshrestha/asyncomplete.vim'
-    Plug 'prabirshrestha/asyncomplete-buffer.vim'
-    Plug 'prabirshrestha/asyncomplete-file.vim'
-elseif has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'zchee/deoplete-jedi'
-endif
+"if $SSH_CONNECTION
+    "Plug 'prabirshrestha/async.vim'
+    "Plug 'prabirshrestha/asyncomplete.vim'
+    "Plug 'prabirshrestha/asyncomplete-buffer.vim'
+    "Plug 'prabirshrestha/asyncomplete-file.vim'
+"elseif has('nvim')
+    "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    "Plug 'zchee/deoplete-jedi'
+"endif
 call plug#end()
 
 if !has('nvim')
@@ -173,7 +173,7 @@ nmap <leader>gN <Plug>GitGutterPrevHunk
 nmap <leader>gl :VTerm<CR>git tree<CR>
 nnoremap <leader>gd :Gvdiff 
 
-nnoremap <leader>c :OverCommandLine<CR>
+nnoremap <leader><leader>c :OverCommandLine<CR>
 
 "nmap <leader>j :call JsBeautify()<CR>
 
@@ -194,13 +194,16 @@ nnoremap <leader>ts :set spell!
 nnoremap <leader>tn :NERDTreeToggle<CR>
 nnoremap <leader>tp :set nopaste
 
-nnoremap <F9> :!ctags -R<CR>
+nnoremap <F9> :!ctags -R --sort=yes ../*<CR>
 
 nnoremap <leader>p "pp
 nnoremap <leader>d "pd
 vnoremap <leader>d "pd
 nnoremap <leader>y "py
 vnoremap <leader>y "py
+
+nnoremap <C-]> :vs<CR><C-]>
+nnoremap <leader>jt <C-]>
 
 "autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
 "autocmd BufEnter *.m  nnoremap <buffer> <leader>c I%<esc>
@@ -245,11 +248,10 @@ map <M-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 nnoremap <F2> :TagbarToggle<CR>
 nnoremap <F3> :AirlineToggleWhitespace<CR>
 
-nnoremap <F4> :setlocal spell  spelllang=en_us<CR>
-nnoremap <F5> :set nospell<CR>
+"nnoremap <F4> :setlocal spell  spelllang=en_us<CR>
+"nnoremap <F5> :set nospell<CR>
 
 "nnoremap <silent> <F8> :NERDTreeToggle<CR>
-nnoremap <F9> :!ctags -R<CR>
 "nnoremap <F10> :set nopaste
 
 """"""""Semi Colon Keys""""""""
@@ -319,10 +321,18 @@ inoremap ]] <C-c>A
 nnoremap <C-[> <C-t>
 nnoremap <C-j> :vs<CR><C-]>
 nnoremap <C-n> <C-^>
+vmap <c-c><c-c> <Plug>SlimeRegionSend
+nmap <C-c><C-l> V<Plug>SlimeRegionSend
+nmap <C-c><C-c> <Plug>SlimeParagraphSend
+nmap <C-c>v     <Plug>SlimeConfig
 
 """"""""Colors""""""""
 "makes vim colorscheme the same as the terminal
-set termguicolors 
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
 "Makes a solarized approximation for vim
 "let g:solarized_termcolors=256
 colorscheme Tomorrow-Night-Eighties
@@ -440,6 +450,9 @@ let g:fzf_colors =
 let g:vimtex_view_method = 'zathura'
 let g:slime_target = "tmux"
 let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane": ":0.1"}
+let g:slime_paste_file = "$HOME/.slime_paste"
+let g:slime_no_mappings = 1
+let g:slime_python_ipython = 1
 "let g:slime_dont_ask_default = 1
 "let g:instant_markdown_slow=1
 "Converting markdown to pdf
@@ -483,7 +496,7 @@ nmap <leader>5 <Plug>AirlineSelectTab5
 nmap <leader>6 <Plug>AirlineSelectTab6
 nmap <leader>7 <Plug>AirlineSelectTab7
 
-let g:ackprg = 'ag --vimgrep'
+let g:ackprg = 'ag --vimgrep --ignore=tags'
 
 let g:mkdp_path_to_chrome = "firefox"
 let g:mkdp_auto_start = 0
