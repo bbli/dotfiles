@@ -24,6 +24,7 @@ ln -s ~/dotfiles/.shell_prompt.sh ~/.shell_prompt.sh
 ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
 
 mkdir ~/.vim
+mkdir ~/.vim/autoload
 ln -s ~/dotfiles/plug.vim ~/.vim/autoload/plug.vim
 ln -s ~/dotfiles/colors ~/.vim/colors
 
