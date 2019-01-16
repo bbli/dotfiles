@@ -100,7 +100,8 @@ Plug 'jiangmiao/auto-pairs'
 "
 "May not be needed with vs+<C-]> combo
 "Still may be good for looking at a codebase for the first time
-Plug 'majutsushi/tagbar'
+"Maybe
+"Plug 'majutsushi/tagbar'
 
 "Front End Development
 "Plug 'pangloss/vim-javascript'
@@ -115,6 +116,7 @@ Plug 'Valloric/MatchTagAlways'
 "
 "Colors
 "Plug 'drewtempelmeyer/palenight.vim'
+"Plug 'arcticicestudio/nord-vim'
 
 ""Misc
 Plug 'wellle/tmux-complete.vim'
@@ -194,7 +196,7 @@ nnoremap <leader>ts :set spell!
 nnoremap <leader>tn :NERDTreeToggle<CR>
 nnoremap <leader>tp :set nopaste
 
-nnoremap <F9> :!ctags -R --sort=yes ../*<CR>
+nnoremap <F9> :!ctags -R --sort=yes .<CR>
 
 nnoremap <leader>p "pp
 nnoremap <leader>d "pd
@@ -297,7 +299,7 @@ cnoremap cn cnext
 cnoremap cN cprev
 cnoremap SB set scrollbind
 cnoremap NSB set noscrollbind
-cnoremap tc tabc
+"cnoremap tc tabc
 cnoremap vsb vertical sb
 cnoremap tj tjump
 
