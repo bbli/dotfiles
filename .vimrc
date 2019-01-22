@@ -54,6 +54,14 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'mbbill/undotree'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2'
+Plug 'ncm2/ncm2-bufword'
+Plug 'wellle/tmux-complete.vim'
+Plug 'ncm2/ncm2-path'
+Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'ncm2' }
+Plug 'ncm2/ncm2-jedi'
 
 "Terminal Interactions
 "Plug 'benmills/vimux'
@@ -64,8 +72,6 @@ Plug 'jpalardy/vim-slime' "useful for creating specific state in script for prof
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
 Plug 'airblade/vim-gitgutter'
-"Plug 'Shougo/denite.nvim'
-"Plug 'chemzqm/denite-git'
 "Plug 'gregsexton/gitv', {'on': ['Gitv']}
 "Plug 'lambdalisue/gina.vim'
 "Plug 'cohama/agit.vim'
@@ -84,7 +90,6 @@ Plug 'mmai/vim-markdown-wiki'
 "Plug 'jtratner/vim-flavored-markdown'
 "Plug 'rhysd/vim-gfm-syntax'
 "Undo
-Plug 'mbbill/undotree'
 
 "Text Objects 
 "Plug 'coderifous/textobj-word-column.vim'
@@ -119,7 +124,6 @@ Plug 'Valloric/MatchTagAlways'
 "Plug 'arcticicestudio/nord-vim'
 
 ""Misc
-Plug 'wellle/tmux-complete.vim'
 if has('nvim')
 	"Plug 'simnalamburt/vim-mundo'
 	Plug 'vimlab/split-term.vim'
@@ -228,6 +232,8 @@ nmap <localleader>e <Plug>(processing-run)
 "nnoremap <localleader>t <C-W>T
 vnoremap <localleader>y "+y
 nnoremap <localleader>y "+y
+vnoremap <localleader>d "+d
+nnoremap <localleader>d "+d
 """"""""Meta Keys""""""""
 "To move lines intuitively
 nnoremap <M-j> :m .+1<CR>==
@@ -316,6 +322,11 @@ cnoremap tj tjump
 " and I only mapped it because I was fixated on insert normal mode
 inoremap ]] <C-c>A
 
+"inoremap " ""<left>
+"inoremap ' ''<left>
+"inoremap ( ()<left>
+"inoremap [ []<left>
+"inoremap { {}<left>
 """"""""Control Maps""""""""
 "This may be dangerous as vim has a lot of built in control key maps
 "Only do to overide
@@ -383,6 +394,9 @@ nnoremap <Space> <Nop>
 
 
 """"""""Plugin related variables""""""""
+autocmd BufEnter * call ncm2#enable_for_buffer()
+"Actually independent of ncm2 plugin. Just code for QOL when using autocomplete
+set completeopt=noinsert,menuone,noselect
 "let g:gitgutter_sign_added = 'a'
 "let g:gitgutter_sign_modified = 'm'
 "let g:gitgutter_sign_removed = 'r'

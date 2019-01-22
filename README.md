@@ -6,3 +6,9 @@ In an effort to become a hotkey spammer like Emacs users/become better at vim, I
 * **Meta**: Repeated actions(moving lines, macros)
 * **Leader(Space)**: Files, Text Manipulation and Vim External Interactions(FZF,system clipboard)
 * **Local Leader(-)**: Non-Vim External Interactions(Vimux,markdown preview)
+
+## Things to do on Server
+* Install conda environment
+* Install neovim appimage
+* copy ipython kernel specs
+
