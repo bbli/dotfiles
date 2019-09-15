@@ -14,6 +14,9 @@ set t_Co=256
 set foldenable
 set foldlevel=0
 set foldmethod=manual
+"set list lcs =tab:\|\
+"set listchars=tab:\|\
+"set list
 set ruler
 set splitright
 set number ""relativenumber
@@ -58,14 +61,17 @@ Plug 'mbbill/undotree'
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-bufword'
-Plug 'wellle/tmux-complete.vim'
+"Plug 'wellle/tmux-complete.vim'
 Plug 'ncm2/ncm2-path'
 Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'ncm2' }
-Plug 'ncm2/ncm2-jedi'
+"Plug 'ncm2/ncm2-jedi'
 
 "Terminal Interactions
+" For asynchronous make builds
+"Plug 'tpope/vim-dispatch'
 "Plug 'benmills/vimux'
-Plug 'jpalardy/vim-slime' "useful for creating specific state in script for profiling
+"Plug 'jpalardy/vim-slime' "useful for creating specific state in script for profiling
+Plug 'christoomey/vim-tmux-runner'
 
 "Git
 "For Gvsplit and co
@@ -100,13 +106,16 @@ Plug 'wellle/targets.vim'
 "Syntax
 Plug 'w0rp/ale'
 Plug 'jiangmiao/auto-pairs'
+"Plug 'nathanaelkane/vim-indent-guides'
+Plug 'tommcdo/vim-lion'
+Plug 'Yggdroot/indentLine'
 "Language pack for a lot of things
 "Plug 'sheerun/vim-polyglot'
 "
 "May not be needed with vs+<C-]> combo
 "Still may be good for looking at a codebase for the first time
 "Maybe
-"Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 
 "Front End Development
 "Plug 'pangloss/vim-javascript'
@@ -166,6 +175,8 @@ let maplocalleader="-"
 """"""""Leader Keys""""""""
 
 nnoremap <leader>zz :nohlsearch<CR>
+" Eventually disable nerdcommenter defaults so I can use `cm` instead
+nnoremap <leader>m A\<C-c>
 "nnoremap <leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=0<CR>
 "nnoremap <leader>o :set foldlevel=5<CR>
 "nnoremap <leader><leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=1<CR>
@@ -183,12 +194,13 @@ nnoremap <leader><leader>c :OverCommandLine<CR>
 
 "nmap <leader>j :call JsBeautify()<CR>
 
-nnoremap <leader>s :VTerm<CR>
-nnoremap <localleader>s :Term<CR>
+nnoremap <leader>os :VTerm<CR>
+"nnoremap <localleader>s :Term<CR>
 
-nnoremap <leader>o :FZF<CR>
-nnoremap <leader><leader>o :FZF ../<CR>
-nnoremap <leader><leader>h :FZF ~<CR>
+nnoremap <leader>of :FZF<CR>
+nnoremap <leader><leader>of :FZF ../<CR>
+nnoremap <leader><leader>oh :FZF ~<CR>
+
 nnoremap <leader>ff :OverCommandLine<CR>Ack 
 nnoremap <leader>fw :OverCommandLine<CR>AckWindow 
 cnoremap FF FZF
@@ -196,9 +208,10 @@ cnoremap FF FZF
 nnoremap <leader>tu :UndotreeToggle<CR>
 nnoremap <leader>tt :TagbarToggle<CR>
 nnoremap <leader>tw :AirlineToggleWhitespace<CR>
-nnoremap <leader>ts :set spell!
+nnoremap <leader>ts :set spell!<CR>
 nnoremap <leader>tn :NERDTreeToggle<CR>
-nnoremap <leader>tp :set nopaste
+nnoremap <leader>tp :set nopaste<CR>
+nnoremap <leader>ti :IndentGuidesToggle<CR>
 
 nnoremap <F9> :!ctags -R --sort=yes .<CR>
 
@@ -288,11 +301,12 @@ nnoremap k gk
 nnoremap j gj
 nnoremap gk k
 nnoremap gj j
-nnoremap EE @
+"nnoremap EE @
 nnoremap C c$
 nnoremap D d$
 nnoremap Y y$
 nnoremap gb gi
+nnoremap E $
 "nnoremap w W
 "nnoremap W w
 "nnoremap b B
@@ -300,6 +314,7 @@ nnoremap gb gi
 
 """"""""Command Mode maps""""""""
 cnoremap sE %s
+nnoremap <leader>ss :OverCommandLine<CR>%s/
 "For grep
 cnoremap cn cnext
 cnoremap cN cprev
@@ -308,6 +323,7 @@ cnoremap NSB set noscrollbind
 "cnoremap tc tabc
 cnoremap vsb vertical sb
 cnoremap tj tjump
+cnoremap think :e ~/Dropbox/Notes/MyThoughts/Ways-of-Thinking/Comp_Sci_Thinking/Design-Principles.md
 
 
 """"""""Operator Mode maps""""""""
@@ -348,19 +364,23 @@ if exists('+termguicolors')
 endif
 "Makes a solarized approximation for vim
 "let g:solarized_termcolors=256
-colorscheme Tomorrow-Night-Eighties
+colorscheme gruvbox
 set background=dark
 augroup filetype_color
 	autocmd!
 	autocmd FileType text color nova
 	autocmd FileType vim color seoul256
 	autocmd FileType matlab color seoul256
-	autocmd FileType python color Tomorrow-Night-Eighties
+	autocmd FileType python color gruvbox
 	autocmd FileType markdown color nova
 	autocmd FileType latex color nova
     autocmd FileType html color nova
-    autocmd FileType javascript color Tomorrow-Night-Eighties
+    autocmd FileType javascript color gruvbox
     autocmd FileType css color nova
+    autocmd FileType scheme color gruvbox
+    autocmd FileType c color gruvbox
+    autocmd FileType cpp color gruvbox
+    autocmd FileType clojure color gruvbox
 augroup END
 
 augroup buffer_color
@@ -368,13 +388,18 @@ augroup buffer_color
 	autocmd BufEnter vim colorscheme seoul256
 	"autocmd BufEnter *.txt colorscheme seoul256
 	autocmd BufEnter *.txt colorscheme nova
-	autocmd BufEnter *.py colorscheme Tomorrow-Night-Eighties
+	autocmd BufEnter *.py colorscheme gruvbox
 	autocmd BufEnter *.m colorscheme seoul256
     autocmd BufEnter *.md colorscheme nova
 	autocmd BufEnter *.tex colorscheme nova
     autocmd BufEnter *.html color nova
-    autocmd BufEnter *.js color Tomorrow-Night-Eighties
+    autocmd BufEnter *.js color gruvbox
     autocmd BufEnter *.css color nova
+    autocmd BufEnter *.scm color gruvbox
+    autocmd BufEnter *.c color gruvbox
+    autocmd BufEnter *.cpp color gruvbox
+    autocmd BufEnter *.h color gruvbox
+    autocmd BufEnter *.clj color gruvbox
 augroup END
 
 """"""""Other Autocommands""""""""
@@ -397,6 +422,10 @@ nnoremap <Space> <Nop>
 autocmd BufEnter * call ncm2#enable_for_buffer()
 "Actually independent of ncm2 plugin. Just code for QOL when using autocomplete
 set completeopt=noinsert,menuone,noselect
+
+let g:indentLine_setColors = 0
+
+"let g:indent_guides_enable_on_vim_startup = 1
 "let g:gitgutter_sign_added = 'a'
 "let g:gitgutter_sign_modified = 'm'
 "let g:gitgutter_sign_removed = 'r'
@@ -487,6 +516,7 @@ let g:mkdp_refresh_slow = 1
 "let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 let g:airline_theme='distinguished'
+let g:promptline_theme = 'airline'
 "Makes it so actual buffer number shows up in the tabline. Not nesscary since idx mode works now
 let g:airline#extensions#tabline#buffer_nr_show = 0
 let g:airline#extensions#tabline#enabled = 1
@@ -529,7 +559,14 @@ let g:undotree_DiffCommand = "diff"
 "nnoremap <C-l> <C-W><C-l>
 "nnoremap <C-h> <C-W><C-h>
 
-"
+let g:promptline_preset = {
+        \'a' : [ promptline#slices#conda_env() ],
+        \'b' : [ promptline#slices#cwd({'dir_limit':2}) ],
+        \'c' : [ promptline#slices#vcs_branch() ],
+        \'y' : [ promptline#slices#git_status() ]}
+"\'a' : [ promptline#slices#conda_env() ],
+"\'b' : [ promptline#slices#user() ],
+ "\'warn' : [ promptline#slices#last_exit_code() ]}
 "Use this one for custom thing on left
 "     \'b'    : '#(df -h| head -n 4 | tail -n 1)',
 let g:tmuxline_preset = {

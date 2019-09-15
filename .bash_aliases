@@ -8,7 +8,7 @@ alias ls='ls -F --color'
 alias rm='rm -i'
 
 alias df='df -h'
-alias du='du -h'
+#alias du='du -h'
 
 alias grep='grep --color'
 alias egrep='egrep --color=auto'
@@ -22,6 +22,8 @@ if [ -f $HOME/.shell_prompt.sh ]; then
 ## Directory shortcuts
 alias home='cd ~'
 alias code='cd ~/Dropbox/Code'
+alias dot='cd ~/Dropbox/Code/dotfiles'
+alias snip='cd ~/.vim/plugged/vim-snippets/snippets'
 alias notes='cd ~/Dropbox/Notes'
 alias swap='cd /home/benson/.local/share/nvim/swap'
 alias nvimp="cd /home/benson/.nvim/plugged/repos/github.com/"
