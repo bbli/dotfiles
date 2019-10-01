@@ -344,13 +344,13 @@ inoremap ]] <C-c>A
 "This may be dangerous as vim has a lot of built in control key maps
 "Only do to overide
 "nnoremap <C-]> :vs<CR><C-]>
-nnoremap <C-[> <C-t>
-nnoremap <C-j> :vs<CR><C-]>
-nnoremap <C-n> <C-^>
-vmap <c-c><c-c> <Plug>SlimeRegionSend
-nmap <C-c><C-l> V<Plug>SlimeRegionSend
-nmap <C-c><C-c> <Plug>SlimeParagraphSend
-nmap <C-c>v     <Plug>SlimeConfig
+"nnoremap <C-[> <C-t>
+"nnoremap <C-j> :vs<CR><C-]>
+"nnoremap <C-n> <C-^>
+"vmap <c-c><c-c> <Plug>SlimeRegionSend
+"nmap <C-c><C-l> V<Plug>SlimeRegionSend
+"nmap <C-c><C-c> <Plug>SlimeParagraphSend
+"nmap <C-c>v     <Plug>SlimeConfig
 
 """"""""Colors""""""""
 "makes vim colorscheme the same as the terminal
@@ -359,45 +359,64 @@ if exists('+termguicolors')
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
+
+"Credit joshdick
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+
+
 "Makes a solarized approximation for vim
 "let g:solarized_termcolors=256
 colorscheme gruvbox
 set background=dark
-augroup filetype_color
-	autocmd!
-	autocmd FileType text color nova
-	autocmd FileType vim color seoul256
-	autocmd FileType matlab color seoul256
-	autocmd FileType python color gruvbox
-	autocmd FileType markdown color nova
-	autocmd FileType latex color nova
-    autocmd FileType html color nova
-    autocmd FileType javascript color gruvbox
-    autocmd FileType css color nova
-    autocmd FileType scheme color gruvbox
-    autocmd FileType c color gruvbox
-    autocmd FileType cpp color gruvbox
-    autocmd FileType clojure color gruvbox
-augroup END
+"augroup filetype_color
+	"autocmd!
+	"autocmd FileType text color nova
+	"autocmd FileType vim color seoul256
+	"autocmd FileType matlab color seoul256
+	"autocmd FileType python color gruvbox
+	"autocmd FileType markdown color nova
+	"autocmd FileType latex color nova
+    "autocmd FileType html color nova
+    "autocmd FileType javascript color gruvbox
+    "autocmd FileType css color nova
+    "autocmd FileType scheme color gruvbox
+    "autocmd FileType c color gruvbox
+    "autocmd FileType cpp color gruvbox
+    "autocmd FileType clojure color gruvbox
+"augroup END
 
-augroup buffer_color
-	autocmd!
-	autocmd BufEnter vim colorscheme seoul256
-	"autocmd BufEnter *.txt colorscheme seoul256
-	autocmd BufEnter *.txt colorscheme nova
-	autocmd BufEnter *.py colorscheme gruvbox
-	autocmd BufEnter *.m colorscheme seoul256
-    autocmd BufEnter *.md colorscheme nova
-	autocmd BufEnter *.tex colorscheme nova
-    autocmd BufEnter *.html color nova
-    autocmd BufEnter *.js color gruvbox
-    autocmd BufEnter *.css color nova
-    autocmd BufEnter *.scm color gruvbox
-    autocmd BufEnter *.c color gruvbox
-    autocmd BufEnter *.cpp color gruvbox
-    autocmd BufEnter *.h color gruvbox
-    autocmd BufEnter *.clj color gruvbox
-augroup END
+"augroup buffer_color
+	"autocmd!
+	"autocmd BufEnter vim colorscheme seoul256
+	""autocmd BufEnter *.txt colorscheme seoul256
+	"autocmd BufEnter *.txt colorscheme nova
+	"autocmd BufEnter *.py colorscheme gruvbox
+	"autocmd BufEnter *.m colorscheme seoul256
+    "autocmd BufEnter *.md colorscheme nova
+	"autocmd BufEnter *.tex colorscheme nova
+    "autocmd BufEnter *.html color nova
+    "autocmd BufEnter *.js color gruvbox
+    "autocmd BufEnter *.css color nova
+    "autocmd BufEnter *.scm color gruvbox
+    "autocmd BufEnter *.c color gruvbox
+    "autocmd BufEnter *.cpp color gruvbox
+    "autocmd BufEnter *.h color gruvbox
+    "autocmd BufEnter *.clj color gruvbox
+"augroup END
 
 """"""""Other Autocommands""""""""
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown "Make vim recognize .md as markdown file
@@ -420,6 +439,8 @@ autocmd BufEnter * call ncm2#enable_for_buffer()
 "Actually independent of ncm2 plugin. Just code for QOL when using autocomplete
 set completeopt=noinsert,menuone,noselect
 
+let g:toggle_list_no_mappings = 1
+
 let g:indentLine_setColors = 0
 
 "let g:indent_guides_enable_on_vim_startup = 1
@@ -429,22 +450,18 @@ let g:indentLine_setColors = 0
 "let g:gitgutter_sign_modified_removed = 'mr'
 let g:gitgutter_map_keys = 0
 
-"let g:neodark#use_256color = 1
-let g:sneak#s_next = 1
 let g:enable_bold_font = 1
 
 
 let g:processing_no_default_mappings = 1
 
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-let g:mta_filetypes = {
-    \ 'html' : 1,
-    \ 'xhtml' : 1,
-    \ 'xml' : 1,
-    \ 'jinja' : 1,
-    \ 'vue' : 1,
-    \}
+"let g:mta_filetypes = {
+    "\ 'html' : 1,
+    "\ 'xhtml' : 1,
+    "\ 'xml' : 1,
+    "\ 'jinja' : 1,
+    "\ 'vue' : 1,
+    "\}
 
 " Put this in vimrc or a plugin file of your own.
 " After this is configured, :ALEFix will try and fix your JS code with ESLint.
@@ -461,10 +478,6 @@ let g:ale_completion_enabled = 1
 
 
 
-let g:used_javascript_libs = 'd3,vue'
-"let g:cm_matcher={'module': 'cm_matchers.abbrev_matcher', 'case':'smartcase'}
-"let g:asyncomplete_auto_popup = 1
-"let g:spacegray_low_contrast = 1
 
 let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark = 'soft'
@@ -490,11 +503,11 @@ let g:fzf_colors =
 	\ 'header':  ['fg', 'Comment'] }
 
 let g:vimtex_view_method = 'zathura'
-let g:slime_target = "tmux"
-let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane": ":0.1"}
-let g:slime_paste_file = "$HOME/.slime_paste"
-let g:slime_no_mappings = 1
-let g:slime_python_ipython = 1
+"let g:slime_target = "tmux"
+"let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane": ":0.1"}
+"let g:slime_paste_file = "$HOME/.slime_paste"
+"let g:slime_no_mappings = 1
+"let g:slime_python_ipython = 1
 "let g:slime_dont_ask_default = 1
 "let g:instant_markdown_slow=1
 "Converting markdown to pdf
@@ -505,10 +518,10 @@ let g:UltiSnipsExpandTrigger = ";;"
 let g:UltiSnipsJumpForwardTrigger = "<leader><leader>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-j>"
 
-let g:mkdp_path_to_chrome = "firefox"
-let g:mkdp_auto_start = 0
-let g:mkdp_auto_close = 0
-let g:mkdp_refresh_slow = 1
+"let g:mkdp_path_to_chrome = "firefox"
+"let g:mkdp_auto_start = 0
+"let g:mkdp_auto_close = 0
+"let g:mkdp_refresh_slow = 1
 
 "let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
@@ -530,6 +543,7 @@ let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tagbar#enabled=0
 let g:airline_skip_empty_sections = 1
 let g:airline#extensions#vimagit#enabled = 1
+let g:airline#extensions#whitespace#enabled = 0
 "let g:airline_symbols.maxlinenr
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
@@ -540,11 +554,6 @@ nmap <leader>6 <Plug>AirlineSelectTab6
 nmap <leader>7 <Plug>AirlineSelectTab7
 
 let g:ackprg = 'ag --vimgrep --ignore=tags'
-
-let g:mkdp_path_to_chrome = "firefox"
-let g:mkdp_auto_start = 0
-let g:mkdp_auto_close = 0
-let g:mkdp_refresh_slow = 1
 
 let g:undotree_WindowLayout = 2
 let g:undotree_SetFocusWhenToggle = 1
@@ -582,13 +591,6 @@ let g:tmuxline_preset = {
 "     \'y'    : ['%R', '%a', '%Y'],
 "     \'z'    : '#H'}
 
-"autocmd BufWritePost *.tex Dispatch! latexmk -pdf %
-"function! SourceIfExists(file)
-  "if filereadable(expand(a:file))
-    "exe 'source' a:file
-  "endif
-"endfunction
-" }
 "SourceIfExists(~/.vim_config)
 source ~/.vim_config
 "this only works when calling vimdiff from command line
