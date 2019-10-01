@@ -252,19 +252,11 @@ vnoremap <localleader>d "+d
 nnoremap <localleader>d "+d
 """"""""Meta Keys""""""""
 "To move lines intuitively
-nnoremap <M-j> :m .+1<CR>==
-nnoremap <M-k> :m .-2<CR>==
-vnoremap <M-j> :m '>+1<CR>gv=gv
-vnoremap <M-k> :m '<-2<CR>gv=gv
-vnoremap <M-y> "0
-"vnoremap <M-u> "+
-nnoremap <M-y> "0
-"nnoremap <M-u> "+
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
 
-nnoremap <M-m> qh
-nnoremap <M-h> @h 
-"nnoremap <C-n> @m 
-"nnoremap <M-n> dd
 
 map <M-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
@@ -317,7 +309,9 @@ nnoremap E $
 
 """"""""Command Mode maps""""""""
 cnoremap sE %s
+nnoremap <leader>sr :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
 nnoremap <leader>ss :OverCommandLine<CR>%s/
+nnoremap / /\<
 "For grep
 cnoremap cn cnext
 cnoremap cN cprev
@@ -326,7 +320,7 @@ cnoremap NSB set noscrollbind
 "cnoremap tc tabc
 cnoremap vsb vertical sb
 cnoremap tj tjump
-cnoremap think :e ~/Dropbox/Notes/MyThoughts/Ways-of-Thinking/Comp_Sci_Thinking/Design-Principles.md
+cnoremap think e ~/Dropbox/Notes/MyThoughts/Ways-of-Thinking/Comp_Sci_Thinking/Design-Principles.md
 
 
 """"""""Operator Mode maps""""""""
