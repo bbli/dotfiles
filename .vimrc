@@ -228,6 +228,14 @@ nnoremap <leader>jt <C-]>
 nnoremap <leader>jb <C-t>
 nnoremap <leader>js :vs<CR><C-]>
 nnoremap <leader>jc g;
+
+nnoremap <leader>dn ]c
+nnoremap <leader>dN [c
+nnoremap <leader>dl :.diffput<CR>
+nnoremap <leader>dp dp
+
+nnoremap <leader>mr qh
+nnoremap <leader>mm @h
 "autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
 "autocmd BufEnter *.m  nnoremap <buffer> <leader>c I%<esc>
 """"""""Local Leader Keys""""""""
