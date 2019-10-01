@@ -3,6 +3,7 @@
 ## This part installs the nesscary software
 apt update 
 apt --assume-yes install vim
+apt --assume-yes install neovim
 # For clipboard support. Not nesscary on server
 #apt --assume-yes install vim-gtk
 apt --assume-yes install git
@@ -26,10 +27,14 @@ ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
 mkdir ~/.vim
 mkdir ~/.vim/autoload
 ln -s ~/dotfiles/plug.vim ~/.vim/autoload/plug.vim
+## TODO: make directory site and autoload
+mkdir ~/.local/share/nvim
+ln -s ~/dotfiles/plug.vim ~/.local/share/nvim/site/autoload/plug.vim
 ln -s ~/dotfiles/colors ~/.vim/colors
 
 touch ~/.vim_config
 
+## TODO: make directoty nvim
 ## If neovim enabled
-#ln -s ~/dotfiles/init.vim ~/.config/nvim/init.vim
+ln -s ~/dotfiles/init.vim ~/.config/nvim/init.vim
 

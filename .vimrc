@@ -53,6 +53,7 @@ Plug 'osyo-manga/vim-over'
 "Files
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
+Plug 'milkypostman/vim-togglelist'
 "Plug 'tpope/vim-commentary'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -138,15 +139,15 @@ if has('nvim')
 	Plug 'vimlab/split-term.vim'
     "Plug 'Shougo/denite.nvim'
 endif
-"if $SSH_CONNECTION
+if $SSH_CONNECTION
     "Plug 'prabirshrestha/async.vim'
     "Plug 'prabirshrestha/asyncomplete.vim'
     "Plug 'prabirshrestha/asyncomplete-buffer.vim'
     "Plug 'prabirshrestha/asyncomplete-file.vim'
 "elseif has('nvim')
     "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    "Plug 'zchee/deoplete-jedi'
-"endif
+    "Plug 'zchee/deoplete-jedi
+endif
 call plug#end()
 
 if !has('nvim')
@@ -197,8 +198,8 @@ nnoremap <leader><leader>c :OverCommandLine<CR>
 nnoremap <leader>os :VTerm<CR>
 "nnoremap <localleader>s :Term<CR>
 
-nnoremap <leader>of :FZF<CR>
-nnoremap <leader><leader>of :FZF ../<CR>
+nnoremap <leader>oo :FZF<CR>
+nnoremap <leader>ob :FZF ../<CR>
 nnoremap <leader><leader>oh :FZF ~<CR>
 
 nnoremap <leader>ff :OverCommandLine<CR>Ack 
@@ -212,6 +213,8 @@ nnoremap <leader>ts :set spell!<CR>
 nnoremap <leader>tn :NERDTreeToggle<CR>
 nnoremap <leader>tp :set nopaste<CR>
 nnoremap <leader>ti :IndentGuidesToggle<CR>
+nmap <leader>tq :call ToggleQuickfixList()<CR>
+nmap <leader>tl :call ToggleLocationList()<CR>
 
 nnoremap <F9> :!ctags -R --sort=yes .<CR>
 

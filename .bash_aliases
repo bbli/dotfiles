@@ -51,7 +51,7 @@ alias py='python3.6'
 alias ptime='python -m cProfile -s cumulative'
 
 ## Tmux
-alias attach='tmux -2 a -t'
+alias attach='tmux a -t'
 alias switch='tmux switch-client -t'
 alias tkill='tmux kill-ses -t'
 alias nv='nvim'
