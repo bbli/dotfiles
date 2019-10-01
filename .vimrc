@@ -224,9 +224,10 @@ vnoremap <leader>d "pd
 nnoremap <leader>y "py
 vnoremap <leader>y "py
 
-nnoremap <C-]> :vs<CR><C-]>
 nnoremap <leader>jt <C-]>
-
+nnoremap <leader>jb <C-t>
+nnoremap <leader>js :vs<CR><C-]>
+nnoremap <leader>jc g;
 "autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
 "autocmd BufEnter *.m  nnoremap <buffer> <leader>c I%<esc>
 """"""""Local Leader Keys""""""""
