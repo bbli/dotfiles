@@ -82,6 +82,7 @@ Plug 'airblade/vim-gitgutter'
 "Plug 'gregsexton/gitv', {'on': ['Gitv']}
 "Plug 'lambdalisue/gina.vim'
 "Plug 'cohama/agit.vim'
+Plug 'AndrewRadev/linediff.vim'
 
 "Snippets
 Plug 'SirVer/ultisnips'
