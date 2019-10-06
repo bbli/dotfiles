@@ -31,7 +31,7 @@ mkdir ~/.vim
 mkdir ~/.vim/autoload
 ln -s ~/dotfiles/plug.vim ~/.vim/autoload/plug.vim
 ## TODO: make directory site and autoload
-mkdir ~/.local/share/nvim
+mkdir ~/.local/share/nvim/site/autoload
 ln -s ~/dotfiles/plug.vim ~/.local/share/nvim/site/autoload/plug.vim
 ln -s ~/dotfiles/colors ~/.vim/colors
 
@@ -39,5 +39,6 @@ touch ~/.vim_config
 
 ## TODO: make directoty nvim
 ## If neovim enabled
+mkdir ~/.config/nvim
 ln -s ~/dotfiles/init.vim ~/.config/nvim/init.vim
 
