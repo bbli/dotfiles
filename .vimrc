@@ -322,6 +322,7 @@ cnoremap sE %s
 nnoremap <leader>sr :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
 nnoremap <leader>ss :OverCommandLine<CR>%s/
 nnoremap / /\<
+nnoremap <leader>/ /
 "For grep
 cnoremap cn cnext
 cnoremap cN cprev
@@ -362,6 +363,8 @@ inoremap ]] <C-c>A
 "nmap <C-c><C-c> <Plug>SlimeParagraphSend
 "nmap <C-c>v     <Plug>SlimeConfig
 
+nnoremap <C-m> qm
+nnoremap <C-h> @m
 """"""""Colors""""""""
 "makes vim colorscheme the same as the terminal
 if exists('+termguicolors')
