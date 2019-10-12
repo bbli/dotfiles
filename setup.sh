@@ -11,6 +11,7 @@ apt --assume-yes install ctags
 apt --assume-yes install silversearcher-ag
 apt --assume-yes install tmux
 apt --assume-yes install ncdu
+apt --assume-yes install tree
 #apt --assume-yes upgrade python3 nvm, neovim is prebuilt with python3.6
 #apt --assume-yes install python-pip # for neovim
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -27,11 +28,11 @@ ln -s ~/dotfiles/.gitconfig ~/.gitconfig
 ln -s ~/dotfiles/.shell_prompt.sh ~/.shell_prompt.sh
 ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
 
-mkdir ~/.vim
-mkdir ~/.vim/autoload
+#mkdir ~/.vim
+mkdir -p ~/.vim/autoload
 ln -s ~/dotfiles/plug.vim ~/.vim/autoload/plug.vim
 ## TODO: make directory site and autoload
-mkdir ~/.local/share/nvim/site/autoload
+mkdir -p ~/.local/share/nvim/site/autoload
 ln -s ~/dotfiles/plug.vim ~/.local/share/nvim/site/autoload/plug.vim
 ln -s ~/dotfiles/colors ~/.vim/colors
 
@@ -39,6 +40,6 @@ touch ~/.vim_config
 
 ## TODO: make directoty nvim
 ## If neovim enabled
-mkdir ~/.config/nvim
+mkdir -p ~/.config/nvim
 ln -s ~/dotfiles/init.vim ~/.config/nvim/init.vim
 
