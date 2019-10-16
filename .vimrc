@@ -176,6 +176,8 @@ let maplocalleader="-"
 
 """"""""Leader Keys""""""""
 
+nnoremap <leader>m qm
+nnoremap <leader>h @m
 nnoremap <leader>zz :nohlsearch<CR>
 " Eventually disable nerdcommenter defaults so I can use `cm` instead
 nnoremap <leader>m A\<C-c>
@@ -363,8 +365,6 @@ inoremap ]] <C-c>A
 "nmap <C-c><C-c> <Plug>SlimeParagraphSend
 "nmap <C-c>v     <Plug>SlimeConfig
 
-nnoremap <C-m> qm
-nnoremap <C-h> @m
 """"""""Colors""""""""
 "makes vim colorscheme the same as the terminal
 if exists('+termguicolors')
