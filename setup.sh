@@ -30,6 +30,7 @@ ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
 
 #mkdir ~/.vim
 mkdir -p ~/.vim/autoload
+mkdir -p ~/.vim/plugged
 ln -s ~/dotfiles/plug.vim ~/.vim/autoload/plug.vim
 ## TODO: make directory site and autoload
 mkdir -p ~/.local/share/nvim/site/autoload
