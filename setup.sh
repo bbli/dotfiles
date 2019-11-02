@@ -10,6 +10,7 @@ apt --assume-yes install git
 apt --assume-yes install ctags
 apt --assume-yes install silversearcher-ag
 apt --assume-yes install tmux
+apt --assume-yes install tig
 apt --assume-yes install ncdu
 apt --assume-yes install tree
 #apt --assume-yes upgrade python3 nvm, neovim is prebuilt with python3.6
