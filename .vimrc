@@ -327,8 +327,8 @@ nnoremap E $
 cnoremap sE %s
 nnoremap <leader>sr :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
 nnoremap <leader>ss :OverCommandLine<CR>%s/
-nnoremap / /\<
-nnoremap <leader>/ /
+nnoremap / :OverCommandLine/\<
+nnoremap <leader>/ :OverCommandLine/
 "For grep
 cnoremap cn cnext
 cnoremap cN cprev
