@@ -190,11 +190,11 @@ nnoremap <leader>m A\<C-c>
 "nnoremap <leader><leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=1<CR>
 
 nnoremap <leader>gm :Magit<CR>
-nmap <leader>gp <Plug>GitGutterPreviewHunk
-nmap <leader>gs <Plug>GitGutterStageHunk
-nmap <leader>gu <Plug>GitGutterUndoHunk
-nmap <leader>gn <Plug>GitGutterNextHunk
-nmap <leader>gN <Plug>GitGutterPrevHunk
+nmap <leader>gp <Plug>(GitGutterPreviewHunk)
+nmap <leader>gs <Plug>(GitGutterStageHunk)
+nmap <leader>gu <Plug>(GitGutterUndoHunk)
+nmap <leader>gn <Plug>(GitGutterNextHunk)
+nmap <leader>gN <Plug>(GitGutterPrevHunk)
 nmap <leader>gl :VTerm<CR>git tree<CR>
 nnoremap <leader>gd :Gvdiff 
 
