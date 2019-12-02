@@ -207,10 +207,12 @@ nnoremap <leader>os :VTerm<CR>
 
 nnoremap <leader>oo :FZF<CR>
 nnoremap <leader>ob :FZF ../<CR>
+nnoremap <leader>oh :History<CR>
 nnoremap <leader><leader>oh :FZF ~<CR>
 
 nnoremap <leader>ff :OverCommandLine<CR>Ack 
 nnoremap <leader>fw :OverCommandLine<CR>AckWindow 
+
 cnoremap FF FZF
 
 nnoremap <leader>tu :UndotreeToggle<CR>
