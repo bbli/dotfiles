@@ -12,3 +12,5 @@ In an effort to become a hotkey spammer like Emacs users/become better at vim, I
 * Install neovim appimage
 * copy ipython kernel specs
 
+* **If git version is too old -> just rsync over my plugin repo directory**
+
