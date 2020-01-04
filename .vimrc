@@ -58,21 +58,26 @@ Plug 'osyo-manga/vim-over'
 "Files
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
+ Plug 'tpope/vim-commentary'
 Plug 'milkypostman/vim-togglelist'
-"Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-commentary'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mbbill/undotree'
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2'
-Plug 'ncm2/ncm2-bufword'
-"Plug 'wellle/tmux-complete.vim'
-Plug 'ncm2/ncm2-path'
-Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'ncm2' }
-"Plug 'ncm2/ncm2-jedi'
+"Plug 'roxma/nvim-yarp'
+"Plug 'ncm2/ncm2'
+"Plug 'ncm2/ncm2-ultisnips'
+"Plug 'ncm2/ncm2-bufword'
+"Plug 'ncm2/ncm2-path'
+"Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'ncm2' }
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'wellle/tmux-complete.vim'
+"Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 "Terminal Interactions
+"---
 " For asynchronous make builds
 "Plug 'tpope/vim-dispatch'
 "Plug 'benmills/vimux'
@@ -80,14 +85,17 @@ Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'ncm2' }
 Plug 'christoomey/vim-tmux-runner'
 
 "Git
+"---
 "For Gvsplit and co
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
 Plug 'airblade/vim-gitgutter'
-"Plug 'gregsexton/gitv', {'on': ['Gitv']}
 "Plug 'lambdalisue/gina.vim'
 "Plug 'cohama/agit.vim'
-Plug 'AndrewRadev/linediff.vim'
+"Plug 'junegunn/gv.vim'
+"For diffing code that is not between branches
+"Plug 'AndrewRadev/linediff.vim'
+"Plug 'rhysd/git-messenger.vim'
 
 "Snippets
 Plug 'SirVer/ultisnips'
@@ -111,10 +119,9 @@ Plug 'honza/vim-snippets'
 Plug 'wellle/targets.vim'
 
 "Syntax
-Plug 'w0rp/ale'
-Plug 'jiangmiao/auto-pairs'
+"Plug 'w0rp/ale'
+"Plug 'jiangmiao/auto-pairs'
 "Plug 'nathanaelkane/vim-indent-guides'
-Plug 'tommcdo/vim-lion'
 Plug 'Yggdroot/indentLine'
 "Language pack for a lot of things
 "Plug 'sheerun/vim-polyglot'
@@ -123,6 +130,7 @@ Plug 'Yggdroot/indentLine'
 "Still may be good for looking at a codebase for the first time
 "Maybe
 Plug 'majutsushi/tagbar'
+" Plug 'ludovicchabant/vim-gutentags'
 
 "Front End Development
 "Plug 'pangloss/vim-javascript'
@@ -196,10 +204,12 @@ nmap <leader>gs <Plug>(GitGutterStageHunk)
 nmap <leader>gu <Plug>(GitGutterUndoHunk)
 nmap <leader>gn <Plug>(GitGutterNextHunk)
 nmap <leader>gN <Plug>(GitGutterPrevHunk)
+nmap <leader>go <Plug>(git-messenger)
 nmap <leader>gl :VTerm<CR>git tree<CR>
 nnoremap <leader>gd :Gvdiff 
 
-nnoremap <leader><leader>c :OverCommandLine<CR>
+nmap <leader><leader>c gcc
+vmap <leader><leader>c gc
 
 "nmap <leader>j :call JsBeautify()<CR>
 
@@ -209,12 +219,18 @@ nnoremap <leader>os :VTerm<CR>
 nnoremap <leader>oo :FZF<CR>
 nnoremap <leader>ob :FZF ../<CR>
 nnoremap <leader>oh :History<CR>
-nnoremap <leader><leader>oh :FZF ~<CR>
+nnoremap <leader>ot :Tags<CR>
+"nnoremap <leader><leader>oh :FZF ~<CR>
+nnoremap <leader>ol :CocList<CR>
+nnoremap <leader>om :CocList mru<CR>
+nnoremap <leader>oc :CocList commands<CR>
 
-nnoremap <leader>ff :OverCommandLine<CR>Ack 
+nnoremap <leader>ff :CocList grep <CR>
+nnoremap <leader>fa :OverCommandLine<CR>Ack 
 nnoremap <leader>fw :OverCommandLine<CR>AckWindow 
+nnoremap <leader>fr :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
+nnoremap <leader>fs :OverCommandLine<CR>%s/
 
-cnoremap FF FZF
 nnoremap s <Nop>
 nnoremap <leader>sl :VtrSendLinesToRunner<CR>
 vnoremap <leader>sl :VtrSendLinesToRunner<CR>
@@ -230,29 +246,35 @@ nnoremap <leader>ts :set spell!<CR>
 nnoremap <leader>tn :NERDTreeToggle<CR>
 nnoremap <leader>tp :set nopaste<CR>
 nnoremap <leader>ti :IndentGuidesToggle<CR>
+nnoremap <leader>tr :reg<CR>
 nmap <leader>tq :call ToggleQuickfixList()<CR>
 nmap <leader>tl :call ToggleLocationList()<CR>
 
 nnoremap <F9> :!ctags -R --sort=yes .<CR>
 
-nnoremap <leader>p "pp
-nnoremap <leader>d "pd
-vnoremap <leader>d "pd
-nnoremap <leader>y "py
-vnoremap <leader>y "py
+nnoremap <leader>p "zp
+nnoremap <leader>P "zP
+nnoremap <leader>d "zd
+vnoremap <leader>d "zd
+nnoremap <leader>y "zy
+vnoremap <leader>y "zy
 
 nnoremap <leader>jt <C-]>
 nnoremap <leader>jb <C-t>
 nnoremap <leader>js :vs<CR><C-]>
+
 nnoremap <leader>jc g;
+nnoremap <leader>jC g,
+nmap <leader>jd :vs<CR><Plug>(coc-definition)
+"nmap <leader>jr <Plug>(coc-references) tbh * is better
 
 nnoremap <leader>dn ]c
 nnoremap <leader>dN [c
 nnoremap <leader>dl :.diffput<CR>
 nnoremap <leader>dp dp
 
-nnoremap <leader>mr qh
-nnoremap <leader>mm @h
+nnoremap <leader>mr qa
+nnoremap <leader>mm @a
 "autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
 "autocmd BufEnter *.m  nnoremap <buffer> <leader>c I%<esc>
 """"""""Local Leader Keys""""""""
@@ -260,6 +282,7 @@ nnoremap <localleader>v :e ~/.vimrc<CR>
 nnoremap <localleader>b :e ~/.bash_aliases<CR>
 nnoremap <localleader>g :e ~/.gitconfig<CR>
 nnoremap <localleader>n :e ~/.config/nvim/init.vim<CR>
+nnoremap <localleader>c :CocConfig<CR>
 
 "nnoremap <localleader>vp :VimuxPromptCommand<CR>
 "nnoremap <localleader>r :VimuxRunLastCommand<CR>
@@ -461,11 +484,12 @@ nnoremap <Space> <Nop>
 
 
 """"""""Plugin related variables""""""""
-autocmd BufEnter * call ncm2#enable_for_buffer()
+"autocmd BufEnter * call ncm2#enable_for_buffer()
 "Actually independent of ncm2 plugin. Just code for QOL when using autocomplete
 set completeopt=noinsert,menuone,noselect
 
 let g:toggle_list_no_mappings = 1
+let g:git_messenger_no_default_mappings = v:true
 
 let g:indentLine_setColors = 0
 
@@ -631,3 +655,136 @@ let g:VtrStripLeadingWhitespace = 0
 let g:VtrClearEmptyLines = 0
 let g:VtrAppendNewline = 1
 let g:VtrClearBeforeSend = 0
+
+" if hidden is not set, TextEdit might fail.
+set hidden
+
+" Some servers have issues with backup files, see #649
+set nobackup
+set nowritebackup
+
+" Better display for messages. I will set back to 1 for now
+set cmdheight=1
+
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+"inoremap <silent><expr> <TAB>
+      "\ pumvisible() ? "\<C-n>" :
+      "\ <SID>check_back_space() ? "\<TAB>" :
+      "\ coc#refresh()
+"inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+"function! s:check_back_space() abort
+  "let col = col('.') - 1
+  "return !col || getline('.')[col - 1]  =~# '\s'
+"endfunction
+
+"" Use <c-space> to trigger completion.
+"inoremap <silent><expr> <c-space> coc#refresh()
+
+"" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+"" Coc only does snippet and additional edit on confirm.
+"inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+"" Or use `complete_info` if your vim support it, like:
+"" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+"" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+"" Remap keys for gotos
+" nmap <silent> <leader>cd <Plug>(coc-definition)
+nmap <silent> <leader>ct <Plug>(coc-type-definition)
+nmap <silent> <leader>ci <Plug>(coc-implementation)
+nmap <silent> <leader>cr <Plug>(coc-references)
+
+
+"" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+"" Highlight symbol under cursor on CursorHold
+"autocmd CursorHold * silent call CocActionAsync('highlight')
+
+"" Remap for rename current word
+"nmap <leader>rn <Plug>(coc-rename)
+
+"" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+"" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader><leader>f  :call CocAction('format')<CR>
+"autocmd BufWritePre :call CocAction('format')<CR>
+
+"augroup mygroup
+  "autocmd!
+  "" Setup formatexpr specified filetype(s).
+  "autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  "" Update signature help on jump placeholder
+  "autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+"augroup end
+
+"" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+"" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+"" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+"" Create mappings for function text object, requires document symbols feature of languageserver.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+"" Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+"nmap <silent> <TAB> <Plug>(coc-range-select)
+"xmap <silent> <TAB> <Plug>(coc-range-select)
+
+
+"" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+"" use `:OR` for organize import of current buffer
+"command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+"" Add status line support, for integration with other plugin, checkout `:h coc-status`
+"set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+"" Using CocList
+"" Show all diagnostics
+"nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+"" Manage extensions
+"nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+"" Show commands
+"nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+"" Find symbol of current document
+"nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+"" Search workspace symbols
+"nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+"" Do default action for next item.
+"nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+"" Do default action for previous item.
+"nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+"" Resume latest coc list
+"nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
