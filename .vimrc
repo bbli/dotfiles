@@ -215,6 +215,13 @@ nnoremap <leader>ff :OverCommandLine<CR>Ack
 nnoremap <leader>fw :OverCommandLine<CR>AckWindow 
 
 cnoremap FF FZF
+nnoremap s <Nop>
+nnoremap <leader>sl :VtrSendLinesToRunner<CR>
+vnoremap <leader>sl :VtrSendLinesToRunner<CR>
+nnoremap <leader>ss :VtrSendCommand<CR>
+nnoremap <leader>sp :VtrAttachToPane<CR>
+nnoremap <leader>sf :VtrFlushCommand<CR>
+nnoremap <leader>sd :VtrSendCtrlD<CR>
 
 nnoremap <leader>tu :UndotreeToggle<CR>
 nnoremap <leader>tt :TagbarToggle<CR>
@@ -329,8 +336,6 @@ nnoremap E $
 
 """"""""Command Mode maps""""""""
 cnoremap sE %s
-nnoremap <leader>sr :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
-nnoremap <leader>ss :OverCommandLine<CR>%s/
 nnoremap / /\<
 nnoremap <leader>/ /
 "For grep
@@ -620,3 +625,9 @@ highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Re
 highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
 highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
 highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+
+"For tmux runner
+let g:VtrStripLeadingWhitespace = 0
+let g:VtrClearEmptyLines = 0
+let g:VtrAppendNewline = 1
+let g:VtrClearBeforeSend = 0
