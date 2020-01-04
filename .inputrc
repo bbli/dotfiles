@@ -3,3 +3,6 @@
 ## arrow down
 "\e[B":history-search-forward
 #set editing-mode vi
+#$include function rl_custom_isearch ~/Software/rl_custom_isearch/target/release/librl_custom_isearch.so
+#"\C-r": rl_custom_isearch
+#"\C-s": rl_custom_isearch

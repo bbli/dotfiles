@@ -68,3 +68,9 @@ alias syncML='rsync -avzHh --progress --exclude "*.json" --exclude "*.qbio-vip4"
 # a = archive-copies recursively and perserves timestamps
 
 alias tb='tensorboard'
+
+source <(curl -Ss https://raw.githubusercontent.com/wfxr/forgit/master/forgit.plugin.zsh)
+#Not worth b/c I lose out on ssh fzf completion -> just do **<TAB> and tmux to navigate
+#source ~/Software/fzf-tab-completion/bash/fzf-bash-completion.sh
+#bind -x '"\C-j": fzf_bash_completion'
+#source ~/Software/fzf-obc/bin/fzf-obc.bash
