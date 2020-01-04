@@ -50,6 +50,7 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'edkolev/promptline.vim'
 Plug 'mhinz/vim-startify'
 
+Plug 'troydm/zoomwintab.vim'
 Plug 'osyo-manga/vim-over'
 "Plug 'unblevable/quick-scope'
 "Plug 'justinmk/vim-sneak' "didn't really find myself using this
@@ -96,7 +97,7 @@ Plug 'honza/vim-snippets'
 "Plug 'brennier/quicktex'
 "
 "Markdown stuff
-Plug 'mmai/vim-markdown-wiki'
+"Plug 'mmai/vim-markdown-wiki'
 "Plug 'iamcco/mathjax-support-for-mkdp'
 "Plug 'iamcco/markdown-preview.vim'
 "Plug 'jtratner/vim-flavored-markdown'
@@ -184,7 +185,7 @@ nnoremap <leader>m qm
 nnoremap <leader>h @m
 nnoremap <leader>zz :nohlsearch<CR>
 " Eventually disable nerdcommenter defaults so I can use `cm` instead
-nnoremap <leader>m A\<C-c>
+"nnoremap <leader>m A\<C-c>
 "nnoremap <leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=0<CR>
 "nnoremap <leader>o :set foldlevel=5<CR>
 "nnoremap <leader><leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=1<CR>
@@ -275,6 +276,7 @@ nnoremap <C-k> :m .-2<CR>==
 vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
 
+nnoremap <C-w><Space> <C-w>=
 
 map <M-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
