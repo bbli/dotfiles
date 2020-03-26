@@ -272,9 +272,11 @@ nnoremap <leader>jt <C-]>
 nnoremap <leader>jb <C-t>
 nnoremap <leader>js :vs<CR><C-]>
 
+nmap <leader>jE <Plug>(coc-diagnostic-prev)
+nmap <leader>je <Plug>(coc-diagnostic-next)
 nnoremap <leader>jc g;
 nnoremap <leader>jC g,
-nmap <leader>jd :vs<CR><Plug>(coc-definition)
+nmap <leader>jd <Plug>(coc-definition)
 "nmap <leader>jr <Plug>(coc-references) tbh * is better
 
 nnoremap <leader>dn ]c
