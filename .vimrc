@@ -576,7 +576,7 @@ let g:vimtex_view_method = 'zathura'
 "autocmd BufWritePost *.md !markdown-pdf % -o %.pdf
 "let g:vimwiki_hl_headers = 1
 
-let g:UltiSnipsExpandTrigger = ";;" 
+let g:UltiSnipsExpandTrigger = "zz" 
 let g:UltiSnipsJumpForwardTrigger = "<leader><leader>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-j>"
 
