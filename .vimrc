@@ -38,10 +38,7 @@ set autoindent
 set undofile
 set undodir=~/.undodir/
 
-"set autoindent
-"set noexpandtab
-"set tabstop=4
-"set shiftwidth=4
+
 """"""""Plugins""""""""
 call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
@@ -57,7 +54,7 @@ Plug 'osyo-manga/vim-over'
 "Don't really need all search highlighted as I am typing
 "Files
 Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
+" Plug 'scrooloose/nerdcommenter'
  Plug 'tpope/vim-commentary'
 Plug 'milkypostman/vim-togglelist'
 Plug 'tpope/vim-commentary'
@@ -75,6 +72,8 @@ Plug 'mbbill/undotree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'wellle/tmux-complete.vim'
 "Plug 'jackguo380/vim-lsp-cxx-highlight'
+"C++
+" Plug 'https://github.com/jansenm/vim-cmake.git'
 
 "Terminal Interactions
 "---
@@ -90,11 +89,9 @@ Plug 'christoomey/vim-tmux-runner'
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
 Plug 'airblade/vim-gitgutter'
-"Plug 'lambdalisue/gina.vim'
-"Plug 'cohama/agit.vim'
-"Plug 'junegunn/gv.vim'
 "For diffing code that is not between branches
 "Plug 'AndrewRadev/linediff.vim'
+" When I work on a large codebase and need to see past logs on a certain line
 "Plug 'rhysd/git-messenger.vim'
 
 "Snippets
@@ -117,6 +114,12 @@ Plug 'honza/vim-snippets'
 "Plug 'glts/vim-textobj-indblock'
 "Plug 'kana/vim-textobj-user' 
 Plug 'wellle/targets.vim'
+Plug 'michaeljsmith/vim-indent-object'
+"Plug 'wellle/context.vim'
+"Plug 'junegunn/vim-peekaboo'
+" For camelCase word deletion
+"Plug 'Julian/vim-textobj-variable-segment'
+Plug 'bronson/vim-visual-star-search'
 
 "Syntax
 "Plug 'w0rp/ale'
@@ -211,6 +214,8 @@ nnoremap <leader>gd :Gvdiff
 nmap <leader><leader>c gcc
 vmap <leader><leader>c gc
 
+nnoremap <leader><leader>t :MerlinTypeOf<CR>
+
 "nmap <leader>j :call JsBeautify()<CR>
 
 nnoremap <leader>os :VTerm<CR>
@@ -224,12 +229,16 @@ nnoremap <leader>ot :Tags<CR>
 nnoremap <leader>ol :CocList<CR>
 nnoremap <leader>om :CocList mru<CR>
 nnoremap <leader>oc :CocList commands<CR>
+nnoremap <leader>od :CocCommand workspace.showOutput<CR>
 
 nnoremap <leader>ff :CocList grep <CR>
 nnoremap <leader>fa :OverCommandLine<CR>Ack 
 nnoremap <leader>fw :OverCommandLine<CR>AckWindow 
 nnoremap <leader>fr :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
 nnoremap <leader>fs :OverCommandLine<CR>%s/
+command! -bang -nargs=? -complete=dir HFiles
+  \ call fzf#vim#files(<q-args>, {'source': 'ag --hidden --ignore .git -g ""'}, <bang>0)
+nn <leader>fh :HFiles<CR>
 
 nnoremap s <Nop>
 nnoremap <leader>sl :VtrSendLinesToRunner<CR>

@@ -16,11 +16,6 @@ function __promptline_ps1 {
   [ $is_prompt_empty -eq 1 ] && slice_prefix="$slice_empty_prefix"
   # section "b" slices
   __promptline_wrapper "$(__promptline_vcs_branch)" "$slice_prefix" "$slice_suffix" && { slice_prefix="$slice_joiner"; is_prompt_empty=0; }
-
-  # section "y" header
-  slice_prefix="${y_bg}${sep}${y_fg}${y_bg}${space}" slice_suffix="$space${y_sep_fg}" slice_joiner="${y_fg}${y_bg}${alt_sep}${space}" slice_empty_prefix="${y_fg}${y_bg}${space}"
-  [ $is_prompt_empty -eq 1 ] && slice_prefix="$slice_empty_prefix"
-  # section "y" slices
   __promptline_wrapper "$(__promptline_git_status)" "$slice_prefix" "$slice_suffix" && { slice_prefix="$slice_joiner"; is_prompt_empty=0; }
 
   # close sections
@@ -41,7 +36,7 @@ function __promptline_vcs_branch {
   return 1
 }
 function __promptline_cwd {
-  local dir_limit="2"
+  local dir_limit="1"
   local truncation="⋯"
   local first_char
   local part_count=0
@@ -85,6 +80,7 @@ function __promptline_left_prompt {
   [ $is_prompt_empty -eq 1 ] && slice_prefix="$slice_empty_prefix"
   # section "b" slices
   __promptline_wrapper "$(__promptline_vcs_branch)" "$slice_prefix" "$slice_suffix" && { slice_prefix="$slice_joiner"; is_prompt_empty=0; }
+  __promptline_wrapper "$(__promptline_git_status)" "$slice_prefix" "$slice_suffix" && { slice_prefix="$slice_joiner"; is_prompt_empty=0; }
 
   # close sections
   printf "%s" "${reset_bg}${sep}$reset$space"
@@ -146,15 +142,7 @@ function __promptline_git_status {
   [[ $is_clean -gt 0 ]]            && { printf "%s" "$leading_whitespace$clean_symbol"; leading_whitespace=" "; }
 }
 function __promptline_right_prompt {
-  local slice_prefix slice_empty_prefix slice_joiner slice_suffix
-
-  # section "y" header
-  slice_prefix="${y_sep_fg}${rsep}${y_fg}${y_bg}${space}" slice_suffix="$space${y_sep_fg}" slice_joiner="${y_fg}${y_bg}${alt_rsep}${space}" slice_empty_prefix=""
-  # section "y" slices
-  __promptline_wrapper "$(__promptline_git_status)" "$slice_prefix" "$slice_suffix" && { slice_prefix="$slice_joiner"; }
-
-  # close sections
-  printf "%s" "$reset"
+  return
 }
 function __promptline {
   local last_exit_code="${PROMPTLINE_LAST_EXIT_CODE:-$?}"
@@ -181,9 +169,6 @@ function __promptline {
   local b_fg="${wrap}38;5;250${end_wrap}"
   local b_bg="${wrap}48;5;238${end_wrap}"
   local b_sep_fg="${wrap}38;5;238${end_wrap}"
-  local y_fg="${wrap}38;5;250${end_wrap}"
-  local y_bg="${wrap}48;5;238${end_wrap}"
-  local y_sep_fg="${wrap}38;5;238${end_wrap}"
   if [[ -n ${ZSH_VERSION-} ]]; then
     PROMPT="$(__promptline_left_prompt)"
     RPROMPT="$(__promptline_right_prompt)"
