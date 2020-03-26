@@ -284,8 +284,8 @@ nnoremap <leader>dN [c
 nnoremap <leader>dl :.diffput<CR>
 nnoremap <leader>dp dp
 
-nnoremap <leader>mr qa
-nnoremap <leader>mm @a
+"nnoremap <leader>mr qa
+"nnoremap <leader>mm @a
 "autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
 "autocmd BufEnter *.m  nnoremap <buffer> <leader>c I%<esc>
 """"""""Local Leader Keys""""""""
@@ -334,12 +334,13 @@ nnoremap <F3> :AirlineToggleWhitespace<CR>
 """"""""Semi Colon Keys""""""""
 inoremap ;c <C-c>
 vnoremap ;c <C-c>
+inoremap ;; ;
+vnoremap ;w <C-c>:w<CR>
+inoremap ;w <C-c>:w<CR>
+nnoremap ;n :bn<CR>
 nnoremap ;q :q<CR>
 nnoremap ;z :q!<CR>
 nnoremap ;w <C-c>:w<CR>
-inoremap ;w <C-c>:w<CR>
-vnoremap ;w <C-c>:w<CR>
-nnoremap ;n :bn<CR>
 "nnoremap ;;n :2bn<CR>
 "nnoremap ;;N :2bp<CR>
 nnoremap ;N :bp<CR>
@@ -584,8 +585,6 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-j>"
 "let g:mkdp_auto_close = 0
 "let g:mkdp_refresh_slow = 1
 
-"let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-
 let g:airline_theme='distinguished'
 let g:promptline_theme = 'airline'
 "Makes it so actual buffer number shows up in the tabline. Not nesscary since idx mode works now
@@ -627,10 +626,10 @@ let g:undotree_DiffCommand = "diff"
 "nnoremap <C-h> <C-W><C-h>
 
 let g:promptline_preset = {
-        \'a' : [ promptline#slices#conda_env() ],
-        \'b' : [ promptline#slices#cwd({'dir_limit':2}) ],
-        \'c' : [ promptline#slices#vcs_branch() ],
-        \'y' : [ promptline#slices#git_status() ]}
+        \'a' : [ promptline#slices#conda_env(),promptline#slices#cwd({'dir_limit':1}) ],
+        \'b' : [ promptline#slices#vcs_branch(),promptline#slices#git_status() ],}
+" \'b' : [ promptline#slices#cwd({'dir_limit':1}) ],
+" \'y' : [ promptline#slices#git_status() ]}
 "\'a' : [ promptline#slices#conda_env() ],
 "\'b' : [ promptline#slices#user() ],
  "\'warn' : [ promptline#slices#last_exit_code() ]}
@@ -708,9 +707,6 @@ set signcolumn=yes
 "" Or use `complete_info` if your vim support it, like:
 "" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
-"" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 "" Remap keys for gotos
 " nmap <silent> <leader>cd <Plug>(coc-definition)
@@ -798,4 +794,21 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 "nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 "" Resume latest coc list
 "nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" nn <silent><buffer> <C-l> :call CocLocations('ccls','$ccls/navigate',{'direction':'D'})<cr>
+" nn <silent><buffer> <C-k> :call CocLocations('ccls','$ccls/navigate',{'direction':'L'})<cr>
+" nn <silent><buffer> <C-j> :call CocLocations('ccls','$ccls/navigate',{'direction':'R'})<cr>
+" nn <silent><buffer> <C-h> :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<cr>
+nn <leader>ci :CocInfo<CR>
+nn <leader>cl :CocOpenLog<CR>
 
+" Make sure to use tabs
+" set autoindent
+" set noexpandtab
+" set tabstop=4
+" set shiftwidth=4
+
+" let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+" execute "set rtp+=" . g:opamshare . "/merlin/vim"
+
+autocmd FileType json syntax match Comment +\/\/.\+$+
+" autocmd BufReadPre,FileReadPre * :set background=dark

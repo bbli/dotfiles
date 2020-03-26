@@ -28,6 +28,7 @@ alias notes='cd ~/Dropbox/Notes'
 alias swap='cd /home/benson/.local/share/nvim/swap'
 alias nvimp="cd /home/benson/.nvim/plugged/repos/github.com/"
 alias vimp='cd /home/benson/.vim/plugged'
+alias zoom='/home/benson/Software/zoom_x86_64.pkg/opt/zoom/ZoomLauncher'
 
 
 ## Command shortcuts
