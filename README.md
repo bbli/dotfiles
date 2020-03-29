@@ -18,11 +18,11 @@ In an effort to become a hotkey spammer like Emacs users/become better at vim, I
 * coc-yank -> for yank history across vim instances
 * coc-ultisnips -> so I can be reminded of snippets
 * coc-pairs -> has options to not do for certain files
-* coc-lines
 * coc-lists
 * coc-snippets -> apparantly for lsp supported snippets. Doesn't really work though
 
 * coc-python
+* coc-cmake
 
 * Q: Why do I need to set a list of global extensions?
 * TODO: I should get tags working

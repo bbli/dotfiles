@@ -140,7 +140,7 @@ Plug 'majutsushi/tagbar'
 "Plug 'othree/javascript-libraries-syntax.vim'
 "Plug 'carlitux/deoplete-ternjs'
 Plug 'tpope/vim-surround' "Why do I need this plugin again?
-Plug 'Valloric/MatchTagAlways'
+" Plug 'Valloric/MatchTagAlways'
 "Plug 'mattn/emmet-vim'
 " Beautify is kinda weird when acting on html,
 " and benefit for javascript seems to be minimal
@@ -192,14 +192,15 @@ let maplocalleader="-"
 
 """"""""Leader Keys""""""""
 
-nnoremap <leader>m qm
-nnoremap <leader>h @m
-nnoremap <leader>zz :nohlsearch<CR>
-" Eventually disable nerdcommenter defaults so I can use `cm` instead
-"nnoremap <leader>m A\<C-c>
-"nnoremap <leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=0<CR>
-"nnoremap <leader>o :set foldlevel=5<CR>
-"nnoremap <leader><leader>f :set foldmethod=indent<CR> <bar> :set foldlevel=1<CR>
+" nnoremap <leader><leader>m qm
+nnoremap <leader><leader>m @m
+nnoremap <leader><leader>z :nohlsearch<CR>
+
+nmap <leader><leader>c gcc
+vmap <leader><leader>c gc
+
+nnoremap <leader><leader>t :MerlinTypeOf<CR>
+nnoremap <leader><leader>i :call <SID>show_documentation()<CR>
 
 nnoremap <leader>gm :Magit<CR>
 nmap <leader>gp <Plug>(GitGutterPreviewHunk)
@@ -211,34 +212,27 @@ nmap <leader>go <Plug>(git-messenger)
 nmap <leader>gl :VTerm<CR>git tree<CR>
 nnoremap <leader>gd :Gvdiff 
 
-nmap <leader><leader>c gcc
-vmap <leader><leader>c gc
+command! -bang -nargs=? -complete=dir HFiles
+  \ call fzf#vim#files(<q-args>, {'source': 'ag --hidden --ignore .git -g ""'}, <bang>0)
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, {'source': 'ag --ignore .git -g ""'}, <bang>0)
 
-nnoremap <leader><leader>t :MerlinTypeOf<CR>
-
-"nmap <leader>j :call JsBeautify()<CR>
-
+nnoremap <leader>oa :HFiles<CR>
 nnoremap <leader>os :VTerm<CR>
-"nnoremap <localleader>s :Term<CR>
-
-nnoremap <leader>oo :FZF<CR>
-nnoremap <leader>ob :FZF ../<CR>
+nnoremap <leader>oo :Files<CR>
+nnoremap <leader>ob :Files ../<CR>
 nnoremap <leader>oh :History<CR>
-nnoremap <leader>ot :Tags<CR>
+nnoremap <leader>oy :CocList yank<CR>
+" nnoremap <leader>op :CocList mru<CR>
 "nnoremap <leader><leader>oh :FZF ~<CR>
 nnoremap <leader>ol :CocList<CR>
-nnoremap <leader>om :CocList mru<CR>
 nnoremap <leader>oc :CocList commands<CR>
-nnoremap <leader>od :CocCommand workspace.showOutput<CR>
 
 nnoremap <leader>ff :CocList grep <CR>
 nnoremap <leader>fa :OverCommandLine<CR>Ack 
-nnoremap <leader>fw :OverCommandLine<CR>AckWindow 
+" nnoremap <leader>fw :OverCommandLine<CR>AckWindow 
 nnoremap <leader>fr :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
 nnoremap <leader>fs :OverCommandLine<CR>%s/
-command! -bang -nargs=? -complete=dir HFiles
-  \ call fzf#vim#files(<q-args>, {'source': 'ag --hidden --ignore .git -g ""'}, <bang>0)
-nn <leader>fh :HFiles<CR>
 
 nnoremap s <Nop>
 nnoremap <leader>sl :VtrSendLinesToRunner<CR>
@@ -269,14 +263,13 @@ nnoremap <leader>y "zy
 vnoremap <leader>y "zy
 
 nnoremap <leader>jt <C-]>
-nnoremap <leader>jb <C-t>
-nnoremap <leader>js :vs<CR><C-]>
-
+nmap <leader>jd <Plug>(coc-definition)
+" nnoremap <leader>jb <C-t>
+" nnoremap <leader>js :vs<CR><C-]>
 nmap <leader>jE <Plug>(coc-diagnostic-prev)
 nmap <leader>je <Plug>(coc-diagnostic-next)
 nnoremap <leader>jc g;
 nnoremap <leader>jC g,
-nmap <leader>jd <Plug>(coc-definition)
 "nmap <leader>jr <Plug>(coc-references) tbh * is better
 
 nnoremap <leader>dn ]c
@@ -749,19 +742,19 @@ nmap <leader><leader>f  :call CocAction('format')<CR>
 "augroup end
 
 "" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+" xmap <leader>a  <Plug>(coc-codeaction-selected)
+" nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 "" Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
+" nmap <leader>ac  <Plug>(coc-codeaction)
 "" Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
+" nmap <leader>qf  <Plug>(coc-fix-current)
 
 "" Create mappings for function text object, requires document symbols feature of languageserver.
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
+" xmap if <Plug>(coc-funcobj-i)
+" xmap af <Plug>(coc-funcobj-a)
+" omap if <Plug>(coc-funcobj-i)
+" omap af <Plug>(coc-funcobj-a)
 
 "" Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
 "nmap <silent> <TAB> <Plug>(coc-range-select)
@@ -800,6 +793,7 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 " nn <silent><buffer> <C-h> :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<cr>
 nn <leader>ci :CocInfo<CR>
 nn <leader>cl :CocOpenLog<CR>
+nnoremap <leader>cd :CocCommand workspace.showOutput<CR>
 
 " Make sure to use tabs
 " set autoindent
