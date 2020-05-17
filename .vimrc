@@ -226,12 +226,10 @@ command! -bang -nargs=? -complete=dir HFiles
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, {'source': 'ag --ignore .git -g ""'}, <bang>0)
 
-nnoremap <leader>oa :HFiles<CR>
 nnoremap <leader>os :VTerm<CR>
-nnoremap <leader>oo :Files<CR>
-nnoremap <leader>ob :Files ../<CR>
-nnoremap <leader>oh :History<CR>
+nnoremap <leader>ot :tab split<CR>
 nnoremap <leader>oy :CocList yank<CR>
+
 nnoremap <leader>oa :FZF<CR>
 nnoremap <leader>oi :HFiles<CR>
 nnoremap <leader>oo :GFiles<CR>
@@ -279,7 +277,7 @@ vnoremap <leader>y "zy
 nnoremap <leader>jt <C-]>
 nmap <leader>jd <Plug>(coc-definition)
 " nnoremap <leader>jb <C-t>
-" nnoremap <leader>js :vs<CR><C-]>
+nmap <leader>js :vs<CR><Plug>(coc-definition)
 nmap <leader>jE <Plug>(coc-diagnostic-prev)
 nmap <leader>je <Plug>(coc-diagnostic-next)
 nnoremap <leader>jc g;
@@ -378,14 +376,16 @@ nnoremap E $
 
 """"""""Command Mode maps""""""""
 cnoremap sE %s
-nnoremap / /\<
-nnoremap <leader>/ /
+" nnoremap / /\<
+nnoremap <leader>/ /\<
 "For grep
 cnoremap cn cnext
 cnoremap cN cprev
 cnoremap SB set scrollbind
 cnoremap NSB set noscrollbind
-"cnoremap tc tabc
+cnoremap tc tabc
+cnoremap tn tabnext
+cnoremap tN tabprevious
 cnoremap vsb vertical sb
 cnoremap tj tjump
 cnoremap think e ~/Dropbox/Notes/MyThoughts/Ways-of-Thinking/Comp_Sci_Thinking/Design-Principles.md
@@ -446,9 +446,16 @@ if (empty($TMUX))
 endif
 
 
+" set termguicolors
 "Makes a solarized approximation for vim
 "let g:solarized_termcolors=256
 colorscheme gruvbox
+" colorscheme neodark
+" colorscheme deus
+let g:gruvbox_contrast_dark="soft"
+" let g:gruvbox_bold=0
+let g:gruvbox_underline=1
+let g:gruvbox_material_background = 'soft'
 set background=dark
 "augroup filetype_color
 	"autocmd!
@@ -489,6 +496,7 @@ set background=dark
 """"""""Other Autocommands""""""""
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost *.txt set filetype=markdown "Make vim recognize .md as markdown file
+autocmd BufNewFile,BufReadPost CMakeLists.txt set filetype=cmake "except cmake files
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 
 """"""""Misc""""""""
@@ -737,7 +745,7 @@ endfunction
 "autocmd CursorHold * silent call CocActionAsync('highlight')
 
 "" Remap for rename current word
-"nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>rn <Plug>(coc-rename)
 
 "" Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
@@ -820,3 +828,10 @@ nnoremap <leader>cd :CocCommand workspace.showOutput<CR>
 
 autocmd FileType json syntax match Comment +\/\/.\+$+
 " autocmd BufReadPre,FileReadPre * :set background=dark
+
+" Disabling highlighting on C++ functions/methods
+highlight LspCxxHlSymClassMethod ctermfg=White
+highlight LspCxxHlSymClassVariable ctermfg=White
+highlight LspCxxHlSymStructMethod ctermfg=White
+" highlight LspCxxHlSymFunction ctermfg=White
+
