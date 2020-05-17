@@ -58,10 +58,13 @@ Plug 'scrooloose/nerdtree'
  Plug 'tpope/vim-commentary'
 Plug 'milkypostman/vim-togglelist'
 Plug 'tpope/vim-commentary'
-Plug 'mileszs/ack.vim'
+" Plug 'mileszs/ack.vim'
+Plug 'jremmen/vim-ripgrep'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mbbill/undotree'
+Plug 'gruvbox-community/gruvbox'
+" Plug 'sainnhe/gruvbox-material'
 "Plug 'roxma/nvim-yarp'
 "Plug 'ncm2/ncm2'
 "Plug 'ncm2/ncm2-ultisnips'
@@ -70,6 +73,7 @@ Plug 'mbbill/undotree'
 "Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'ncm2' }
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'wellle/tmux-complete.vim'
 "Plug 'jackguo380/vim-lsp-cxx-highlight'
 "C++
@@ -126,6 +130,8 @@ Plug 'bronson/vim-visual-star-search'
 "Plug 'jiangmiao/auto-pairs'
 "Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Yggdroot/indentLine'
+Plug 'pboettch/vim-cmake-syntax'
+Plug 'rhysd/vim-llvm'
 "Language pack for a lot of things
 "Plug 'sheerun/vim-polyglot'
 "

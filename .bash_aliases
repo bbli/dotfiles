@@ -1,4 +1,3 @@
-
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
@@ -60,6 +59,9 @@ alias vi='vim'
 
 ## Docker
 alias doc='docker run -it -v /home/benson/Dropbox/Code/dotfiles:/root/dotfiles'
+alias skype='/opt/skype/bin/skypeforlinux'
+
+alias nvim-server='/home/benson/Desktop/Docker_Builds/artful-neovim/nvim-server'
 
 ## Remote Sync
 alias syncML='rsync -avzHh --progress --exclude "*.json" --exclude "*.qbio-vip4" --exclude "*.pt" bbli@qbio-vip4.physics.ucsb.edu:/home/bbli/ML_Code/UNet/Code ~/Documents/Server_Code/'
@@ -70,7 +72,7 @@ alias syncML='rsync -avzHh --progress --exclude "*.json" --exclude "*.qbio-vip4"
 
 alias tb='tensorboard'
 
-source <(curl -Ss https://raw.githubusercontent.com/wfxr/forgit/master/forgit.plugin.zsh)
+# source <(curl -Ss https://raw.githubusercontent.com/wfxr/forgit/master/forgit.plugin.zsh)
 #Not worth b/c I lose out on ssh fzf completion -> just do **<TAB> and tmux to navigate
 #source ~/Software/fzf-tab-completion/bash/fzf-bash-completion.sh
 #bind -x '"\C-j": fzf_bash_completion'
