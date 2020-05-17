@@ -197,6 +197,11 @@ let mapleader=" "
 let maplocalleader="-"
 
 """"""""Leader Keys""""""""
+nnoremap <leader><leader>t :MerlinTypeOf<CR>
+nnoremap <leader><leader>i :call <SID>show_documentation()<CR>
+
+" nnoremap <leader><leader>t :tabn<CR>
+cnoremap tn tabn
 
 " nnoremap <leader><leader>m qm
 nnoremap <leader><leader>m @m
@@ -205,8 +210,6 @@ nnoremap <leader><leader>z :nohlsearch<CR>
 nmap <leader><leader>c gcc
 vmap <leader><leader>c gc
 
-nnoremap <leader><leader>t :MerlinTypeOf<CR>
-nnoremap <leader><leader>i :call <SID>show_documentation()<CR>
 
 nnoremap <leader>gm :Magit<CR>
 nmap <leader>gp <Plug>(GitGutterPreviewHunk)
@@ -229,13 +232,18 @@ nnoremap <leader>oo :Files<CR>
 nnoremap <leader>ob :Files ../<CR>
 nnoremap <leader>oh :History<CR>
 nnoremap <leader>oy :CocList yank<CR>
+nnoremap <leader>oa :FZF<CR>
+nnoremap <leader>oi :HFiles<CR>
+nnoremap <leader>oo :GFiles<CR>
+" nnoremap <leader>ob :Files ../<CR>
+nnoremap <leader>oh :History<CR>
 " nnoremap <leader>op :CocList mru<CR>
 "nnoremap <leader><leader>oh :FZF ~<CR>
 nnoremap <leader>ol :CocList<CR>
 nnoremap <leader>oc :CocList commands<CR>
 
-nnoremap <leader>ff :CocList grep <CR>
-nnoremap <leader>fa :OverCommandLine<CR>Ack 
+nnoremap <leader>ff :OverCommandLine<CR>Ggrep 
+nnoremap <leader>fa :OverCommandLine<CR>Rg  
 " nnoremap <leader>fw :OverCommandLine<CR>AckWindow 
 nnoremap <leader>fr :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
 nnoremap <leader>fs :OverCommandLine<CR>%s/
