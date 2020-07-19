@@ -1,5 +1,5 @@
 # some more ls aliases
-alias ll='ls -alF'
+# alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 #Interactive options
@@ -15,6 +15,7 @@ alias egrep='egrep --color=auto'
 export EDITOR='vim'
 export VISUAL='vim'
 
+# For promptline
 if [ -f $HOME/.shell_prompt.sh ]; then
 	    . $HOME/.shell_prompt.sh
     fi
@@ -22,12 +23,13 @@ if [ -f $HOME/.shell_prompt.sh ]; then
 alias home='cd ~'
 alias code='cd ~/Dropbox/Code'
 alias dot='cd ~/Dropbox/Code/dotfiles'
-alias snip='cd ~/.vim/plugged/vim-snippets/snippets'
+alias snip='cd ~/.vim/my-snippets/UltiSnips'
 alias notes='cd ~/Dropbox/Notes'
 alias swap='cd /home/benson/.local/share/nvim/swap'
 alias nvimp="cd /home/benson/.nvim/plugged/repos/github.com/"
 alias vimp='cd /home/benson/.vim/plugged'
 alias zoom='/home/benson/Software/zoom_x86_64.pkg/opt/zoom/ZoomLauncher'
+alias proj='cd $(git rev-parse --git-dir)/..'
 
 
 ## Command shortcuts
@@ -43,9 +45,17 @@ alias port='ssh -N -f -L'
 alias pac='sudo pacman -S'
 alias yao='yaourt -S'
 
+## Exa
+alias ls='exa'
+alias ll='exa --header --long'
+alias tree='exa --tree'
+
+alias j='fasd_cd -d'     # cd, same functionality as j in autojump
+alias jj='fasd_cd -d -i' # cd with interactive selection
+
 ## Python
-alias act='source activate'
-alias deact='source deactivate'
+# alias act='source activate'
+# alias deact='source deactivate'
 alias pytest3='python3.6 -m pytest'
 alias py='python3.6'
 alias ptime='python -m cProfile -s cumulative'

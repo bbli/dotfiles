@@ -1,4 +1,8 @@
+"Since vim will run some bash commands on startup, so make sure shell is POSIX
+"compatible
+set shell=/usr/bin/bash
 syntax enable
+set runtimepath+=~/.vim/my-snippets
 set nocompatible
 set hidden
 set number relativenumber
@@ -41,6 +45,8 @@ set undodir=~/.undodir/
 
 """"""""Plugins""""""""
 call plug#begin('~/.vim/plugged')
+Plug 'ThePrimeagen/vim-be-good'
+
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
@@ -54,10 +60,9 @@ Plug 'osyo-manga/vim-over'
 "Don't really need all search highlighted as I am typing
 "Files
 Plug 'scrooloose/nerdtree'
-" Plug 'scrooloose/nerdcommenter'
- Plug 'tpope/vim-commentary'
+Plug 'scrooloose/nerdcommenter'
+" Plug 'tpope/vim-commentary'
 Plug 'milkypostman/vim-togglelist'
-Plug 'tpope/vim-commentary'
 " Plug 'mileszs/ack.vim'
 Plug 'jremmen/vim-ripgrep'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -75,6 +80,8 @@ Plug 'gruvbox-community/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'wellle/tmux-complete.vim'
+Plug 'cespare/vim-toml'
+Plug 'dag/vim-fish'
 "Plug 'jackguo380/vim-lsp-cxx-highlight'
 "C++
 " Plug 'https://github.com/jansenm/vim-cmake.git'
@@ -207,31 +214,38 @@ cnoremap tn tabn
 nnoremap <leader><leader>m @m
 nnoremap <leader><leader>z :nohlsearch<CR>
 
-nmap <leader><leader>c gcc
-vmap <leader><leader>c gc
+"Comments
+nmap <leader><leader>c <Plug>NERDCommenterToggle
+vmap <leader><leader>c <Plug>NERDCommenterToggle
 
+" <C-^> switches between two files
+nnoremap <leader><leader>s <C-^>
 
 nnoremap <leader>gm :Magit<CR>
 nmap <leader>gp <Plug>(GitGutterPreviewHunk)
-nmap <leader>gs <Plug>(GitGutterStageHunk)
-nmap <leader>gu <Plug>(GitGutterUndoHunk)
+" nmap <leader>gs <Plug>(GitGutterStageHunk)
+" nmap <leader>gu <Plug>(GitGutterUndoHunk)
 nmap <leader>gn <Plug>(GitGutterNextHunk)
 nmap <leader>gN <Plug>(GitGutterPrevHunk)
-nmap <leader>go <Plug>(git-messenger)
+" nmap <leader>go <Plug>(git-messenger)
 nmap <leader>gl :VTerm<CR>git tree<CR>
+nmap <leader>gs :G<CR>
 nnoremap <leader>gd :Gvdiff 
 
 command! -bang -nargs=? -complete=dir HFiles
-  \ call fzf#vim#files(<q-args>, {'source': 'ag --hidden --ignore .git -g ""'}, <bang>0)
+  \ call fzf#vim#files(<q-args>, {'source': 'rg --hidden --ignore .git -g ""'}, <bang>0)
 command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, {'source': 'ag --ignore .git -g ""'}, <bang>0)
+  \ call fzf#vim#files(<q-args>, {'source': 'rg --ignore .git -g ""'}, <bang>0)
 
 nnoremap <leader>os :VTerm<CR>
 nnoremap <leader>ot :tab split<CR>
-nnoremap <leader>oy :CocList yank<CR>
 
+nnoremap <leader>oa :HFiles<CR>
+cnoremap hh :Helptags<CR>
+"fix this
+" nnoremap <leader>op call fzf#vim#complete#path('rg --files')
 nnoremap <leader>oa :FZF<CR>
-nnoremap <leader>oi :HFiles<CR>
+" nnoremap <leader>oi :HFiles<CR>
 nnoremap <leader>oo :GFiles<CR>
 " nnoremap <leader>ob :Files ../<CR>
 nnoremap <leader>oh :History<CR>
@@ -239,12 +253,15 @@ nnoremap <leader>oh :History<CR>
 "nnoremap <leader><leader>oh :FZF ~<CR>
 nnoremap <leader>ol :CocList<CR>
 nnoremap <leader>oc :CocList commands<CR>
+nnoremap <leader>oy :CocList yank<CR>
 
 nnoremap <leader>ff :OverCommandLine<CR>Ggrep 
 nnoremap <leader>fa :OverCommandLine<CR>Rg  
-" nnoremap <leader>fw :OverCommandLine<CR>AckWindow 
-nnoremap <leader>fr :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
-nnoremap <leader>fs :OverCommandLine<CR>%s/
+nnoremap <leader>fs :OverCommandLine<CR>Ggrep <C-r><C-w><CR>
+" nnoremap <leader>fr :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
+nnoremap <leader>fw :OverCommandLine<CR>%s/
+"" rename current word
+nmap <leader>fr <Plug>(coc-rename)
 
 nnoremap s <Nop>
 nnoremap <leader>sl :VtrSendLinesToRunner<CR>
@@ -274,21 +291,34 @@ vnoremap <leader>d "zd
 nnoremap <leader>y "zy
 vnoremap <leader>y "zy
 
-nnoremap <leader>jt <C-]>
+" /word to use recursive macros(search on Google)
+" nmap <leader>jD <Plug>(coc-declaration)
+" nmap <leader>jw <Plug>(coc-implementation)
+" nmap <leader>jt <Plug>(coc-refactor)
+" nmap <leader>ji <Plug>(coc-funcobj-i)
+" nmap <leader>jj <Plug>(coc-funcobj-a)
+
+" nnoremap <leader>jt <C-]>
 nmap <leader>jd <Plug>(coc-definition)
+"nmap <leader>jt :tab split<CR><Plug>(coc-definition)
 " nnoremap <leader>jb <C-t>
 nmap <leader>js :vs<CR><Plug>(coc-definition)
 nmap <leader>jE <Plug>(coc-diagnostic-prev)
 nmap <leader>je <Plug>(coc-diagnostic-next)
 nnoremap <leader>jc g;
 nnoremap <leader>jC g,
-"nmap <leader>jr <Plug>(coc-references) tbh * is better
+" tbh * is better
+nmap <leader>jr <Plug>(coc-references)
+nnoremap <leader>jw :OverCommandLine<CR>Ggrep <C-r><C-w><CR>
 
 nnoremap <leader>dn ]c
 nnoremap <leader>dN [c
-nnoremap <leader>dl :.diffput<CR>
+"nnoremap <leader>dl :.diffput<CR>
+nmap <leader>dh :diffget //3<CR>
+nmap <leader>dl :diffget //2<CR>
 nnoremap <leader>dp dp
 
+nnoremap <C-t> <C-z>
 "nnoremap <leader>mr qa
 "nnoremap <leader>mm @a
 "autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>

@@ -10,6 +10,7 @@
 #	old = red normal bold
 #	new = green normal bold
 	excludesfile = ~/.gitignore
+	;pager = nvim -R
 [diff]
 	tool = vimdiff
 [difftool]
@@ -19,6 +20,7 @@
     cc = clean -d -f -x
     g = git
 	stat = status -sb
+    wt = worktree
 	d = difftool
     t = tag -n
 	p = push origin master
@@ -36,7 +38,9 @@
 	pr = "!f() { git fetch -fu ${2:-upstream} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
 	pr-clean = "!git checkout master ; git for-each-ref refs/heads/pr/* --format=\"%(refname)\" | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
 [merge]
-	conflictstyle = diff3
+	conflictstyle = merge
+[status]
+    showUntrackedFiles = all
 
 ;[color]
   ;pager = true
@@ -89,3 +93,5 @@
   ;selected = normal
   ;separator = red bold
   ;linenumber = normal
+;[color]
+	;pager = no
