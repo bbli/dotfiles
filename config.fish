@@ -87,3 +87,5 @@ set SPACEFISH_PROMPT_SEPARATE_LINE false
 set SPACEFISH_DIR_COLOR cyan
 set SPACEFISH_PACKAGE_SHOW false
 set SPACEFISH_RUST_SHOW false
+
+source /opt/miniconda3/etc/fish/conf.d/conda.fish

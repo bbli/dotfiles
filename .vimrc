@@ -329,6 +329,7 @@ nnoremap <localleader>b :e ~/.bash_aliases<CR>
 nnoremap <localleader>g :e ~/.gitconfig<CR>
 nnoremap <localleader>n :e ~/.config/nvim/init.vim<CR>
 nnoremap <localleader>c :CocConfig<CR>
+nnoremap <localleader>f :e ~/.config/fish/config.fish<CR>
 
 "nnoremap <localleader>vp :VimuxPromptCommand<CR>
 "nnoremap <localleader>r :VimuxRunLastCommand<CR>
@@ -373,6 +374,7 @@ inoremap ;; ;
 vnoremap ;w <C-c>:w<CR>
 inoremap ;w <C-c>:w<CR>
 nnoremap ;n :bn<CR>
+" nnoremap ;q <C-z>
 nnoremap ;q :q<CR>
 nnoremap ;z :q!<CR>
 nnoremap ;w <C-c>:w<CR>
@@ -383,9 +385,9 @@ nnoremap ;d :bwipeout<CR>
 nnoremap ;D :bwipeout!<CR>
 nnoremap ;; ;
 nnoremap <leader>; ,
+
 nnoremap ;t :MtaJumpToOtherTag<CR>
 nnoremap ;o <C-^>
-
 nnoremap ;r @:
 
 """"""""Normal Mode maps""""""""
@@ -411,14 +413,14 @@ nnoremap <leader>/ /\<
 "For grep
 cnoremap cn cnext
 cnoremap cN cprev
-cnoremap SB set scrollbind
-cnoremap NSB set noscrollbind
+" cnoremap SB set scrollbind
+" cnoremap NSB set noscrollbind
 cnoremap tc tabc
 cnoremap tn tabnext
 cnoremap tN tabprevious
-cnoremap vsb vertical sb
+" cnoremap vsb vertical sb
 cnoremap tj tjump
-cnoremap think e ~/Dropbox/Notes/MyThoughts/Ways-of-Thinking/Comp_Sci_Thinking/Design-Principles.md
+" cnoremap think e ~/Dropbox/Notes/MyThoughts/Ways-of-Thinking/Comp_Sci_Thinking/Design-Principles.md
 
 
 """"""""Operator Mode maps""""""""
@@ -523,11 +525,12 @@ set background=dark
     "autocmd BufEnter *.clj color gruvbox
 "augroup END
 
-""""""""Other Autocommands""""""""
+""""""""Other Autocommands/Functions""""""""
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost *.txt set filetype=markdown "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost CMakeLists.txt set filetype=cmake "except cmake files
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+
 
 """"""""Misc""""""""
 " Allow saving of files as sudo when I forgot to start vim using sudo.
@@ -630,7 +633,7 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-j>"
 "let g:mkdp_auto_close = 0
 "let g:mkdp_refresh_slow = 1
 
-let g:airline_theme='distinguished'
+let g:airline_theme='gruvbox'
 let g:promptline_theme = 'airline'
 "Makes it so actual buffer number shows up in the tabline. Not nesscary since idx mode works now
 let g:airline#extensions#tabline#buffer_nr_show = 0
@@ -664,6 +667,8 @@ let g:undotree_WindowLayout = 2
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_DiffCommand = "diff"
 
+
+let NERDCreateDefaultMappings = 0
 
 "nnoremap <C-j> <C-W><C-j>
 "nnoremap <C-k> <C-W><C-k>
@@ -774,8 +779,6 @@ endfunction
 "" Highlight symbol under cursor on CursorHold
 "autocmd CursorHold * silent call CocActionAsync('highlight')
 
-"" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
 
 "" Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
@@ -859,7 +862,7 @@ nnoremap <leader>cd :CocCommand workspace.showOutput<CR>
 autocmd FileType json syntax match Comment +\/\/.\+$+
 " autocmd BufReadPre,FileReadPre * :set background=dark
 
-" Disabling highlighting on C++ functions/methods
+" Enabling highlighting on C++ functions/methods
 highlight LspCxxHlSymClassMethod ctermfg=White
 highlight LspCxxHlSymClassVariable ctermfg=White
 highlight LspCxxHlSymStructMethod ctermfg=White
