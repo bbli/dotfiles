@@ -19,8 +19,8 @@ set foldenable
 set foldlevel=0
 set foldmethod=manual
 "set list lcs =tab:\|\
-"set listchars=tab:\|\
 "set list
+"set listchars=tab:\|\
 set ruler
 set splitright
 set number ""relativenumber
@@ -47,44 +47,57 @@ set undodir=~/.undodir/
 call plug#begin('~/.vim/plugged')
 Plug 'ThePrimeagen/vim-be-good'
 
+"Visual
+"---
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 Plug 'edkolev/promptline.vim'
 Plug 'mhinz/vim-startify'
+Plug 'gruvbox-community/gruvbox'
+" Plug 'sainnhe/gruvbox-material'
 
-Plug 'troydm/zoomwintab.vim'
+"Conveniences
+"---
+Plug 'gcmt/taboo.vim'
+" Below Plugin not that useful since I can use tabs for that purpose
+"Plug 'troydm/zoomwintab.vim'
 Plug 'osyo-manga/vim-over'
 "Plug 'unblevable/quick-scope'
 "Plug 'justinmk/vim-sneak' "didn't really find myself using this
-"Don't really need all search highlighted as I am typing
-"Files
-Plug 'scrooloose/nerdtree'
+"Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdcommenter'
-" Plug 'tpope/vim-commentary'
-Plug 'milkypostman/vim-togglelist'
+Plug 'bronson/vim-visual-star-search'
+Plug 'Yggdroot/indentLine'
+Plug 'tpope/vim-surround' "Why do I need this plugin again?
+
+"Special Windows
+"---
+Plug 'scrooloose/nerdtree'
+"Plug 'milkypostman/vim-togglelist'
+"Plug 'romainl/vim-qf'
 " Plug 'mileszs/ack.vim'
-Plug 'jremmen/vim-ripgrep'
+Plug 'jremmen/vim-ripgrep', {'frozen': 1}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mbbill/undotree'
-Plug 'gruvbox-community/gruvbox'
-" Plug 'sainnhe/gruvbox-material'
+
+"Language Server
+"---
+Plug 'majutsushi/tagbar'
 "Plug 'roxma/nvim-yarp'
 "Plug 'ncm2/ncm2'
 "Plug 'ncm2/ncm2-ultisnips'
 "Plug 'ncm2/ncm2-bufword'
 "Plug 'ncm2/ncm2-path'
 "Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'ncm2' }
-
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'wellle/tmux-complete.vim'
 Plug 'cespare/vim-toml'
 Plug 'dag/vim-fish'
-"Plug 'jackguo380/vim-lsp-cxx-highlight'
-"C++
-" Plug 'https://github.com/jansenm/vim-cmake.git'
+Plug 'pboettch/vim-cmake-syntax'
+Plug 'rhysd/vim-llvm'
 
 "Terminal Interactions
 "---
@@ -106,88 +119,32 @@ Plug 'airblade/vim-gitgutter'
 "Plug 'rhysd/git-messenger.vim'
 
 "Snippets
+"---
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+
 "Latex
+"---
 "Plug 'lervag/vimtex'
 "Plug 'brennier/quicktex'
-"
-"Markdown stuff
-"Plug 'mmai/vim-markdown-wiki'
-"Plug 'iamcco/mathjax-support-for-mkdp'
-"Plug 'iamcco/markdown-preview.vim'
-"Plug 'jtratner/vim-flavored-markdown'
-"Plug 'rhysd/vim-gfm-syntax'
-"Undo
 
 "Text Objects 
+"---
 "Plug 'coderifous/textobj-word-column.vim'
 "Plug 'glts/vim-textobj-indblock'
 "Plug 'kana/vim-textobj-user' 
 Plug 'wellle/targets.vim'
 Plug 'michaeljsmith/vim-indent-object'
 "Plug 'wellle/context.vim'
-"Plug 'junegunn/vim-peekaboo'
 " For camelCase word deletion
 "Plug 'Julian/vim-textobj-variable-segment'
-Plug 'bronson/vim-visual-star-search'
-
-"Syntax
-"Plug 'w0rp/ale'
-"Plug 'jiangmiao/auto-pairs'
-"Plug 'nathanaelkane/vim-indent-guides'
-Plug 'Yggdroot/indentLine'
-Plug 'pboettch/vim-cmake-syntax'
-Plug 'rhysd/vim-llvm'
-"Language pack for a lot of things
-"Plug 'sheerun/vim-polyglot'
-"
-"May not be needed with vs+<C-]> combo
-"Still may be good for looking at a codebase for the first time
-"Maybe
-Plug 'majutsushi/tagbar'
-" Plug 'ludovicchabant/vim-gutentags'
-
-"Front End Development
-"Plug 'pangloss/vim-javascript'
-"Plug 'othree/javascript-libraries-syntax.vim'
-"Plug 'carlitux/deoplete-ternjs'
-Plug 'tpope/vim-surround' "Why do I need this plugin again?
-" Plug 'Valloric/MatchTagAlways'
-"Plug 'mattn/emmet-vim'
-" Beautify is kinda weird when acting on html,
-" and benefit for javascript seems to be minimal
-"Plug 'maksimr/vim-jsbeautify'
-"
-"Colors
-"Plug 'drewtempelmeyer/palenight.vim'
-"Plug 'arcticicestudio/nord-vim'
-
-""Misc
-if has('nvim')
-	"Plug 'simnalamburt/vim-mundo'
-	Plug 'vimlab/split-term.vim'
-    "Plug 'Shougo/denite.nvim'
-endif
-if $SSH_CONNECTION
-    "Plug 'prabirshrestha/async.vim'
-    "Plug 'prabirshrestha/asyncomplete.vim'
-    "Plug 'prabirshrestha/asyncomplete-buffer.vim'
-    "Plug 'prabirshrestha/asyncomplete-file.vim'
-"elseif has('nvim')
-    "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    "Plug 'zchee/deoplete-jedi
-endif
 call plug#end()
+
+
 
 if !has('nvim')
 	set ttymouse=xterm2
-    "Plug 'Shougo/neocomplete.vim'
 endif
-"if $SSH_CONNECTION
-"elseif has('nvim')
-    "call deoplete#custom#set('ultisnips', 'rank', 9999)
-"endif
 
 "Making ALt usable on Linux
 for i in range(97,122)
@@ -262,15 +219,12 @@ nnoremap <leader>ol :CocList<CR>
 nnoremap <leader>oc :CocList commands<CR>
 nnoremap <leader>oy :CocList yank<CR>
 
-"My hack so that I don't need to modify the plugin itself
-command! -bang -nargs=? GitRipGrep
-    \ :exe ':Rg --hidden -g "!.git" ' . ''.shellescape(<q-args>) . ' '.shellescape(systemlist('git rev-parse --show-toplevel')[0])
-"To include hidden files too
-command! -bang -nargs=? RipGrep
-    \ : exe ':Rg --hidden -g "!.git" '. ''.shellescape(<q-args>)
-command! -bang -nargs=* GRg
-    \ call fzf#vim#grep('rg --hidden -g "!.git" '.shellescape(<q-args>), 0,
-        \ {'dir': systemlist('git rev-parse --show-toplevel')[0]}, <bang>0)
+"My wrapper so that I don't need to modify the plugin itself
+"fun
+let g:rg_command = 'rg --vimgrep --hidden -g "!.git"'
+"command! -bang -nargs=* GRg
+    "\ call fzf#vim#grep('rg --hidden -g "!.git" '.shellescape(<q-args>), 0,
+        "\ {'dir': systemlist('git rev-parse --show-toplevel')[0]}, <bang>0)
 "This way doesn't work for some reason
   "\ call fzf#vim#grep(<q-args>, 0, {'source': 'rg --hidden ', 'dir': systemlist('git rev-parse --show-toplevel')[0]}, <bang>0)
 command! -bang -nargs=* GGrep
@@ -281,11 +235,14 @@ command! -bang -nargs=* GGrep
 " This is a fugitive mapping, not FZF
 nnoremap <leader>ff :GitRipGrep 
 nnoremap <leader>fg :Ggrep 
+" Note I modified the source code for this
 nnoremap <leader>fa :RipGrep 
 "nnoremap <leader>fs :Ggrep <C-r><C-w><CR>
 " nnoremap <leader>fr :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
-"" rename current word
+" rename current word
 nmap <leader>fr <Plug>(coc-rename)
+" If you want to do something more complex than renaming(like with a macro)
+nmap <leader>cr <Plug>(coc-refactor)
 
 nnoremap <leader>sl :VtrSendLinesToRunner<CR>
 vnoremap <leader>sl :VtrSendLinesToRunner<CR>
