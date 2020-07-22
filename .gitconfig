@@ -95,3 +95,5 @@
   ;linenumber = normal
 ;[color]
 	;pager = no
+[grep]
+	extendRegexp = true

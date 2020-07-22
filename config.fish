@@ -3,6 +3,10 @@ function j
     fasd_cd -d $argv
 end
 
+function rm
+    /usr/bin/rm -i $argv
+end
+
 function jj
     fasd_cd -d -i 
 end

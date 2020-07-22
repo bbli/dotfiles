@@ -232,21 +232,28 @@ nmap <leader>gl :VTerm<CR>git tree<CR>
 nmap <leader>gs :G<CR>
 nnoremap <leader>gd :Gvdiff 
 
-command! -bang -nargs=? -complete=dir HFiles
-  \ call fzf#vim#files(<q-args>, {'source': 'rg --hidden --ignore .git -g ""'}, <bang>0)
-command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, {'source': 'rg --ignore .git -g ""'}, <bang>0)
-
 nnoremap <leader>os :VTerm<CR>
 nnoremap <leader>ot :tab split<CR>
 
+" fzf and ripgrep settings
+let g:fzf_action = {
+    \ 'ctrl-t': 'tab split',
+    \ 'ctrl-i': 'split',
+    \ 'ctrl-s': 'vsplit'
+    \ }
+command! -bang -nargs=? -complete=dir HFiles
+  "\ call fzf#vim#files(<q-args>, {'source': 'rg --hidden --ignore .git -g ""'}, <bang>0)
+  \ call fzf#vim#files(<q-args>, fzf#wrap({'source': 'rg --hidden --ignore .git'}), <bang>0)
+"command! -bang -nargs=? -complete=dir Files
+  "\ call fzf#vim#files(<q-args>, {'source': 'rg --ignore .git -g ""'}, <bang>0)
+nnoremap <leader>oo :GFiles<CR>
 nnoremap <leader>oa :HFiles<CR>
-cnoremap hh :Helptags<CR>
 "fix this
 " nnoremap <leader>op call fzf#vim#complete#path('rg --files')
+nnoremap <leader>om :Helptags<CR>
 nnoremap <leader>oa :FZF<CR>
+nnoremap <leader>ob :CocList buffers<CR>
 " nnoremap <leader>oi :HFiles<CR>
-nnoremap <leader>oo :GFiles<CR>
 " nnoremap <leader>ob :Files ../<CR>
 nnoremap <leader>oh :History<CR>
 " nnoremap <leader>op :CocList mru<CR>
@@ -255,15 +262,31 @@ nnoremap <leader>ol :CocList<CR>
 nnoremap <leader>oc :CocList commands<CR>
 nnoremap <leader>oy :CocList yank<CR>
 
-nnoremap <leader>ff :OverCommandLine<CR>Ggrep 
-nnoremap <leader>fa :OverCommandLine<CR>Rg  
-nnoremap <leader>fs :OverCommandLine<CR>Ggrep <C-r><C-w><CR>
+"My hack so that I don't need to modify the plugin itself
+command! -bang -nargs=? GitRipGrep
+    \ :exe ':Rg --hidden -g "!.git" ' . ''.shellescape(<q-args>) . ' '.shellescape(systemlist('git rev-parse --show-toplevel')[0])
+"To include hidden files too
+command! -bang -nargs=? RipGrep
+    \ : exe ':Rg --hidden -g "!.git" '. ''.shellescape(<q-args>)
+command! -bang -nargs=* GRg
+    \ call fzf#vim#grep('rg --hidden -g "!.git" '.shellescape(<q-args>), 0,
+        \ {'dir': systemlist('git rev-parse --show-toplevel')[0]}, <bang>0)
+"This way doesn't work for some reason
+  "\ call fzf#vim#grep(<q-args>, 0, {'source': 'rg --hidden ', 'dir': systemlist('git rev-parse --show-toplevel')[0]}, <bang>0)
+command! -bang -nargs=* GGrep
+        \ call fzf#vim#grep(
+            \   'git grep --line-number -- '.shellescape(<q-args>), 0,
+            \   {'dir': systemlist('git rev-parse --show-toplevel')[0]}, <bang>0)
+
+" This is a fugitive mapping, not FZF
+nnoremap <leader>ff :GitRipGrep 
+nnoremap <leader>fg :Ggrep 
+nnoremap <leader>fa :RipGrep 
+"nnoremap <leader>fs :Ggrep <C-r><C-w><CR>
 " nnoremap <leader>fr :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
-nnoremap <leader>fw :OverCommandLine<CR>%s/
 "" rename current word
 nmap <leader>fr <Plug>(coc-rename)
 
-nnoremap s <Nop>
 nnoremap <leader>sl :VtrSendLinesToRunner<CR>
 vnoremap <leader>sl :VtrSendLinesToRunner<CR>
 nnoremap <leader>ss :VtrSendCommand<CR>
