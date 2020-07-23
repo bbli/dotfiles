@@ -75,9 +75,10 @@ Plug 'tpope/vim-surround' "Why do I need this plugin again?
 "---
 Plug 'scrooloose/nerdtree'
 "Plug 'milkypostman/vim-togglelist'
-"Plug 'romainl/vim-qf'
+Plug 'romainl/vim-qf'
 " Plug 'mileszs/ack.vim'
-Plug 'jremmen/vim-ripgrep', {'frozen': 1}
+"Plug 'jremmen/vim-ripgrep', {'frozen': 1}
+Plug 'bbli/vim-ripgrep'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mbbill/undotree'
@@ -215,6 +216,7 @@ nnoremap <leader>oh :History<CR>
 nnoremap <leader>ol :CocList<CR>
 nnoremap <leader>oc :CocList commands<CR>
 nnoremap <leader>oy :CocList yank<CR>
+nnoremap <leader>or :reg<CR>
 
 "My wrapper so that I don't need to modify the plugin itself
 "fun
@@ -253,11 +255,13 @@ nnoremap <leader>tt :TagbarToggle<CR>
 nnoremap <leader>tw :AirlineToggleWhitespace<CR>
 nnoremap <leader>ts :set spell!<CR>
 nnoremap <leader>tn :NERDTreeToggle<CR>
-nnoremap <leader>tp :set nopaste<CR>
-nnoremap <leader>ti :IndentGuidesToggle<CR>
-nnoremap <leader>tr :reg<CR>
-nmap <leader>tq :call ToggleQuickfixList()<CR>
-nmap <leader>tl :call ToggleLocationList()<CR>
+nnoremap <leader>tp :set paste!<CR>
+
+nnoremap <leader>tr :TabooRename 
+nnoremap <leader>ts :TabooReset<CR>
+"nnoremap <leader>ti :IndentGuidesToggle<CR>
+"nmap <leader>tq :call ToggleQuickfixList()<CR>
+"nmap <leader>tl :call ToggleLocationList()<CR>
 
 nnoremap <F9> :!ctags -R --sort=yes .<CR>
 

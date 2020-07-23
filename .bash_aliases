@@ -73,10 +73,6 @@ alias skype='/opt/skype/bin/skypeforlinux'
 
 alias nvim-server='/home/benson/Desktop/Docker_Builds/artful-neovim/nvim-server'
 
-## Remote Sync
-alias syncML='rsync -avzHh --progress --exclude "*.json" --exclude "*.qbio-vip4" --exclude "*.pt" bbli@qbio-vip4.physics.ucsb.edu:/home/bbli/ML_Code/UNet/Code ~/Documents/Server_Code/'
-## create sync for real 
-
 # z = compress, v = verbose, H = hardlinks, h = human readable
 # a = archive-copies recursively and perserves timestamps
 
