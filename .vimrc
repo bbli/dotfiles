@@ -164,17 +164,14 @@ let maplocalleader="-"
 nnoremap <leader><leader>t :MerlinTypeOf<CR>
 nnoremap <leader><leader>i :call <SID>show_documentation()<CR>
 
-" nnoremap <leader><leader>t :tabn<CR>
-cnoremap tn tabn
 
 " nnoremap <leader><leader>m qm
 nnoremap <leader><leader>m @m
 nnoremap <leader><leader>z :nohlsearch<CR>
-
+"nnoremap <C-t> <C-z>
 "Comments
 nmap <leader><leader>c <Plug>NERDCommenterToggle
 vmap <leader><leader>c <Plug>NERDCommenterToggle
-
 " <C-^> switches between two files
 nnoremap <leader><leader>s <C-^>
 
@@ -279,10 +276,13 @@ vnoremap <leader>y "zy
 " nmap <leader>jj <Plug>(coc-funcobj-a)
 
 " nnoremap <leader>jt <C-]>
+nmap <leader>jf <Plug>(coc-float-jump)
 nmap <leader>jd <Plug>(coc-definition)
 "nmap <leader>jt :tab split<CR><Plug>(coc-definition)
 " nnoremap <leader>jb <C-t>
 nmap <leader>js :vs<CR><Plug>(coc-definition)
+nmap <leader>jD <Plug>(coc-declaration)
+"nmap <leader>ji <Plug>(coc-implementation)
 nmap <leader>jE <Plug>(coc-diagnostic-prev)
 nmap <leader>je <Plug>(coc-diagnostic-next)
 nnoremap <leader>jc g;
@@ -298,7 +298,6 @@ nmap <leader>dh :diffget //3<CR>
 nmap <leader>dl :diffget //2<CR>
 nnoremap <leader>dp dp
 
-nnoremap <C-t> <C-z>
 "nnoremap <leader>mr qa
 "nnoremap <leader>mm @a
 "autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
@@ -379,13 +378,18 @@ nnoremap gj j
 nnoremap C c$
 nnoremap D d$
 nnoremap Y y$
-nnoremap gb gi
 nnoremap E $
+nnoremap gE g$
+nnoremap W 0w
+" to jump between brackets/parantheses
+nnoremap s %
+nnoremap S <C-^>
 "nnoremap w W
 "nnoremap W w
 "nnoremap b B
 "nnoremap B b
 
+nnoremap gb gi
 """"""""Command Mode maps""""""""
 cnoremap sE %s
 " nnoremap / /\<
