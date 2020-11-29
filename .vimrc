@@ -3,6 +3,7 @@
 set shell=/usr/bin/bash
 syntax enable
 set runtimepath+=~/.vim/my-snippets
+set runtimepath+=~/Dropbox/Code/Projects/my_plugin
 set nocompatible
 set hidden
 set number relativenumber
@@ -41,11 +42,15 @@ set shiftwidth=4
 set autoindent
 set undofile
 set undodir=~/.undodir/
+set inccommand=nosplit
+set colorcolumn=80
 
 
 """"""""Plugins""""""""
 call plug#begin('~/.vim/plugged')
-Plug 'ThePrimeagen/vim-be-good'
+"Plug 'ThePrimeagen/vim-be-good'
+"Plug '~/Dropbox/Code/Projects/my-plugin'
+"Plug 'bbli/my_plugin', {'do': ':UpdateRemotePlugins'}
 
 "Visual
 "---
@@ -202,7 +207,6 @@ vmap <leader><leader>c <Plug>NERDCommenterToggle
 "nnoremap <CR> n
 nnoremap s %
 nnoremap <leader><leader>s <C-^>
-nnoremap <C-m> <C-^>
 " visual-mode
 "xmap s <Plug>Sneak_s
 "xmap S <Plug>Sneak_S
@@ -245,19 +249,29 @@ command! -bang -nargs=? -complete=dir HFiles
 nnoremap <leader>oo :GFiles<CR>
 nnoremap <leader>oa :HFiles<CR>
 "fix this
-" nnoremap <leader>op call fzf#vim#complete#path('rg --files')
+"2
+"command! -bang OP call fzf#run(fzf#wrap({'source':'rg --files --hidden','sink':'' 'dir':'/home/benson'}))<CR>
+"1
+"command! -bang OP call fzf#vim#complete#path('rg --files',{'dir':"/home/benson"})
+"nnoremap <leader>op :call fzf#vim#complete#path('rg --files',{'dir':'/home/benson'})<CR>
+nnoremap <leader>ot :tab split<CR>
+"nnoremap <leader>op :OP<CR>
 nnoremap <leader>om :Helptags<CR>
 nnoremap <leader>oa :FZF<CR>
 nnoremap <leader>ob :CocList buffers<CR>
+nnoremap <leader>od :BD<CR>
+nnoremap <leader>oc :History:<CR>
+nnoremap <leader>os :History/<CR>
+nnoremap / :History/<CR>
+"nnoremap : :History:<CR>
+"nnoremap <leader>: :
 " nnoremap <leader>oi :HFiles<CR>
 " nnoremap <leader>ob :Files ../<CR>
 nnoremap <leader>oh :History<CR>
-" nnoremap <leader>op :CocList mru<CR>
-"nnoremap <leader><leader>oh :FZF ~<CR>
-nnoremap <leader>ol :CocList<CR>
-nnoremap <leader>oc :CocList commands<CR>
 nnoremap <leader>oy :CocList yank<CR>
 nnoremap <leader>or :reg<CR>
+" nnoremap <leader>op :CocList mru<CR>
+"nnoremap <leader><leader>oh :FZF ~<CR>
 
 "My wrapper so that I don't need to modify the plugin itself
 "fun
@@ -272,38 +286,88 @@ command! -bang -nargs=* GGrep
             \   'git grep --line-number -- '.shellescape(<q-args>), 0,
             \   {'dir': systemlist('git rev-parse --show-toplevel')[0]}, <bang>0)
 
-" This is a fugitive mapping, not FZF
-nnoremap <leader>ff :GitRipGrep 
-nnoremap <leader>fg :Ggrep 
-" Note I modified the source code for this
-nnoremap <leader>fa :RipGrep 
-"nnoremap <leader>fs :Ggrep <C-r><C-w><CR>
-" nnoremap <leader>fr :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
-" rename current word
-nmap <leader>fr <Plug>(coc-rename)
-" If you want to do something more complex than renaming(like with a macro)
-nmap <leader>cr <Plug>(coc-refactor)
 
-nnoremap <leader>sl :VtrSendLinesToRunner<CR>
-vnoremap <leader>sl :VtrSendLinesToRunner<CR>
-nnoremap <leader>ss :VtrSendCommand<CR>
-nnoremap <leader>sp :VtrAttachToPane<CR>
-nnoremap <leader>sf :VtrFlushCommand<CR>
-nnoremap <leader>sd :VtrSendCtrlD<CR>
+nnoremap <leader>ff :OverCommandLine<CR>GitRipGrep 
+nnoremap <leader>fa :OverCommandLine<CR>RipGrep 
+nnoremap <leader>fw :OverCommandLine<CR>Ggrep <C-r><C-w><CR>
+
+nnoremap <leader>fr :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
+nnoremap <leader>fm :OverCommandLine<CR>g/\<<C-r><C-w>\>/norm! @m<CR>
+" :'<,'>norm! @a to apply the macro only to a visual selection
+" (hit : in visual mode to switch to command mode)
+
+nmap <leader>cr <Plug>(coc-rename)
+" If you want to do something more complex than renaming(like with a macro)
+" Though that said, I can run macros on quickfix list with g + norm combo
+"nmap <leader>cr <Plug>(coc-refactor)
+
+"Not really used
+"nnoremap <leader>fg :Ggrep 
+" Note I modified the source code for this
+"nnoremap <leader>fs :Ggrep <C-r><C-w><CR>
+"nnoremap <leader>cc :OverCommandLine<CR>
+
+nnoremap <leader>sp :SlimuxREPLConfigure<CR>
+nnoremap <leader>ss :SlimuxShellRun
+nnoremap <leader>st :TestNearest<CR>
+nnoremap <leader>sl :TestLast<CR>
+" vim test also integrates with projectionist plugin
+"let g:VimuxUseNearest=1
+"nnoremap <leader>sp :VimuxOpenRunner<CR>
+
+"nnoremap <leader>sl :VimuxPromptCommand<CR>
+"nnoremap <leader>ss :VimuxRunLastCommand<CR>
+"nnoremap <leader>si :VimuxInspectRunner<CR>
+"nnoremap <localleader>vs :VimuxInterruptRunner<CR>
+"
+"nnoremap <leader>sl :VtrSendLinesToRunner<CR>
+"vnoremap <leader>sl :VtrSendLinesToRunner<CR>
+"nnoremap <leader>sp :VtrAttachToPane<CR>
+"nnoremap <leader>ss :VtrSendCommand<CR>
+"nnoremap <leader>sf :VtrFlushCommand<CR>
+
+" Vimux's version is better
+"nnoremap <leader>sz :VtrFocusRunner<CR>
+" These didn't work that well
+"nnoremap <leader>sd :VtrDetachRunner<CR>
+"nnoremap <leader>sa :VtrReattachRunner<CR>
+"
+"nnoremap <leader>sd :VtrSendCtrlD<CR>
+"nnoremap <leader>ss %
+
+nnoremap <leader>to :Voom markdown<CR>
+nnoremap <leader>tw :AirlineToggleWhitespace<CR>
 
 nnoremap <leader>tu :UndotreeToggle<CR>
 nnoremap <leader>tt :TagbarToggle<CR>
-nnoremap <leader>tw :AirlineToggleWhitespace<CR>
 nnoremap <leader>ts :set spell!<CR>
 nnoremap <leader>tn :NERDTreeToggle<CR>
 nnoremap <leader>tp :set paste!<CR>
 
 nnoremap <leader>tr :TabooRename 
 nnoremap <leader>ts :TabooReset<CR>
+nnoremap <leader>tc :tabc<CR>
 "nnoremap <leader>ti :IndentGuidesToggle<CR>
+
+"nmap <leader>tq :copen<CR>
+"nmap <leader>tl :lopen<CR>
 "nmap <leader>tq :call ToggleQuickfixList()<CR>
 "nmap <leader>tl :call ToggleLocationList()<CR>
+nmap <leader>tl <Plug>(qf_loc_toggle)
+"let g:qf_auto_open_quickfix = 0
+"let g:qf_auto_open_loclist = 0
+"let g:qf_shorten_path = 0
 
+nnoremap <C-w>; <C-w>p
+
+nmap <leader>tq <Plug>(qf_qf_toggle)
+nmap <leader>qq <Plug>(qf_qf_switch)
+nmap <leader>qn <Plug>(qf_newer)
+nmap <leader>qN <Plug>(qf_older)
+nnoremap <leader>qr :cdo %s/
+
+" coc's version is more useful as it will generate based on file path, not current
+" directory
 nnoremap <F9> :!ctags -R --sort=yes .<CR>
 
 nnoremap <leader>p "zp
@@ -320,21 +384,21 @@ vnoremap <leader>y "zy
 " nmap <leader>ji <Plug>(coc-funcobj-i)
 " nmap <leader>jj <Plug>(coc-funcobj-a)
 
-" nnoremap <leader>jt <C-]>
 nmap <leader>jf <Plug>(coc-float-jump)
 nmap <leader>jd <Plug>(coc-definition)
+nmap <leader>ji <Plug>(coc-implementation)
 "nmap <leader>jt :tab split<CR><Plug>(coc-definition)
 " nnoremap <leader>jb <C-t>
 nmap <leader>js :vs<CR><Plug>(coc-definition)
+nmap <leader>jr <Plug>(coc-references)
 nmap <leader>jD <Plug>(coc-declaration)
 "nmap <leader>ji <Plug>(coc-implementation)
 nmap <leader>jE <Plug>(coc-diagnostic-prev)
 nmap <leader>je <Plug>(coc-diagnostic-next)
 nnoremap <leader>jc g;
 nnoremap <leader>jC g,
-" tbh * is better
-nmap <leader>jr <Plug>(coc-references)
-nnoremap <leader>jw :OverCommandLine<CR>Ggrep <C-r><C-w><CR>
+nnoremap <leader>jm `M
+nnoremap <leader>mm mM
 
 nnoremap <leader>dn ]c
 nnoremap <leader>dN [c
@@ -354,16 +418,14 @@ nnoremap <localleader>g :e ~/.gitconfig<CR>
 nnoremap <localleader>n :e ~/.config/nvim/init.vim<CR>
 nnoremap <localleader>c :CocConfig<CR>
 nnoremap <localleader>f :e ~/.config/fish/config.fish<CR>
+nnoremap <localleader>l :e ~/.init.lua<CR>
 
-"nnoremap <localleader>vp :VimuxPromptCommand<CR>
-"nnoremap <localleader>r :VimuxRunLastCommand<CR>
-"nnoremap <localleader>vs :VimuxInterruptRunner<CR>
 
 nnoremap <localleader>ww :MarkdownPreview<CR>
 nnoremap <localleader>wc :MarkdownPreviewStop<CR>
 
 "nnoremap <localleader>e :!python % <CR>
-nmap <localleader>e <Plug>(processing-run)
+"nmap <localleader>e <Plug>(processing-run)
 
 "nnoremap <localleader>t <C-W>T
 vnoremap <localleader>y "+y
@@ -372,12 +434,18 @@ vnoremap <localleader>d "+d
 nnoremap <localleader>d "+d
 """"""""Meta Keys""""""""
 "To move lines intuitively
-nnoremap <C-j> :m .+1<CR>==
+"Alt and Shift combos won't work with K
 nnoremap <C-k> :m .-2<CR>==
-vnoremap <C-j> :m '>+1<CR>gv=gv
-vnoremap <C-k> :m '<-2<CR>gv=gv
+nnoremap <C-j> :m .+1<CR>==
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
 
 nnoremap <C-w><Space> <C-w>=
+
+"nnoremap <C-h> <C-w><C-h>
+"nnoremap <C-j> <C-w><C-j>
+"nnoremap <C-k> <C-w><C-k>
+"nnoremap <C-l> <C-w><C-l>
 
 map <M-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
@@ -397,16 +465,32 @@ vnoremap ;c <C-c>
 inoremap ;; ;
 vnoremap ;w <C-c>:w<CR>
 inoremap ;w <C-c>:w<CR>
-nnoremap ;n :bn<CR>
 " nnoremap ;q <C-z>
 nnoremap ;q :q<CR>
 nnoremap ;z :q!<CR>
 nnoremap ;w <C-c>:w<CR>
 "nnoremap ;;n :2bn<CR>
 "nnoremap ;;N :2bp<CR>
+nnoremap ;n :bn<CR>
 nnoremap ;N :bp<CR>
-nnoremap ;d :bwipeout<CR>
+nnoremap <silent> ;d :bwipeout<CR>
 nnoremap ;D :bwipeout!<CR>
+
+function! s:list_buffers()
+  redir => list
+  silent ls
+  redir END
+  return split(list, "\n")
+endfunction
+
+function! s:delete_buffers(lines)
+  execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
+endfunction
+
+command! BD call fzf#run(fzf#wrap({'source': s:list_buffers(),
+  \ 'sink*': { lines -> s:delete_buffers(lines) },
+  \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'}))
+
 nnoremap ;; ;
 nnoremap <leader>; ,
 
@@ -427,14 +511,20 @@ nnoremap E $
 nnoremap gE g$
 nnoremap W 0w
 " to jump between brackets/parantheses
-nnoremap s %
-nnoremap S <C-^>
+"nnoremap s %
+"nnoremap S <C-^>
 "nnoremap w W
 "nnoremap W w
 "nnoremap b B
 "nnoremap B b
 
 nnoremap gb gi
+
+"Training vim skip
+nnoremap h <Nop>
+nnoremap l <Nop>
+
+nnoremap <C-w>m <C-w>p
 """"""""Command Mode maps""""""""
 cnoremap sE %s
 " nnoremap / /\<
@@ -444,12 +534,12 @@ cnoremap cn cnext
 cnoremap cN cprev
 " cnoremap SB set scrollbind
 " cnoremap NSB set noscrollbind
-cnoremap tc tabc
+"cnoremap tc tabc
 cnoremap tn tabnext
 cnoremap tN tabprevious
+"cnoremap tC tabc<CR>
 " cnoremap vsb vertical sb
-cnoremap tj tjump
-" cnoremap think e ~/Dropbox/Notes/MyThoughts/Ways-of-Thinking/Comp_Sci_Thinking/Design-Principles.md
+" nnoremap <leader><leader>t :tabn<CR>
 
 
 """"""""Operator Mode maps""""""""
@@ -464,6 +554,7 @@ cnoremap tj tjump
 " and I only mapped it because I was fixated on insert normal mode
 inoremap ]] <C-c>A
 
+inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files',fzf#wrap({'dir':'/home/benson'}))
 "inoremap " ""<left>
 "inoremap ' ''<left>
 "inoremap ( ()<left>
@@ -483,6 +574,7 @@ inoremap ]] <C-c>A
 
 """"""""Colors""""""""
 "makes vim colorscheme the same as the terminal
+
 if exists('+termguicolors')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -506,18 +598,32 @@ if (empty($TMUX))
   endif
 endif
 
+let g:taboo_tabline = 0
 
+let NERDTreeHijackNetrw=1
 " set termguicolors
 "Makes a solarized approximation for vim
 "let g:solarized_termcolors=256
-colorscheme gruvbox
-" colorscheme neodark
-" colorscheme deus
 let g:gruvbox_contrast_dark="soft"
 " let g:gruvbox_bold=0
 let g:gruvbox_underline=1
 let g:gruvbox_material_background = 'soft'
 set background=dark
+colorscheme gruvbox
+"colorscheme gruvbox-material
+" colorscheme neodark
+" colorscheme deus
+if has('termguicolors')
+    set termguicolors
+endif
+let g:sonokai_style = 'shusia'
+let g:sonokai_diagnostic_line_highlight = 1
+"colorscheme sonokai
+
+let g:edge_style = 'aura'
+let g:edge_diagnostic_line_highlight = 1
+"colorscheme edge
+"
 "augroup filetype_color
 	"autocmd!
 	"autocmd FileType text color nova
@@ -560,6 +666,7 @@ autocmd BufNewFile,BufReadPost *.txt set filetype=markdown "Make vim recognize .
 autocmd BufNewFile,BufReadPost CMakeLists.txt set filetype=cmake "except cmake files
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 
+autocmd FileType go let b:dispatch = 'go test'
 
 """"""""Misc""""""""
 " Allow saving of files as sudo when I forgot to start vim using sudo.
@@ -580,6 +687,7 @@ set completeopt=noinsert,menuone,noselect
 let g:toggle_list_no_mappings = 1
 let g:git_messenger_no_default_mappings = v:true
 
+let g:sneak#s_next = 1
 let g:indentLine_setColors = 0
 
 "let g:indent_guides_enable_on_vim_startup = 1
@@ -627,6 +735,17 @@ let g:vimtex_mappings_enabled=1
 "let g:ycm_python_binary_path = '/usr/bin/python3'
 
 " Customize fzf colors to match your color scheme
+let g:fzf_action = {
+    \ 'ctrl-t': 'tab split',
+    \ 'ctrl-i': 'split',
+    \ 'ctrl-s': 'vsplit'
+    \ }
+let g:fzf_layout = { 'window': 
+    \ { 'width': 1,
+    \ 'height': 0.35,
+    \ 'yoffset': 1,
+    \ 'border': 'rounded',
+    \}}
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
 	\ 'bg':      ['bg', 'Normal'],
@@ -756,7 +875,7 @@ set nowritebackup
 set cmdheight=1
 
 " You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
+set updatetime=200
 
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
@@ -875,9 +994,6 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 " nn <silent><buffer> <C-k> :call CocLocations('ccls','$ccls/navigate',{'direction':'L'})<cr>
 " nn <silent><buffer> <C-j> :call CocLocations('ccls','$ccls/navigate',{'direction':'R'})<cr>
 " nn <silent><buffer> <C-h> :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<cr>
-nn <leader>ci :CocInfo<CR>
-nn <leader>cl :CocOpenLog<CR>
-nnoremap <leader>cd :CocCommand workspace.showOutput<CR>
 
 " Make sure to use tabs
 " set autoindent
@@ -897,3 +1013,31 @@ highlight LspCxxHlSymClassVariable ctermfg=White
 highlight LspCxxHlSymStructMethod ctermfg=White
 " highlight LspCxxHlSymFunction ctermfg=White
 
+
+" $ccls/member
+" member variables / variables in a namespace
+" Aka where all the variables are declared first
+nn <silent> <leader>xm :call CocLocations('ccls','$ccls/member')<cr>
+
+"autocmd BufCreate *py :CocCommand python.enableLinting
+
+" How to debug Coc
+nn <leader>ci :CocInfo<CR>
+nn <leader>co :CocOpenLog<CR>
+nnoremap <leader>cd :CocCommand workspace.showOutput<CR>
+nnoremap <leader>cl :CocList<CR>
+nnoremap <leader>cc :CocList commands<CR>
+" Check settings on this website: https://github.com/neoclide/coc.nvim/blob/master/data/schema.json
+"
+autocmd BufWritePost * GitGutter
+
+let g:unstack_mapkey=''
+let g:unstack_layout="portrait"
+
+let test#strategy = "slimux"
+
+" Create mappings (with leader)
+"nmap <Leader>as <Plug>(AerojumpSpace)
+"nmap <Leader>ab <Plug>(AerojumpBolt)
+"nmap <Leader>aa <Plug>(AerojumpFromCursorBolt)
+nmap <Leader>jj <Plug>(AerojumpDefault)
