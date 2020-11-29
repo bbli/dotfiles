@@ -64,7 +64,7 @@ alias ptime='python -m cProfile -s cumulative'
 alias attach='tmux a -t'
 alias switch='tmux switch-client -t'
 alias tkill='tmux kill-ses -t'
-alias nv='nvim'
+alias nv='~/.local/bin/neovim'
 alias vi='vim'
 
 ## Docker
@@ -77,6 +77,8 @@ alias nvim-server='/home/benson/Desktop/Docker_Builds/artful-neovim/nvim-server'
 # a = archive-copies recursively and perserves timestamps
 
 alias tb='tensorboard'
+
+alias dgo='/home/benson/Software/distributed_systems_go/bin/go'
 
 # source <(curl -Ss https://raw.githubusercontent.com/wfxr/forgit/master/forgit.plugin.zsh)
 #Not worth b/c I lose out on ssh fzf completion -> just do **<TAB> and tmux to navigate

@@ -20,7 +20,7 @@ function du
 end
 
 function nv
-    nvim $argv
+    /home/benson/.local/bin/neovim $argv
 end
 
 function vi
@@ -29,6 +29,10 @@ end
 
 function psf
     procs --tree | fzf
+end
+
+function ptree
+    procs --tree
 end
 
 function pac
@@ -45,7 +49,7 @@ function ls
 end
 
 function ll
-    exa --header --long $argv
+    exa --header --long -H -m $argv
 end
 
 function tree
@@ -78,6 +82,10 @@ function notes
     cd ~/Dropbox/Notes
 end
 
+function rdb
+    cgdb -d rust-gdb
+end
+
 function proj
     cd (git rev-parse --git-dir)/..
 end
@@ -85,11 +93,16 @@ end
 function snip
     cd ~/.vim/my-snippets/UltiSnips
 end
+
+function dgo
+    /home/benson/Software/distributed_systems_go/bin/go $argv
+end
 # Variables
 set SPACEFISH_PROMPT_ADD_NEWLINE false
-set SPACEFISH_PROMPT_SEPARATE_LINE false
+set SPACEFISH_PROMPT_SEPARATE_LINE true
 set SPACEFISH_DIR_COLOR cyan
 set SPACEFISH_PACKAGE_SHOW false
 set SPACEFISH_RUST_SHOW false
+set SPACEFISH_GOLANG_SHOW false
 
 source /opt/miniconda3/etc/fish/conf.d/conda.fish
