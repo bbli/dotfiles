@@ -55,34 +55,46 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'edkolev/promptline.vim'
 Plug 'mhinz/vim-startify'
 Plug 'gruvbox-community/gruvbox'
-" Plug 'sainnhe/gruvbox-material'
+"Plug 'sainnhe/sonokai'
+"Plug 'sainnhe/edge'
+Plug 'sainnhe/gruvbox-material'
 
 "Conveniences
 "---
+" For renaming tabs
 Plug 'gcmt/taboo.vim'
 " Below Plugin not that useful since I can use tabs for that purpose
 "Plug 'troydm/zoomwintab.vim'
 Plug 'osyo-manga/vim-over'
 "Plug 'unblevable/quick-scope'
-"Plug 'justinmk/vim-sneak' "didn't really find myself using this
 "Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdcommenter'
 Plug 'bronson/vim-visual-star-search'
 Plug 'Yggdroot/indentLine'
-Plug 'tpope/vim-surround' "Why do I need this plugin again?
+"Plug 'tpope/vim-surround'
+Plug 'machakann/vim-sandwich'
+
+"Plug 'justinmk/vim-sneak'
+"Plug 'goldfeld/vim-seek'
+Plug 'jayflo/vim-skip'
+Plug 'ripxorip/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
 
 "Special Windows
 "---
 Plug 'scrooloose/nerdtree'
+"Plug 'tpope/vim-vinegar'
 "Plug 'milkypostman/vim-togglelist'
+"Plug 'jceb/vim-editqf'
 Plug 'romainl/vim-qf'
 " Plug 'mileszs/ack.vim'
 "Plug 'jremmen/vim-ripgrep', {'frozen': 1}
 Plug 'bbli/vim-ripgrep'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all','frozen':1}
+Plug 'junegunn/fzf.vim', {'frozen': 1}
 Plug 'mbbill/undotree'
+Plug 'vimlab/split-term.vim'
 
+Plug 'vim-voom/VOoM'
 "Language Server
 "---
 Plug 'majutsushi/tagbar'
@@ -93,20 +105,25 @@ Plug 'majutsushi/tagbar'
 "Plug 'ncm2/ncm2-path'
 "Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'ncm2' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'jackguo380/vim-lsp-cxx-highlight'
+"Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'wellle/tmux-complete.vim'
 Plug 'cespare/vim-toml'
 Plug 'dag/vim-fish'
 Plug 'pboettch/vim-cmake-syntax'
 Plug 'rhysd/vim-llvm'
+Plug 'nvim-treesitter/nvim-treesitter', {'frozen':1}
 
 "Terminal Interactions
 "---
+Plug 'vim-test/vim-test'
+Plug 'esamattis/slimux'
 " For asynchronous make builds
-"Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-dispatch'
+"Plug 'neomake/neomake'
+Plug 'mattboehm/vim-unstack'
 "Plug 'benmills/vimux'
 "Plug 'jpalardy/vim-slime' "useful for creating specific state in script for profiling
-Plug 'christoomey/vim-tmux-runner'
+"Plug 'christoomey/vim-tmux-runner'
 
 "Git
 "---
@@ -140,7 +157,7 @@ Plug 'michaeljsmith/vim-indent-object'
 " For camelCase word deletion
 "Plug 'Julian/vim-textobj-variable-segment'
 call plug#end()
-
+source /home/benson/.vim/plugged/vim-sandwich/macros/sandwich/keymap/surround.vim
 
 
 if !has('nvim')
@@ -153,28 +170,45 @@ for i in range(97,122)
 	    exec "map \e".c." <M-".c.">"
 		  exec "map! \e".c." <M-".c.">"
 	  endfor
-augroup markdown
-    au!
-    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
-augroup END
+"augroup markdown
+    "au!
+    "au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+"augroup END
 """Leader maps must be defined after this command.
 let mapleader=" "
 let maplocalleader="-"
 
 """"""""Leader Keys""""""""
-nnoremap <leader><leader>t :MerlinTypeOf<CR>
-nnoremap <leader><leader>i :call <SID>show_documentation()<CR>
+"nnoremap <leader><leader>t :MerlinTypeOf<CR>
+"nnoremap <leader><leader>i :call <SID>show_documentation()<CR>
+nnoremap <leader>l 40l
 
 
 " nnoremap <leader><leader>m qm
 nnoremap <leader><leader>m @m
 nnoremap <leader><leader>z :nohlsearch<CR>
-"nnoremap <C-t> <C-z>
+nnoremap <C-t> <C-z>
 "Comments
 nmap <leader><leader>c <Plug>NERDCommenterToggle
 vmap <leader><leader>c <Plug>NERDCommenterToggle
 " <C-^> switches between two files
+
+" 2-character Sneak (default)
+"nmap s <Plug>Sneak_s
+"nmap S <Plug>Sneak_S
+"nnoremap s %
+"nnoremap s /
+"nnoremap S ?
+"nnoremap <CR> n
+nnoremap s %
 nnoremap <leader><leader>s <C-^>
+nnoremap <C-m> <C-^>
+" visual-mode
+"xmap s <Plug>Sneak_s
+"xmap S <Plug>Sneak_S
+" operator-pending-mode
+"omap s <Plug>Sneak_s
+"omap S <Plug>Sneak_S
 
 nnoremap <leader>gm :Magit<CR>
 nmap <leader>gp <Plug>(GitGutterPreviewHunk)
@@ -182,20 +216,27 @@ nmap <leader>gp <Plug>(GitGutterPreviewHunk)
 " nmap <leader>gu <Plug>(GitGutterUndoHunk)
 nmap <leader>gn <Plug>(GitGutterNextHunk)
 nmap <leader>gN <Plug>(GitGutterPrevHunk)
+nmap <leader>gf :GitGutterFold<CR>
 " nmap <leader>go <Plug>(git-messenger)
-nmap <leader>gl :VTerm<CR>git tree<CR>
+nmap <leader>gl :Glog<CR>
+"nmap <leader>gl :VTerm<CR>git tree<CR>
 nmap <leader>gs :G<CR>
 nnoremap <leader>gd :Gvdiff 
 
-nnoremap <leader>os :VTerm<CR>
-nnoremap <leader>ot :tab split<CR>
+
+nnoremap <leader>ms :mks ~/.vim/sessions/default.vim<CR>
+nnoremap <leader>ls :source ~/.vim/sessions/default.vim<CR>
+nnoremap <leader>lv :source ~/.vimrc<CR>
+"nnoremap <leader>lt :write | edit | TSBufEnable highlight
+" using indirection since TSBufEnable won't be available until vim fully
+" finishes starting up
+let @T = "write | edit | TSBufEnable highlight"
+nnoremap <leader>lt :<C-R>T<CR>
+
+nnoremap <leader>el :UnstackFromTmux<CR>
+nnoremap <leader>ec :sign unplace<CR>
 
 " fzf and ripgrep settings
-let g:fzf_action = {
-    \ 'ctrl-t': 'tab split',
-    \ 'ctrl-i': 'split',
-    \ 'ctrl-s': 'vsplit'
-    \ }
 command! -bang -nargs=? -complete=dir HFiles
   "\ call fzf#vim#files(<q-args>, {'source': 'rg --hidden --ignore .git -g ""'}, <bang>0)
   \ call fzf#vim#files(<q-args>, fzf#wrap({'source': 'rg --hidden --ignore .git'}), <bang>0)
