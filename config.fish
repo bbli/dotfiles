@@ -106,3 +106,6 @@ set SPACEFISH_RUST_SHOW false
 set SPACEFISH_GOLANG_SHOW false
 
 source /opt/miniconda3/etc/fish/conf.d/conda.fish
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/benson/Software/cloud-sdk-stuff/google-cloud-sdk/path.fish.inc' ]; . '/home/benson/Software/cloud-sdk-stuff/google-cloud-sdk/path.fish.inc'; end

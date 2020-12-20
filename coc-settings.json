@@ -1,0 +1,80 @@
+{
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": [
+                "c",
+                "cpp",
+                "objc",
+                "objcpp"
+            ],
+            "rootPatterns": [
+                ".ccls",
+                "compile_commands.json",
+                ".vim/",
+                ".git/",
+                ".hg/"
+            ],
+            "initializationOptions": {
+                "cache": {
+                    "directory": "/tmp/ccls"
+                },
+                "highlight": {
+                    "lsRanges": true
+                }
+            }
+        },
+        "ocaml": {
+            "command": "opam",
+            "args": [
+                "config",
+                "exec",
+                "--",
+                "ocaml-language-server",
+                "--stdio"
+            ],
+            "filetypes": [
+                "ocaml",
+                "reason"
+            ]
+            //			"trace.server": "verbose"
+        }
+    },
+    "python.jediEnabled": false,
+    "python.analysis.diagnosticEnabled": true,
+    "python.condaPath": "/opt/miniconda3/bin/conda",
+    "python.linting.pylintArgs": [
+        "--init-hook",
+        "import sys; sys.path.append('/home/benson/Documents/lldb/llvm-project/lldb/packages/Python')"
+    ],
+    "python.autoComplete.extraPaths": [
+        "/home/benson/Documents/lldb/llvm-project/lldb/packages/Python"
+    ],
+    "coc.preferences.formatOnType": false,
+    "coc.preferences.formatOnSaveFiletypes": [],
+    "coc.preferences.useQuickfixForLocations": true,
+    "yank.enableCompletion": false,
+    "yank.list.maxsize": 20,
+    //    "coc.source.ccls.enable": false,
+    "ccls.codeLens.localVariables": false,
+    "ccls.codeLens.enabled": false,
+    "ccls.index.onChange": true,
+    "ccls.index.trackDependency": 2,
+    "ccls.completion.caseSensitivity": 0,
+    "ccls.highlighting.enabled.types": false,
+    "ccls.highlighting.enabled.namespaces": false,
+    "ccls.highlighting.enabled.typeAliases": true,
+    "ccls.highlighting.enabled.globalVariables": true,
+    "suggest.noselect": true,
+    "suggest.maxCompleteItemCount": 8,
+    "suggest.localityBonus": true,
+    "suggest.languageSourcePriority": 99,
+    "rust.jobs": 3,
+    "rust.clippy_preference": "on",
+    "rust-analyzer.inlayHints.chainingHints": true,
+    "rust-analyzer.inlayHints.typeHints": true,
+    "rust-analyzer.inlayHints.parameterHints": true,
+    "rust-analyzer.trace.server": "verbose",
+    "codeLens.enable": false,
+    "diagnostic.refreshAfterSave":true
+}

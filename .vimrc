@@ -61,8 +61,9 @@ Plug 'edkolev/promptline.vim'
 Plug 'mhinz/vim-startify'
 Plug 'gruvbox-community/gruvbox'
 "Plug 'sainnhe/sonokai'
-"Plug 'sainnhe/edge'
-Plug 'sainnhe/gruvbox-material'
+Plug 'sainnhe/edge'
+"Plug 'drewtempelmeyer/palenight.vim'
+Plug 'rakr/vim-one'
 
 "Conveniences
 "---
@@ -128,7 +129,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'mattboehm/vim-unstack'
 "Plug 'benmills/vimux'
 "Plug 'jpalardy/vim-slime' "useful for creating specific state in script for profiling
-"Plug 'christoomey/vim-tmux-runner'
+Plug 'christoomey/vim-tmux-runner'
 
 "Git
 "---
@@ -307,10 +308,11 @@ nmap <leader>cr <Plug>(coc-rename)
 "nnoremap <leader>fs :Ggrep <C-r><C-w><CR>
 "nnoremap <leader>cc :OverCommandLine<CR>
 
-nnoremap <leader>sp :SlimuxREPLConfigure<CR>
+"nnoremap <leader>sp :SlimuxREPLConfigure<CR>
 nnoremap <leader>ss :SlimuxShellRun
 nnoremap <leader>st :TestNearest<CR>
 nnoremap <leader>sl :TestLast<CR>
+nnoremap <leader>sf :TestFile<CR>
 " vim test also integrates with projectionist plugin
 "let g:VimuxUseNearest=1
 "nnoremap <leader>sp :VimuxOpenRunner<CR>
@@ -384,19 +386,21 @@ vnoremap <leader>y "zy
 " nmap <leader>ji <Plug>(coc-funcobj-i)
 " nmap <leader>jj <Plug>(coc-funcobj-a)
 
-nmap <leader>jf <Plug>(coc-float-jump)
+"nmap <leader>jf <Plug>(coc-float-jump)
 nmap <leader>jd <Plug>(coc-definition)
 nmap <leader>ji <Plug>(coc-implementation)
 "nmap <leader>jt :tab split<CR><Plug>(coc-definition)
 " nnoremap <leader>jb <C-t>
 nmap <leader>js :vs<CR><Plug>(coc-definition)
 nmap <leader>jr <Plug>(coc-references)
-nmap <leader>jD <Plug>(coc-declaration)
+"nmap <leader>jD <Plug>(coc-declaration)
+nmap <leader>jD :CocCommand clangd.switchSourceHeader<cr>
 "nmap <leader>ji <Plug>(coc-implementation)
 nmap <leader>jE <Plug>(coc-diagnostic-prev)
 nmap <leader>je <Plug>(coc-diagnostic-next)
 nnoremap <leader>jc g;
 nnoremap <leader>jC g,
+
 nnoremap <leader>jm `M
 nnoremap <leader>mm mM
 
@@ -599,30 +603,33 @@ if (empty($TMUX))
 endif
 
 let g:taboo_tabline = 0
-
 let NERDTreeHijackNetrw=1
-" set termguicolors
-"Makes a solarized approximation for vim
-"let g:solarized_termcolors=256
-let g:gruvbox_contrast_dark="soft"
-" let g:gruvbox_bold=0
-let g:gruvbox_underline=1
-let g:gruvbox_material_background = 'soft'
-set background=dark
-colorscheme gruvbox
-"colorscheme gruvbox-material
-" colorscheme neodark
-" colorscheme deus
+
 if has('termguicolors')
     set termguicolors
 endif
+" set termguicolors
+"Makes a solarized approximation for vim
+"let g:solarized_termcolors=256
+set background=dark
+let g:gruvbox_contrast_dark="soft"
+" let g:gruvbox_bold=0
+let g:gruvbox_underline=1
+
+"colorscheme one
+"colorscheme gruvbox
+"colorscheme palenight
+" Dark
+
+" colorscheme neodark
+" colorscheme deus
 let g:sonokai_style = 'shusia'
 let g:sonokai_diagnostic_line_highlight = 1
 "colorscheme sonokai
 
-let g:edge_style = 'aura'
+let g:edge_style = 'default'
 let g:edge_diagnostic_line_highlight = 1
-"colorscheme edge
+colorscheme edge
 "
 "augroup filetype_color
 	"autocmd!
@@ -781,8 +788,13 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-j>"
 "let g:mkdp_auto_close = 0
 "let g:mkdp_refresh_slow = 1
 
-let g:airline_theme='gruvbox'
-let g:promptline_theme = 'airline'
+"let g:airline_theme='gruvbox'
+let g:airline_theme = "onedark"
+"let g:airline_theme = "raven"
+"let g:airline_theme = "base16_google"
+"let g:airline_theme = "base16_eighties"
+"let g:promptline_theme = 'gruvbox'
+"let g:airline_theme='one'
 "Makes it so actual buffer number shows up in the tabline. Not nesscary since idx mode works now
 let g:airline#extensions#tabline#buffer_nr_show = 0
 let g:airline#extensions#tabline#enabled = 1
@@ -1027,6 +1039,7 @@ nn <leader>co :CocOpenLog<CR>
 nnoremap <leader>cd :CocCommand workspace.showOutput<CR>
 nnoremap <leader>cl :CocList<CR>
 nnoremap <leader>cc :CocList commands<CR>
+nnoremap <leader>cm :CocList marketplace<CR>
 " Check settings on this website: https://github.com/neoclide/coc.nvim/blob/master/data/schema.json
 "
 autocmd BufWritePost * GitGutter

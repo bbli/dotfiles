@@ -2,7 +2,8 @@ set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 
 tnoremap ;c <C-\><C-n>
-set shada='120
+" number of old files needs to be set higher given I use vim as manpager
+set shada='200
 source ~/.vimrc
 if (has("nvim"))
   "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >

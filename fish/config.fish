@@ -1,1 +1,0 @@
-/home/benson/Dropbox/Code/dotfiles/config.fish
