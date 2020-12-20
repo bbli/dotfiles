@@ -1,29 +1,7 @@
 {
+    "diagnostic.refreshOnInsertMode":true,
+    "diagnostic.refreshAfterSave": true,
     "languageserver": {
-        "ccls": {
-            "command": "ccls",
-            "filetypes": [
-                "c",
-                "cpp",
-                "objc",
-                "objcpp"
-            ],
-            "rootPatterns": [
-                ".ccls",
-                "compile_commands.json",
-                ".vim/",
-                ".git/",
-                ".hg/"
-            ],
-            "initializationOptions": {
-                "cache": {
-                    "directory": "/tmp/ccls"
-                },
-                "highlight": {
-                    "lsRanges": true
-                }
-            }
-        },
         "ocaml": {
             "command": "opam",
             "args": [
@@ -40,9 +18,11 @@
             //			"trace.server": "verbose"
         }
     },
+    "python.pythonPath":"python",
     "python.jediEnabled": false,
     "python.analysis.diagnosticEnabled": true,
     "python.condaPath": "/opt/miniconda3/bin/conda",
+    "pyright.useLibraryCodeForTypes": true,
     "python.linting.pylintArgs": [
         "--init-hook",
         "import sys; sys.path.append('/home/benson/Documents/lldb/llvm-project/lldb/packages/Python')"
@@ -76,5 +56,4 @@
     "rust-analyzer.inlayHints.parameterHints": true,
     "rust-analyzer.trace.server": "verbose",
     "codeLens.enable": false,
-    "diagnostic.refreshAfterSave":true
 }
