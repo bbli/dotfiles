@@ -3,7 +3,19 @@
 set shell=/usr/bin/bash
 syntax enable
 set runtimepath+=~/.vim/my-snippets
+" Temp for creating plugin
 set runtimepath+=~/Dropbox/Code/Projects/my_plugin
+"set verbosefile=verbose.txt
+
+set smartcase "default case insensitive search. WIll change if captial letter in search
+
+set linebreak "will not wrap in middle of word
+set breakindent "wrapped lines will start at same indentation level
+set breakindentopt=sbr
+" I use a unicode curly array with a <backslash><space>
+set showbreak=↪>\
+
+set timeoutlen=600 "Any smaller and copy to global register will be too slow
 set nocompatible
 set hidden
 set number relativenumber
@@ -24,6 +36,7 @@ set foldmethod=manual
 "set listchars=tab:\|\
 set ruler
 set splitright
+"set splitbelow
 set number ""relativenumber
 set title
 set cursorline
@@ -49,8 +62,8 @@ set colorcolumn=80
 """"""""Plugins""""""""
 call plug#begin('~/.vim/plugged')
 "Plug 'ThePrimeagen/vim-be-good'
-"Plug '~/Dropbox/Code/Projects/my-plugin'
-"Plug 'bbli/my_plugin', {'do': ':UpdateRemotePlugins'}
+"Plug 'bbli/filter-jump.nvim', {'do': ':UpdateRemotePlugins'}
+"Plug 'ripxorip/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
 
 "Visual
 "---
@@ -61,7 +74,7 @@ Plug 'edkolev/promptline.vim'
 Plug 'mhinz/vim-startify'
 Plug 'gruvbox-community/gruvbox'
 "Plug 'sainnhe/sonokai'
-Plug 'sainnhe/edge'
+Plug 'bbli/edge'
 "Plug 'drewtempelmeyer/palenight.vim'
 Plug 'rakr/vim-one'
 
@@ -82,8 +95,7 @@ Plug 'machakann/vim-sandwich'
 
 "Plug 'justinmk/vim-sneak'
 "Plug 'goldfeld/vim-seek'
-Plug 'jayflo/vim-skip'
-Plug 'ripxorip/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'jayflo/vim-skip'
 
 "Special Windows
 "---
@@ -96,9 +108,11 @@ Plug 'romainl/vim-qf'
 "Plug 'jremmen/vim-ripgrep', {'frozen': 1}
 Plug 'bbli/vim-ripgrep'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all','frozen':1}
-Plug 'junegunn/fzf.vim', {'frozen': 1}
+"Plug 'junegunn/fzf.vim', {'frozen': 1}
+Plug 'bbli/fzf.vim'
 Plug 'mbbill/undotree'
 Plug 'vimlab/split-term.vim'
+Plug 'voldikss/vim-floaterm'
 
 Plug 'vim-voom/VOoM'
 "Language Server
@@ -111,12 +125,14 @@ Plug 'majutsushi/tagbar'
 "Plug 'ncm2/ncm2-path'
 "Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'ncm2' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 "Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'wellle/tmux-complete.vim'
 Plug 'cespare/vim-toml'
 Plug 'dag/vim-fish'
 Plug 'pboettch/vim-cmake-syntax'
 Plug 'rhysd/vim-llvm'
+" This seems to be the only nvim specific plugin I use
 Plug 'nvim-treesitter/nvim-treesitter', {'frozen':1}
 
 "Terminal Interactions
@@ -146,10 +162,11 @@ Plug 'airblade/vim-gitgutter'
 "---
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'dawikur/algorithm-mnemonics.vim'
 
 "Latex
 "---
-"Plug 'lervag/vimtex'
+"Plug 'lervag/vimtex', { 'tag': 'v1.0' }
 "Plug 'brennier/quicktex'
 
 "Text Objects 
@@ -206,7 +223,7 @@ vmap <leader><leader>c <Plug>NERDCommenterToggle
 "nnoremap s /
 "nnoremap S ?
 "nnoremap <CR> n
-nnoremap s %
+nnoremap S %
 nnoremap <leader><leader>s <C-^>
 " visual-mode
 "xmap s <Plug>Sneak_s
@@ -217,15 +234,15 @@ nnoremap <leader><leader>s <C-^>
 
 nnoremap <leader>gm :Magit<CR>
 nmap <leader>gp <Plug>(GitGutterPreviewHunk)
-" nmap <leader>gs <Plug>(GitGutterStageHunk)
-" nmap <leader>gu <Plug>(GitGutterUndoHunk)
+nmap <leader>gs <Plug>(GitGutterStageHunk)
+nmap <leader>gu <Plug>(GitGutterUndoHunk)
 nmap <leader>gn <Plug>(GitGutterNextHunk)
 nmap <leader>gN <Plug>(GitGutterPrevHunk)
 nmap <leader>gf :GitGutterFold<CR>
 " nmap <leader>go <Plug>(git-messenger)
 nmap <leader>gl :Glog<CR>
 "nmap <leader>gl :VTerm<CR>git tree<CR>
-nmap <leader>gs :G<CR>
+nmap <leader>gg :G<CR>
 nnoremap <leader>gd :Gvdiff 
 
 
@@ -247,24 +264,24 @@ command! -bang -nargs=? -complete=dir HFiles
   \ call fzf#vim#files(<q-args>, fzf#wrap({'source': 'rg --hidden --ignore .git'}), <bang>0)
 "command! -bang -nargs=? -complete=dir Files
   "\ call fzf#vim#files(<q-args>, {'source': 'rg --ignore .git -g ""'}, <bang>0)
-nnoremap <leader>oo :GFiles<CR>
 nnoremap <leader>oa :HFiles<CR>
+nnoremap <leader>oo :GFiles<CR>
 "fix this
 "2
 "command! -bang OP call fzf#run(fzf#wrap({'source':'rg --files --hidden','sink':'' 'dir':'/home/benson'}))<CR>
 "1
 "command! -bang OP call fzf#vim#complete#path('rg --files',{'dir':"/home/benson"})
 "nnoremap <leader>op :call fzf#vim#complete#path('rg --files',{'dir':'/home/benson'})<CR>
-nnoremap <leader>ot :tab split<CR>
 "nnoremap <leader>op :OP<CR>
+nnoremap <leader>os :FloatermNew<CR>
 nnoremap <leader>om :Helptags<CR>
 nnoremap <leader>oa :FZF<CR>
 nnoremap <leader>ob :CocList buffers<CR>
 nnoremap <leader>od :BD<CR>
-nnoremap <leader>oc :History:<CR>
-nnoremap <leader>os :History/<CR>
-nnoremap / :History/<CR>
-"nnoremap : :History:<CR>
+nnoremap <leader>oc :Commands<CR>
+"nnoremap <leader>os :History/<CR>
+"nnoremap / :History/<CR>
+"nnoremap : :Commands<CR>
 "nnoremap <leader>: :
 " nnoremap <leader>oi :HFiles<CR>
 " nnoremap <leader>ob :Files ../<CR>
@@ -337,18 +354,20 @@ nnoremap <leader>sf :TestFile<CR>
 "nnoremap <leader>sd :VtrSendCtrlD<CR>
 "nnoremap <leader>ss %
 
-nnoremap <leader>to :Voom markdown<CR>
+nnoremap <leader>to :VoomToggle markdown<CR>
 nnoremap <leader>tw :AirlineToggleWhitespace<CR>
 
 nnoremap <leader>tu :UndotreeToggle<CR>
 nnoremap <leader>tt :TagbarToggle<CR>
-nnoremap <leader>ts :set spell!<CR>
+"nnoremap <leader>ts :set spell!<CR>
+nnoremap <leader>ts :FloatermToggle<CR>
 nnoremap <leader>tn :NERDTreeToggle<CR>
-nnoremap <leader>tp :set paste!<CR>
+"nnoremap <leader>tp :set paste!<CR>
 
-nnoremap <leader>tr :TabooRename 
-nnoremap <leader>ts :TabooReset<CR>
-nnoremap <leader>tc :tabc<CR>
+nnoremap to :tab split<CR>
+nnoremap tr :TabooRename 
+nnoremap ts :TabooReset<CR>
+nnoremap tc :tabc<CR>
 "nnoremap <leader>ti :IndentGuidesToggle<CR>
 
 "nmap <leader>tq :copen<CR>
@@ -363,10 +382,10 @@ nmap <leader>tl <Plug>(qf_loc_toggle)
 nnoremap <C-w>; <C-w>p
 
 nmap <leader>tq <Plug>(qf_qf_toggle)
-nmap <leader>qq <Plug>(qf_qf_switch)
 nmap <leader>qn <Plug>(qf_newer)
 nmap <leader>qN <Plug>(qf_older)
-nnoremap <leader>qr :cdo %s/
+" Don't apply g when substituting
+nnoremap <leader>qr :OverCommandLine<CR>cdo %s/
 
 " coc's version is more useful as it will generate based on file path, not current
 " directory
@@ -386,7 +405,8 @@ vnoremap <leader>y "zy
 " nmap <leader>ji <Plug>(coc-funcobj-i)
 " nmap <leader>jj <Plug>(coc-funcobj-a)
 
-"nmap <leader>jf <Plug>(coc-float-jump)
+nmap <leader>jf <Plug>(coc-float-jump)
+nmap <leader>jq <Plug>(qf_qf_switch)
 nmap <leader>jd <Plug>(coc-definition)
 nmap <leader>ji <Plug>(coc-implementation)
 "nmap <leader>jt :tab split<CR><Plug>(coc-definition)
@@ -441,8 +461,8 @@ nnoremap <localleader>d "+d
 "Alt and Shift combos won't work with K
 nnoremap <C-k> :m .-2<CR>==
 nnoremap <C-j> :m .+1<CR>==
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
 
 nnoremap <C-w><Space> <C-w>=
 
@@ -479,6 +499,9 @@ nnoremap ;n :bn<CR>
 nnoremap ;N :bp<CR>
 nnoremap <silent> ;d :bwipeout<CR>
 nnoremap ;D :bwipeout!<CR>
+"inoremap <C-m> <C-C>la
+inoremap mm <C-c>la
+inoremap m; mm
 
 function! s:list_buffers()
   redir => list
@@ -532,10 +555,11 @@ nnoremap <C-w>m <C-w>p
 """"""""Command Mode maps""""""""
 cnoremap sE %s
 " nnoremap / /\<
-nnoremap <leader>/ /\<
+nnoremap <leader>/ /
 "For grep
-cnoremap cn cnext
-cnoremap cN cprev
+cnoremap cn cnext<CR>
+cnoremap cN cprev<CR>
+"cnoremap cf cfirst
 " cnoremap SB set scrollbind
 " cnoremap NSB set noscrollbind
 "cnoremap tc tabc
@@ -556,7 +580,9 @@ cnoremap tN tabprevious
 """"""""Insert Mode maps""""""""
 " To be honest, I don't think this is nesscary. Those keys are not awkward,
 " and I only mapped it because I was fixated on insert normal mode
-inoremap ]] <C-c>A
+"inoremap ]] <C-c>A
+"make cause some issues, such as dummy -> but will be amortized zero cost with
+"autocomplete
 
 inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files',fzf#wrap({'dir':'/home/benson'}))
 "inoremap " ""<left>
@@ -1049,8 +1075,26 @@ let g:unstack_layout="portrait"
 
 let test#strategy = "slimux"
 
-" Create mappings (with leader)
-"nmap <Leader>as <Plug>(AerojumpSpace)
-"nmap <Leader>ab <Plug>(AerojumpBolt)
-"nmap <Leader>aa <Plug>(AerojumpFromCursorBolt)
-nmap <Leader>jj <Plug>(AerojumpDefault)
+"let g:filter_jump_strip_characters = ["_"]
+"highlight! link SearchCurrent Red
+"highlight! link SearchHighlights Green
+nmap s <Plug>(FilterJump)
+nmap f <Plug>(FilterJumpLineForward)
+nmap F <Plug>(FilterJumpLineBackward)
+let g:filter_jump_keymaps = {
+    \ "<C-n>" : "FilterJumpNextMatch",
+    \ "<C-p>" : "FilterJumpPrevMatch",
+    \ "<CR>" : "FilterJumpSelect",
+    \ "<C-f>" : "FilterJumpSelect",
+    \ "<C-c>" : "FilterJumpExit"}
+" TODO: change plugin to accept setup + teardown lambdas instead,
+" as CocDisable applies for the whole vim session, not just current buffer
+let g:filter_jump_buffer_options = ["let b:coc_pairs_disabled = ['`','(','[','{','<',]"]
+
+
+autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
+
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
+nmap <Leader>ad <Plug>(AerojumpDefault)
