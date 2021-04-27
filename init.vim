@@ -1,7 +1,7 @@
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 
-tnoremap ;c <C-\><C-n>
+"tnoremap ;c <C-\><C-n>
 " number of old files needs to be set higher given I use vim as manpager
 set shada='200
 source ~/.vimrc
@@ -12,6 +12,8 @@ endif
 
 " for treesitter
 luafile ~/.init.lua
+"set foldmethod=expr
+"set foldexpr=nvim_treesitter#foldexpr()
 "nnoremap <leader>lt :write | edit | TSBufEnable highlight
 
 " let g:opamshare = substitute(system('opam config var share'),'\n$','','''')

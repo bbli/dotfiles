@@ -7,6 +7,7 @@ set runtimepath+=~/.vim/my-snippets
 set runtimepath+=~/Dropbox/Code/Projects/my_plugin
 "set verbosefile=verbose.txt
 
+set ignorecase
 set smartcase "default case insensitive search. WIll change if captial letter in search
 
 set linebreak "will not wrap in middle of word
@@ -54,7 +55,7 @@ set showmatch "Will highlight matching parantheses, brackets, etc"
 set shiftwidth=4
 set autoindent
 set undofile
-set undodir=~/.undodir/
+"set undodir=~/.undodir/
 set inccommand=nosplit
 set colorcolumn=80
 
@@ -108,6 +109,9 @@ Plug 'romainl/vim-qf'
 "Plug 'jremmen/vim-ripgrep', {'frozen': 1}
 Plug 'bbli/vim-ripgrep'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all','frozen':1}
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 "Plug 'junegunn/fzf.vim', {'frozen': 1}
 Plug 'bbli/fzf.vim'
 Plug 'mbbill/undotree'
@@ -125,7 +129,7 @@ Plug 'majutsushi/tagbar'
 "Plug 'ncm2/ncm2-path'
 "Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'ncm2' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
+"Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 "Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'wellle/tmux-complete.vim'
 Plug 'cespare/vim-toml'
@@ -133,7 +137,7 @@ Plug 'dag/vim-fish'
 Plug 'pboettch/vim-cmake-syntax'
 Plug 'rhysd/vim-llvm'
 " This seems to be the only nvim specific plugin I use
-Plug 'nvim-treesitter/nvim-treesitter', {'frozen':1}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 "Terminal Interactions
 "---
@@ -224,7 +228,7 @@ vmap <leader><leader>c <Plug>NERDCommenterToggle
 "nnoremap S ?
 "nnoremap <CR> n
 nnoremap S %
-nnoremap <leader><leader>s <C-^>
+nnoremap <leader>bs <C-^>
 " visual-mode
 "xmap s <Plug>Sneak_s
 "xmap S <Plug>Sneak_S
@@ -354,7 +358,7 @@ nnoremap <leader>sf :TestFile<CR>
 "nnoremap <leader>sd :VtrSendCtrlD<CR>
 "nnoremap <leader>ss %
 
-nnoremap <leader>to :VoomToggle markdown<CR>
+"nnoremap <leader>to :VoomToggle markdown<CR>
 nnoremap <leader>tw :AirlineToggleWhitespace<CR>
 
 nnoremap <leader>tu :UndotreeToggle<CR>
@@ -398,9 +402,6 @@ vnoremap <leader>d "zd
 nnoremap <leader>y "zy
 vnoremap <leader>y "zy
 
-" /word to use recursive macros(search on Google)
-" nmap <leader>jD <Plug>(coc-declaration)
-" nmap <leader>jw <Plug>(coc-implementation)
 " nmap <leader>jt <Plug>(coc-refactor)
 " nmap <leader>ji <Plug>(coc-funcobj-i)
 " nmap <leader>jj <Plug>(coc-funcobj-a)
@@ -445,8 +446,8 @@ nnoremap <localleader>f :e ~/.config/fish/config.fish<CR>
 nnoremap <localleader>l :e ~/.init.lua<CR>
 
 
-nnoremap <localleader>ww :MarkdownPreview<CR>
-nnoremap <localleader>wc :MarkdownPreviewStop<CR>
+"nnoremap <localleader>ww :MarkdownPreview<CR>
+"nnoremap <localleader>wc :MarkdownPreviewStop<CR>
 
 "nnoremap <localleader>e :!python % <CR>
 "nmap <localleader>e <Plug>(processing-run)
@@ -459,10 +460,11 @@ nnoremap <localleader>d "+d
 """"""""Meta Keys""""""""
 "To move lines intuitively
 "Alt and Shift combos won't work with K
-nnoremap <C-k> :m .-2<CR>==
-nnoremap <C-j> :m .+1<CR>==
-vnoremap <C-j> :m '>+1<CR>gv=gv
-vnoremap <C-k> :m '<-2<CR>gv=gv
+"But Ctrl will mess up window specific mappings
+nnoremap <M-k> :m .-2<CR>==
+nnoremap <M-j> :m .+1<CR>==
+vnoremap <M-j> :m '>+1<CR>gv=gv
+vnoremap <M-k> :m '<-2<CR>gv=gv
 
 nnoremap <C-w><Space> <C-w>=
 
@@ -474,8 +476,8 @@ nnoremap <C-w><Space> <C-w>=
 map <M-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 """"""""Fn Keys""""""""
-nnoremap <F2> :TagbarToggle<CR>
-nnoremap <F3> :AirlineToggleWhitespace<CR>
+"nnoremap <F2> :TagbarToggle<CR>
+"nnoremap <F3> :AirlineToggleWhitespace<CR>
 
 "nnoremap <F4> :setlocal spell  spelllang=en_us<CR>
 "nnoremap <F5> :set nospell<CR>
@@ -902,58 +904,24 @@ let g:VtrClearEmptyLines = 0
 let g:VtrAppendNewline = 1
 let g:VtrClearBeforeSend = 0
 
-" if hidden is not set, TextEdit might fail.
-set hidden
 
+" ******************* COC STUF**********************
+" 1.if hidden is not set, TextEdit might fail.
+set hidden
 " Some servers have issues with backup files, see #649
 set nobackup
 set nowritebackup
-
 " Better display for messages. I will set back to 1 for now
 set cmdheight=1
-
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=200
-
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
-
 " always show signcolumns
 set signcolumn=yes
 
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-"inoremap <silent><expr> <TAB>
-      "\ pumvisible() ? "\<C-n>" :
-      "\ <SID>check_back_space() ? "\<TAB>" :
-      "\ coc#refresh()
-"inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-"function! s:check_back_space() abort
-  "let col = col('.') - 1
-  "return !col || getline('.')[col - 1]  =~# '\s'
-"endfunction
-
-"" Use <c-space> to trigger completion.
-"inoremap <silent><expr> <c-space> coc#refresh()
-
-"" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-"" Coc only does snippet and additional edit on confirm.
-"inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-"" Or use `complete_info` if your vim support it, like:
-"" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-
-
-"" Remap keys for gotos
-" nmap <silent> <leader>cd <Plug>(coc-definition)
-nmap <silent> <leader>ct <Plug>(coc-type-definition)
-nmap <silent> <leader>ci <Plug>(coc-implementation)
-nmap <silent> <leader>cr <Plug>(coc-references)
-
-
-"" Use K to show documentation in preview window
+"" 2.Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
-
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
@@ -961,18 +929,25 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
-
 "" Highlight symbol under cursor on CursorHold
+" the highlight is too shallow(just white-clear), so nah
 "autocmd CursorHold * silent call CocActionAsync('highlight')
 
 
-"" Use `:Format` to format current buffer
+"" 3.Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
-
 "" Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader><leader>f  :call CocAction('format')<CR>
+xmap <leader>cf  <Plug>(coc-format-selected)
+nmap <leader>cf  :call CocAction('format')<CR>
 "autocmd BufWritePre :call CocAction('format')<CR>
+
+" 4. Use <C-SPACE> to trigger completion(if for some reason it doesn't
+" auto start)
+"if has('nvim')
+  "inoremap <silent><expr> <c-space> coc#refresh()
+"else
+  "inoremap <silent><expr> <c-@> coc#refresh()
+"endif
 
 "augroup mygroup
   "autocmd!
@@ -982,34 +957,35 @@ nmap <leader><leader>f  :call CocAction('format')<CR>
   "autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 "augroup end
 
-"" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-" xmap <leader>a  <Plug>(coc-codeaction-selected)
-" nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-"" Remap for do codeAction of current line
-" nmap <leader>ac  <Plug>(coc-codeaction)
-"" Fix autofix problem of current line
-" nmap <leader>qf  <Plug>(coc-fix-current)
-
-"" Create mappings for function text object, requires document symbols feature of languageserver.
-" xmap if <Plug>(coc-funcobj-i)
-" xmap af <Plug>(coc-funcobj-a)
-" omap if <Plug>(coc-funcobj-i)
-" omap af <Plug>(coc-funcobj-a)
-
+"" 5.Code Actions
+ xmap <leader>a  <Plug>(coc-codeaction-selected)
+ nmap <leader>a  <Plug>(coc-codeaction-selected)
+ " Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+"nmap <leader>qf  <Plug>(coc-fix-current)
 "" Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-"nmap <silent> <TAB> <Plug>(coc-range-select)
-"xmap <silent> <TAB> <Plug>(coc-range-select)
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
+
+" 6. Movement in Coc windows(Seems to be built in already)
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+"if has('nvim-0.4.0') || has('patch-8.2.0750')
+  "nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  "nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  "inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  "inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  "vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  "vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+"endif
 
 
 "" Use `:Fold` to fold current buffer
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
 "" use `:OR` for organize import of current buffer
 "command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
 "" Add status line support, for integration with other plugin, checkout `:h coc-status`
-"set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 "" Using CocList
 "" Show all diagnostics
@@ -1050,13 +1026,20 @@ highlight LspCxxHlSymClassMethod ctermfg=White
 highlight LspCxxHlSymClassVariable ctermfg=White
 highlight LspCxxHlSymStructMethod ctermfg=White
 " highlight LspCxxHlSymFunction ctermfg=White
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
 
 
 " $ccls/member
 " member variables / variables in a namespace
 " Aka where all the variables are declared first
 nn <silent> <leader>xm :call CocLocations('ccls','$ccls/member')<cr>
-
 "autocmd BufCreate *py :CocCommand python.enableLinting
 
 " How to debug Coc
@@ -1066,6 +1049,7 @@ nnoremap <leader>cd :CocCommand workspace.showOutput<CR>
 nnoremap <leader>cl :CocList<CR>
 nnoremap <leader>cc :CocList commands<CR>
 nnoremap <leader>cm :CocList marketplace<CR>
+nnoremap <leader>cr :CocListResume<CR>
 " Check settings on this website: https://github.com/neoclide/coc.nvim/blob/master/data/schema.json
 "
 autocmd BufWritePost * GitGutter
@@ -1097,4 +1081,11 @@ autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
-nmap <Leader>ad <Plug>(AerojumpDefault)
+"nmap <Leader>ad <Plug>(AerojumpDefault)
+
+" ***************** TELESCOPE*******************
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>

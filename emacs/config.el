@@ -126,13 +126,13 @@
 (after! org
         ;; (add-to-list 'org-font-lock-extra-keywords '("^" benson/emphasis-box-face))
         (add-to-list 'org-emphasis-alist '("_" org-code verbatim))
-        (add-to-list 'org-emphasis-alist '("=" (:inherit org-verbatim :height 160 :box nil)))
+        (add-to-list 'org-emphasis-alist '("=" (:inherit org-verbatim :height 0.7 :box nil)))
         (push '(tags-tree . local) org-show-context-detail)
 )
-(custom-set-faces! '(org-tag :height 200))
-(custom-set-faces! '(org-block :height 150))
-(custom-set-faces! '(org-block-begin-line :height 150))
-(custom-set-faces! '(org-block-end-line :height 150))
+(custom-set-faces! '(org-tag :height 0.6))
+(custom-set-faces! '(org-block :height 0.7))
+(custom-set-faces! '(org-block-begin-line :height 0.7))
+(custom-set-faces! '(org-block-end-line :height 0.7))
 (after! org
   (setq org-agenda-files '("~/Dropbox/Org/Learning/Learning.org"
                           "~/Dropbox/Org/Software/Software.org"
@@ -254,6 +254,7 @@
         :desc "open all buffers" "B" #'ivy-switch-buffer
         :desc "kill current buffer" "k" #'kill-this-buffer
         :desc "choose a buffer to delete" "d" #'ido-kill-buffer
+        :desc "cycle outshine mode" "c" #'outshine-cycle-buffer
         )
 )
 ;;;; Window Relation Operations
@@ -333,7 +334,8 @@
     (org-narrow-to-subtree)
     (org-hide-block-all)))
 (map! :map org-mode-map
-      :desc "open branches below subtree" "C-c o" (lambda () (interactive) (outline-show-children 10))
+      ;; :desc "open branches below subtree" "C-c o" (lambda () (interactive) (outline-show-children 10))
+      :desc "open branches below subtree" "C-c o" #'org-show-subtree
       :desc "open ALL branches up to level two" "C-c O" #'(lambda () (interactive) (org-content 2))
       :desc "close current branch" "C-c c" #'outline-hide-body
 
@@ -341,10 +343,13 @@
       :desc "previous visible heading" "C-c C-p" #'outline-previous-visible-heading
       :desc "go up a heading" "C-c C-u" #'outline-up-heading
       :desc "toggle narrow of subtree" "C-c n" #'org-toggle-narrow-to-subtree
+      :desc "hide source blocks of current subtree" "C-c h" #'benson/org-hide-block-subtree
 
       ;; :desc "find tag" "C-c C-u" #'outline-up-heading
       :desc "refile headline" "C-c r" #'org-refile
+      :desc "ediff two regions" "C-c e" #'ediff-regions-linewise
       )
+(map! :leader :desc "remove babel result for current block" "m r" #'org-babel-remove-result)
 ;; 4. next headline "b n"(leave at C-e C-n since it's a motion)
 
 ;;;; TODO Jump Maps
