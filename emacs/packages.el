@@ -17,6 +17,12 @@
 (package! olivetti)
 (package! poet-theme)
 (package! outshine)
+
+; For EAF, though "s" and "deferred" seem to already be used by Doom
+(package! s)
+(package! deferred)
+(package! epc)
+(package! ctable)
 ;; (package! org-super-agenda)
 
 ;; - `load!' for loading external *.el files relative to this one

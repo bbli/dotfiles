@@ -21,8 +21,8 @@
   (setq doom-modeline-height 20)
   (setq doom-modeline-buffer-encoding nil)
   )
-(setq doom-font (font-spec :family "Source Code Pro" :size 21)
-           doom-variable-pitch-font (font-spec :family "ETBembo" :size 26)
+(setq doom-font (font-spec :family "Source Code Pro" :size 22)
+           doom-variable-pitch-font (font-spec :family "ETBembo" :size 28)
            ;; DejaVu headlines are too wide for my tastes
            ;; doom-variable-pitch-font (font-spec :family "DejaVu Sans" :size 28)
    )
@@ -97,7 +97,8 @@
   (org-variable-pitch-minor-mode)
 )
 (add-hook 'org-mode-hook 'benson/write-mode)
-
+(add-hook 'org-mode-hook (lambda () (flyspell-mode 0)));since I just need this for blogging.TODO: though should just lazy load
+;; (setq org-indirect-buffer-display 'new-frame) "Hmm, cannot get multiple indirect buffers w/o creating a new frame.
 ;; (setq doom-theme 'doom-one)
 (setq doom-theme 'doom-opera)
 ;; NOTE: JUST LOAD ALL ORG STUFF DURING CONFIG UNLIKE OTHER PACKAGES
@@ -115,24 +116,29 @@
 (setq org-hide-block-startup t)
 (setq org-noter-notes-search-path '("~/Dropbox/Org/"))
 (setq org-startup-with-inline-images t)
+(setq org-refile-targets '((nil :maxlevel . 1)
+                                (org-agenda-files :maxlevel . 1)))
 ;; TODO: call restart?? But already seems to work
 (use-package! org-superstar
             :config (org-superstar-configure-like-org-bullets)
             )
+(advice-add 'org-set-tags-command :override 'counsel-org-tag)
 ;; (defface benson/emphasis-box-face
 ;;   '((t (:weight semi-bold :box t)))
 ;;   "Font for boxing/emphasis in notes"
 ;;   )
 (after! org
         ;; (add-to-list 'org-font-lock-extra-keywords '("^" benson/emphasis-box-face))
-        (add-to-list 'org-emphasis-alist '("_" org-code verbatim))
+        (add-to-list 'org-emphasis-alist '("_" (:inherit org-code :height 1.4)))
         (add-to-list 'org-emphasis-alist '("=" (:inherit org-verbatim :height 0.7 :box nil)))
         (push '(tags-tree . local) org-show-context-detail)
 )
 (custom-set-faces! '(org-tag :height 0.6))
 (custom-set-faces! '(org-block :height 0.7))
+(custom-set-faces! '(org-meta-line :height 0.7))
 (custom-set-faces! '(org-block-begin-line :height 0.7))
 (custom-set-faces! '(org-block-end-line :height 0.7))
+(custom-set-faces! '(org-code :height 0.7))
 (after! org
   (setq org-agenda-files '("~/Dropbox/Org/Learning/Learning.org"
                           "~/Dropbox/Org/Software/Software.org"
@@ -223,18 +229,30 @@
 ;;;; TODO Keymaps to Remember
 ;;;; <C-M-m> to set multiple tags
 ;;;; TODO Find Maps
-;; (map! :leader
-;;       "f" nil
-;;       (:prefix "f"
-;;        :desc "Find in current directory" "a" #'+default/find-file-under-here
-;;        :desc "Find in git repo" "f" #'+ivy/projectile-find-file
-        ;3. find current word in entire repo -> and send to quickfix
-        ;4. Find and replace in this buffer
-        ;:desc "Search tags in current buffer" -> find tag instead?
-        ;:desc "Search headline in current buffer" -> find headlines
-       ;; )
-;; )
-;; (map! :map evil-motion-state-map
+(defvar evil-ex-initial-input-d nil)
+(defun evil-ex-d ()
+ ;; (message evil-ex-initial-input-d)
+  )
+(defun benson/find-and-replace-at-point ()
+  (interactive)
+  (let ((evil-ex-initial-input-d "%s/"))
+        (evil-ex-d)
+    )
+  ;; (kbd "%s")
+  )
+(map! :leader
+      "f" nil
+      (:prefix "f"
+       ;; :desc "Find in current directory" "a" #'+default/find-file-under-here
+       ;; :desc "Find in git repo" "f" #'+ivy/projectile-find-file
+       ;;  3. find current word in entire repo -> and send to quickfix
+       ;;  4. Find and replace in this buffer
+       ;;  :desc "Search tags in current buffer" -> find tag instead?
+       ;;  :desc "Search headline in current buffer" -> find headlines
+       :desc "Find word under cursor and replace" "r" #'benson/find-and-replace-at-point
+       )
+)
+;(map! :map evil-motion-state-map
 ;;       :desc "swiper fuzzy search buffer" "/" #'+default/search-buffer)
 (map! :leader
       :desc "swiper fuzzy search buffer" "/" #'+default/search-buffer)
@@ -302,7 +320,7 @@
 ;; (define-key benson/insert-map "s" #'yas-insert-snippet)
 (defun benson/insert-connect-pair ()
   (interactive)
-  (insert-char ?~ 2)
+  (insert-char ?= 2)
   )
 (defun benson/insert-emphasis-pair ()
   (interactive)
@@ -344,6 +362,8 @@
       :desc "go up a heading" "C-c C-u" #'outline-up-heading
       :desc "toggle narrow of subtree" "C-c n" #'org-toggle-narrow-to-subtree
       :desc "hide source blocks of current subtree" "C-c h" #'benson/org-hide-block-subtree
+      ;; :desc "hide source blocks of current subtree" "C-c c"
+      ;; #'flyspell-correct-at-point
 
       ;; :desc "find tag" "C-c C-u" #'outline-up-heading
       :desc "refile headline" "C-c r" #'org-refile
@@ -357,6 +377,9 @@
 (map! :leader
       :prefix "j"
       :desc "jump to definition" "d" #'+lookup/definition
+      :desc "jump to definition" "c" #'goto-last-change
+      :desc "jump to next error" "e" #'next-error
+      :desc "jump to next error" "E" #'previous-error
       )
 
 ;;;; TODO To be decided Maps
@@ -386,9 +409,7 @@
 ;;;; Open Related Operations
 (defun benson/open-org-directory ()
   (interactive)
-  (let ((default-directory org-directory))
-        (+ivy/projectile-find-file)
-    )
+(counsel-fzf nil org-directory nil)
   )
 (map! :leader
       "o" nil
@@ -403,6 +424,7 @@
       :desc "open scratch buffer" "s" 'doom/switch-to-scratch-buffer
       :desc "open config directory" "c" #'doom/find-file-in-private-config
       :desc "open all buffers" "b" #'ivy-switch-buffer
+      :desc "choose a buffer to delete" "d" #'ido-kill-buffer
        )
 )
 
@@ -461,7 +483,7 @@
 (setq company-idle-delay 0.1)
 (setq which-key-idle-delay 0.6)
 (setq company-tooltip-idle-delay 0.2)
-(setq company-show-numbers t)
+;; (setq company-show-numbers t)
 
 ;; (defvar outline-minor-mode-prefix "\M-#")
 (advice-add 'outshine-mode :after 'outshine-cycle-buffer)
@@ -479,3 +501,54 @@
 (set-display-table-slot standard-display-table 'wrap
                         (make-glyph-code ?↩ 'fallback))
 ;; (setq search-invisible nil); no point given I can't expand just the sparse tree results as of now
+;; (advice-add 'evil-narrow-to-field :overwrite "dummy macro)
+(advice-add 'ediff-quit :after (lambda (&rest stuff)(winner-undo)))
+;; (use-package eaf
+;;   ;; :load-path "/usr/share/emacs/site-lisp/eaf"
+;;   :load-path "~/.emacs.d/site-lisp/emacs-application-framework"
+;;   :init
+;;   (use-package epc) ;:defer t :ensure t)
+;;   (use-package ctable); :defer t :ensure t)
+;;   (use-package deferred); :defer t :ensure t)
+;;   (use-package s); :defer t :ensure t)
+;;   ;; :custom
+;;   ;; (eaf-browser-continue-where-left-off t)
+;;   :config
+;;   (eaf-setq eaf-browser-enable-adblocker "true")
+;;   (eaf-bind-key scroll_up "k" eaf-pdf-viewer-keybinding)
+;;   (eaf-bind-key scroll_down "j" eaf-pdf-viewer-keybinding)
+;;   (eaf-bind-key take_photo "p" eaf-camera-keybinding)
+;;   (eaf-bind-key copy_link "y" eaf-browser-keybinding)
+;;   (eaf-bind-key insert_or_scroll_up_page "C-u" eaf-browser-keybinding)
+;;   (eaf-bind-key nil "v" eaf-browser-keybinding)
+;;   (eaf-bind-key insert_or_open_browser "O" eaf-browser-keybinding)
+;;   (eaf-bind-key insert_or_edit_url "o" eaf-browser-keybinding)
+;;   (eaf-bind-key nil "C-w" eaf-browser-keybinding)
+;;   ;; (eaf-bind-key nil "M-q" eaf-browser-keybinding)
+;;   ) ;; unbind, see more in the Wiki
+;; (require 'eaf-evil)
+
+;; (define-key key-translation-map (kbd "SPC")
+;;     (lambda (prompt)
+;;       (if (derived-mode-p 'eaf-mode)
+;;           (pcase eaf--buffer-app-name
+;;             ("browser" (if  (string= (eaf-call-sync "call_function" eaf--buffer-id "is_focus") "True")
+;;                            (kbd "SPC")
+;;                          (kbd eaf-evil-leader-key)))
+;;             ("pdf-viewer" (kbd eaf-evil-leader-key))
+;;             ("image-viewer" (kbd eaf-evil-leader-key))
+;;             (_  (kbd "SPC")))
+;;         (kbd "SPC"))))
+(setq ox-hugo-export-with-toc t)
+(use-package ox-hugo
+  :ensure t            ;Auto-install the package from Melpa (optional)
+  :after ox
+  ;; (ox-hugo-export-with-section-numbers 't)
+  ;; (ox-hugo-footer "hi")
+  )
+(define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
+(define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+;; (setq org-log-done 'time)
+;; (setq org-log-done-with-time nil)
+(setq enable-local-variables 't)
+(setq global-auto-revert-mode 't)

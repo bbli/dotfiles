@@ -36,3 +36,7 @@ luafile ~/.init.lua
 " autocmd BufDelete,BufWipeout *
 "           \ call s:update_oldfiles(expand('<afile>:p'))
 
+command! Scratch lua require'tools'.makeScratch()
+au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=150}
+" lua text will be syntax highlighted!
+let g:vimsyn_embed = 'l'

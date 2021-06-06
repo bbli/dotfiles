@@ -122,6 +122,7 @@ Plug 'vim-voom/VOoM'
 "Language Server
 "---
 Plug 'majutsushi/tagbar'
+Plug 'liuchengxu/vista.vim'
 "Plug 'roxma/nvim-yarp'
 "Plug 'ncm2/ncm2'
 "Plug 'ncm2/ncm2-ultisnips'
@@ -265,10 +266,11 @@ nnoremap <leader>ec :sign unplace<CR>
 " fzf and ripgrep settings
 command! -bang -nargs=? -complete=dir HFiles
   "\ call fzf#vim#files(<q-args>, {'source': 'rg --hidden --ignore .git -g ""'}, <bang>0)
-  \ call fzf#vim#files(<q-args>, fzf#wrap({'source': 'rg --hidden --ignore .git'}), <bang>0)
+  "\ call fzf#vim#files(<q-args>, fzf#wrap({'source': 'rg --hidden --ignore --hidden .git'}), <bang>0)
+  \ call fzf#vim#files(<q-args>, fzf#wrap({'source': 'rg --files --hidden'}), <bang>0)
 "command! -bang -nargs=? -complete=dir Files
   "\ call fzf#vim#files(<q-args>, {'source': 'rg --ignore .git -g ""'}, <bang>0)
-nnoremap <leader>oa :HFiles<CR>
+"nnoremap <leader>oa :HFiles<CR>
 nnoremap <leader>oo :GFiles<CR>
 "fix this
 "2
@@ -280,8 +282,10 @@ nnoremap <leader>oo :GFiles<CR>
 nnoremap <leader>os :FloatermNew<CR>
 nnoremap <leader>om :Helptags<CR>
 nnoremap <leader>oa :FZF<CR>
+nnoremap <leader>oa :HFiles<CR>
 nnoremap <leader>ob :CocList buffers<CR>
 nnoremap <leader>od :BD<CR>
+" TODO: Replace with meta-;??
 nnoremap <leader>oc :Commands<CR>
 "nnoremap <leader>os :History/<CR>
 "nnoremap / :History/<CR>
@@ -368,10 +372,14 @@ nnoremap <leader>ts :FloatermToggle<CR>
 nnoremap <leader>tn :NERDTreeToggle<CR>
 "nnoremap <leader>tp :set paste!<CR>
 
+" TODO: change to w to be aligned with emac's workspace?
+" Also, my hands moving to w feels much better than moving to t,
+" As I can still use my pointer finger after clicking w
+" Last of all, t can be back to being "Toggle" keymaps
 nnoremap to :tab split<CR>
+nnoremap tc :tabc<CR>
 nnoremap tr :TabooRename 
 nnoremap ts :TabooReset<CR>
-nnoremap tc :tabc<CR>
 "nnoremap <leader>ti :IndentGuidesToggle<CR>
 
 "nmap <leader>tq :copen<CR>
@@ -905,6 +913,11 @@ let g:VtrAppendNewline = 1
 let g:VtrClearBeforeSend = 0
 
 
+" highlights yanked text
+augroup highlight_yank
+  autocmd!
+  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
+augroup END
 " ******************* COC STUF**********************
 " 1.if hidden is not set, TextEdit might fail.
 set hidden
@@ -917,7 +930,7 @@ set cmdheight=1
 set updatetime=200
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
-" always show signcolumns
+" gutter space for lsp info on left
 set signcolumn=yes
 
 "" 2.Use K to show documentation in preview window
@@ -1062,9 +1075,9 @@ let test#strategy = "slimux"
 "let g:filter_jump_strip_characters = ["_"]
 "highlight! link SearchCurrent Red
 "highlight! link SearchHighlights Green
-nmap s <Plug>(FilterJump)
-nmap f <Plug>(FilterJumpLineForward)
-nmap F <Plug>(FilterJumpLineBackward)
+"nmap s <Plug>(FilterJump)
+"nmap f <Plug>(FilterJumpLineForward)
+"nmap F <Plug>(FilterJumpLineBackward)
 let g:filter_jump_keymaps = {
     \ "<C-n>" : "FilterJumpNextMatch",
     \ "<C-p>" : "FilterJumpPrevMatch",
@@ -1085,7 +1098,11 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 
 " ***************** TELESCOPE*******************
 " Find files using Telescope command-line sugar.
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+"nnoremap <leader>ff <cmd>Telescope find_files<cr>
+"nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+"nnoremap <leader>fb <cmd>Telescope buffers<cr>
+"nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+"function! fzf#vim#complete#word()
+    "echom "Replaced!"
+"endfunction
+let neovide_remember_dimension = 1

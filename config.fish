@@ -43,6 +43,10 @@ function yao
     yaourt -S $argv
 end
 
+#function config
+   #/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $argv
+#end
+
 ### Exa
 function ls
     exa $argv
