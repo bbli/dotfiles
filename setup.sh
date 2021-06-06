@@ -21,28 +21,27 @@
 dotfiles_path=$HOME/Documents/Code/dotfiles
 # This script will mostly just set up symbolic links
 ln -s "$dotfiles_path/.vimrc" ~/.vimrc
-#ln -s ~/dotfiles/.inputrc ~/.inputrc
+ln -s "$dotfiles_path/.inputrc" ~/.inputrc
 ## ubuntu image already has a bashrc that sources the .bash_aliases file
-## ln -s ~/dotfiles/.bashrc ~/.bashrc
-#ln -s ~/dotfiles/.bash_aliases ~/.bash_aliases
-#ln -s ~/dotfiles/.gitconfig ~/.gitconfig
-#ln -s ~/dotfiles/.shell_prompt.sh ~/.shell_prompt.sh
-#ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
+#ln -s "$dotfiles_path/.bashrc" ~/.bashrc
+ln -s "$dotfiles_path/.bash_aliases" ~/.bash_aliases
+ln -s "$dotfiles_path/.gitconfig" ~/.gitconfig
+ln -s "$dotfiles_path/.shell_prompt.sh" ~/.shell_prompt
+ln -s "$dotfiles_path/.tmux.conf" ~/.tmux.conf
 
-##mkdir ~/.vim
-#mkdir -p ~/.vim/autoload
-#mkdir -p ~/.vim/plugged
-#ln -s ~/dotfiles/plug.vim ~/.vim/autoload/plug.vim
-### TODO: make directory site and autoload
-#mkdir -p ~/.local/share/nvim/site/autoload
-#ln -s ~/dotfiles/plug.vim ~/.local/share/nvim/site/autoload/plug.vim
-#ln -s ~/dotfiles/colors ~/.vim/colors
+mkdir -p ~/.vim
+mkdir -p ~/.vim/autoload
+mkdir -p ~/.vim/plugged
+ln -s "$dotfiles_path/plug.vim" ~/.vim/autoload/plug.vim
+mkdir -p ~/.local/share/nvim/site/autoload
+ln -s "$dotfiles_path/plug.vim" ~/.local/share/nvim/site/autoload/plug.vim
+ln -s "$dotfiles_path/colors" ~/.vim/colors
 
 #touch ~/.vim_config
 
-### TODO: make directoty nvim
 ### If neovim enabled
-#mkdir -p ~/.config/nvim
-#ln -s ~/dotfiles/init.vim ~/.config/nvim/init.vim
-#ln -s ~/dotfiles/init.lua ~/.init.lua
+mkdir -p ~/.config/nvim
+ln -s "$dotfiles_path/init.vim" ~/.config/nvim/init.vim
+ln -s "$dotfiles_path/init.lua" ~/.init.lua
+ln -s ~/dotfiles/init.lua ~/.init.lua
 

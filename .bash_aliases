@@ -85,3 +85,5 @@ alias dgo='/home/benson/Software/distributed_systems_go/bin/go'
 #source ~/Software/fzf-tab-completion/bash/fzf-bash-completion.sh
 #bind -x '"\C-j": fzf_bash_completion'
 #source ~/Software/fzf-obc/bin/fzf-obc.bash
+
+#alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
