@@ -1,7 +1,11 @@
+" MAC SENSITIVE THINGS
+let home_dir = "/home/benson"
+
+
+
 "Since vim will run some bash commands on startup, so make sure shell is POSIX
 "compatible
-let home_dir = "/home/benson"
-set shell=/usr/bin/bash
+set shell=/bin/bash
 syntax enable
 set runtimepath+=~/.vim/my-snippets
 " Temp for creating plugin
