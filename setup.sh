@@ -18,7 +18,8 @@
 #git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 
-dotfiles_path=$HOME/Documents/Code/dotfiles
+#dotfiles_path=$HOME/Documents/Code/dotfiles
+dotfiles_path=$HOME/dotfiles
 # This script will mostly just set up symbolic links
 ln -s "$dotfiles_path/.vimrc" ~/.vimrc
 ln -s "$dotfiles_path/.inputrc" ~/.inputrc
@@ -26,7 +27,7 @@ ln -s "$dotfiles_path/.inputrc" ~/.inputrc
 #ln -s "$dotfiles_path/.bashrc" ~/.bashrc
 ln -s "$dotfiles_path/.bash_aliases" ~/.bash_aliases
 ln -s "$dotfiles_path/.gitconfig" ~/.gitconfig
-ln -s "$dotfiles_path/.shell_prompt.sh" ~/.shell_prompt
+ln -s "$dotfiles_path/.shell_prompt.sh" ~/.shell_prompt.sh
 ln -s "$dotfiles_path/.tmux.conf" ~/.tmux.conf
 
 mkdir -p ~/.vim
@@ -43,5 +44,3 @@ ln -s "$dotfiles_path/colors" ~/.vim/colors
 mkdir -p ~/.config/nvim
 ln -s "$dotfiles_path/init.vim" ~/.config/nvim/init.vim
 ln -s "$dotfiles_path/init.lua" ~/.init.lua
-ln -s ~/dotfiles/init.lua ~/.init.lua
-
