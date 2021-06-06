@@ -1,5 +1,6 @@
 "Since vim will run some bash commands on startup, so make sure shell is POSIX
 "compatible
+let home_dir = "/home/benson"
 set shell=/usr/bin/bash
 syntax enable
 set runtimepath+=~/.vim/my-snippets
@@ -185,7 +186,7 @@ Plug 'michaeljsmith/vim-indent-object'
 " For camelCase word deletion
 "Plug 'Julian/vim-textobj-variable-segment'
 call plug#end()
-source /home/benson/.vim/plugged/vim-sandwich/macros/sandwich/keymap/surround.vim
+source ~/.vim/plugged/vim-sandwich/macros/sandwich/keymap/surround.vim
 
 
 if !has('nvim')
@@ -274,10 +275,10 @@ command! -bang -nargs=? -complete=dir HFiles
 nnoremap <leader>oo :GFiles<CR>
 "fix this
 "2
-"command! -bang OP call fzf#run(fzf#wrap({'source':'rg --files --hidden','sink':'' 'dir':'/home/benson'}))<CR>
+"command! -bang OP call fzf#run(fzf#wrap({'source':'rg --files --hidden','sink':'' 'dir':home_dir}))<CR>
 "1
-"command! -bang OP call fzf#vim#complete#path('rg --files',{'dir':"/home/benson"})
-"nnoremap <leader>op :call fzf#vim#complete#path('rg --files',{'dir':'/home/benson'})<CR>
+"command! -bang OP call fzf#vim#complete#path('rg --files',{'dir':home_dir})
+"nnoremap <leader>op :call fzf#vim#complete#path('rg --files',{'dir':home_dir})<CR>
 "nnoremap <leader>op :OP<CR>
 nnoremap <leader>os :FloatermNew<CR>
 nnoremap <leader>om :Helptags<CR>
@@ -594,7 +595,7 @@ cnoremap tN tabprevious
 "make cause some issues, such as dummy -> but will be amortized zero cost with
 "autocomplete
 
-inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files',fzf#wrap({'dir':'/home/benson'}))
+inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files',fzf#wrap({'dir':home_dir}))
 "inoremap " ""<left>
 "inoremap ' ''<left>
 "inoremap ( ()<left>
