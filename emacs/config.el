@@ -3,6 +3,20 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
+(if (eq system-type 'darwin)
+  ; Mac specific things
+  (progn
+      (setq code-directory "~/Documents/Code")
+      (setq org-directory "~/Documents/Org")
+      (setq dotfiles-directory "~/dotfiles")
+    )
+  ; Linux specific things
+  (progn
+    (setq code-directory "~/Dropbox/Code/")
+    (setq org-directory "~/Dropbox/Org")
+      (setq dotfiles-directory "~/Dropbox/Code/dotfiles")
+    )
+)
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Benson Li"
@@ -78,7 +92,7 @@
 ;; `load-theme' function. This is the default:
 
 ;;
-(add-to-list 'load-path "~/Dropbox/Code/dotfiles/emacs/themes/")
+(add-to-list 'load-path (expand-file-name "emacs/themes" dotfiles-directory))
 (require 'org-variable-pitch)
 (require 'olivetti)
 ;; (require 'elegant)
@@ -104,7 +118,6 @@
 ;; NOTE: JUST LOAD ALL ORG STUFF DURING CONFIG UNLIKE OTHER PACKAGES
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/Dropbox/Org")
 (setq org-ellipsis " ▼")
 ;; (setq org-startup-folded t)
 (setq org-hide-emphasis-markers t)
@@ -114,7 +127,7 @@
 (add-hook 'before-save-hook 'time-stamp)
 ;; (add-hook 'org-mode-hook 'variable-pitch-mode)
 (setq org-hide-block-startup t)
-(setq org-noter-notes-search-path '("~/Dropbox/Org/"))
+(setq org-noter-notes-search-path '(,org-directory))
 (setq org-startup-with-inline-images t)
 (setq org-refile-targets '((nil :maxlevel . 1)
                                 (org-agenda-files :maxlevel . 1)))
@@ -140,9 +153,12 @@
 (custom-set-faces! '(org-block-end-line :height 0.7))
 (custom-set-faces! '(org-code :height 0.7))
 (after! org
-  (setq org-agenda-files '("~/Dropbox/Org/Learning/Learning.org"
-                          "~/Dropbox/Org/Software/Software.org"
-                          "~/Dropbox/Org/Life/Life.org")))
+  (setq org-agenda-files '(,(expand-file-name "Learning/Learning.org" org-directory)
+                            ,(expand-file-name "Software/Software.org" org-directory)
+                            ,(expand-file-name "Life/Life.org" org-directory)
+                          )
+        )
+  )
 ;This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 ;; "Hmm, describe-face says height is still unspecified
@@ -171,7 +187,7 @@
 (add-hook 'org-mode-hook 'org-toggle-pretty-entities)
 (add-hook 'org-mode-hook 'add-pretty-symbols-org)
 
-(setq projectile-project-search-path `("~/Dropbox/Code/" "~/Dropbox/Org/"))
+(setq projectile-project-search-path `(code-directory org-directory))
 
 ;;;; TODO Misc
 ; NOTE: It appears maps are loaded after doom remaps,
