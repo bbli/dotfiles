@@ -44,3 +44,6 @@ ln -s "$dotfiles_path/colors" ~/.vim/colors
 mkdir -p ~/.config/nvim
 ln -s "$dotfiles_path/init.vim" ~/.config/nvim/init.vim
 ln -s "$dotfiles_path/init.lua" ~/.init.lua
+ln -s "$dotfiles_path/emacs/config.el" ~/.doom.d/config.el
+ln -s "$dotfiles_path/emacs/init.el" ~/.doom.d/init.el
+ln -s "$dotfiles_path/emacs/packages.el" ~/.doom.d/packages.el

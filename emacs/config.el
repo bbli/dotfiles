@@ -229,17 +229,13 @@
 ;;;; TODO Keymaps to Remember
 ;;;; <C-M-m> to set multiple tags
 ;;;; TODO Find Maps
-(defvar evil-ex-initial-input-d nil)
-(defun evil-ex-d ()
- ;; (message evil-ex-initial-input-d)
-  )
-(defun benson/find-and-replace-at-point ()
-  (interactive)
-  (let ((evil-ex-initial-input-d "%s/"))
-        (evil-ex-d)
-    )
-  ;; (kbd "%s")
-  )
+; TODO Need to do this emacs style -> since "%" is always interpreted as format string
+;; (message www)
+;; (defun benson/find-and-replace-at-point ()
+  ;; (interactive)
+  ;; (let ((www "\\s/"))
+        ;; (evil-ex-d)
+  ;; )
 (map! :leader
       "f" nil
       (:prefix "f"

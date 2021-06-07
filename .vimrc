@@ -4,7 +4,7 @@ let home_dir = "/home/benson"
 
 
 "Since vim will run some bash commands on startup, so make sure shell is POSIX
-"compatible
+"compatible.Mac has this but not /usr/bin/bash
 set shell=/bin/bash
 syntax enable
 set runtimepath+=~/.vim/my-snippets
@@ -279,7 +279,7 @@ command! -bang -nargs=? -complete=dir HFiles
 nnoremap <leader>oo :GFiles<CR>
 "fix this
 "2
-"command! -bang OP call fzf#run(fzf#wrap({'source':'rg --files --hidden','sink':'' 'dir':home_dir}))<CR>
+command! -bang OP call fzf#run(fzf#wrap({'source':'rg --files --hidden','sink':'' 'dir':"~/"}))<CR>
 "1
 "command! -bang OP call fzf#vim#complete#path('rg --files',{'dir':home_dir})
 "nnoremap <leader>op :call fzf#vim#complete#path('rg --files',{'dir':home_dir})<CR>
