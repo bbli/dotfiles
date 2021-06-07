@@ -1,6 +1,18 @@
 " MAC SENSITIVE THINGS
-let home_dir = "/home/benson"
-
+if !exists("g:os")
+    if has("win64") || has("win32") || has("win16")
+        let g:os = "Windows"
+    else
+        let g:os = substitute(system('uname'), '\n', '', '')
+    endif
+endif
+if g:os == "Linux"
+    let home_dir = "/home/benson"
+    set runtimepath+=~/Documents/Code/Projects/my_plugin
+else
+    let home_dir = "/Users/benson"
+    set runtimepath+=~/Dropbox/Code/Projects/my_plugin
+endif
 
 
 "Since vim will run some bash commands on startup, so make sure shell is POSIX
@@ -9,7 +21,6 @@ set shell=/bin/bash
 syntax enable
 set runtimepath+=~/.vim/my-snippets
 " Temp for creating plugin
-set runtimepath+=~/Dropbox/Code/Projects/my_plugin
 "set verbosefile=verbose.txt
 
 set ignorecase
@@ -127,7 +138,7 @@ Plug 'vim-voom/VOoM'
 "Language Server
 "---
 Plug 'majutsushi/tagbar'
-Plug 'liuchengxu/vista.vim'
+"Plug 'liuchengxu/vista.vim' "Doesn't work on mac?
 "Plug 'roxma/nvim-yarp'
 "Plug 'ncm2/ncm2'
 "Plug 'ncm2/ncm2-ultisnips'
