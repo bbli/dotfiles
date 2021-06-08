@@ -127,7 +127,7 @@
 (add-hook 'before-save-hook 'time-stamp)
 ;; (add-hook 'org-mode-hook 'variable-pitch-mode)
 (setq org-hide-block-startup t)
-(setq org-noter-notes-search-path '(,org-directory))
+(setq org-noter-notes-search-path `(,org-directory))
 (setq org-startup-with-inline-images t)
 (setq org-refile-targets '((nil :maxlevel . 1)
                                 (org-agenda-files :maxlevel . 1)))
@@ -153,7 +153,7 @@
 (custom-set-faces! '(org-block-end-line :height 0.7))
 (custom-set-faces! '(org-code :height 0.7))
 (after! org
-  (setq org-agenda-files '(,(expand-file-name "Learning/Learning.org" org-directory)
+  (setq org-agenda-files `(,(expand-file-name "Learning/Learning.org" org-directory)
                             ,(expand-file-name "Software/Software.org" org-directory)
                             ,(expand-file-name "Life/Life.org" org-directory)
                           )
