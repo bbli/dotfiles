@@ -78,7 +78,6 @@ alias nvim-server='/home/benson/Desktop/Docker_Builds/artful-neovim/nvim-server'
 
 alias tb='tensorboard'
 
-alias dgo='/home/benson/Software/distributed_systems_go/bin/go'
 
 # source <(curl -Ss https://raw.githubusercontent.com/wfxr/forgit/master/forgit.plugin.zsh)
 #Not worth b/c I lose out on ssh fzf completion -> just do **<TAB> and tmux to navigate

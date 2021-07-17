@@ -2,7 +2,7 @@
 ;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
-
+;(general-override-mode)
 (if (eq system-type 'darwin)
   ; Mac specific things
   (progn
@@ -123,7 +123,7 @@
 (setq org-hide-emphasis-markers t)
  ;; org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "✿"))
 (setq org-todo-keywords
-      '((sequence "TODO" "|" "DONE")))
+      '((sequence "TODO" "|" "FUTURE" "DONE")))
 (add-hook 'before-save-hook 'time-stamp)
 ;; (add-hook 'org-mode-hook 'variable-pitch-mode)
 (setq org-hide-block-startup t)
@@ -140,12 +140,30 @@
 ;;   '((t (:weight semi-bold :box t)))
 ;;   "Font for boxing/emphasis in notes"
 ;;   )
+;; (defun focus-on-subtree ()
+;;     (org-tree-to-indirect-buffer)
+;;   (doom/window-maximize-buffer)
+;;   )
 (after! org
         ;; (add-to-list 'org-font-lock-extra-keywords '("^" benson/emphasis-box-face))
         (add-to-list 'org-emphasis-alist '("_" (:inherit org-code :height 1.4)))
         (add-to-list 'org-emphasis-alist '("=" (:inherit org-verbatim :height 0.7 :box nil)))
         (push '(tags-tree . local) org-show-context-detail)
+        (add-hook 'org-agenda-after-show-hook 'org-tree-to-indirect-buffer)
+        (map! :map org-mode-map "C-h" nil "C-a" nil)
 )
+;; TODO:
+;(let (org-agenda-files `(,(buffer-file-name)))
+  ;;; STUFF
+  ;)evil-mouse-drag-region
+;; (defun inject-current-file-into-agenda (fun &rest args)
+;;   (message "hi there4")
+;;   (setq org-agenda-files (list (buffer-file-name)))
+;;     ;(message org-agenda-files)
+;;     (apply fun args)
+;;   (setq org-agenda-files nil)
+;; )
+;;  (advice-add 'evil-mouse-drag-region :around 'inject-current-file-into-agenda )
 (custom-set-faces! '(org-tag :height 0.6))
 (custom-set-faces! '(org-block :height 0.7))
 (custom-set-faces! '(org-meta-line :height 0.7))
@@ -154,12 +172,15 @@
 (custom-set-faces! '(org-code :height 0.7))
 (after! org
   (setq org-agenda-files `(,(expand-file-name "Learning/Learning.org" org-directory)
+                            ,(expand-file-name "Learning/ProblemSolving.org" org-directory)
+                            ,(expand-file-name "Learning/Algorithms.org" org-directory)
+                            ,(expand-file-name "Software/Debug.org" org-directory)
                             ,(expand-file-name "Software/Software.org" org-directory)
                             ,(expand-file-name "Life/Life.org" org-directory)
                           )
         )
   )
-;This determines the style of line numbers in effect. If set to `nil', line
+;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 ;; "Hmm, describe-face says height is still unspecified
 ;; (set-face-attribute 'mode-line nil :height 15)

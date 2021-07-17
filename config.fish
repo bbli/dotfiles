@@ -98,8 +98,8 @@ function snip
     cd ~/.vim/my-snippets/UltiSnips
 end
 
-function dgo
-    /home/benson/Software/distributed_systems_go/bin/go $argv
+function pack
+    cd ~/.local/share/nvim/site/pack/packer/start
 end
 # Variables
 set SPACEFISH_PROMPT_ADD_NEWLINE false

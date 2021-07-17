@@ -1,4 +1,4 @@
-" MAC SENSITIVE THINGS
+" ************  Mac Sensitive  ************{{{1
 if !exists("g:os")
     if has("win64") || has("win32") || has("win16")
         let g:os = "Windows"
@@ -15,6 +15,15 @@ else
 endif
 
 
+" ************  Options  ************{{{1
+set foldmethod=marker
+"set foldmarker=apple,sauce
+"set foldtext="MyFoldText()"
+"function MyFoldText()
+  "let line = getline(v:foldstart)
+  "See help for full
+  "return v:folddashes . sub
+"endfunction
 "Since vim will run some bash commands on startup, so make sure shell is POSIX
 "compatible.Mac has this but not /usr/bin/bash
 set shell=/bin/bash
@@ -47,7 +56,6 @@ set laststatus=2
 set t_Co=256
 set foldenable
 set foldlevel=0
-set foldmethod=manual
 "set list lcs =tab:\|\
 "set list
 "set listchars=tab:\|\
@@ -76,7 +84,7 @@ set inccommand=nosplit
 set colorcolumn=80
 
 
-""""""""Plugins""""""""
+" ************  Plugins  ************{{{1
 call plug#begin('~/.vim/plugged')
 "Plug 'ThePrimeagen/vim-be-good'
 "Plug 'bbli/filter-jump.nvim', {'do': ':UpdateRemotePlugins'}
@@ -125,9 +133,6 @@ Plug 'romainl/vim-qf'
 "Plug 'jremmen/vim-ripgrep', {'frozen': 1}
 Plug 'bbli/vim-ripgrep'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all','frozen':1}
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
 "Plug 'junegunn/fzf.vim', {'frozen': 1}
 Plug 'bbli/fzf.vim'
 Plug 'mbbill/undotree'
@@ -138,14 +143,14 @@ Plug 'vim-voom/VOoM'
 "Language Server
 "---
 Plug 'majutsushi/tagbar'
-"Plug 'liuchengxu/vista.vim' "Doesn't work on mac?
+Plug 'liuchengxu/vista.vim' "Doesn't work on mac?
 "Plug 'roxma/nvim-yarp'
 "Plug 'ncm2/ncm2'
 "Plug 'ncm2/ncm2-ultisnips'
 "Plug 'ncm2/ncm2-bufword'
 "Plug 'ncm2/ncm2-path'
 "Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'ncm2' }
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 "Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'wellle/tmux-complete.vim'
@@ -222,14 +227,16 @@ for i in range(97,122)
 let mapleader=" "
 let maplocalleader="-"
 
-""""""""Leader Keys""""""""
+" ************  Leader Keys  ************{{{1
 "nnoremap <leader><leader>t :MerlinTypeOf<CR>
 "nnoremap <leader><leader>i :call <SID>show_documentation()<CR>
 nnoremap <leader>l 40l
 
 
 " nnoremap <leader><leader>m qm
-nnoremap <leader><leader>m @m
+" Override marks for now
+nnoremap mm @m
+nnoremap <leader><leader>m 9000@m
 nnoremap <leader><leader>z :nohlsearch<CR>
 nnoremap <C-t> <C-z>
 "Comments
@@ -460,7 +467,7 @@ nnoremap <leader>dp dp
 "nnoremap <leader>mm @a
 "autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
 "autocmd BufEnter *.m  nnoremap <buffer> <leader>c I%<esc>
-""""""""Local Leader Keys""""""""
+""""""""Local Leader Keys""""""""{{{1
 nnoremap <localleader>v :e ~/.vimrc<CR>
 nnoremap <localleader>b :e ~/.bash_aliases<CR>
 nnoremap <localleader>g :e ~/.gitconfig<CR>
@@ -481,7 +488,7 @@ vnoremap <localleader>y "+y
 nnoremap <localleader>y "+y
 vnoremap <localleader>d "+d
 nnoremap <localleader>d "+d
-""""""""Meta Keys""""""""
+""""""""Meta Keys""""""""{{{1
 "To move lines intuitively
 "Alt and Shift combos won't work with K
 "But Ctrl will mess up window specific mappings
@@ -499,7 +506,7 @@ nnoremap <C-w><Space> <C-w>=
 
 map <M-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
-""""""""Fn Keys""""""""
+""""""""Fn Keys""""""""{{{1
 "nnoremap <F2> :TagbarToggle<CR>
 "nnoremap <F3> :AirlineToggleWhitespace<CR>
 
@@ -509,7 +516,7 @@ map <M-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 "nnoremap <silent> <F8> :NERDTreeToggle<CR>
 "nnoremap <F10> :set nopaste
 
-""""""""Semi Colon Keys""""""""
+""""""""Semi Colon Keys""""""""{{{1
 inoremap ;c <C-c>
 vnoremap ;c <C-c>
 inoremap ;; ;
@@ -551,7 +558,7 @@ nnoremap ;t :MtaJumpToOtherTag<CR>
 nnoremap ;o <C-^>
 nnoremap ;r @:
 
-""""""""Normal Mode maps""""""""
+""""""""Normal Mode maps""""""""{{{1
 nnoremap k gk
 nnoremap j gj
 nnoremap gk k
@@ -576,9 +583,10 @@ nnoremap gb gi
 "Training vim skip
 nnoremap h <Nop>
 nnoremap l <Nop>
+nnoremap <C-g> <cmd>close<CR>
 
 nnoremap <C-w>m <C-w>p
-""""""""Command Mode maps""""""""
+""""""""Command Mode maps""""""""{{{1
 cnoremap sE %s
 " nnoremap / /\<
 nnoremap <leader>/ /
@@ -596,14 +604,14 @@ cnoremap tN tabprevious
 " nnoremap <leader><leader>t :tabn<CR>
 
 
-""""""""Operator Mode maps""""""""
+""""""""Operator Mode maps""""""""{{{1
 "onoremap w W
 "onoremap W w
 "onoremap b B
 "onoremap B b
 "onoremap ) i)
 "onoremap ] i]
-""""""""Insert Mode maps""""""""
+""""""""Insert Mode maps""""""""{{{1
 " To be honest, I don't think this is nesscary. Those keys are not awkward,
 " and I only mapped it because I was fixated on insert normal mode
 "inoremap ]] <C-c>A
@@ -616,7 +624,7 @@ inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files',fzf#wrap({'dir':ho
 "inoremap ( ()<left>
 "inoremap [ []<left>
 "inoremap { {}<left>
-""""""""Control Maps""""""""
+""""""""Control/Special Key Maps""""""""{{{1
 "This may be dangerous as vim has a lot of built in control key maps
 "Only do to overide
 "nnoremap <C-]> :vs<CR><C-]>
@@ -628,7 +636,20 @@ inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files',fzf#wrap({'dir':ho
 "nmap <C-c><C-c> <Plug>SlimeParagraphSend
 "nmap <C-c>v     <Plug>SlimeConfig
 
-""""""""Colors""""""""
+let g:fold_flag = 0
+function! ToggleFoldAll()
+    if g:fold_flag
+        let g:fold_flag = 0
+        normal! zM
+    else
+        let g:fold_flag = 1
+        normal! zR
+    endif
+endfunction
+nmap <TAB> za
+nnoremap <S-TAB> :call ToggleFoldAll()<CR>
+
+""""""""Colors""""""""{{{1
 "makes vim colorscheme the same as the terminal
 
 if exists('+termguicolors')
@@ -719,7 +740,7 @@ colorscheme edge
     "autocmd BufEnter *.clj color gruvbox
 "augroup END
 
-""""""""Other Autocommands/Functions""""""""
+""""""""Other Autocommands/Functions""""""""{{{1
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost *.txt set filetype=markdown "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost CMakeLists.txt set filetype=cmake "except cmake files
@@ -727,7 +748,7 @@ autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 
 autocmd FileType go let b:dispatch = 'go test'
 
-""""""""Misc""""""""
+""""""""Misc""""""""{{{1
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
 nnoremap <Space> <Nop>
@@ -738,7 +759,7 @@ nnoremap <Space> <Nop>
 "nnoremap <silent> <C[> :CtrlP<CR>
 
 
-""""""""Plugin related variables""""""""
+""""""""Plugin related variables""""""""{{{1
 "autocmd BufEnter * call ncm2#enable_for_buffer()
 "Actually independent of ncm2 plugin. Just code for QOL when using autocomplete
 set completeopt=noinsert,menuone,noselect
@@ -994,8 +1015,8 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 "nmap <leader>qf  <Plug>(coc-fix-current)
 "" Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
+"nmap <silent> <TAB> <Plug>(coc-range-select)
+"xmap <silent> <TAB> <Plug>(coc-range-select)
 
 " 6. Movement in Coc windows(Seems to be built in already)
 " Remap <C-f> and <C-b> for scroll float windows/popups.
@@ -1014,6 +1035,7 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 "" use `:OR` for organize import of current buffer
 "command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 "" Add status line support, for integration with other plugin, checkout `:h coc-status`
+"TODO: same with lsp?
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 "" Using CocList
@@ -1121,4 +1143,5 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 "function! fzf#vim#complete#word()
     "echom "Replaced!"
 "endfunction
-let neovide_remember_dimension = 1
+let neovide_remember_window_size = 1
+"let g:vista_sidebar_keepalt
