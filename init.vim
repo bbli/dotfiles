@@ -18,6 +18,7 @@ require('packer').startup(function()
   use 'simrat39/rust-tools.nvim'
   -- tagbar/vista is better b/c it shows the current hovered function
   --use 'simrat39/symbols-outline.nvim'
+  use 'anott03/nvim-lspinstall'
   use {
   'nvim-lua/lsp-status.nvim',
    config = function()
@@ -38,12 +39,15 @@ require('packer').startup(function()
 
   -- Debugger
   use 'mfussenegger/nvim-dap'
+  use 'mfussenegger/nvim-dap-python' --Actualy, supposedly vim-ultest will cover this?
+  use 'theHamsta/nvim-dap-virtual-text'
+  use 'nvim-telescope/telescope-dap.nvim'
   -- MISC
   use {
       "folke/zen-mode.nvim",
       config = function() require("zen-mode").setup { } end
     }
-  use 'kyazdani42/nvim-web-devicons'
+  use 'kyazdani42/nvim-web-devicons' -- forgot which plugin is optionally dependent on this
   --use {
 --      "folke/twilight.nvim",
  --     config = function() require("twilight").setup { } end
@@ -131,6 +135,7 @@ let g:vimsyn_embed = 'l'
 
 
 nnoremap <leader>jd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <leader>jd <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <leader>jD <cmd>lua vim.lsp.buf.declaration()<CR>
 "nnoremap <leader>jr <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <leader>jr <cmd>lua vim.lsp.buf.incoming_calls()<CR>
@@ -161,10 +166,15 @@ nnoremap <leader>fs <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 "autocmd BufWritePre *.py lua vim.lsp.buf.formatting_sync(nil, 100)
 nnoremap <silent><leader>ca <cmd>lua require('lspsaga.codeaction').code_action()<CR>
 vnoremap <silent><leader>ca :<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>
+"nnoremap <leader>fc <cmd>lua require'telescope.builtin'.lsp_workspace_symbols{prompt_prefix=" ", default_text=" :class: "}<CR>
 
 autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
+" ************  Language Servers  ************{{{1
 lua <<EOF
---require'lspconfig'.sumneko_lua.setup {}
+-- clangd
+require'lspconfig'.clangd.setup{}
+
+-- Rust Tools
 local opts = {
     tools = { -- rust-tools options
         autoSetHints = true,
@@ -203,8 +213,41 @@ local opts = {
     -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
     server = {} -- rust-analyer options
 }
-
 require('rust-tools').setup(opts)
+
+
+-- Lua Language Server
+local sumneko_binary = "/usr/bin/lua-language-server"
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
+require'lspconfig'.sumneko_lua.setup {
+  cmd = {sumneko_binary},
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+        -- Setup your lua path
+        path = runtime_path,
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = {'vim'},
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}
+
+
 EOF
 " ************  TreeSitter  ************{{{1
 lua <<EOF
@@ -295,12 +338,20 @@ require('telescope').setup{
     mappings = {
       n = {
           [ "q" ] = actions.close,
+          ["<C-b>"] = actions.preview_scrolling_up,
+          ["<C-f>"] = actions.preview_scrolling_down,
       },
      i = {
-          [ "C-j" ] = actions.move_selection_next,
-          [ "C-k" ] = actions.move_selection_previous,
-          [ "C-f" ] = actions.send_to_qflist,
-          [ "q" ] = actions.smart_send_to_loclist,
+          [ "<C-g>" ] = actions.close,
+          [ "<C-j>" ] = actions.move_selection_next,
+          [ "<C-k>" ] = actions.move_selection_previous,
+          [ "<C-l>" ] = actions.smart_send_to_qflist + actions.open_qflist,
+          [ "<C-h>" ] = actions.complete_tag,
+          [ "<C-u>" ] = false,
+          [ "<C-d>" ] = false,
+          [ "<C-f>" ] = actions.preview_scrolling_up,
+          [ "<C-b>" ] = actions.preview_scrolling_down,
+
      },
     },
       layout_config = {
@@ -309,6 +360,61 @@ require('telescope').setup{
   }
 }
 EOF
+" ************  Debugger  ************{{{1
+lua <<EOF
+--require('telescope').load_extension('dap') -- NOTE: needs to be called after telescope setup
+local dap = require('dap')
+dap.adapters.lldb = {
+  type = 'executable',
+  command = '/usr/bin/lldb-vscode', -- adjust as needed
+  name = "lldb"
+}
+dap.configurations.cpp = {
+  {
+    name = "Launch",
+    type = "lldb",
+    request = "launch",
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+    args = {},
+
+    runInTerminal = false,
+  },
+}
+dap.configurations.c = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp
+dap.defaults.fallback.terminal_win_cmd = '50vsplit new'
+
+vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''})
+EOF
+au FileType dap-repl lua require('dap.ext.autocompl').attach()
+nnoremap <silent> <leader>dc :lua require'dap'.continue()<CR>
+nnoremap <silent> <leader>ds :lua require'dap'.step_over()<CR>
+nnoremap <silent> <leader>di :lua require'dap'.step_into()<CR>
+nnoremap <silent> <leader>do :lua require'dap'.step_out()<CR>
+nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <silent> <leader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+nnoremap <silent> <leader>dp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
+nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
+nnoremap <silent> <leader>dq :lua require'dap'.stop()<CR>
+"TODO create command for running to cursor?
+
+":Telescope dap commands
+":Telescope dap configurations
+":Telescope dap list_breakpoints
+":Telescope dap variables
+":Telescope dap frames
+"A typical debug flow consists of:
+"1.Setting breakpoints via :lua require'dap'.toggle_breakpoint().
+"2. Launching debug sessions and resuming execution via :lua require'dap'.continue().
+"3. Stepping through code via :lua require'dap'.step_over() and :lua require'dap'.step_into().
+"4. Inspecting the state via the built-in REPL: :lua require'dap'.repl.open() or using the widget UI (:help dap-widgets)
+
+let g:dap_virtual_text = 'all_frames'
 " ************  TODO  ************{{{1
 nnoremap <silent> <A-t> :Lspsaga open_floaterm<CR>
 tnoremap <silent> <A-t> <C-\><C-n>:Lspsaga close_floaterm<CR>
@@ -333,4 +439,6 @@ nnoremap <leader>vk <cmd>Telescope keymaps<cr>
 nnoremap <leader>vm <cmd>Telescope help_tags<cr>
 
 nnoremap <leader>fs <cmd>Telescope lsp_workspace_symbols<cr>
+nnoremap <leader>jd <cmd>Telescope lsp_definitions<cr>
+nnoremap <leader>ji <cmd>Telescope lsp_implementations<cr>
 
