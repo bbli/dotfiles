@@ -42,6 +42,9 @@ end
 function yao
     yaourt -S $argv
 end
+function ff
+    fg
+end
 
 #function config
    #/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $argv

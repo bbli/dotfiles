@@ -117,7 +117,8 @@ Plug 'bronson/vim-visual-star-search'
 Plug 'Yggdroot/indentLine'
 "Plug 'tpope/vim-surround'
 Plug 'machakann/vim-sandwich'
-
+"So <C-j> works properly -> Actually still doesn't work
+"Plug '~/.vim/plugged/bash-support'
 "Plug 'justinmk/vim-sneak'
 "Plug 'goldfeld/vim-seek'
 "Plug 'jayflo/vim-skip'
@@ -159,7 +160,6 @@ Plug 'dag/vim-fish'
 Plug 'pboettch/vim-cmake-syntax'
 Plug 'rhysd/vim-llvm'
 " This seems to be the only nvim specific plugin I use
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 "Terminal Interactions
 "---
@@ -559,17 +559,17 @@ nnoremap ;o <C-^>
 nnoremap ;r @:
 
 """"""""Normal Mode maps""""""""{{{1
-nnoremap k gk
-nnoremap j gj
-nnoremap gk k
-nnoremap gj j
+nnoremap <unique> k gk
+nnoremap <unique> j gj
+nnoremap <unique> gk k
+nnoremap <unique> gj j
 "nnoremap EE @
-nnoremap C c$
-nnoremap D d$
-nnoremap Y y$
-nnoremap E $
-nnoremap gE g$
-nnoremap W 0w
+nnoremap <unique> C c$
+nnoremap <unique> D d$
+nnoremap <unique> Y y$
+nnoremap <unique> E $
+nnoremap <unique> gE g$
+nnoremap <unique> W 0w
 " to jump between brackets/parantheses
 "nnoremap s %
 "nnoremap S <C-^>
@@ -1145,3 +1145,5 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 "endfunction
 let neovide_remember_window_size = 1
 "let g:vista_sidebar_keepalt
+let g:BASH_Ctrl_j = 'off'
+let g:C_Ctrl_j = 'off'

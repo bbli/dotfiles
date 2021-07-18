@@ -7,14 +7,17 @@ require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
+ -- UTILITY
+  use 'nvim-lua/popup.nvim'
+  use 'nvim-lua/plenary.nvim'
   -- LSP STUFF
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/nvim-compe'
   use 'glepnir/lspsaga.nvim'
   use 'kosayoda/nvim-lightbulb'
-  -- tag bar is better b/c it shows the current hovered function
+  use 'simrat39/rust-tools.nvim'
+  -- tagbar/vista is better b/c it shows the current hovered function
   --use 'simrat39/symbols-outline.nvim'
-  --use 'mattn/vim-lsp-settings'
   use {
   'nvim-lua/lsp-status.nvim',
    config = function()
@@ -22,15 +25,25 @@ require('packer').startup(function()
        lsp_status.register_progress()
    end
   }
+  -- TREE SITTER
+  use {
+      'nvim-treesitter/nvim-treesitter',
+      run = ':TSUpdate'
+      }
+  use 'nvim-treesitter/nvim-treesitter-textobjects'
+  use {
+      'nvim-telescope/telescope.nvim',
+      requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+      }
 
-  use 'nvim-lua/popup.nvim'
-  use 'nvim-lua/plenary.nvim'
-  use 'nvim-telescope/telescope.nvim'
-
+  -- Debugger
+  use 'mfussenegger/nvim-dap'
+  -- MISC
   use {
       "folke/zen-mode.nvim",
       config = function() require("zen-mode").setup { } end
     }
+  use 'kyazdani42/nvim-web-devicons'
   --use {
 --      "folke/twilight.nvim",
  --     config = function() require("twilight").setup { } end
@@ -91,23 +104,23 @@ let g:vimsyn_embed = 'l'
   "return ''
 "endfunction
 "set statusline^=%{LspStatus()}
-lua << EOF
-local lsp_status = require('lsp-status')
+"lua << EOF
+"local lsp_status = require('lsp-status')
 
-lsp_status.config({
-  kind_labels = vim.g.completion_customize_lsp_label
-})
-lsp_status.register_progress()
+"lsp_status.config({
+  "kind_labels = vim.g.completion_customize_lsp_label
+"})
+"lsp_status.register_progress()
 
-local on_attach = function(client, bufnr)
-  lsp_status.on_attach(client)
-end
+"local on_attach = function(client, bufnr)
+  "lsp_status.on_attach(client)
+"end
 
-require('lspconfig').rust_analyzer.setup{
-  on_attach = on_attach,
-  capabilities = lsp_status.capabilities,
-}
-EOF
+"require('lspconfig').rust_analyzer.setup{
+  "on_attach = on_attach,
+  "capabilities = lsp_status.capabilities,
+"}
+"EOF
 
 "function! StatuslineLsp() abort
   "return luaeval("require('lsp-status').status()")
@@ -150,25 +163,93 @@ nnoremap <silent><leader>ca <cmd>lua require('lspsaga.codeaction').code_action()
 vnoremap <silent><leader>ca :<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>
 
 autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
-let g:symbols_outline = {
-    \ "highlight_hovered_item": v:false,
-    \ "show_guides": v:true,
-    \ "position": 'right',
-    \ "auto_preview": v:false,
-    \ "show_numbers": v:false,
-    \ "show_relative_numbers": v:false,
-    \ "show_symbol_details": v:true,
-    \ "keymaps": {
-        \ "close": "<Esc>",
-        \ "goto_location": "<Cr>",
-        \ "focus_location": "o",
-        \ "hover_symbol": "<C-space>",
-        \ "rename_symbol": "r",
-        \ "code_actions": "a",
-    \ },
-    \ "lsp_blacklist": [],
-\ }
+lua <<EOF
+--require'lspconfig'.sumneko_lua.setup {}
+local opts = {
+    tools = { -- rust-tools options
+        autoSetHints = true,
+        hover_with_actions = true,
 
+        runnables = {
+            use_telescope = true
+            -- rest of the opts are forwarded to telescope
+        },
+
+        inlay_hints = {
+            show_parameter_hints = true,
+            parameter_hints_prefix = "<- ",
+            -- prefix for all the other hints (type, chaining)
+            other_hints_prefix = "=> ",
+        },
+
+        hover_actions = {
+            -- the border that is used for the hover window
+            -- see vim.api.nvim_open_win()
+            border = {
+                {"╭", "FloatBorder"}, {"─", "FloatBorder"},
+                {"╮", "FloatBorder"}, {"│", "FloatBorder"},
+                {"╯", "FloatBorder"}, {"─", "FloatBorder"},
+                {"╰", "FloatBorder"}, {"│", "FloatBorder"}
+            },
+
+            -- whether the hover action window gets automatically focused
+            -- default: false
+            auto_focus = false
+        }
+    },
+
+    -- all the opts to send to nvim-lspconfig
+    -- these override the defaults set by rust-tools.nvim
+    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
+    server = {} -- rust-analyer options
+}
+
+require('rust-tools').setup(opts)
+EOF
+" ************  TreeSitter  ************{{{1
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        ["ab"] = "@block.outer",
+        ["ib"] = "@block.inner",
+        ["at"] = "@frame.outer",
+        ["it"] = "@frame.inner",
+      },
+    },
+
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["]m"] = "@function.outer",
+        ["]]"] = "@class.outer",
+      },
+      goto_next_end = {
+        ["]M"] = "@function.outer",
+        ["]["] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[m"] = "@function.outer",
+        ["[["] = "@class.outer",
+      },
+      goto_previous_end = {
+        ["[M"] = "@function.outer",
+        ["[]"] = "@class.outer",
+      },
+    },
+
+  },
+}
+EOF
 " ************  AutoComplete  ************{{{1
 lua << EOF
 require'compe'.setup {
@@ -206,6 +287,50 @@ require'compe'.setup {
   };
 }
 EOF
+" ************  Telescope  ************{{{1
+lua <<EOF
+local actions = require('telescope.actions')
+require('telescope').setup{
+  defaults = {
+    mappings = {
+      n = {
+          [ "q" ] = actions.close,
+      },
+     i = {
+          [ "C-j" ] = actions.move_selection_next,
+          [ "C-k" ] = actions.move_selection_previous,
+          [ "C-f" ] = actions.send_to_qflist,
+          [ "q" ] = actions.smart_send_to_loclist,
+     },
+    },
+      layout_config = {
+          preview_width = 75
+      }
+  }
+}
+EOF
 " ************  TODO  ************{{{1
-nnoremap <silent> <A-d> :Lspsaga open_floaterm<CR>
-tnoremap <silent> <A-d> <C-\><C-n>:Lspsaga close_floaterm<CR>
+nnoremap <silent> <A-t> :Lspsaga open_floaterm<CR>
+tnoremap <silent> <A-t> <C-\><C-n>:Lspsaga close_floaterm<CR>
+" TODO: better than fzf but I seriously need to change the locking
+" behavior
+nnoremap <leader>oa <cmd>Telescope find_files<cr>
+"nnoremap <leader>ug <cmd>Telescope live_grep<cr>
+nnoremap <leader>ob <cmd>Telescope buffers<cr>
+nnoremap <leader>oh <cmd>Telescope oldfiles<cr>
+nnoremap <leader>oc <cmd>Telescope commands<cr>
+" TODO: Telescope way better here -> Harpoon will probably replace though
+nnoremap <leader>ul <cmd>Telescope marks<cr>
+"TODO: why is this not filtering?
+nnoremap <leader>un <cmd>Telescope registers<cr>
+
+nnoremap <leader>gb <cmd>Telescope git_branchs<CR>
+nnoremap <leader>gc <cmd>Telescope git_commits<CR>
+
+nnoremap <leader>vo <cmd>Telescope vim_options<cr>
+nnoremap <leader>vc <cmd>Telescope autocommands<cr>
+nnoremap <leader>vk <cmd>Telescope keymaps<cr>
+nnoremap <leader>vm <cmd>Telescope help_tags<cr>
+
+nnoremap <leader>fs <cmd>Telescope lsp_workspace_symbols<cr>
+
