@@ -359,7 +359,7 @@ let mapleader=" "
 let maplocalleader="-"
 
 " ************** LEADER MAPS **************{{{1
-" ****Misc****
+" ---Misc---{{{2
 "nnoremap <leader><leader>t :MerlinTypeOf<CR>
 "nnoremap <leader><leader>i :call <SID>show_documentation()<CR>
 nnoremap <leader>l 40l
@@ -403,7 +403,7 @@ vnoremap <leader>d "zd
 nnoremap <leader>y "zy
 vnoremap <leader>y "zy
 
-" ****Buffer Related Operations****
+" ---Buffer Related---{{2
 nnoremap <leader>bs <C-^>
 nnoremap <silent> <leader>bk :bwipeout<CR>
 nnoremap <leader>bm :ZenMode<CR>
@@ -412,7 +412,7 @@ nnoremap <leader>br :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
 "nnoremap <leader>bm :OverCommandLine<CR>g/\<<C-r><C-w>\>/norm! @m<CR>
 
 
-" ****Workspace Related Operations****
+" ---Workspace Related---{{{2
 nnoremap <leader>ws :mks ~/.vim/sessions/default.vim<CR>
 nnoremap <leader>wl :source ~/.vim/sessions/default.vim<CR>
 
@@ -425,7 +425,7 @@ nnoremap <leader>wk :tabc<CR>
 nnoremap <leader>wr :TabooRename 
 "nnoremap <leader>ws :TabooReset<CR>
 
-" ***  Git Related Opeartions  ***
+" ---Git Related---{{{2
 nnoremap <leader>gm :Magit<CR>
 nmap <leader>gp <Plug>(GitGutterPreviewHunk)
 nmap <leader>gs <Plug>(GitGutterStageHunk)
@@ -442,7 +442,7 @@ nmap <leader>gg :G<CR>
 nnoremap <leader>gd :Gvdiff 
 
 
-" ****Open Related Operations****
+" ---Open Related---{{{2
 " fzf and ripgrep settings
 command! -bang -nargs=? -complete=dir HFiles
   "\ call fzf#vim#files(<q-args>, {'source': 'rg --hidden --ignore .git -g ""'}, <bang>0)
@@ -502,7 +502,7 @@ nnoremap <leader>fw :OverCommandLine<CR>Ggrep <C-r><C-w><CR>
 
 
 
-" ****Running Project****{{2
+" ---Compling/Running Related---{{{2
 "TODO: change prefix to 'r' or 'p' for run/project?
 "nnoremap <leader>sp :SlimuxREPLConfigure<CR>
 nnoremap <leader>ss :SlimuxShellRun
@@ -533,7 +533,7 @@ nnoremap <leader>sf :TestFile<CR>
 "nnoremap <leader>sd :VtrSendCtrlD<CR>
 "nnoremap <leader>ss %
 
-" ****Toggles****{{2
+" ---Toggles---{{{2
 "nnoremap <leader>to :VoomToggle markdown<CR>
 nnoremap <leader>tw :AirlineToggleWhitespace<CR>
 
@@ -556,7 +556,7 @@ nmap <leader>tl <Plug>(qf_loc_toggle)
 " nmap <leader>ji <Plug>(coc-funcobj-i)
 " nmap <leader>jj <Plug>(coc-funcobj-a)
 
-" ****Jump Related Operations****
+" ---Jump Related---{{{2
 nmap <leader>jf <Plug>(coc-float-jump)
 nmap <leader>jq <Plug>(qf_qf_switch)
 nmap <leader>jd <Plug>(coc-definition)
@@ -577,7 +577,7 @@ nnoremap <leader>jC g,
 nnoremap <leader>jm `M
 nnoremap <leader>mm mM
 
-" ****Diff View Related Opeartions****
+" ---Diff View Related---{{{2
 nnoremap <leader>dn ]c
 nnoremap <leader>dN [c
 "nnoremap <leader>dl :.diffput<CR>

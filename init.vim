@@ -195,7 +195,7 @@ nnoremap <leader>je <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 nnoremap <leader>jE <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 
 nnoremap <leader>fr <cmd>lua require('lspsaga.rename').rename()<CR>
-nnoremap <leader>fs <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <leader>fs <cmd>Telescope lsp_workspace_symbols<cr>
 
 "nnoremap K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
@@ -590,6 +590,5 @@ nnoremap <leader>vm <cmd>Telescope help_tags<cr>
 nnoremap <leader>vv <cmd>Telescope quickfix<cr>
 nnoremap <leader>vl <cmd>Telescope loclist<cr>
 
-nnoremap <leader>fs <cmd>Telescope lsp_workspace_symbols<cr>
 nnoremap <leader>jd <cmd>Telescope lsp_definitions<cr>
 nnoremap <leader>ji <cmd>Telescope lsp_implementations<cr>
