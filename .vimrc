@@ -1,4 +1,135 @@
-" ************  Mac Sensitive  ************{{{1
+" ************** COC STUFF **************{{{1
+" 1.if hidden is not set, TextEdit might fail.
+set hidden
+" Some servers have issues with backup files, see #649
+set nobackup
+set nowritebackup
+" Better display for messages. I will set back to 1 for now
+set cmdheight=1
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=200
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+" gutter space for lsp info on left
+set signcolumn=yes
+
+"" 2.Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+"" Highlight symbol under cursor on CursorHold
+" the highlight is too shallow(just white-clear), so nah
+"autocmd CursorHold * silent call CocActionAsync('highlight')
+
+
+"" 3.Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+"" Remap for format selected region
+xmap <leader>cf  <Plug>(coc-format-selected)
+nmap <leader>cf  :call CocAction('format')<CR>
+"autocmd BufWritePre :call CocAction('format')<CR>
+
+" 4. Use <C-SPACE> to trigger completion(if for some reason it doesn't
+" auto start)
+"if has('nvim')
+  "inoremap <silent><expr> <c-space> coc#refresh()
+"else
+  "inoremap <silent><expr> <c-@> coc#refresh()
+"endif
+
+"augroup mygroup
+  "autocmd!
+  "" Setup formatexpr specified filetype(s).
+  "autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  "" Update signature help on jump placeholder
+  "autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+"augroup end
+
+"" 5.Code Actions
+ xmap <leader>a  <Plug>(coc-codeaction-selected)
+ nmap <leader>a  <Plug>(coc-codeaction-selected)
+ " Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+"nmap <leader>qf  <Plug>(coc-fix-current)
+"" Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+"nmap <silent> <TAB> <Plug>(coc-range-select)
+"xmap <silent> <TAB> <Plug>(coc-range-select)
+
+" 6. Movement in Coc windows(Seems to be built in already)
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+"if has('nvim-0.4.0') || has('patch-8.2.0750')
+  "nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  "nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  "inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  "inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  "vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  "vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+"endif
+
+
+"" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+"" use `:OR` for organize import of current buffer
+"command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+"" Add status line support, for integration with other plugin, checkout `:h coc-status`
+"TODO: same with lsp?
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+"" Using CocList
+"" Show all diagnostics
+"nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+"" Manage extensions
+"nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+"" Show commands
+"nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+"" Find symbol of current document
+"nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+"" Search workspace symbols
+"nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+"" Do default action for next item.
+"nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+"" Do default action for previous item.
+"nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+"" Resume latest coc list
+"nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" nn <silent><buffer> <C-l> :call CocLocations('ccls','$ccls/navigate',{'direction':'D'})<cr>
+" nn <silent><buffer> <C-k> :call CocLocations('ccls','$ccls/navigate',{'direction':'L'})<cr>
+" nn <silent><buffer> <C-j> :call CocLocations('ccls','$ccls/navigate',{'direction':'R'})<cr>
+" nn <silent><buffer> <C-h> :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<cr>
+
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+
+" $ccls/member
+" member variables / variables in a namespace
+" Aka where all the variables are declared first
+nn <silent> <leader>xm :call CocLocations('ccls','$ccls/member')<cr>
+"autocmd BufCreate *py :CocCommand python.enableLinting
+
+" How to debug Coc
+nn <leader>ci :CocInfo<CR>
+nn <leader>co :CocOpenLog<CR>
+nnoremap <leader>cd :CocCommand workspace.showOutput<CR>
+nnoremap <leader>cl :CocList<CR>
+nnoremap <leader>cc :CocList commands<CR>
+nnoremap <leader>cm :CocList marketplace<CR>
+nnoremap <leader>cr :CocListResume<CR>
+autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
+" Check settings on this website: https://github.com/neoclide/coc.nvim/blob/master/data/schema.json
+" ************** MAC SENSITIVE **************{{{1
 if !exists("g:os")
     if has("win64") || has("win32") || has("win16")
         let g:os = "Windows"
@@ -13,9 +144,7 @@ else
     let home_dir = "/Users/benson"
     set runtimepath+=~/Dropbox/Code/Projects/my_plugin
 endif
-
-
-" ************  Options  ************{{{1
+" ************** OPTIONS **************{{{1
 set foldmethod=marker
 "set foldmarker=apple,sauce
 "set foldtext="MyFoldText()"
@@ -84,7 +213,7 @@ set inccommand=nosplit
 set colorcolumn=80
 
 
-" ************  Plugins  ************{{{1
+" ************** PLUGINS **************{{{1
 call plug#begin('~/.vim/plugged')
 "Plug 'ThePrimeagen/vim-be-good'
 "Plug 'bbli/filter-jump.nvim', {'do': ':UpdateRemotePlugins'}
@@ -229,39 +358,74 @@ for i in range(97,122)
 let mapleader=" "
 let maplocalleader="-"
 
-" ************  Leader Keys  ************{{{1
+" ************** LEADER MAPS **************{{{1
+" ****Misc****
 "nnoremap <leader><leader>t :MerlinTypeOf<CR>
 "nnoremap <leader><leader>i :call <SID>show_documentation()<CR>
 nnoremap <leader>l 40l
-
-
 " nnoremap <leader><leader>m qm
 " Override marks for now
 nnoremap mm @m
 nnoremap <leader><leader>m 9000@m
 nnoremap <leader><leader>z :nohlsearch<CR>
 nnoremap <C-t> <C-z>
-"Comments
 nmap <leader><leader>c <Plug>NERDCommenterToggle
 vmap <leader><leader>c <Plug>NERDCommenterToggle
 " <C-^> switches between two files
+"nnoremap <leader>lt :write | edit | TSBufEnable highlight
+" using indirection since TSBufEnable won't be available until vim fully finishes starting up
+" -> Or can put this in an "after directory"?
+let @T = "write | edit | TSBufEnable highlight"
+nnoremap <leader>lt :<C-R>T<CR>
+nnoremap <leader>el :UnstackFromTmux<CR>
+nnoremap <leader>ec :sign unplace<CR>
 
-" 2-character Sneak (default)
-"nmap s <Plug>Sneak_s
-"nmap S <Plug>Sneak_S
-"nnoremap s %
-"nnoremap s /
-"nnoremap S ?
-"nnoremap <CR> n
-nnoremap S %
+"let g:qf_auto_open_quickfix = 0
+"let g:qf_auto_open_loclist = 0
+"let g:qf_shorten_path = 0
+
+nnoremap <C-w>; <C-w>p
+
+nmap <leader>tq <Plug>(qf_qf_toggle)
+nmap <leader>qn <Plug>(qf_newer)
+nmap <leader>qN <Plug>(qf_older)
+" Don't apply g when substituting
+nnoremap <leader>qr :OverCommandLine<CR>cdo %s/
+
+" coc's version is more useful as it will generate based on file path, not current
+" directory
+nnoremap <F9> :!ctags -R --sort=yes .<CR>
+
+nnoremap <leader>p "zp
+nnoremap <leader>P "zP
+nnoremap <leader>d "zd
+vnoremap <leader>d "zd
+nnoremap <leader>y "zy
+vnoremap <leader>y "zy
+
+" ****Buffer Related Operations****
 nnoremap <leader>bs <C-^>
-" visual-mode
-"xmap s <Plug>Sneak_s
-"xmap S <Plug>Sneak_S
-" operator-pending-mode
-"omap s <Plug>Sneak_s
-"omap S <Plug>Sneak_S
+nnoremap <silent> <leader>bk :bwipeout<CR>
+nnoremap <leader>bm :ZenMode<CR>
+nnoremap <leader>bb <cmd>Telescope buffers<cr>
+nnoremap <leader>br :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
+"nnoremap <leader>bm :OverCommandLine<CR>g/\<<C-r><C-w>\>/norm! @m<CR>
 
+
+" ****Workspace Related Operations****
+nnoremap <leader>ws :mks ~/.vim/sessions/default.vim<CR>
+nnoremap <leader>wl :source ~/.vim/sessions/default.vim<CR>
+
+" TODO: change to w to be aligned with emac's workspace?
+" Also, my hands moving to w feels much better than moving to t,
+" As I can still use my pointer finger after clicking w
+" Last of all, t can be back to being "Toggle" keymaps
+nnoremap <leader>wo :tab split<CR>
+nnoremap <leader>wk :tabc<CR>
+nnoremap <leader>wr :TabooRename 
+"nnoremap <leader>ws :TabooReset<CR>
+
+" ***  Git Related Opeartions  ***
 nnoremap <leader>gm :Magit<CR>
 nmap <leader>gp <Plug>(GitGutterPreviewHunk)
 nmap <leader>gs <Plug>(GitGutterStageHunk)
@@ -277,19 +441,8 @@ nmap <leader>gl :Glog<CR>
 nmap <leader>gg :G<CR>
 nnoremap <leader>gd :Gvdiff 
 
-"TODO: remap to w for workspace?
-nnoremap <leader>ws :mks ~/.vim/sessions/default.vim<CR>
-nnoremap <leader>ws :source ~/.vim/sessions/default.vim<CR>
-nnoremap <leader>wv :source ~/.vimrc<CR>
-"nnoremap <leader>lt :write | edit | TSBufEnable highlight
-" using indirection since TSBufEnable won't be available until vim fully finishes starting up
-" -> Or can put this in an "after directory"?
-let @T = "write | edit | TSBufEnable highlight"
-nnoremap <leader>lt :<C-R>T<CR>
 
-nnoremap <leader>el :UnstackFromTmux<CR>
-nnoremap <leader>ec :sign unplace<CR>
-
+" ****Open Related Operations****
 " fzf and ripgrep settings
 command! -bang -nargs=? -complete=dir HFiles
   "\ call fzf#vim#files(<q-args>, {'source': 'rg --hidden --ignore .git -g ""'}, <bang>0)
@@ -297,8 +450,6 @@ command! -bang -nargs=? -complete=dir HFiles
   \ call fzf#vim#files(<q-args>, fzf#wrap({'source': 'rg --files --hidden'}), <bang>0)
 "command! -bang -nargs=? -complete=dir Files
   "\ call fzf#vim#files(<q-args>, {'source': 'rg --ignore .git -g ""'}, <bang>0)
-"nnoremap <leader>oa :HFiles<CR>
-nnoremap <leader>oo :GFiles<CR>
 "fix this
 "2
 command! -bang OP call fzf#run(fzf#wrap({'source':'rg --files --hidden','sink':'' 'dir':"~/"}))<CR>
@@ -306,6 +457,8 @@ command! -bang OP call fzf#run(fzf#wrap({'source':'rg --files --hidden','sink':'
 "command! -bang OP call fzf#vim#complete#path('rg --files',{'dir':home_dir})
 "nnoremap <leader>op :call fzf#vim#complete#path('rg --files',{'dir':home_dir})<CR>
 "nnoremap <leader>op :OP<CR>
+"nnoremap <leader>oa :HFiles<CR>
+nnoremap <leader>oo :GFiles<CR>
 nnoremap <leader>os :FloatermNew<CR>
 nnoremap <leader>om :Helptags<CR>
 nnoremap <leader>oa :FZF<CR>
@@ -344,22 +497,12 @@ nnoremap <leader>ff :OverCommandLine<CR>GitRipGrep
 nnoremap <leader>fa :OverCommandLine<CR>RipGrep 
 nnoremap <leader>fw :OverCommandLine<CR>Ggrep <C-r><C-w><CR>
 
-nnoremap <leader>fr :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
-nnoremap <leader>fm :OverCommandLine<CR>g/\<<C-r><C-w>\>/norm! @m<CR>
 " :'<,'>norm! @a to apply the macro only to a visual selection
 " (hit : in visual mode to switch to command mode)
 
-nmap <leader>cr <Plug>(coc-rename)
-" If you want to do something more complex than renaming(like with a macro)
-" Though that said, I can run macros on quickfix list with g + norm combo
-"nmap <leader>cr <Plug>(coc-refactor)
 
-"Not really used
-"nnoremap <leader>fg :Ggrep 
-" Note I modified the source code for this
-"nnoremap <leader>fs :Ggrep <C-r><C-w><CR>
-"nnoremap <leader>cc :OverCommandLine<CR>
 
+" ****Running Project****{{2
 "TODO: change prefix to 'r' or 'p' for run/project?
 "nnoremap <leader>sp :SlimuxREPLConfigure<CR>
 nnoremap <leader>ss :SlimuxShellRun
@@ -390,6 +533,7 @@ nnoremap <leader>sf :TestFile<CR>
 "nnoremap <leader>sd :VtrSendCtrlD<CR>
 "nnoremap <leader>ss %
 
+" ****Toggles****{{2
 "nnoremap <leader>to :VoomToggle markdown<CR>
 nnoremap <leader>tw :AirlineToggleWhitespace<CR>
 
@@ -400,14 +544,6 @@ nnoremap <leader>ts :FloatermToggle<CR>
 nnoremap <leader>tn :NERDTreeToggle<CR>
 "nnoremap <leader>tp :set paste!<CR>
 
-" TODO: change to w to be aligned with emac's workspace?
-" Also, my hands moving to w feels much better than moving to t,
-" As I can still use my pointer finger after clicking w
-" Last of all, t can be back to being "Toggle" keymaps
-nnoremap to :tab split<CR>
-nnoremap tc :tabc<CR>
-nnoremap tr :TabooRename 
-nnoremap ts :TabooReset<CR>
 "nnoremap <leader>ti :IndentGuidesToggle<CR>
 
 "nmap <leader>tq :copen<CR>
@@ -415,33 +551,12 @@ nnoremap ts :TabooReset<CR>
 "nmap <leader>tq :call ToggleQuickfixList()<CR>
 "nmap <leader>tl :call ToggleLocationList()<CR>
 nmap <leader>tl <Plug>(qf_loc_toggle)
-"let g:qf_auto_open_quickfix = 0
-"let g:qf_auto_open_loclist = 0
-"let g:qf_shorten_path = 0
-
-nnoremap <C-w>; <C-w>p
-
-nmap <leader>tq <Plug>(qf_qf_toggle)
-nmap <leader>qn <Plug>(qf_newer)
-nmap <leader>qN <Plug>(qf_older)
-" Don't apply g when substituting
-nnoremap <leader>qr :OverCommandLine<CR>cdo %s/
-
-" coc's version is more useful as it will generate based on file path, not current
-" directory
-nnoremap <F9> :!ctags -R --sort=yes .<CR>
-
-nnoremap <leader>p "zp
-nnoremap <leader>P "zP
-nnoremap <leader>d "zd
-vnoremap <leader>d "zd
-nnoremap <leader>y "zy
-vnoremap <leader>y "zy
 
 " nmap <leader>jt <Plug>(coc-refactor)
 " nmap <leader>ji <Plug>(coc-funcobj-i)
 " nmap <leader>jj <Plug>(coc-funcobj-a)
 
+" ****Jump Related Operations****
 nmap <leader>jf <Plug>(coc-float-jump)
 nmap <leader>jq <Plug>(qf_qf_switch)
 nmap <leader>jd <Plug>(coc-definition)
@@ -462,6 +577,7 @@ nnoremap <leader>jC g,
 nnoremap <leader>jm `M
 nnoremap <leader>mm mM
 
+" ****Diff View Related Opeartions****
 nnoremap <leader>dn ]c
 nnoremap <leader>dN [c
 "nnoremap <leader>dl :.diffput<CR>
@@ -473,7 +589,7 @@ nnoremap <leader>dp dp
 "nnoremap <leader>mm @a
 "autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
 "autocmd BufEnter *.m  nnoremap <buffer> <leader>c I%<esc>
-""""""""Local Leader Keys""""""""{{{1
+" ************** LOCAL LEADER MAPS **************{{{1
 nnoremap <localleader>v :e ~/.vimrc<CR>
 nnoremap <localleader>b :e ~/.bash_aliases<CR>
 nnoremap <localleader>g :e ~/.gitconfig<CR>
@@ -494,7 +610,7 @@ vnoremap <localleader>y "+y
 nnoremap <localleader>y "+y
 vnoremap <localleader>d "+d
 nnoremap <localleader>d "+d
-""""""""Meta Keys""""""""{{{1
+" ************** META MAPS **************{{{1
 "To move lines intuitively
 "Alt and Shift combos won't work with K
 "But Ctrl will mess up window specific mappings
@@ -512,7 +628,7 @@ nnoremap <C-w><Space> <C-w>=
 
 map <M-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
-""""""""Fn Keys""""""""{{{1
+" ************  FN MAPS  ************{{{1
 "nnoremap <F2> :TagbarToggle<CR>
 "nnoremap <F3> :AirlineToggleWhitespace<CR>
 
@@ -522,7 +638,7 @@ map <M-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 "nnoremap <silent> <F8> :NERDTreeToggle<CR>
 "nnoremap <F10> :set nopaste
 
-""""""""Semi Colon Keys""""""""{{{1
+" ************** SEMI COLON MAPS **************{{{1
 inoremap ;c <C-c>
 vnoremap ;c <C-c>
 inoremap ;; ;
@@ -539,8 +655,7 @@ nnoremap ;N :bp<CR>
 nnoremap <silent> ;d :bwipeout<CR>
 nnoremap ;D :bwipeout!<CR>
 "inoremap <C-m> <C-C>la
-inoremap mm <C-c>la
-inoremap m; mm
+inoremap <C-l> <C-c>la
 
 function! s:list_buffers()
   redir => list
@@ -564,7 +679,7 @@ nnoremap ;t :MtaJumpToOtherTag<CR>
 nnoremap ;o <C-^>
 nnoremap ;r @:
 
-""""""""Normal Mode maps""""""""{{{1
+" ************** NORMAL MODE MAPS **************{{{1
 nnoremap <unique> k gk
 nnoremap <unique> j gj
 nnoremap <unique> gk k
@@ -592,7 +707,9 @@ nnoremap l <Nop>
 nnoremap <C-g> <cmd>close<CR>
 
 nnoremap <C-w>m <C-w>p
-""""""""Command Mode maps""""""""{{{1
+
+nnoremap S %
+" ************** COMMAND MODE MAPS **************{{{1
 cnoremap sE %s
 " nnoremap / /\<
 nnoremap <leader>/ /
@@ -610,14 +727,14 @@ cnoremap tN tabprevious
 " nnoremap <leader><leader>t :tabn<CR>
 
 
-""""""""Operator Mode maps""""""""{{{1
+" ************** OPERAOTR MODE MAPS **************{{{1
 "onoremap w W
 "onoremap W w
 "onoremap b B
 "onoremap B b
 "onoremap ) i)
 "onoremap ] i]
-""""""""Insert Mode maps""""""""{{{1
+" ************** INSERT MODE MAPS **************{{{1
 " To be honest, I don't think this is nesscary. Those keys are not awkward,
 " and I only mapped it because I was fixated on insert normal mode
 "inoremap ]] <C-c>A
@@ -630,7 +747,7 @@ inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files',fzf#wrap({'dir':ho
 "inoremap ( ()<left>
 "inoremap [ []<left>
 "inoremap { {}<left>
-""""""""Control/Special Key Maps""""""""{{{1
+" ************** CONTROL/SPECIAL KEY(TAB,etc) MAPS **************{{{1
 "This may be dangerous as vim has a lot of built in control key maps
 "Only do to overide
 "nnoremap <C-]> :vs<CR><C-]>
@@ -655,7 +772,12 @@ endfunction
 nmap <TAB> za
 nnoremap <S-TAB> :call ToggleFoldAll()<CR>
 
-""""""""Colors""""""""{{{1
+nnoremap <Space> <Nop>
+" nnoremap <Up> <Nop>
+" nnoremap <Down> <Nop>
+" nnoremap <Left> <Nop>
+" nnoremap <Right> <Nop>
+" ************** COLORS **************{{{1
 "makes vim colorscheme the same as the terminal
 
 if exists('+termguicolors')
@@ -745,7 +867,7 @@ colorscheme edge
     "autocmd BufEnter *.clj color gruvbox
 "augroup END
 
-""""""""Other Autocommands/Functions""""""""{{{1
+" ************** AUTOCOMMANDS **************{{{1
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost *.txt set filetype=markdown "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost CMakeLists.txt set filetype=cmake "except cmake files
@@ -756,14 +878,6 @@ autocmd FileType go let b:dispatch = 'go test'
 """"""""Misc""""""""{{{1
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
-nnoremap <Space> <Nop>
-" nnoremap <Up> <Nop>
-" nnoremap <Down> <Nop>
-" nnoremap <Left> <Nop>
-" nnoremap <Right> <Nop>
-"nnoremap <silent> <C[> :CtrlP<CR>
-
-
 """"""""Plugin related variables""""""""{{{1
 "autocmd BufEnter * call ncm2#enable_for_buffer()
 "Actually independent of ncm2 plugin. Just code for QOL when using autocomplete
@@ -786,30 +900,6 @@ let g:enable_bold_font = 1
 
 
 let g:processing_no_default_mappings = 1
-
-"let g:mta_filetypes = {
-    "\ 'html' : 1,
-    "\ 'xhtml' : 1,
-    "\ 'xml' : 1,
-    "\ 'jinja' : 1,
-    "\ 'vue' : 1,
-    "\}
-
-" Put this in vimrc or a plugin file of your own.
-" After this is configured, :ALEFix will try and fix your JS code with ESLint.
-let g:ale_fixers = {
-\   'javascript': ['prettier-eslint','eslint'],
-\}
-" Enable completion where available.
-let g:ale_completion_enabled = 1
-" Put this in vimrc or a plugin file of your own.
- " Set this setting in vimrc if you want to fix files automatically on save.
- " This is off by default.
- let g:ale_fix_on_save = 1
- 
-
-
-
 
 let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark = 'soft'
@@ -963,119 +1053,6 @@ augroup highlight_yank
   autocmd!
   autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
-" ******************* COC STUF**********************
-" 1.if hidden is not set, TextEdit might fail.
-set hidden
-" Some servers have issues with backup files, see #649
-set nobackup
-set nowritebackup
-" Better display for messages. I will set back to 1 for now
-set cmdheight=1
-" You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=200
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
-" gutter space for lsp info on left
-set signcolumn=yes
-
-"" 2.Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-"" Highlight symbol under cursor on CursorHold
-" the highlight is too shallow(just white-clear), so nah
-"autocmd CursorHold * silent call CocActionAsync('highlight')
-
-
-"" 3.Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
-"" Remap for format selected region
-xmap <leader>cf  <Plug>(coc-format-selected)
-nmap <leader>cf  :call CocAction('format')<CR>
-"autocmd BufWritePre :call CocAction('format')<CR>
-
-" 4. Use <C-SPACE> to trigger completion(if for some reason it doesn't
-" auto start)
-"if has('nvim')
-  "inoremap <silent><expr> <c-space> coc#refresh()
-"else
-  "inoremap <silent><expr> <c-@> coc#refresh()
-"endif
-
-"augroup mygroup
-  "autocmd!
-  "" Setup formatexpr specified filetype(s).
-  "autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  "" Update signature help on jump placeholder
-  "autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-"augroup end
-
-"" 5.Code Actions
- xmap <leader>a  <Plug>(coc-codeaction-selected)
- nmap <leader>a  <Plug>(coc-codeaction-selected)
- " Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Apply AutoFix to problem on the current line.
-"nmap <leader>qf  <Plug>(coc-fix-current)
-"" Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-"nmap <silent> <TAB> <Plug>(coc-range-select)
-"xmap <silent> <TAB> <Plug>(coc-range-select)
-
-" 6. Movement in Coc windows(Seems to be built in already)
-" Remap <C-f> and <C-b> for scroll float windows/popups.
-"if has('nvim-0.4.0') || has('patch-8.2.0750')
-  "nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  "nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  "inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  "inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  "vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  "vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-"endif
-
-
-"" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-"" use `:OR` for organize import of current buffer
-"command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-"" Add status line support, for integration with other plugin, checkout `:h coc-status`
-"TODO: same with lsp?
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-"" Using CocList
-"" Show all diagnostics
-"nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-"" Manage extensions
-"nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-"" Show commands
-"nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-"" Find symbol of current document
-"nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-"" Search workspace symbols
-"nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-"" Do default action for next item.
-"nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-"" Do default action for previous item.
-"nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-"" Resume latest coc list
-"nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-" nn <silent><buffer> <C-l> :call CocLocations('ccls','$ccls/navigate',{'direction':'D'})<cr>
-" nn <silent><buffer> <C-k> :call CocLocations('ccls','$ccls/navigate',{'direction':'L'})<cr>
-" nn <silent><buffer> <C-j> :call CocLocations('ccls','$ccls/navigate',{'direction':'R'})<cr>
-" nn <silent><buffer> <C-h> :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<cr>
-
-" Make sure to use tabs
-" set autoindent
-" set noexpandtab
-" set tabstop=4
-" set shiftwidth=4
-
-" let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-" execute "set rtp+=" . g:opamshare . "/merlin/vim"
 
 autocmd FileType json syntax match Comment +\/\/.\+$+
 " autocmd BufReadPre,FileReadPre * :set background=dark
@@ -1085,31 +1062,7 @@ highlight LspCxxHlSymClassMethod ctermfg=White
 highlight LspCxxHlSymClassVariable ctermfg=White
 highlight LspCxxHlSymStructMethod ctermfg=White
 " highlight LspCxxHlSymFunction ctermfg=White
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
 
-
-" $ccls/member
-" member variables / variables in a namespace
-" Aka where all the variables are declared first
-nn <silent> <leader>xm :call CocLocations('ccls','$ccls/member')<cr>
-"autocmd BufCreate *py :CocCommand python.enableLinting
-
-" How to debug Coc
-nn <leader>ci :CocInfo<CR>
-nn <leader>co :CocOpenLog<CR>
-nnoremap <leader>cd :CocCommand workspace.showOutput<CR>
-nnoremap <leader>cl :CocList<CR>
-nnoremap <leader>cc :CocList commands<CR>
-nnoremap <leader>cm :CocList marketplace<CR>
-nnoremap <leader>cr :CocListResume<CR>
-" Check settings on this website: https://github.com/neoclide/coc.nvim/blob/master/data/schema.json
 "
 autocmd BufWritePost * GitGutter
 
@@ -1118,6 +1071,18 @@ let g:unstack_layout="portrait"
 
 let test#strategy = "slimux"
 
+
+
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
+
+let neovide_remember_window_size = 1
+"let g:vista_sidebar_keepalt
+let g:BASH_Ctrl_j = 'off'
+let g:C_Ctrl_j = 'off'
+"let g:signify_sign_show_count = 0
+" ************** MY PLUGIN STUFF **************{{{1
 "let g:filter_jump_strip_characters = ["_"]
 "highlight! link SearchCurrent Red
 "highlight! link SearchHighlights Green
@@ -1133,26 +1098,3 @@ let g:filter_jump_keymaps = {
 " TODO: change plugin to accept setup + teardown lambdas instead,
 " as CocDisable applies for the whole vim session, not just current buffer
 let g:filter_jump_buffer_options = ["let b:coc_pairs_disabled = ['`','(','[','{','<',]"]
-
-
-autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
-
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
-"nmap <Leader>ad <Plug>(AerojumpDefault)
-
-" ***************** TELESCOPE*******************
-" Find files using Telescope command-line sugar.
-"nnoremap <leader>ff <cmd>Telescope find_files<cr>
-"nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-"nnoremap <leader>fb <cmd>Telescope buffers<cr>
-"nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-"function! fzf#vim#complete#word()
-    "echom "Replaced!"
-"endfunction
-let neovide_remember_window_size = 1
-"let g:vista_sidebar_keepalt
-let g:BASH_Ctrl_j = 'off'
-let g:C_Ctrl_j = 'off'
-"let g:signify_sign_show_count = 0

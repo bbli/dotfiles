@@ -194,6 +194,9 @@ nnoremap <leader>ji <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <leader>je <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 nnoremap <leader>jE <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 
+nnoremap <leader>fr <cmd>lua require('lspsaga.rename').rename()<CR>
+nnoremap <leader>fs <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+
 "nnoremap K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
 nnoremap <leader>k <cmd>lua vim.lsp.buf.signature_help()<CR> "Don't really understand this
@@ -203,11 +206,10 @@ nnoremap <silent> ls <cmd>lua require('lspsaga.signaturehelp').signature_help()<
 "nnoremap <leader>wl <cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>
 "Q: make autocmd on save since asynchronous? Nah since I want
 "diagonistic errors and this will only delay
+" ****Rest of Lanuage Server****
 nnoremap <leader>lf <cmd>lua vim.lsp.buf.formatting()<CR>
 nnoremap <leader>ll <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
-"nnoremap <leader>fr <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <silent>fr <cmd>lua require('lspsaga.rename').rename()<CR>
-nnoremap <leader>fs <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+"--nnoremap <leader>fr <cmd>lua vim.lsp.buf.rename()<CR>
 "nnoremap <leader>jt <cmd>lua vim.lsp.buf.type_definition()<CR> "What is this used for?
 "nnoremap <leader>ct <cmd>lua vim.lsp.buf.outgoing_calls()<CR> "Just one level BFS
 "
@@ -573,7 +575,7 @@ nnoremap <M-;> <cmd>Telescope commands<cr>
 " TODO: Telescope way better here compared to FZF b/c of preview  -> Harpoon will probably replace though
 nnoremap <leader>ul <cmd>Telescope marks<cr>
 "TODO: why is this not filtering?
-nnoremap <leader>un <cmd>Telescope registers<cr>
+nnoremap <leader>or <cmd>Telescope registers<cr>
 
 " These will check out the selected commit/branch
 nnoremap <leader>gb <cmd>Telescope git_branchs<CR>
