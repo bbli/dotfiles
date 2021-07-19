@@ -6,16 +6,22 @@ lua << EOF
 require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
+  use {
+      'nvim-telescope/telescope.nvim',
+      requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+      }
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
- -- UTILITY
+ -- ************  UTILITY LIBRARIES  ************
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
-  -- LSP STUFF
+  -- ************  LSP STUFF  ************
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/nvim-compe'
   use 'glepnir/lspsaga.nvim'
   use 'kosayoda/nvim-lightbulb'
   use 'simrat39/rust-tools.nvim'
+  use "ray-x/lsp_signature.nvim"
   -- tagbar/vista is better b/c it shows the current hovered function
   --use 'simrat39/symbols-outline.nvim'
   use 'anott03/nvim-lspinstall'
@@ -26,28 +32,35 @@ require('packer').startup(function()
        lsp_status.register_progress()
    end
   }
-  -- TREE SITTER
+  -- ************  TREE SITTER  ************
   use {
       'nvim-treesitter/nvim-treesitter',
       run = ':TSUpdate'
       }
   use 'nvim-treesitter/nvim-treesitter-textobjects'
-  use {
-      'nvim-telescope/telescope.nvim',
-      requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
-      }
-
-  -- Debugger
+  use 'RRethy/nvim-treesitter-textsubjects'
+  use 'mizlan/iswap.nvim'
+  -- ************  DEBUGGER  ************
   use 'mfussenegger/nvim-dap'
   use 'mfussenegger/nvim-dap-python' --Actualy, supposedly vim-ultest will cover this?
   use 'theHamsta/nvim-dap-virtual-text'
   use 'nvim-telescope/telescope-dap.nvim'
-  -- MISC
+  --use "Pocco81/DAPInstall.nvim"
+  -- ************  GIT  ************
+  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
+  use 'sindrets/diffview.nvim'
+  -- ************  MISC  ************
+  use 'windwp/nvim-autopairs'
   use {
       "folke/zen-mode.nvim",
       config = function() require("zen-mode").setup { } end
     }
-  use 'kyazdani42/nvim-web-devicons' -- forgot which plugin is optionally dependent on this
+  use {
+      'kyazdani42/nvim-web-devicons', -- forgot which plugin is optionally dependent on this
+      --config = function()
+      --require('nvim-web-devicons').setup{default = true}
+      --end
+      }
   --use {
 --      "folke/twilight.nvim",
  --     config = function() require("twilight").setup { } end
@@ -93,7 +106,7 @@ luafile ~/.init.lua
 "           \ call s:update_oldfiles(expand('<afile>:p'))
 
 command! Scratch lua require'tools'.makeScratch()
-au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=150}
+"au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=150}
 " lua text will be syntax highlighted!
 let g:vimsyn_embed = 'l'
 
@@ -133,6 +146,44 @@ let g:vimsyn_embed = 'l'
 ""set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 ""set statusline^=%{StatuslineLsp()}
 
+lua << EOF
+--nah, colors are better
+--vim.fn.sign_define("LspDiagnosticsSignError", {text = "", numhl = "LspDiagnosticsDefaultError"})
+--vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "", numhl = "LspDiagnosticsDefaultWarning"})
+--vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "", numhl = "LspDiagnosticsDefaultInformation"})
+--vim.fn.sign_define("LspDiagnosticsSignHint", {text = "", numhl = "LspDiagnosticsDefaultHint"})
+EOF
+"From: https://www.reddit.com/r/neovim/comments/l00zzb/improve_style_of_builtin_lsp_diagnostic_messages/
+" Errors in Red
+hi LspDiagnosticsVirtualTextError guifg=Red ctermfg=Red
+" Warnings in Yellow
+hi LspDiagnosticsVirtualTextWarning guifg=Yellow ctermfg=Yellow
+" Info and Hints in White
+hi LspDiagnosticsVirtualTextInformation guifg=White ctermfg=White
+hi LspDiagnosticsVirtualTextHint guifg=White ctermfg=White
+
+" Underline the offending code
+hi LspDiagnosticsUnderlineError guifg=NONE ctermfg=NONE cterm=underline gui=underline
+hi LspDiagnosticsUnderlineWarning guifg=NONE ctermfg=NONE cterm=underline gui=underline
+hi LspDiagnosticsUnderlineInformation guifg=NONE ctermfg=NONE cterm=underline gui=underline
+hi LspDiagnosticsUnderlineHint guifg=NONE ctermfg=NONE cterm=underline gui=underline
+
+lua << EOF
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+ vim.lsp.diagnostic.on_publish_diagnostics, {
+   -- Enable underline, use default values
+   underline = true,
+   -- Enable virtual text only on Warning or above, override spacing to 2
+   virtual_text = {
+     spacing = 2,
+     severity_limit = "Warning",
+   },
+ }
+)
+EOF
+
+"autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+
 
 nnoremap <leader>jd <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <leader>jd <cmd>lua vim.lsp.buf.definition()<CR>
@@ -169,10 +220,32 @@ vnoremap <silent><leader>ca :<C-U>lua require('lspsaga.codeaction').range_code_a
 "nnoremap <leader>fc <cmd>lua require'telescope.builtin'.lsp_workspace_symbols{prompt_prefix=" ", default_text=" :class: "}<CR>
 
 autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
+
+lua << EOF
+require "lsp_signature".setup()
+EOF
 " ************  Language Servers  ************{{{1
 lua <<EOF
 -- clangd
-require'lspconfig'.clangd.setup{}
+require'lspconfig'.clangd.setup{
+    on_attach = on_attach,
+    default_config = {
+        cmd = {
+            "clangd", "--background-index", "--suggest-missing-includes",
+            -- "--pch-storage=memory", "--suggest-missing-includes"
+            "-j=3",
+        },
+        filetypes = {"c", "cpp", "objc", "objcpp"},
+        --root_dir = require"nvim_lsp/util".root_pattern("compile_commands.json", compile_flags.txt", .git"),
+        init_option = {
+            --clang = {
+                fallbackFlags = {
+                    "-std=c++17"} -- YEAH, STILL NOT WORKING
+             --   }
+        }
+    }
+}
+
 
 -- Rust Tools
 local opts = {
@@ -211,7 +284,8 @@ local opts = {
     -- all the opts to send to nvim-lspconfig
     -- these override the defaults set by rust-tools.nvim
     -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
-    server = {} -- rust-analyer options
+    server = {
+        } -- rust-analyer options
 }
 require('rust-tools').setup(opts)
 
@@ -252,6 +326,13 @@ EOF
 " ************  TreeSitter  ************{{{1
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
+     textsubjects = {
+        enable = true,
+        keymaps = {
+            ['t'] = 'textsubjects-smart',
+            ['T'] = 'textsubjects-container-outer',
+        }
+    },
   textobjects = {
     select = {
       enable = true,
@@ -338,8 +419,8 @@ require('telescope').setup{
     mappings = {
       n = {
           [ "q" ] = actions.close,
-          ["<C-b>"] = actions.preview_scrolling_up,
-          ["<C-f>"] = actions.preview_scrolling_down,
+          ["<C-f>"] = actions.preview_scrolling_up,
+          ["<C-b>"] = actions.preview_scrolling_down,
       },
      i = {
           [ "<C-g>" ] = actions.close,
@@ -349,16 +430,26 @@ require('telescope').setup{
           [ "<C-h>" ] = actions.complete_tag,
           [ "<C-u>" ] = false,
           [ "<C-d>" ] = false,
-          [ "<C-f>" ] = actions.preview_scrolling_up,
-          [ "<C-b>" ] = actions.preview_scrolling_down,
+          [ "<C-b>" ] = actions.preview_scrolling_up,
+          [ "<C-f>" ] = actions.preview_scrolling_down,
 
      },
     },
       layout_config = {
           preview_width = 75
       }
+  },
+   extensions = {
+    fzf = {
+      fuzzy = true,                    -- false will only do exact matching
+      override_generic_sorter = false, -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                       -- the default case_mode is "smart_case"
+    }
   }
 }
+require('telescope').load_extension('fzf')
 EOF
 " ************  Debugger  ************{{{1
 lua <<EOF
@@ -391,16 +482,16 @@ dap.defaults.fallback.terminal_win_cmd = '50vsplit new'
 vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''})
 EOF
 au FileType dap-repl lua require('dap.ext.autocompl').attach()
-nnoremap <silent> <leader>dc :lua require'dap'.continue()<CR>
-nnoremap <silent> <leader>ds :lua require'dap'.step_over()<CR>
-nnoremap <silent> <leader>di :lua require'dap'.step_into()<CR>
-nnoremap <silent> <leader>do :lua require'dap'.step_out()<CR>
-nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>
-nnoremap <silent> <leader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
-nnoremap <silent> <leader>dp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
-nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
-nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
-nnoremap <silent> <leader>dq :lua require'dap'.stop()<CR>
+nnoremap <silent> <localleader>dc :lua require'dap'.continue()<CR>
+nnoremap <silent> <localleader>ds :lua require'dap'.step_over()<CR>
+nnoremap <silent> <localleader>di :lua require'dap'.step_into()<CR>
+nnoremap <silent> <localleader>do :lua require'dap'.step_out()<CR>
+nnoremap <silent> <localleader>db :lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <silent> <localleader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+nnoremap <silent> <localleader>dp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+nnoremap <silent> <localleader>dr :lua require'dap'.repl.open()<CR>
+nnoremap <silent> <localleader>dl :lua require'dap'.run_last()<CR>
+nnoremap <silent> <localleader>dq :lua require'dap'.stop()<CR>
 "TODO create command for running to cursor?
 
 ":Telescope dap commands
@@ -415,30 +506,88 @@ nnoremap <silent> <leader>dq :lua require'dap'.stop()<CR>
 "4. Inspecting the state via the built-in REPL: :lua require'dap'.repl.open() or using the widget UI (:help dap-widgets)
 
 let g:dap_virtual_text = 'all_frames'
+" ************  Diffview  ************{{{1
+lua << EOF
+local cb = require'diffview.config'.diffview_callback
+
+require'diffview'.setup {
+  diff_binaries = false,    -- Show diffs for binaries
+  file_panel = {
+    width = 35,
+    use_icons = true        -- Requires nvim-web-devicons
+  },
+  key_bindings = {
+    disable_defaults = true,                   -- Disable the default key bindings
+    -- The `view` bindings are active in the diff buffers, only when the current
+    -- tabpage is a Diffview.
+    view = {
+        -- Use <leader>gn to go to next diff
+      ["<leader>dn"]     = cb("select_next_entry"),  -- Open the diff for the next file 
+      ["<leader>dN"]   = cb("select_prev_entry"),  -- Open the diff for the previous file
+      ["<leader>df"] = cb("focus_files"),        -- Bring focus to the files panel
+      ["<leader>dd"] = cb("toggle_files"),       -- Toggle the files panel.
+    },
+    file_panel = {
+      ["j"]             = cb("next_entry"),         -- Bring the cursor to the next file entry
+      ["<down>"]        = cb("next_entry"),
+      ["k"]             = cb("prev_entry"),         -- Bring the cursor to the previous file entry.
+      ["<up>"]          = cb("prev_entry"),
+      ["<cr>"]          = cb("select_entry"),       -- Open the diff for the selected entry.
+      ["o"]             = cb("select_entry"),
+      ["<2-LeftMouse>"] = cb("select_entry"),
+      ["-"]             = cb("toggle_stage_entry"), -- Stage / unstage the selected entry.
+      ["S"]             = cb("stage_all"),          -- Stage all entries.
+      ["U"]             = cb("unstage_all"),        -- Unstage all entries.
+      ["R"]             = cb("refresh_files"),      -- Update stats and entries in the file list.
+      ["<tab>"]         = cb("select_next_entry"),
+      ["<s-tab>"]       = cb("select_prev_entry"),
+      ["<leader>df"]     = cb("focus_files"),
+      ["<leader>dd"]     = cb("toggle_files"),
+    }
+  }
+}
+EOF
+" ************  Rest  ************{{{1
+lua << EOF
+require('nvim-web-devicons').setup{default = true}
+require('nvim-autopairs').setup({
+  enable_check_bracket_line = true
+})
+--require("nvim-autopairs.completion.compe").setup({
+--  map_cr = true, --  map <CR> on insert mode
+--  map_complete = true -- it will auto insert `(` after select function or method item
+--})
+EOF
 " ************  TODO  ************{{{1
 nnoremap <silent> <A-t> :Lspsaga open_floaterm<CR>
 tnoremap <silent> <A-t> <C-\><C-n>:Lspsaga close_floaterm<CR>
 " TODO: better than fzf but I seriously need to change the locking
 " behavior
 nnoremap <leader>oa <cmd>Telescope find_files<cr>
+nnoremap <leader>oo <cmd>Telescope git_files<cr>
 "nnoremap <leader>ug <cmd>Telescope live_grep<cr>
 nnoremap <leader>ob <cmd>Telescope buffers<cr>
 nnoremap <leader>oh <cmd>Telescope oldfiles<cr>
 nnoremap <leader>oc <cmd>Telescope commands<cr>
-" TODO: Telescope way better here -> Harpoon will probably replace though
+nnoremap <M-;> <cmd>Telescope commands<cr>
+" TODO: Telescope way better here compared to FZF b/c of preview  -> Harpoon will probably replace though
 nnoremap <leader>ul <cmd>Telescope marks<cr>
 "TODO: why is this not filtering?
 nnoremap <leader>un <cmd>Telescope registers<cr>
 
+" These will check out the selected commit/branch
 nnoremap <leader>gb <cmd>Telescope git_branchs<CR>
 nnoremap <leader>gc <cmd>Telescope git_commits<CR>
+nnoremap <leader>gd :DiffviewOpen
 
 nnoremap <leader>vo <cmd>Telescope vim_options<cr>
 nnoremap <leader>vc <cmd>Telescope autocommands<cr>
 nnoremap <leader>vk <cmd>Telescope keymaps<cr>
 nnoremap <leader>vm <cmd>Telescope help_tags<cr>
+"Combine with ripgrep for faster narrowing!
+nnoremap <leader>vv <cmd>Telescope quickfix<cr>
+nnoremap <leader>vl <cmd>Telescope loclist<cr>
 
 nnoremap <leader>fs <cmd>Telescope lsp_workspace_symbols<cr>
 nnoremap <leader>jd <cmd>Telescope lsp_definitions<cr>
 nnoremap <leader>ji <cmd>Telescope lsp_implementations<cr>
-

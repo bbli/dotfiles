@@ -137,10 +137,10 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all','frozen':1}
 "Plug 'junegunn/fzf.vim', {'frozen': 1}
 Plug 'bbli/fzf.vim'
 Plug 'mbbill/undotree'
-Plug 'vimlab/split-term.vim'
-Plug 'voldikss/vim-floaterm'
+"Plug 'vimlab/split-term.vim'
+"Plug 'voldikss/vim-floaterm'
 
-Plug 'vim-voom/VOoM'
+"Plug 'vim-voom/VOoM'
 "Language Server
 "---
 Plug 'majutsushi/tagbar'
@@ -155,11 +155,10 @@ Plug 'liuchengxu/vista.vim' "Doesn't work on mac?
 "Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 "Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'wellle/tmux-complete.vim'
-Plug 'cespare/vim-toml'
-Plug 'dag/vim-fish'
-Plug 'pboettch/vim-cmake-syntax'
-Plug 'rhysd/vim-llvm'
-" This seems to be the only nvim specific plugin I use
+"Plug 'cespare/vim-toml'
+"Plug 'dag/vim-fish'
+"Plug 'pboettch/vim-cmake-syntax'
+"Plug 'rhysd/vim-llvm'
 
 "Terminal Interactions
 "---
@@ -179,9 +178,12 @@ Plug 'christoomey/vim-tmux-runner'
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
 Plug 'airblade/vim-gitgutter'
+" This plugin cannot stage hunks
+"Plug 'mhinz/vim-signify'
+
 "For diffing code that is not between branches
 "Plug 'AndrewRadev/linediff.vim'
-" When I work on a large codebase and need to see past logs on a certain line
+" When I work on a large codebase and need to see past logs that modified a certain line
 "Plug 'rhysd/git-messenger.vim'
 
 "Snippets
@@ -263,23 +265,25 @@ nnoremap <leader>bs <C-^>
 nnoremap <leader>gm :Magit<CR>
 nmap <leader>gp <Plug>(GitGutterPreviewHunk)
 nmap <leader>gs <Plug>(GitGutterStageHunk)
+vmap <leader>gs <Plug>(GitGutterStageHunk)
 nmap <leader>gu <Plug>(GitGutterUndoHunk)
 nmap <leader>gn <Plug>(GitGutterNextHunk)
 nmap <leader>gN <Plug>(GitGutterPrevHunk)
 nmap <leader>gf :GitGutterFold<CR>
 " nmap <leader>go <Plug>(git-messenger)
 nmap <leader>gl :Glog<CR>
+" Above is better b/c if commit on another branch -> will have a name
 "nmap <leader>gl :VTerm<CR>git tree<CR>
 nmap <leader>gg :G<CR>
 nnoremap <leader>gd :Gvdiff 
 
-
-nnoremap <leader>ms :mks ~/.vim/sessions/default.vim<CR>
-nnoremap <leader>ls :source ~/.vim/sessions/default.vim<CR>
-nnoremap <leader>lv :source ~/.vimrc<CR>
+"TODO: remap to w for workspace?
+nnoremap <leader>ws :mks ~/.vim/sessions/default.vim<CR>
+nnoremap <leader>ws :source ~/.vim/sessions/default.vim<CR>
+nnoremap <leader>wv :source ~/.vimrc<CR>
 "nnoremap <leader>lt :write | edit | TSBufEnable highlight
-" using indirection since TSBufEnable won't be available until vim fully
-" finishes starting up
+" using indirection since TSBufEnable won't be available until vim fully finishes starting up
+" -> Or can put this in an "after directory"?
 let @T = "write | edit | TSBufEnable highlight"
 nnoremap <leader>lt :<C-R>T<CR>
 
@@ -356,6 +360,7 @@ nmap <leader>cr <Plug>(coc-rename)
 "nnoremap <leader>fs :Ggrep <C-r><C-w><CR>
 "nnoremap <leader>cc :OverCommandLine<CR>
 
+"TODO: change prefix to 'r' or 'p' for run/project?
 "nnoremap <leader>sp :SlimuxREPLConfigure<CR>
 nnoremap <leader>ss :SlimuxShellRun
 nnoremap <leader>st :TestNearest<CR>
@@ -453,6 +458,7 @@ nmap <leader>je <Plug>(coc-diagnostic-next)
 nnoremap <leader>jc g;
 nnoremap <leader>jC g,
 
+"TODO: rarely used and will soon be replaced by harpoon
 nnoremap <leader>jm `M
 nnoremap <leader>mm mM
 
@@ -676,7 +682,6 @@ if (empty($TMUX))
 endif
 
 let g:taboo_tabline = 0
-let NERDTreeHijackNetrw=1
 
 if has('termguicolors')
     set termguicolors
@@ -902,6 +907,9 @@ let g:undotree_DiffCommand = "diff"
 
 
 let NERDCreateDefaultMappings = 0
+let NERDTreeHijackNetrw=1
+let NERDTreeChDirMode=3
+let NERDTreeHighlightCursorline=1
 
 "nnoremap <C-j> <C-W><C-j>
 "nnoremap <C-k> <C-W><C-k>
@@ -1147,3 +1155,4 @@ let neovide_remember_window_size = 1
 "let g:vista_sidebar_keepalt
 let g:BASH_Ctrl_j = 'off'
 let g:C_Ctrl_j = 'off'
+"let g:signify_sign_show_count = 0
