@@ -1,4 +1,5 @@
-# Command Aliases
+# ************** FUNCTIONS **************{{{1
+# ************** COMMAND ALIASES **************{{{1
 function j
     fasd_cd -d $argv
 end
@@ -35,6 +36,10 @@ function ptree
     procs --tree
 end
 
+function rdb
+    cgdb -d rust-gdb
+end
+
 function pac
     sudo pacman -S $argv
 end
@@ -46,11 +51,8 @@ function ff
     fg
 end
 
-#function config
-   #/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $argv
-#end
-
-### Exa
+sd
+# ************** EXA **************{{{1
 function ls
     exa $argv
 end
@@ -63,7 +65,7 @@ function tree
     exa --tree $argv
 end
 
-### Python
+# ************** PYTHON VIRTUAL ENV **************{{{1
 function act
     source activate $argv
 end
@@ -76,7 +78,7 @@ function py
     python3 $argv
 end
 
-# directories
+# ************** DIRECTORIES **************{{{1
 function code
     cd ~/Dropbox/Code
 end
@@ -85,12 +87,8 @@ function dot
     cd ~/Dropbox/Code/dotfiles
 end
 
-function notes
-    cd ~/Dropbox/Notes
-end
-
-function rdb
-    cgdb -d rust-gdb
+function org
+    cd ~/Dropbox/Org
 end
 
 function proj
@@ -104,7 +102,7 @@ end
 function pack
     cd ~/.local/share/nvim/site/pack/packer/start
 end
-# Variables
+# ************** VARIABLES **************{{{1
 set SPACEFISH_PROMPT_ADD_NEWLINE false
 set SPACEFISH_PROMPT_SEPARATE_LINE true
 set SPACEFISH_DIR_COLOR cyan
@@ -112,6 +110,7 @@ set SPACEFISH_PACKAGE_SHOW false
 set SPACEFISH_RUST_SHOW false
 set SPACEFISH_GOLANG_SHOW false
 
+# ************** SOURCE **************{{{1
 source /opt/miniconda3/etc/fish/conf.d/conda.fish
 
 # The next line updates PATH for the Google Cloud SDK.

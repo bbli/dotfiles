@@ -30,8 +30,8 @@ endfunction
 "" 3.Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
 "" Remap for format selected region
-xmap <leader>cf  <Plug>(coc-format-selected)
-nmap <leader>cf  :call CocAction('format')<CR>
+" xmap <leader>cf  <Plug>(coc-format-selected)
+" nmap <leader>cf  :call CocAction('format')<CR>
 "autocmd BufWritePre :call CocAction('format')<CR>
 
 " 4. Use <C-SPACE> to trigger completion(if for some reason it doesn't
@@ -74,12 +74,12 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 
 
 "" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+"command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 "" use `:OR` for organize import of current buffer
 "command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 "" Add status line support, for integration with other plugin, checkout `:h coc-status`
 "TODO: same with lsp?
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+"set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 "" Using CocList
 "" Show all diagnostics
@@ -241,7 +241,8 @@ Plug 'gcmt/taboo.vim'
 Plug 'osyo-manga/vim-over'
 "Plug 'unblevable/quick-scope'
 "Plug 'jiangmiao/auto-pairs'
-Plug 'scrooloose/nerdcommenter'
+"Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-commentary'
 Plug 'bronson/vim-visual-star-search'
 Plug 'Yggdroot/indentLine'
 "Plug 'tpope/vim-surround'
@@ -363,14 +364,9 @@ let maplocalleader="-"
 "nnoremap <leader><leader>t :MerlinTypeOf<CR>
 "nnoremap <leader><leader>i :call <SID>show_documentation()<CR>
 nnoremap <leader>l 40l
-" nnoremap <leader><leader>m qm
 " Override marks for now
-nnoremap mm @m
-nnoremap <leader><leader>m 9000@m
 nnoremap <leader><leader>z :nohlsearch<CR>
 nnoremap <C-t> <C-z>
-nmap <leader><leader>c <Plug>NERDCommenterToggle
-vmap <leader><leader>c <Plug>NERDCommenterToggle
 " <C-^> switches between two files
 "nnoremap <leader>lt :write | edit | TSBufEnable highlight
 " using indirection since TSBufEnable won't be available until vim fully finishes starting up
@@ -396,12 +392,6 @@ nnoremap <leader>qr :OverCommandLine<CR>cdo %s/
 " directory
 nnoremap <F9> :!ctags -R --sort=yes .<CR>
 
-nnoremap <leader>p "zp
-nnoremap <leader>P "zP
-nnoremap <leader>d "zd
-vnoremap <leader>d "zd
-nnoremap <leader>y "zy
-vnoremap <leader>y "zy
 
 " ---Buffer Related---{{2
 nnoremap <leader>bs <C-^>
@@ -411,7 +401,24 @@ nnoremap <leader>bb <cmd>Telescope buffers<cr>
 nnoremap <leader>br :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
 "nnoremap <leader>bm :OverCommandLine<CR>g/\<<C-r><C-w>\>/norm! @m<CR>
 
+" ---Edit Related---{{{2
+"  stuff
+" nmap <leader>c <Plug>NERDCommenterToggle
+" vmap <leader>c <Plug>NERDCommenterToggle
+vmap <unique> <leader>c  <Plug>Commentary
+nmap <unique> <leader>c  <Plug>Commentary
+omap <unique> <leader>c  <Plug>Commentary
+nmap <unique> <leader>cc <Plug>CommentaryLine
 
+nnoremap <leader><leader>p "+p
+nnoremap <leader><leader>P "+P
+vnoremap <leader><leader>y "+y
+nnoremap <leader><leader>y "+y
+vnoremap <leader><leader>d "+d
+nnoremap <leader><leader>d "+d
+
+nnoremap mm @m
+nnoremap <leader><leader>m 9000@m
 " ---Workspace Related---{{{2
 nnoremap <leader>ws :mks ~/.vim/sessions/default.vim<CR>
 nnoremap <leader>wl :source ~/.vim/sessions/default.vim<CR>
@@ -574,8 +581,8 @@ nnoremap <leader>jc g;
 nnoremap <leader>jC g,
 
 "TODO: rarely used and will soon be replaced by harpoon
-nnoremap <leader>jm `M
-nnoremap <leader>mm mM
+" nnoremap <leader>jm `M
+" nnoremap <leader>mm mM
 
 " ---Diff View Related---{{{2
 nnoremap <leader>dn ]c
@@ -606,10 +613,6 @@ nnoremap <localleader>l :e ~/.init.lua<CR>
 "nmap <localleader>e <Plug>(processing-run)
 
 "nnoremap <localleader>t <C-W>T
-vnoremap <localleader>y "+y
-nnoremap <localleader>y "+y
-vnoremap <localleader>d "+d
-nnoremap <localleader>d "+d
 " ************** META MAPS **************{{{1
 "To move lines intuitively
 "Alt and Shift combos won't work with K
@@ -868,6 +871,7 @@ colorscheme edge
 "augroup END
 
 " ************** AUTOCOMMANDS **************{{{1
+autocmd BufNewFile,BufReadPost *.fish set filetype=fish "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost *.txt set filetype=markdown "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost CMakeLists.txt set filetype=cmake "except cmake files
@@ -956,6 +960,7 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-j>"
 "let g:mkdp_auto_close = 0
 "let g:mkdp_refresh_slow = 1
 
+"let g:airline_section_c = '%-0.10{getcwd()}'
 "let g:airline_theme='gruvbox'
 let g:airline_theme = "onedark"
 "let g:airline_theme = "raven"

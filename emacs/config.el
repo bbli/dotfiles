@@ -150,7 +150,7 @@
         (add-to-list 'org-emphasis-alist '("=" (:inherit org-verbatim :height 0.7 :box nil)))
         (push '(tags-tree . local) org-show-context-detail)
         (add-hook 'org-agenda-after-show-hook 'org-tree-to-indirect-buffer)
-        (map! :map org-mode-map "C-h" nil "C-a" nil)
+        (map! :map org-mode-map "C-h" nil "C-a" nil "o" nil "O" nil)
 )
 ;; TODO:
 ;(let (org-agenda-files `(,(buffer-file-name)))
@@ -171,11 +171,11 @@
 (custom-set-faces! '(org-block-end-line :height 0.7))
 (custom-set-faces! '(org-code :height 0.7))
 (after! org
-  (setq org-agenda-files `(,(expand-file-name "Learning/Learning.org" org-directory)
-                            ,(expand-file-name "Learning/ProblemSolving.org" org-directory)
-                            ,(expand-file-name "Learning/Algorithms.org" org-directory)
-                            ,(expand-file-name "Software/Debug.org" org-directory)
-                            ,(expand-file-name "Software/Software.org" org-directory)
+  (setq org-agenda-files `(,(expand-file-name "Theoretical/Learning.org" org-directory)
+                            ,(expand-file-name "Theoreticalearning/ProblemSolving.org" org-directory)
+                            ,(expand-file-name "Theoretical/Algorithms.org" org-directory)
+                            ,(expand-file-name "Practical/Debug.org" org-directory)
+                            ,(expand-file-name "Practical/Software.org" org-directory)
                             ,(expand-file-name "Life/Life.org" org-directory)
                           )
         )
@@ -213,10 +213,44 @@
 ;;;; TODO Misc
 ; NOTE: It appears maps are loaded after doom remaps,
 ; as I can map to r, which is replace in evil mode
+(defun ~/evil-motion-range--wrapper (fn &rest args)
+  "Like `evil-motion-range', but override field-beginning for performance.
+See URL `https://github.com/ProofGeneral/PG/issues/427'."
+  (cl-letf (((symbol-function 'field-beginning)
+             (lambda (&rest args) 1)))
+    (apply fn args))
+  )
+
+(defun benson/do-nothing (body)
+ body)
+(advice-add #'evil-motion-range :around #'~/evil-motion-range--wrapper)
+(advice-add #'evil-narrow-to-field :override #'benson/do-nothing)
+(defun end-of-line-and-indented-new-line-above ()
+  (interactive)
+  (forward-line -1)
+  (end-of-line)
+  (newline-and-indent)
+  (evil-insert 1)
+)
+(defun end-of-line-and-indented-new-line ()
+  (interactive)
+  (end-of-line)
+  (newline-and-indent)
+  (evil-insert 1)
+)
+
+(map! :n "o" 'end-of-line-and-indented-new-line)
+(map! :n "O" 'end-of-line-and-indented-new-line-above)
+
+
+
 (map! :leader :n "e f" 'edebug-defun)
 (map! :leader :n "e F" `eval-defun)
+(map! :leader :n "d s" `profiler-start)
+(map! :leader :n "d S" `profiler-stop)
 (map! :leader :n "j j" 'ace-link)
 (map! :leader :n "t n" 'treemacs)
+(map! :leader :n "t u" 'undo-tree-visualize)
 ; TODO add properly to doom leader search map
 (map! :leader "s b" 'counsel-grep)
 (map! :leader "s s" 'counsel-grep)
@@ -312,22 +346,23 @@
 ;; ;;<C-w> M = recenter
 ;; ;(map! maximize buffer -> window)
 
-
 ;;;; Workspace Related Operations
-(map! :map doom-leader-workspace-map
+(define-prefix-command 'benson/workspace-map)
+(map! :map benson/workspace-map
+      "n" nil
       :desc "new workspace" "c" #'+workspace/new
       :desc "delete workspace" "k" #'+workspace/delete
       :desc "rename workspaces" "r" #'+workspace/rename
       :desc "next workspace" "n" #'+workspace/switch-right
-      :desc "next workspace" "p" #'+workspace/switch-left
+      :desc "previous workspace" "p" #'+workspace/switch-left
       :desc "switch to last workspace" "m" #'+workspace/other
       :desc "display workspaces" "w" #'+workspace/display
       )
 (map! :leader
       "w" nil
-      :desc "workspace" "w" 'doom-leader-workspace-map
+      :desc "workspace" "w" 'benson/workspace-map
 )
-(map! "C-q" 'doom-leader-workspace-map)
+(map! "C-q" 'benson/workspace-map)
 
 
 ;;;; Git Related Operationss
@@ -386,6 +421,8 @@
     (org-hide-block-all)))
 (map! :map org-mode-map
       ;; :desc "open branches below subtree" "C-c o" (lambda () (interactive) (outline-show-children 10))
+      :n "o" 'end-of-line-and-indented-new-line
+      :n "O" 'end-of-line-and-indented-new-line-above
       :desc "open branches below subtree" "C-c o" #'org-show-subtree
       :desc "open ALL branches up to level two" "C-c O" #'(lambda () (interactive) (org-content 2))
       :desc "close current branch" "C-c c" #'outline-hide-body
@@ -442,6 +479,7 @@
 ;;;; Open Related Operations
 (defun benson/open-org-directory ()
   (interactive)
+  (message "got here benson")
 (counsel-fzf nil org-directory nil)
   )
 (map! :leader
