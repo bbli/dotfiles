@@ -38,8 +38,9 @@ require('packer').startup(function()
       run = ':TSUpdate'
       }
   use 'nvim-treesitter/nvim-treesitter-textobjects'
-  use 'RRethy/nvim-treesitter-textsubjects'
+  -- use 'RRethy/nvim-treesitter-textsubjects'
   use 'mizlan/iswap.nvim'
+  --use 'JoosepAlviste/nvim-ts-context-commentstring'
   -- ************  DEBUGGER  ************
   use 'mfussenegger/nvim-dap'
   use 'mfussenegger/nvim-dap-python' --Actualy, supposedly vim-ultest will cover this?
@@ -96,7 +97,7 @@ if (has("nvim"))
 endif
 
 " for treesitter
-luafile ~/.init.lua
+"luafile ~/.init.lua
 "set foldmethod=expr
 "set foldexpr=nvim_treesitter#foldexpr()
 "nnoremap <leader>lt :write | edit | TSBufEnable highlight
@@ -228,6 +229,8 @@ require "lsp_signature".setup()
 EOF
 " ************  Language Servers  ************{{{1
 lua <<EOF
+-- vimls
+require'lspconfig'.vimls.setup{}
 -- clangd
 require'lspconfig'.clangd.setup{
     on_attach = on_attach,
@@ -328,51 +331,82 @@ EOF
 " ************  TreeSitter  ************{{{1
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-     textsubjects = {
-        enable = true,
-        keymaps = {
-            ['t'] = 'textsubjects-smart',
-            ['T'] = 'textsubjects-container-outer',
-        }
+    highlight = {
+    enable = true,
+    --custom_captures = {
+        -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
+        -- ["keyword"] = "TSString", -- for testing if tresitter works
+        --},
+    additional_vim_regex_highlighting = false,
     },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true,
-
-      keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-        ["ab"] = "@block.outer",
-        ["ib"] = "@block.inner",
-        ["at"] = "@frame.outer",
-        ["it"] = "@frame.inner",
-      },
+incremental_selection = {
+enable = true,
+keymaps = {
+    init_selection = "gnn",
+    node_incremental = "grn",
+    scope_incremental = "grc",
+    node_decremental = "grm",
     },
+},
+  indent = {
+  enable = true
+  },
+  -- since I don't use operator pending that often/when I do want exact
+     -- textsubjects = {
+     -- enable = true,
+     -- keymaps = {
+     --     ['t'] = 'textsubjects-smart',
+     --     ['T'] = 'textsubjects-container-outer',
+     --     }
+     -- },
+ textobjects = {
+     select = {
+     enable = true,
+     lookahead = true,
 
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        ["]m"] = "@function.outer",
-        ["]]"] = "@class.outer",
-      },
-      goto_next_end = {
-        ["]M"] = "@function.outer",
-        ["]["] = "@class.outer",
-      },
-      goto_previous_start = {
-        ["[m"] = "@function.outer",
-        ["[["] = "@class.outer",
-      },
-      goto_previous_end = {
-        ["[M"] = "@function.outer",
-        ["[]"] = "@class.outer",
-      },
-    },
+     keymaps = {
+         ["af"] = "@function.outer",
+         ["if"] = "@function.inner",
+         ["ac"] = "@class.outer",
+         ["ic"] = "@class.inner",
+         ["ab"] = "@block.outer",
+         ["ib"] = "@block.inner",
+         },
+     },
 
+ move = {
+ enable = true,
+ set_jumps = true, -- whether to set jumps in the jumplist
+ goto_next_start = {
+     ["lf"] = "@function.outer",
+     ["ll"] = "@comment.outer",
+
+     ["ls"] = "@statement.outer",
+     ["lc"] = "@class.outer",
+     },
+ goto_previous_start = {
+     ["hh"] = "@comment.outer",
+     ["hf"] = "@function.outer",
+
+     ["hs"] = "@statement.outer",
+     ["hc"] = "@class.outer",
+     },
+ -- below don't matter as much
+ goto_next_end = {
+     ["lL"] = "@statement.outer",
+     ["lF"] = "@function.outer",
+
+     --["lC"] = "@comment.outer",
+     ["lC"] = "@class.outer",
+     },
+ goto_previous_end = {
+     ["[M"] = "@function.outer",
+     ["[]"] = "@class.outer",
+     },
+ },
+  context_commentstring = {
+    enable = true
+  },
   },
 }
 EOF
