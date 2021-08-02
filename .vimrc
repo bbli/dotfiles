@@ -1,3 +1,5 @@
+" set verbose=15
+" set verbosefile=filename.txt
 " ************** COC STUFF **************{{{1
 " 1.if hidden is not set, TextEdit might fail.
 set hidden
@@ -222,6 +224,7 @@ call plug#begin('~/.vim/plugged')
 "Visual
 "---
 Plug 'vim-airline/vim-airline'
+Plug 'bbli/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 Plug 'edkolev/promptline.vim'
@@ -241,7 +244,7 @@ Plug 'gcmt/taboo.vim'
 Plug 'osyo-manga/vim-over'
 "Plug 'unblevable/quick-scope'
 "Plug 'jiangmiao/auto-pairs'
-"Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-commentary'
 Plug 'bronson/vim-visual-star-search'
 Plug 'Yggdroot/indentLine'
@@ -281,7 +284,7 @@ Plug 'liuchengxu/vista.vim' "Doesn't work on mac?
 "Plug 'ncm2/ncm2-bufword'
 "Plug 'ncm2/ncm2-path'
 "Plug 'fgrsnau/ncm2-otherbuf', { 'branch': 'ncm2' }
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 "Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'wellle/tmux-complete.vim'
@@ -872,6 +875,7 @@ colorscheme edge
 
 " ************** AUTOCOMMANDS **************{{{1
 autocmd BufNewFile,BufReadPost *.fish set filetype=fish "Make vim recognize .md as markdown file
+autocmd FileType fish set commentstring=#%s
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost *.txt set filetype=markdown "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost CMakeLists.txt set filetype=cmake "except cmake files
@@ -1084,6 +1088,7 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 
 let neovide_remember_window_size = 1
 "let g:vista_sidebar_keepalt
+let g:vista_sidebar_width = 40
 let g:BASH_Ctrl_j = 'off'
 let g:C_Ctrl_j = 'off'
 "let g:signify_sign_show_count = 0

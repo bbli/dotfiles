@@ -1,4 +1,3 @@
-# ************** FUNCTIONS **************{{{1
 # ************** COMMAND ALIASES **************{{{1
 function j
     fasd_cd -d $argv
@@ -51,7 +50,6 @@ function ff
     fg
 end
 
-sd
 # ************** EXA **************{{{1
 function ls
     exa $argv

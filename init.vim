@@ -25,22 +25,16 @@ require('packer').startup(function()
   -- tagbar/vista is better b/c it shows the current hovered function
   --use 'simrat39/symbols-outline.nvim'
   use 'anott03/nvim-lspinstall'
-  use {
-  'nvim-lua/lsp-status.nvim',
-   config = function()
-       local lsp_status = require('lsp-status')
-       lsp_status.register_progress()
-   end
-  }
+  use 'nvim-lua/lsp-status.nvim'
   -- ************  TREE SITTER  ************
-  use {
-      'nvim-treesitter/nvim-treesitter',
-      run = ':TSUpdate'
-      }
+--  use {
+--      'nvim-treesitter/nvim-treesitter',
+--      run = ':TSUpdate'
+--      }
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   -- use 'RRethy/nvim-treesitter-textsubjects'
   use 'mizlan/iswap.nvim'
-  --use 'JoosepAlviste/nvim-ts-context-commentstring'
+  use 'JoosepAlviste/nvim-ts-context-commentstring'
   -- ************  DEBUGGER  ************
   use 'mfussenegger/nvim-dap'
   use 'mfussenegger/nvim-dap-python' --Actualy, supposedly vim-ultest will cover this?
@@ -114,41 +108,21 @@ let g:vimsyn_embed = 'l'
 " ************  LSP configuration  ************{{{1
 
 " Statusline
-"function! LspStatus() abort
-  "if luaeval('#vim.lsp.buf_get_clients() > 0')
-    "return luaeval("require('lsp-status').status()")
-  "endif
+function! LspStatus() abort
+  if luaeval('#vim.lsp.buf_get_clients() > 0')
+    let result = luaeval("require('lsp-status').status()")
+    " NOTE:Need to slice result since plugin's return string has useless fluff
+    return result[9:]
+  endif
 
-  "return ''
-"endfunction
-"set statusline^=%{LspStatus()}
-"lua << EOF
-"local lsp_status = require('lsp-status')
-
-"lsp_status.config({
-  "kind_labels = vim.g.completion_customize_lsp_label
-"})
-"lsp_status.register_progress()
-
-"local on_attach = function(client, bufnr)
-  "lsp_status.on_attach(client)
-"end
-
-"require('lspconfig').rust_analyzer.setup{
-  "on_attach = on_attach,
-  "capabilities = lsp_status.capabilities,
-"}
-"EOF
-
-"function! StatuslineLsp() abort
-  "return luaeval("require('lsp-status').status()")
-"endfunction
+  return ''
+endfunction
 
 ""set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 ""set statusline^=%{StatuslineLsp()}
 
 lua << EOF
---nah, colors are better
+--nah, as these don't have colors
 --vim.fn.sign_define("LspDiagnosticsSignError", {text = "", numhl = "LspDiagnosticsDefaultError"})
 --vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "", numhl = "LspDiagnosticsDefaultWarning"})
 --vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "", numhl = "LspDiagnosticsDefaultInformation"})
@@ -229,11 +203,18 @@ require "lsp_signature".setup()
 EOF
 " ************  Language Servers  ************{{{1
 lua <<EOF
+local lsp_status = require('lsp-status')
+lsp_status.register_progress()
 -- vimls
 require'lspconfig'.vimls.setup{}
 -- clangd
 require'lspconfig'.clangd.setup{
-    on_attach = on_attach,
+  handlers = lsp_status.extensions.clangd.setup(),
+  init_options = {
+    clangdFileStatus = true
+  },
+  on_attach = lsp_status.on_attach,
+  capabilities = lsp_status.capabilities,
     default_config = {
         cmd = {
             "clangd", "--background-index", "--suggest-missing-includes",
@@ -254,6 +235,8 @@ require'lspconfig'.clangd.setup{
 
 -- Rust Tools
 local opts = {
+      on_attach = lsp_status.on_attach,
+  capabilities = lsp_status.capabilities,
     tools = { -- rust-tools options
         autoSetHints = true,
         hover_with_actions = true,
@@ -332,13 +315,16 @@ EOF
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
     highlight = {
-    enable = true,
-    --custom_captures = {
-        -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-        -- ["keyword"] = "TSString", -- for testing if tresitter works
-        --},
-    additional_vim_regex_highlighting = false,
+        enable = true,
+        --custom_captures = {
+            -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
+            -- ["keyword"] = "TSString", -- for testing if tresitter works
+            --},
+        additional_vim_regex_highlighting = false,
     },
+--  context_commentstring = {
+--    enable = true
+--  },
 incremental_selection = {
 enable = true,
 keymaps = {
@@ -610,6 +596,7 @@ nnoremap <M-;> <cmd>Telescope commands<cr>
 nnoremap <leader>ul <cmd>Telescope marks<cr>
 "TODO: why is this not filtering?
 nnoremap <leader>or <cmd>Telescope registers<cr>
+nnoremap <leader>om <cmd>Telescope help_tags<cr>
 
 " These will check out the selected commit/branch
 nnoremap <leader>gb <cmd>Telescope git_branchs<CR>
