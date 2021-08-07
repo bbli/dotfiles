@@ -17,8 +17,8 @@ require('packer').startup(function()
   use 'nvim-lua/plenary.nvim'
   -- ************  LSP STUFF  ************
   use 'neovim/nvim-lspconfig'
-  --use 'hrsh7th/nvim-compe'
-  --use 'andersevenrud/compe-tmux'
+  use 'hrsh7th/nvim-compe'
+  use 'andersevenrud/compe-tmux'
   use 'glepnir/lspsaga.nvim'
   use 'kosayoda/nvim-lightbulb'
   use 'simrat39/rust-tools.nvim'
@@ -28,10 +28,10 @@ require('packer').startup(function()
   use 'anott03/nvim-lspinstall'
   use 'nvim-lua/lsp-status.nvim'
   -- ************  TREE SITTER  ************
---  use {
---      'nvim-treesitter/nvim-treesitter',
---      run = ':TSUpdate'
---      }
+  use {
+      'nvim-treesitter/nvim-treesitter',
+      run = ':TSUpdate'
+      }
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   -- use 'RRethy/nvim-treesitter-textsubjects'
   use 'mizlan/iswap.nvim'
