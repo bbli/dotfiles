@@ -17,7 +17,8 @@ require('packer').startup(function()
   use 'nvim-lua/plenary.nvim'
   -- ************  LSP STUFF  ************
   use 'neovim/nvim-lspconfig'
-  use 'hrsh7th/nvim-compe'
+  --use 'hrsh7th/nvim-compe'
+  --use 'andersevenrud/compe-tmux'
   use 'glepnir/lspsaga.nvim'
   use 'kosayoda/nvim-lightbulb'
   use 'simrat39/rust-tools.nvim'
@@ -158,7 +159,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 EOF
 
 "autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
-
+nnoremap <unique> <leader>ot :Telescope<CR>
 
 nnoremap <leader>jd <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <leader>jd <cmd>lua vim.lsp.buf.definition()<CR>
@@ -183,7 +184,9 @@ nnoremap <silent> ls <cmd>lua require('lspsaga.signaturehelp').signature_help()<
 "diagonistic errors and this will only delay
 " ****Rest of Lanuage Server****
 nnoremap <leader>lf <cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <unique> <leader><leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 nnoremap <leader>ll <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
+nnoremap <unique> <leader>ls :lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>
 "--nnoremap <leader>fr <cmd>lua vim.lsp.buf.rename()<CR>
 "nnoremap <leader>jt <cmd>lua vim.lsp.buf.type_definition()<CR> "What is this used for?
 "nnoremap <leader>ct <cmd>lua vim.lsp.buf.outgoing_calls()<CR> "Just one level BFS
@@ -308,7 +311,8 @@ require'lspconfig'.sumneko_lua.setup {
     },
   },
 }
-
+-- python
+require'lspconfig'.pyright.setup{}
 
 EOF
 " ************  TreeSitter  ************{{{1
@@ -367,14 +371,14 @@ keymaps = {
      ["lf"] = "@function.outer",
      ["ll"] = "@comment.outer",
 
-     ["ls"] = "@statement.outer",
+     ["C-n"] = "@statement.outer",
      ["lc"] = "@class.outer",
      },
  goto_previous_start = {
      ["hh"] = "@comment.outer",
      ["hf"] = "@function.outer",
 
-     ["hs"] = "@statement.outer",
+     ["C-p"] = "@statement.outer",
      ["hc"] = "@class.outer",
      },
  -- below don't matter as much
@@ -397,42 +401,42 @@ keymaps = {
 }
 EOF
 " ************  AutoComplete  ************{{{1
-lua << EOF
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  resolve_timeout = 800;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = {
-    border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
-    winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-    max_width = 120,
-    min_width = 60,
-    max_height = math.floor(vim.o.lines * 0.3),
-    min_height = 1,
-  };
+" lua << EOF
+" require'compe'.setup {
+"   enabled = true;
+"   autocomplete = true;
+"   debug = false;
+"   min_length = 1;
+"   preselect = 'enable';
+"   throttle_time = 80;
+"   source_timeout = 200;
+"   resolve_timeout = 800;
+"   incomplete_delay = 400;
+"   max_abbr_width = 100;
+"   max_kind_width = 100;
+"   max_menu_width = 100;
+"   documentation = {
+"     border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
+"     winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
+"     max_width = 120,
+"     min_width = 60,
+"     max_height = math.floor(vim.o.lines * 0.3),
+"     min_height = 1,
+"   };
 
-  source = {
-    path = {priority = 3};
-    buffer = {priority = 99};
-    calc = false;
-    nvim_lsp = {priority = 5};
-    nvim_lua = true;
-    vsnip = false;
-    ultisnips = false;
-    luasnip = false;
-    tmux = {priority = 1};
-  };
-}
-EOF
+"   source = {
+"     path = {priority = 3};
+"     buffer = {priority = 99};
+"     calc = false;
+"     nvim_lsp = {priority = 5};
+"     nvim_lua = true;
+"     vsnip = false;
+"     ultisnips = false;
+"     luasnip = false;
+"     tmux = {priority = 1};
+"   };
+" }
+" EOF
 " ************  Telescope  ************{{{1
 lua <<EOF
 local actions = require('telescope.actions')

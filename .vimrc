@@ -141,10 +141,11 @@ if !exists("g:os")
 endif
 if g:os == "Linux"
     let home_dir = "/home/benson"
-    set runtimepath+=~/Documents/Code/Projects/my_plugin
+    set runtimepath+=~/Dropbox/Code/Projects/my_plugin
+    "Remember to call :UpdateRemotePlugins manually
 else
     let home_dir = "/Users/benson"
-    set runtimepath+=~/Dropbox/Code/Projects/my_plugin
+    set runtimepath+=~/Documents/Code/Projects/my_plugin
 endif
 " ************** OPTIONS **************{{{1
 set foldmethod=marker
@@ -218,7 +219,8 @@ set colorcolumn=80
 " ************** PLUGINS **************{{{1
 call plug#begin('~/.vim/plugged')
 "Plug 'ThePrimeagen/vim-be-good'
-"Plug 'bbli/filter-jump.nvim', {'do': ':UpdateRemotePlugins'}
+" Plug 'bbli/filter-jump.nvim', {'do': ':UpdateRemotePlugins'}
+" Plug '~/Dropbox/Code/Projects/my_plugin', {'do': ':UpdateRemotePlugins'}
 "Plug 'ripxorip/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
 
 "Visual
@@ -244,7 +246,7 @@ Plug 'gcmt/taboo.vim'
 Plug 'osyo-manga/vim-over'
 "Plug 'unblevable/quick-scope'
 "Plug 'jiangmiao/auto-pairs'
-Plug 'scrooloose/nerdcommenter'
+" Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-commentary'
 Plug 'bronson/vim-visual-star-search'
 Plug 'Yggdroot/indentLine'
@@ -252,9 +254,10 @@ Plug 'Yggdroot/indentLine'
 Plug 'machakann/vim-sandwich'
 "So <C-j> works properly -> Actually still doesn't work
 "Plug '~/.vim/plugged/bash-support'
-"Plug 'justinmk/vim-sneak'
+" Plug 'justinmk/vim-sneak' -> my plugin is better
 "Plug 'goldfeld/vim-seek'
 "Plug 'jayflo/vim-skip'
+Plug 'rhysd/clever-f.vim'
 
 "Special Windows
 "---
@@ -277,6 +280,7 @@ Plug 'mbbill/undotree'
 "Language Server
 "---
 Plug 'majutsushi/tagbar'
+" Plug 'bbli/tagbar'
 Plug 'liuchengxu/vista.vim' "Doesn't work on mac?
 "Plug 'roxma/nvim-yarp'
 "Plug 'ncm2/ncm2'
@@ -383,7 +387,6 @@ nnoremap <leader>ec :sign unplace<CR>
 "let g:qf_auto_open_loclist = 0
 "let g:qf_shorten_path = 0
 
-nnoremap <C-w>; <C-w>p
 
 nmap <leader>tq <Plug>(qf_qf_toggle)
 nmap <leader>qn <Plug>(qf_newer)
@@ -406,21 +409,25 @@ nnoremap <leader>br :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
 
 " ---Edit Related---{{{2
 "  stuff
-" nmap <leader>c <Plug>NERDCommenterToggle
-" vmap <leader>c <Plug>NERDCommenterToggle
+" nmap gc <Plug>NERDCommenterToggle
+" vmap gc <Plug>NERDCommenterToggle
 vmap <unique> <leader>c  <Plug>Commentary
+vmap <unique> <leader><leader>c  <Plug>Commentary
 nmap <unique> <leader>c  <Plug>Commentary
 omap <unique> <leader>c  <Plug>Commentary
 nmap <unique> <leader>cc <Plug>CommentaryLine
+nmap <unique> <leader><leader>c <Plug>CommentaryLine
 
 nnoremap <leader><leader>p "+p
 nnoremap <leader><leader>P "+P
 vnoremap <leader><leader>y "+y
-nnoremap <leader><leader>y "+y
+nnoremap <leader><leader>y "+yy
 vnoremap <leader><leader>d "+d
-nnoremap <leader><leader>d "+d
+nnoremap <leader><leader>d "+dd
 
-nnoremap mm @m
+nnoremap <unique> <leader><leader>t :ISwapWith<CR>
+
+" nnoremap mm @m
 nnoremap <leader><leader>m 9000@m
 " ---Workspace Related---{{{2
 nnoremap <leader>ws :mks ~/.vim/sessions/default.vim<CR>
@@ -626,6 +633,8 @@ vnoremap <M-j> :m '>+1<CR>gv=gv
 vnoremap <M-k> :m '<-2<CR>gv=gv
 
 nnoremap <C-w><Space> <C-w>=
+nnoremap <C-w>w <C-w>p
+nnoremap <C-w>m <C-w>p
 
 "nnoremap <C-h> <C-w><C-h>
 "nnoremap <C-j> <C-w><C-j>
@@ -654,8 +663,6 @@ inoremap ;w <C-c>:w<CR>
 nnoremap ;q :q<CR>
 nnoremap ;z :q!<CR>
 nnoremap ;w <C-c>:w<CR>
-"nnoremap ;;n :2bn<CR>
-"nnoremap ;;N :2bp<CR>
 nnoremap ;n :bn<CR>
 nnoremap ;N :bp<CR>
 nnoremap <silent> ;d :bwipeout<CR>
@@ -678,7 +685,6 @@ command! BD call fzf#run(fzf#wrap({'source': s:list_buffers(),
   \ 'sink*': { lines -> s:delete_buffers(lines) },
   \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'}))
 
-nnoremap ;; ;
 nnoremap <leader>; ,
 
 nnoremap ;t :MtaJumpToOtherTag<CR>
@@ -698,7 +704,6 @@ nnoremap <unique> E $
 nnoremap <unique> gE g$
 nnoremap <unique> W 0w
 " to jump between brackets/parantheses
-"nnoremap s %
 "nnoremap S <C-^>
 "nnoremap w W
 "nnoremap W w
@@ -712,9 +717,9 @@ nnoremap h <Nop>
 nnoremap l <Nop>
 nnoremap <C-g> <cmd>close<CR>
 
-nnoremap <C-w>m <C-w>p
 
 nnoremap S %
+" nnoremap <unique> t %
 " ************** COMMAND MODE MAPS **************{{{1
 cnoremap sE %s
 " nnoremap / /\<
@@ -876,6 +881,7 @@ colorscheme edge
 " ************** AUTOCOMMANDS **************{{{1
 autocmd BufNewFile,BufReadPost *.fish set filetype=fish "Make vim recognize .md as markdown file
 autocmd FileType fish set commentstring=#%s
+autocmd FileType toml set commentstring=#%s
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost *.txt set filetype=markdown "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost CMakeLists.txt set filetype=cmake "except cmake files
@@ -891,10 +897,27 @@ cmap w!! w !sudo tee > /dev/null %
 "Actually independent of ncm2 plugin. Just code for QOL when using autocomplete
 set completeopt=noinsert,menuone,noselect
 
+let g:tagbar_autofocus = 1
+" "Doesn't look as nice, which is probably why I don't like vista.vim
+" let g:tagbar_compact = 1 
+
 let g:toggle_list_no_mappings = 1
 let g:git_messenger_no_default_mappings = v:true
 
 let g:sneak#s_next = 1
+let g:sneak#use_ic_scs = 1
+" nnoremap <silent> s :<C-U>call sneak#wrap('',           3, 0, 2, 1)<CR>
+" nnoremap <silent> S :<C-U>call sneak#wrap('',           3, 1, 2, 1)<CR>
+" highlight! link Sneak IncSearch
+" highlight! link SneakScope Search
+
+let g:clever_f_across_no_line = 1
+let g:clever_f_smart_case = 1
+let g:clever_f_highlight_timeout_ms=600
+nmap <unique> ;; <Plug>(clever-f-repeat-forward)
+nmap <unique> , <Plug>(clever-f-repeat-back)
+
+
 let g:indentLine_setColors = 0
 
 "let g:indent_guides_enable_on_vim_startup = 1
@@ -1086,7 +1109,7 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
 
-let neovide_remember_window_size = 1
+let neovide_remember_window_size = v:true
 "let g:vista_sidebar_keepalt
 let g:vista_sidebar_width = 40
 let g:BASH_Ctrl_j = 'off'
@@ -1096,7 +1119,7 @@ let g:C_Ctrl_j = 'off'
 "let g:filter_jump_strip_characters = ["_"]
 "highlight! link SearchCurrent Red
 "highlight! link SearchHighlights Green
-"nmap s <Plug>(FilterJump)
+nmap s <Plug>(FilterJump)
 "nmap f <Plug>(FilterJumpLineForward)
 "nmap F <Plug>(FilterJumpLineBackward)
 let g:filter_jump_keymaps = {
@@ -1107,4 +1130,4 @@ let g:filter_jump_keymaps = {
     \ "<C-c>" : "FilterJumpExit"}
 " TODO: change plugin to accept setup + teardown lambdas instead,
 " as CocDisable applies for the whole vim session, not just current buffer
-let g:filter_jump_buffer_options = ["let b:coc_pairs_disabled = ['`','(','[','{','<',]"]
+let g:filter_jump_buffer_options = []
