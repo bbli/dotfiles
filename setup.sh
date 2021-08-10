@@ -29,6 +29,7 @@ ln -s "$dotfiles_path/.bash_aliases" ~/.bash_aliases
 ln -s "$dotfiles_path/.gitconfig" ~/.gitconfig
 ln -s "$dotfiles_path/.shell_prompt.sh" ~/.shell_prompt.sh
 ln -s "$dotfiles_path/.tmux.conf" ~/.tmux.conf
+ln -s "$dotfiles_path/config.fish" ~/.config/fish/config.fish
 
 mkdir -p ~/.vim
 mkdir -p ~/.vim/autoload

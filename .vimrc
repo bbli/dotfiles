@@ -609,6 +609,7 @@ nnoremap <leader>dp dp
 " ************** LOCAL LEADER MAPS **************{{{1
 nnoremap <localleader>v :e ~/.vimrc<CR>
 nnoremap <localleader>b :e ~/.bash_aliases<CR>
+nnoremap <localleader>t :e ~/.tmux.conf<CR>
 nnoremap <localleader>g :e ~/.gitconfig<CR>
 nnoremap <localleader>n :e ~/.config/nvim/init.vim<CR>
 nnoremap <localleader>c :CocConfig<CR>
@@ -709,6 +710,10 @@ nnoremap <unique> W 0w
 "nnoremap W w
 "nnoremap b B
 "nnoremap B b
+" nnoremap n nzz
+" nnoremap N Nzz
+nnoremap <expr> k (v:count > 5  ?  "m'" . v:count  : "") .  'k'
+nnoremap <expr> j (v:count > 5  ?  "m'" . v:count  : "") .  'j'
 
 nnoremap gb gi
 
@@ -716,6 +721,9 @@ nnoremap gb gi
 nnoremap h <Nop>
 nnoremap l <Nop>
 nnoremap <C-g> <cmd>close<CR>
+
+vnoremap > >gv
+vnoremap < <gv
 
 
 nnoremap S %
@@ -745,12 +753,19 @@ cnoremap tN tabprevious
 "onoremap B b
 "onoremap ) i)
 "onoremap ] i]
+onoremap b i]
+onoremap p i)
+onoremap c i}
 " ************** INSERT MODE MAPS **************{{{1
 " To be honest, I don't think this is nesscary. Those keys are not awkward,
 " and I only mapped it because I was fixated on insert normal mode
 "inoremap ]] <C-c>A
 "make cause some issues, such as dummy -> but will be amortized zero cost with
 "autocomplete
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap { {<c-g>u
+inoremap [ [<c-g>u
 
 inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files',fzf#wrap({'dir':home_dir}))
 "inoremap " ""<left>
@@ -780,8 +795,12 @@ function! ToggleFoldAll()
         normal! zR
     endif
 endfunction
-nmap <TAB> za
+" Note this will override <C-i>
+" nmap <TAB> za
+nnoremap go za
 nnoremap <S-TAB> :call ToggleFoldAll()<CR>
+" Actually, this will override default "outline" command
+" nnoremap gO :call ToggleFoldAll()<CR>
 
 nnoremap <Space> <Nop>
 " nnoremap <Up> <Nop>
@@ -1131,3 +1150,16 @@ let g:filter_jump_keymaps = {
 " TODO: change plugin to accept setup + teardown lambdas instead,
 " as CocDisable applies for the whole vim session, not just current buffer
 let g:filter_jump_buffer_options = []
+" ************** Learning **************{{{1
+" let g:value = 0
+" function ToggleValue()
+"     if g:value % 2 == 0
+"         let g:value = g:value +1
+"         return "ieven"
+"     else
+"         let g:value = g:value +1
+"         return "iodd"
+"     endif
+" endf
+" inoremap <expr> <leader><leader>r ToggleValue()
+" nnoremap <expr> <leader><leader>r ToggleValue()
