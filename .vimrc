@@ -122,13 +122,13 @@ nn <silent> <leader>xm :call CocLocations('ccls','$ccls/member')<cr>
 "autocmd BufCreate *py :CocCommand python.enableLinting
 
 " How to debug Coc
-nn <leader>ci :CocInfo<CR>
-nn <leader>co :CocOpenLog<CR>
-nnoremap <leader>cd :CocCommand workspace.showOutput<CR>
-nnoremap <leader>cl :CocList<CR>
-nnoremap <leader>cc :CocList commands<CR>
-nnoremap <leader>cm :CocList marketplace<CR>
-nnoremap <leader>cr :CocListResume<CR>
+" nn <leader>ci :CocInfo<CR>
+" nn <leader>co :CocOpenLog<CR>
+" nnoremap <leader>cd :CocCommand workspace.showOutput<CR>
+" nnoremap <leader>cl :CocList<CR>
+" nnoremap <leader>cc :CocList commands<CR>
+" nnoremap <leader>cm :CocList marketplace<CR>
+" nnoremap <leader>cr :CocListResume<CR>
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
 " Check settings on this website: https://github.com/neoclide/coc.nvim/blob/master/data/schema.json
 " ************** MAC SENSITIVE **************{{{1
@@ -212,7 +212,6 @@ set shiftwidth=4
 set autoindent
 set undofile
 "set undodir=~/.undodir/
-set inccommand=nosplit
 set colorcolumn=80
 
 
@@ -251,6 +250,10 @@ Plug 'tpope/vim-commentary'
 Plug 'bronson/vim-visual-star-search'
 Plug 'Yggdroot/indentLine'
 "Plug 'tpope/vim-surround'
+Plug 'dohsimpson/vim-macroeditor'
+" using this fork so that MACROS can be repeated too
+Plug 'svermeulen/vim-macrobatics'
+Plug 'svermeulen/vim-repeat'
 Plug 'machakann/vim-sandwich'
 "So <C-j> works properly -> Actually still doesn't work
 "Plug '~/.vim/plugged/bash-support'
@@ -308,6 +311,8 @@ Plug 'mattboehm/vim-unstack'
 "Plug 'benmills/vimux'
 "Plug 'jpalardy/vim-slime' "useful for creating specific state in script for profiling
 Plug 'christoomey/vim-tmux-runner'
+Plug 'skywind3000/asynctasks.vim'
+Plug 'skywind3000/asyncrun.vim'
 
 "Git
 "---
@@ -427,8 +432,15 @@ nnoremap <leader><leader>d "+dd
 
 nnoremap <unique> <leader><leader>t :ISwapWith<CR>
 
-" nnoremap mm @m
-nnoremap <leader><leader>m 9000@m
+" Actually range + norm is so much better
+nnoremap <leader>me :MacroEdit m<CR>
+nnoremap <leader>mm @m
+nnoremap <leader><leader>m :%normal @m
+nmap <leader>mr <plug>(Mac_NameCurrentMacro)
+nmap <leader>mf <plug>(Mac_SearchForNamedMacroAndPlay)
+
+nmap <leader>md <plug>(Mac_SearchForNamedMacroAndDelete)
+nmap <leader>mo <plug>(Mac_SearchForNamedMacroAndOverwrite)
 " ---Workspace Related---{{{2
 nnoremap <leader>ws :mks ~/.vim/sessions/default.vim<CR>
 nnoremap <leader>wl :source ~/.vim/sessions/default.vim<CR>
