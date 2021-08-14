@@ -147,7 +147,12 @@ set SPACEFISH_RUST_SHOW false
 set SPACEFISH_GOLANG_SHOW false
 
 # ************** SOURCE **************{{{1
-source /opt/miniconda3/etc/fish/conf.d/conda.fish
+switch (uname)
+    case Linux
+        source /opt/miniconda3/etc/fish/conf.d/conda.fish
+    case Darwin
+    case '*'
+end
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/benson/Software/cloud-sdk-stuff/google-cloud-sdk/path.fish.inc' ]; . '/home/benson/Software/cloud-sdk-stuff/google-cloud-sdk/path.fish.inc'; end
@@ -155,3 +160,4 @@ if [ -f '/home/benson/Software/cloud-sdk-stuff/google-cloud-sdk/path.fish.inc' ]
 # FOr some reason git_status is being ignored
 fzf_configure_bindings --git_status=\cg
 fzf_configure_bindings --directory=\ct
+set fish_greeting
