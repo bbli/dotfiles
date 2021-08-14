@@ -106,9 +106,9 @@
   (setq olivetti-minimum-body-width 100)
   (display-line-numbers-mode 0)
   (olivetti-mode 1)
-  ;; (doom-modeline-mode 0)
-  ;; (display-header2)
-  (org-variable-pitch-minor-mode)
+        ;; (doom-modeline-mode 0)
+        ;; (display-header2)
+ (org-variable-pitch-minor-mode)
 )
 (add-hook 'org-mode-hook 'benson/write-mode)
 (add-hook 'org-mode-hook (lambda () (flyspell-mode 0)));since I just need this for blogging.TODO: though should just lazy load
@@ -146,7 +146,7 @@
 ;;   )
 (after! org
         ;; (add-to-list 'org-font-lock-extra-keywords '("^" benson/emphasis-box-face))
-        (add-to-list 'org-emphasis-alist '("_" (:inherit org-code :height 1.4)))
+        (add-to-list 'org-emphasis-alist '("_" (:inherit org-code :height 2.0)))
         (add-to-list 'org-emphasis-alist '("=" (:inherit org-verbatim :height 0.7 :box nil)))
         (push '(tags-tree . local) org-show-context-detail)
         (add-hook 'org-agenda-after-show-hook 'org-tree-to-indirect-buffer)

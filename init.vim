@@ -1,6 +1,8 @@
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 source ~/.vimrc
+" Only available in neovim
+set inccommand=nosplit
 " ************  Neovim 0.5 Specific Plugins  ************{{{1
 lua << EOF
 require('packer').startup(function()
@@ -11,6 +13,10 @@ require('packer').startup(function()
       requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
       }
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  use {
+      'GustavoKatel/telescope-asynctasks.nvim',
+      requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope.nvim'}}
+      }
 
  -- ************  UTILITY LIBRARIES  ************
   use 'nvim-lua/popup.nvim'
@@ -109,15 +115,6 @@ let g:vimsyn_embed = 'l'
 " ************  LSP configuration  ************{{{1
 
 " Statusline
-function! LspStatus() abort
-  if luaeval('#vim.lsp.buf_get_clients() > 0')
-    let result = luaeval("require('lsp-status').status()")
-    " NOTE:Need to slice result since plugin's return string has useless fluff
-    return result[9:]
-  endif
-
-  return ''
-endfunction
 
 ""set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 ""set statusline^=%{StatuslineLsp()}
@@ -573,6 +570,10 @@ require'diffview'.setup {
   }
 }
 EOF
+" ************** Compiling/Running/Terminal Interaction **************{{{1
+nnoremap <leader>pp <cmd>lua require('telescope').extensions.asynctasks.all()<CR>
+nnoremap <leader>pi <cmd>AsyncTaskMacro<CR>
+nnoremap <localleader>a :AsyncTaskEdit<CR>
 " ************  Rest  ************{{{1
 lua << EOF
 require('nvim-web-devicons').setup{default = true}
@@ -605,7 +606,7 @@ nnoremap <leader>om <cmd>Telescope help_tags<cr>
 " These will check out the selected commit/branch
 nnoremap <leader>gb <cmd>Telescope git_branchs<CR>
 nnoremap <leader>gc <cmd>Telescope git_commits<CR>
-nnoremap <leader>gd :DiffviewOpen
+nnoremap <leader>gD :DiffviewOpen
 
 nnoremap <leader>vo <cmd>Telescope vim_options<cr>
 nnoremap <leader>vc <cmd>Telescope autocommands<cr>
