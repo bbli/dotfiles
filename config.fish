@@ -1,3 +1,41 @@
+# ************** FUNCTIONS **************{{{1
+function chk -d "Checkout local git branch, sorted by recent"
+  git branch -vv | read -z branches; 
+  set branch (echo "$branches" | fzf +m) ;
+  git checkout (echo "$branch" | awk '{print $1}' | sed "s/.* //")
+end
+# Assumes you have already created a new tmux window which opens in the same directory as the previous pane
+# Also if no number given -> just chekout as regular worktree [DONE]
+function create_worktree #-a name number
+    if test (count $argv) = 2
+        set -l branch_name (string join "" "[pr_" $argv[1] "]")
+        set -l number $argv[2]
+
+        and cd (git rev-parse --git-dir)/..
+        and git worktree add ../$branch_name HEAD
+        and cd ../$branch_name
+        and gh pr checkout $number
+        and tmux rename-window $branch_name
+    else if test (count $argv) = 1
+        set -l branch_name (string join "" "[" $argv[1] "]")
+
+        and cd (git rev-parse --git-dir)/..
+        and git worktree add ../$branch_name $branch_name
+        and cd ../$branch_name
+        and tmux rename-window $branch_name
+
+    else
+        print "First argument is branch name. Second(optional) is the pull request number"
+    end
+end
+
+function delete_worktree
+    # 1. first cd to proj root
+    cd (git rev-parse --git-dir)/..
+    git worktree remove .
+    # 2. now exit the tmux window
+    tmux kill-window
+end
 # ************** COMMAND ALIASES **************{{{1
 function j
     fasd_cd -d $argv
@@ -113,3 +151,7 @@ source /opt/miniconda3/etc/fish/conf.d/conda.fish
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/benson/Software/cloud-sdk-stuff/google-cloud-sdk/path.fish.inc' ]; . '/home/benson/Software/cloud-sdk-stuff/google-cloud-sdk/path.fish.inc'; end
+# ************** PLUGIN CONFIGURATION **************{{{1
+# FOr some reason git_status is being ignored
+fzf_configure_bindings --git_status=\cg
+fzf_configure_bindings --directory=\ct
