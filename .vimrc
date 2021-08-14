@@ -470,8 +470,7 @@ nmap <leader>gl :Glog<CR>
 nmap <leader>gg :G<CR>
 nnoremap <leader>gd :Gvdiff 
 
-
-" ---Open Related---{{{2
+" ---Open + Find Related---{{{2
 " fzf and ripgrep settings
 command! -bang -nargs=? -complete=dir HFiles
   "\ call fzf#vim#files(<q-args>, {'source': 'rg --hidden --ignore .git -g ""'}, <bang>0)
@@ -610,12 +609,12 @@ nnoremap <leader>jC g,
 nnoremap <leader>dn ]c
 nnoremap <leader>dN [c
 "nnoremap <leader>dl :.diffput<CR>
-nmap <leader>dh :diffget //3<CR>
-nmap <leader>dl :diffget //2<CR>
+"Grab from left side
+nmap <leader>dh :diffget //2<CR>
+"Grab from right side
+nmap <leader>dl :diffget //3<CR>
 nnoremap <leader>dp dp
 
-"nnoremap <leader>mr qa
-"nnoremap <leader>mm @a
 "autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
 "autocmd BufEnter *.m  nnoremap <buffer> <leader>c I%<esc>
 " ************** LOCAL LEADER MAPS **************{{{1
@@ -705,8 +704,8 @@ nnoremap ;o <C-^>
 nnoremap ;r @:
 
 " ************** NORMAL MODE MAPS **************{{{1
-nnoremap <unique> k gk
-nnoremap <unique> j gj
+" nnoremap <unique> k gk
+" nnoremap <unique> j gj
 nnoremap <unique> gk k
 nnoremap <unique> gj j
 "nnoremap EE @
@@ -724,21 +723,21 @@ nnoremap <unique> W 0w
 "nnoremap B b
 " nnoremap n nzz
 " nnoremap N Nzz
-nnoremap <expr> k (v:count > 5  ?  "m'" . v:count  : "") .  'k'
-nnoremap <expr> j (v:count > 5  ?  "m'" . v:count  : "") .  'j'
+nnoremap <unique> <expr> k v:count > 1  ?  "m'" . v:count . "k"  : "gk"
+nnoremap <unique> <expr> j v:count > 1  ?  "m'" . v:count . "j"  : "gj"
 
-nnoremap gb gi
+nnoremap <unique> gb gi
 
 "Training vim skip
-nnoremap h <Nop>
-nnoremap l <Nop>
-nnoremap <C-g> <cmd>close<CR>
+nnoremap <unique> h <Nop>
+nnoremap <unique> l <Nop>
+nnoremap <unique> <C-g> <cmd>close<CR>
 
 vnoremap > >gv
 vnoremap < <gv
 
 
-nnoremap S %
+nnoremap <unique> S %
 " nnoremap <unique> t %
 " ************** COMMAND MODE MAPS **************{{{1
 cnoremap sE %s
@@ -758,16 +757,25 @@ cnoremap tN tabprevious
 " nnoremap <leader><leader>t :tabn<CR>
 
 
-" ************** OPERAOTR MODE MAPS **************{{{1
+" ************** OPERATOR MODE MAPS **************{{{1
 "onoremap w W
 "onoremap W w
 "onoremap b B
 "onoremap B b
 "onoremap ) i)
 "onoremap ] i]
-onoremap b i]
+onoremap s i]
+onoremap S a]
+
 onoremap p i)
-onoremap c i}
+onoremap P a)
+
+" Cannot since this will override cc
+onoremap <expr> c v:operator ==# 'c' ? 'c' : 'i}'
+onoremap C a}
+" So instead
+" onoremap b i}
+" onoremap B i}
 " ************** INSERT MODE MAPS **************{{{1
 " To be honest, I don't think this is nesscary. Those keys are not awkward,
 " and I only mapped it because I was fixated on insert normal mode
@@ -927,6 +935,10 @@ cmap w!! w !sudo tee > /dev/null %
 "autocmd BufEnter * call ncm2#enable_for_buffer()
 "Actually independent of ncm2 plugin. Just code for QOL when using autocomplete
 set completeopt=noinsert,menuone,noselect
+
+"make quickfix open with height of 6 lines
+let g:asyncrun_open = 6
+
 
 let g:tagbar_autofocus = 1
 " "Doesn't look as nice, which is probably why I don't like vista.vim
