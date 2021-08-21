@@ -1108,7 +1108,7 @@ let g:tmuxline_preset = {
 "     \'z'    : '#H'}
 
 "SourceIfExists(~/.vim_config)
-source ~/.vim_config
+" source ~/.vim_config
 "this only works when calling vimdiff from command line
 "so its useless for comparing different versions with git
 highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red

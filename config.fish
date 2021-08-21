@@ -146,6 +146,7 @@ set SPACEFISH_PACKAGE_SHOW false
 set SPACEFISH_RUST_SHOW false
 set SPACEFISH_GOLANG_SHOW false
 
+fish_add_path -a ~/.emacs.d/bin
 # ************** SOURCE **************{{{1
 switch (uname)
     case Linux
