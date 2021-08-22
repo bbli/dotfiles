@@ -54,7 +54,13 @@ function du
 end
 
 function nv
-    /home/benson/.local/bin/neovim $argv
+    switch (uname)
+    case Linux 
+        /home/benson/.local/bin/neovim $argv
+    case Darwin
+        /usr/local/bin/nvim $argv
+    case '*'
+    end
 end
 
 function vi
