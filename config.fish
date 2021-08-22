@@ -161,6 +161,6 @@ end
 if [ -f '/home/benson/Software/cloud-sdk-stuff/google-cloud-sdk/path.fish.inc' ]; . '/home/benson/Software/cloud-sdk-stuff/google-cloud-sdk/path.fish.inc'; end
 # ************** PLUGIN CONFIGURATION **************{{{1
 # FOr some reason git_status is being ignored
-fzf_configure_bindings --git_status=\cg
-fzf_configure_bindings --directory=\ct
+# fzf_configure_bindings --git_status=\cg
+# fzf_configure_bindings --directory=\ct
 set fish_greeting
