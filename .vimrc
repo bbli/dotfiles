@@ -224,7 +224,7 @@ call plug#begin('~/.vim/plugged')
 
 "Visual
 "---
-Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline'
 Plug 'bbli/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'

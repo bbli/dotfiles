@@ -38,15 +38,11 @@ function delete_worktree
 end
 # ************** COMMAND ALIASES **************{{{1
 function j
-    fasd_cd -d $argv
+    z $argv
 end
 
 function rm
     /usr/bin/rm -i $argv
-end
-
-function jj
-    fasd_cd -d -i 
 end
 
 function df
