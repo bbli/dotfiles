@@ -623,9 +623,11 @@ nnoremap <localleader>b :e ~/.bash_aliases<CR>
 nnoremap <localleader>t :e ~/.tmux.conf<CR>
 nnoremap <localleader>g :e ~/.gitconfig<CR>
 nnoremap <localleader>n :e ~/.config/nvim/init.vim<CR>
-nnoremap <localleader>c :CocConfig<CR>
+nnoremap <localleader>k :e ~/.config/kitty/kitty.conf<CR>
 nnoremap <localleader>f :e ~/.config/fish/config.fish<CR>
 nnoremap <localleader>l :e ~/.init.lua<CR>
+
+" nnoremap <localleader>c :CocConfig<CR>
 
 
 "nnoremap <localleader>ww :MarkdownPreview<CR>
