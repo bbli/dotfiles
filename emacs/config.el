@@ -9,7 +9,7 @@
       (setq code-directory "~/Documents/Code")
       (setq org-directory "~/Documents/Org")
       (setq dotfiles-directory "~/dotfiles")
-      (add-to-list process-environment "LD_LIBRARY_PATH=/usr/local/lib")
+      ; (add-to-list process-environment "LD_LIBRARY_PATH=/usr/local/lib")
     )
   ; Linux specific things
   (progn
