@@ -33,7 +33,7 @@
 ;; font string. You generally only need these two:
 (after! doom-modeline
   (setq doom-modeline-persp-name t)
-  (setq doom-modeline-height 20)
+  (setq doom-modeline-height 10)
   (setq doom-modeline-buffer-encoding nil)
   )
 (setq doom-font (font-spec :family "Source Code Pro" :size 22)
@@ -494,7 +494,7 @@ See URL `https://github.com/ProofGeneral/PG/issues/427'."
       :desc "open current project files" "p" #'+ivy/projectile-find-file
       :desc "open Org directory" "o" #'benson/open-org-directory
       :desc "open scratch buffer" "s" 'doom/switch-to-scratch-buffer
-      :desc "open config directory" "c" #'doom/find-file-in-private-config
+      :desc "open config directory" "c" #'doom/open-private-config
       :desc "open all buffers" "b" #'ivy-switch-buffer
       :desc "choose a buffer to delete" "d" #'ido-kill-buffer
        )

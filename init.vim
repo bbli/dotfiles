@@ -614,7 +614,7 @@ nnoremap <leader>vo <cmd>Telescope vim_options<cr>
 nnoremap <leader>vc <cmd>Telescope autocommands<cr>
 nnoremap <leader>vk <cmd>Telescope keymaps<cr>
 nnoremap <leader>vm <cmd>Telescope help_tags<cr>
-"Combine with ripgrep for faster narrowing!
+"Use after ripgrep for faster narrowing!
 nnoremap <leader>vv <cmd>Telescope quickfix<cr>
 nnoremap <leader>vl <cmd>Telescope loclist<cr>
 

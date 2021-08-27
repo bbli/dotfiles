@@ -42,7 +42,7 @@ function j
 end
 
 function rm
-    /usr/bin/rm -i $argv
+    /bin/rm -i $argv
 end
 
 function df
