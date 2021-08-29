@@ -281,10 +281,12 @@ Plug 'mbbill/undotree'
 
 "Plug 'vim-voom/VOoM'
 "Language Server
+Plug 'tpope/vim-projectionist' "This plugin also helps in setting file local variables, like `makerpg`
 "---
 Plug 'majutsushi/tagbar'
 " Plug 'bbli/tagbar'
 Plug 'liuchengxu/vista.vim' "Doesn't work on mac?
+Plug 'ludovicchabant/vim-gutentags' "Vista auto does this
 "Plug 'roxma/nvim-yarp'
 "Plug 'ncm2/ncm2'
 "Plug 'ncm2/ncm2-ultisnips'
@@ -380,11 +382,6 @@ nnoremap <leader>l 40l
 nnoremap <leader><leader>z :nohlsearch<CR>
 nnoremap <C-t> <C-z>
 " <C-^> switches between two files
-"nnoremap <leader>lt :write | edit | TSBufEnable highlight
-" using indirection since TSBufEnable won't be available until vim fully finishes starting up
-" -> Or can put this in an "after directory"?
-let @T = "write | edit | TSBufEnable highlight"
-nnoremap <leader>lt :<C-R>T<CR>
 nnoremap <leader>el :UnstackFromTmux<CR>
 nnoremap <leader>ec :sign unplace<CR>
 
@@ -943,6 +940,7 @@ let g:asyncrun_open = 6
 
 
 let g:tagbar_autofocus = 1
+let g:tagbar_width = max([25,winwidth(0) / 4])
 " "Doesn't look as nice, which is probably why I don't like vista.vim
 " let g:tagbar_compact = 1 
 

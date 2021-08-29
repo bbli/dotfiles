@@ -3,6 +3,8 @@ let &packpath = &runtimepath
 source ~/.vimrc
 " Only available in neovim
 set inccommand=nosplit
+" TO INSPECT A LUA TABLE
+" print(vim.inspect)
 " ************  Neovim 0.5 Specific Plugins  ************{{{1
 lua << EOF
 require('packer').startup(function()
@@ -168,7 +170,7 @@ nnoremap <leader>je <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 nnoremap <leader>jE <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 
 nnoremap <leader>fr <cmd>lua require('lspsaga.rename').rename()<CR>
-nnoremap <leader>fs <cmd>Telescope lsp_workspace_symbols<cr>
+nnoremap <leader>fs <cmd>Telescope tags<cr>
 
 "nnoremap K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
@@ -180,6 +182,13 @@ nnoremap <silent> ls <cmd>lua require('lspsaga.signaturehelp').signature_help()<
 "Q: make autocmd on save since asynchronous? Nah since I want
 "diagonistic errors and this will only delay
 " ****Rest of Lanuage Server****
+
+"nnoremap <leader>lt :write | edit | TSBufEnable highlight
+" using indirection since TSBufEnable won't be available until vim fully finishes starting up
+" -> Or can put this in an "after directory"?
+let @T = "write | edit | TSBufEnable highlight"
+nnoremap <leader>lc :<C-R>T<CR>
+nnoremap <leader>lt :GutentagsUpdate!<CR>
 nnoremap <leader>lf <cmd>lua vim.lsp.buf.formatting()<CR>
 nnoremap <unique> <leader><leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 nnoremap <leader>ll <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
