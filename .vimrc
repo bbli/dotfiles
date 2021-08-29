@@ -402,6 +402,7 @@ nnoremap <F9> :!ctags -R --sort=yes .<CR>
 
 
 " ---Buffer Related---{{2
+nnoremap <leader>ba :A<CR>
 nnoremap <leader>bs <C-^>
 nnoremap <silent> <leader>bk :bwipeout<CR>
 nnoremap <leader>bm :ZenMode<CR>
@@ -931,6 +932,19 @@ autocmd FileType go let b:dispatch = 'go test'
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
 """"""""Plugin related variables""""""""{{{1
+" TODO:I still don't really understand the purpose of "type" key-value,but w.e
+let g:projectionist_heuristics = {
+            \ '*' : {
+                \ '*.cpp' :{
+                        \ 'alternate' : '{}.h',
+                        \ 'type' : 'source'
+                    \ },
+                \ '*.h' : {
+                        \ 'alternate' : '{}.cpp',
+                        \ 'type' : 'header'
+                    \}
+                \}
+            \}
 "autocmd BufEnter * call ncm2#enable_for_buffer()
 "Actually independent of ncm2 plugin. Just code for QOL when using autocomplete
 set completeopt=noinsert,menuone,noselect
