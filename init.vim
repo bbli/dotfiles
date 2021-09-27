@@ -27,6 +27,7 @@ require('packer').startup(function()
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/nvim-compe'
   use 'andersevenrud/compe-tmux'
+  --use { 'ms-jpq/coq_nvim', branch = 'coq'}
   use 'glepnir/lspsaga.nvim'
   use 'kosayoda/nvim-lightbulb'
   use 'simrat39/rust-tools.nvim'
@@ -288,7 +289,6 @@ local opts = {
 }
 require('rust-tools').setup(opts)
 
-
 -- Lua Language Server
 local sumneko_binary = "/usr/bin/lua-language-server"
 local runtime_path = vim.split(package.path, ';')
@@ -409,6 +409,7 @@ keymaps = {
 }
 EOF
 " ************  AutoComplete  ************{{{1
+
 lua << EOF
 require'compe'.setup {
   enabled = true;
@@ -445,11 +446,21 @@ require'compe'.setup {
   };
 }
 EOF
+
+let g:coq_settings = {}
+lua << EOF
+local apple = vim.g
+apple["coq_settings"] = {
+    auto_start = true,
+    [ "match.proximate_lines" ] = 30,
+    }
+EOF
 " ************  Telescope  ************{{{1
 lua <<EOF
 local actions = require('telescope.actions')
 require('telescope').setup{
   defaults = {
+      file_ignore_patterns = {'build'},
     mappings = {
       n = {
           [ "q" ] = actions.close,

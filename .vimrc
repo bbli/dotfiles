@@ -142,10 +142,12 @@ endif
 if g:os == "Linux"
     let home_dir = "/home/benson"
     set runtimepath+=~/Dropbox/Code/Projects/my_plugin
+    set runtimepath+=~/Dropbox/Code/dotfiles/my-snippets
     "Remember to call :UpdateRemotePlugins manually
 else
     let home_dir = "/Users/benson"
     set runtimepath+=~/Documents/Code/Projects/my_plugin
+    set runtimepath+=~/dotfiles/my-snippets
 endif
 " ************** OPTIONS **************{{{1
 set foldmethod=marker
@@ -160,7 +162,6 @@ set foldmethod=marker
 "compatible.Mac has this but not /usr/bin/bash
 set shell=/bin/bash
 syntax enable
-set runtimepath+=~/.vim/my-snippets
 " Temp for creating plugin
 "set verbosefile=verbose.txt
 
@@ -246,6 +247,7 @@ Plug 'osyo-manga/vim-over'
 "Plug 'unblevable/quick-scope'
 "Plug 'jiangmiao/auto-pairs'
 " Plug 'scrooloose/nerdcommenter'
+Plug 'AndrewRadev/bufferize.vim' "To show messages in a real buffer
 Plug 'tpope/vim-commentary'
 Plug 'bronson/vim-visual-star-search'
 Plug 'Yggdroot/indentLine'
@@ -269,6 +271,7 @@ Plug 'scrooloose/nerdtree'
 "Plug 'milkypostman/vim-togglelist'
 "Plug 'jceb/vim-editqf'
 Plug 'romainl/vim-qf'
+Plug 'AndrewRadev/qftools.vim', { 'branch': 'main' }
 " Plug 'mileszs/ack.vim'
 "Plug 'jremmen/vim-ripgrep', {'frozen': 1}
 Plug 'bbli/vim-ripgrep'

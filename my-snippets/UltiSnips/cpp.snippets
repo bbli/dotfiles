@@ -1,0 +1,76 @@
+# GENERAL
+# -------
+snippet dd
+	std::cout << "${1}: " << ${2} << std::endl;
+endsnippet
+
+snippet test
+	std::cout << ${1:hi} << $2 << $2 << std::endl;
+endsnippet
+
+snippet sd
+// ************  ${1}  ************{{{1
+endsnippet
+
+snippet hd
+// ${1}  {{{2
+endsnippet
+
+snippet pc
+std::copy(${1:container}.begin(),$1.end(),std::ostream_iterator<${2:type}>(std::cout,","));
+endsnippet
+
+# Data Structures
+# ---------------
+snippet vec
+vector<${1:type}> ${2:var}
+endsnippet
+
+# ALGORITHMS
+# ----------
+snippet rle
+snippet for
+for(auto i = 0; i<${1:size} ;++i){
+	if (${2}){
+	}else{
+	}
+}
+endsnippet
+snippet rit
+for(auto it=${1:container}.rbegin(); it!=$1.rend(); ++it){
+	${2}
+}
+endsnippet
+
+snippet it
+for(auto it=${1:container}.begin(); it!=$1.end(); ++it){
+	${2}
+}
+endsnippet
+
+snippet for
+for(auto i = 0; i<${1:size} ;++i){
+	${2}
+}
+endsnippet
+
+snippet acc
+std::accumulate(${1:container}.begin(),$1.end(),${2:value});
+endsnippet
+
+snippet alg
+#include <algorithm>
+#include <vector>
+#include <unordered_map>
+#include <unordered_set>
+#include <numeric>
+#include <iostream>
+#include <string>
+
+using namespace std;
+//**KMM**//
+
+//**Break Down/Wishful Thinking**//
+
+//**Brute Force**//
+endsnippet
