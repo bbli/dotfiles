@@ -435,8 +435,11 @@ nnoremap <unique> <leader><leader>t :ISwapWith<CR>
 
 " Actually range + norm is so much better
 nnoremap <leader>me :MacroEdit m<CR>
-nnoremap <leader>mm @m
-nnoremap <leader><leader>m :%normal @m
+" nnoremap <leader>mm @m
+nnoremap <leader><leader>m @m
+nnoremap <leader>ma :%normal @m<CR>
+vnoremap <leader><leader>m :'<,'>normal @m<CR>
+
 nmap <leader>mr <plug>(Mac_NameCurrentMacro)
 nmap <leader>mf <plug>(Mac_SearchForNamedMacroAndPlay)
 
@@ -446,6 +449,8 @@ nmap <leader>mo <plug>(Mac_SearchForNamedMacroAndOverwrite)
 nnoremap <leader>ws :mks ~/.vim/sessions/default.vim<CR>
 nnoremap <leader>wl :source ~/.vim/sessions/default.vim<CR>
 
+nnoremap <leader>wn :tabnext<CR>
+nnoremap <leader>wp :tabprevious<CR>
 " TODO: change to w to be aligned with emac's workspace?
 " Also, my hands moving to w feels much better than moving to t,
 " As I can still use my pointer finger after clicking w
@@ -735,6 +740,7 @@ nnoremap <unique> gb gi
 nnoremap <unique> h <Nop>
 nnoremap <unique> l <Nop>
 nnoremap <unique> <C-g> <cmd>close<CR>
+vnoremap <unique> <C-g> <ESC>
 
 vnoremap > >gv
 vnoremap < <gv
@@ -824,6 +830,7 @@ nnoremap go za
 nnoremap <S-TAB> :call ToggleFoldAll()<CR>
 " Actually, this will override default "outline" command
 " nnoremap gO :call ToggleFoldAll()<CR>
+
 
 nnoremap <Space> <Nop>
 " nnoremap <Up> <Nop>

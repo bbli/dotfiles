@@ -27,7 +27,19 @@ require('packer').startup(function()
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/nvim-compe'
   use 'andersevenrud/compe-tmux'
-  --use { 'ms-jpq/coq_nvim', branch = 'coq'}
+  --use 'hrsh7th/nvim-cmp'
+  --use {'quangnguyen30192/cmp-nvim-tags',
+      --requires = 'hrsh7th/nvim-cmp'
+  --}
+  --use {'hrsh7th/cmp-buffer',
+    --requires = 'hrsh7th/nvim-cmp'
+  --}
+  --use {'andersevenrud/compe-tmux',
+      --branch = 'cmp'}
+  --use {'ms-jpq/coq_nvim',
+      --branch = 'coq'}
+  --use {'ms-jpq/coq.artifacts', 
+      --branch = 'artifacts'}
   use 'glepnir/lspsaga.nvim'
   use 'kosayoda/nvim-lightbulb'
   use 'simrat39/rust-tools.nvim'
@@ -409,6 +421,54 @@ keymaps = {
 }
 EOF
 " ************  AutoComplete  ************{{{1
+" lua <<EOF
+"   -- Setup nvim-cmp.
+"   local cmp = require'cmp'
+
+"   cmp.setup({
+"     --snippet = {
+"       --expand = function(args)
+"         -- For `ultisnips` user.
+"         --vim.fn["UltiSnips#Anon"](args.body)
+"       --end,
+"     --},
+"     mapping = {
+"       ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+"       ['<C-f>'] = cmp.mapping.scroll_docs(4),
+"       ['<C-Space>'] = cmp.mapping.complete(),
+"       ['<C-e>'] = cmp.mapping.close(),
+"       ['<CR>'] = cmp.mapping.confirm({ select = true }),
+"     },
+"     sources = {
+"       { name = 'nvim_lsp' },
+
+"       -- For ultisnips user.
+"       { name = 'ultisnips' },
+
+"       --{ name = 'buffer' },
+"       { name = 'tags'},
+"       { name = 'path'}
+"     },
+" formatting = {
+"   format = function(entry, vim_item)
+"     -- set a name for each source
+"     vim_item.menu = ({
+"       buffer = "[Buffer]",
+"       nvim_lsp = "[LSP]",
+"       ultisnips = "[UltiSnips]",
+"       nvim_lua = "[Lua]",
+"       tags = "[Tags]",
+"     })[entry.source.name]
+"     return vim_item
+"   end,
+" },
+"   })
+
+  " -- Setup lspconfig.
+  " --require('lspconfig')[%YOUR_LSP_SERVER%].setup {
+  "  --capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  " --}
+" EOF
 
 lua << EOF
 require'compe'.setup {
