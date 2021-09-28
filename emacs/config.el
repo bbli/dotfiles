@@ -124,7 +124,7 @@
 (setq org-hide-emphasis-markers t)
  ;; org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "✿"))
 (setq org-todo-keywords
-      '((sequence "TODO" "|" "FUTURE" "DONE")))
+      '((sequence "TODO" "IMPORTANT" "|" "FUTURE" "DONE")))
 (add-hook 'before-save-hook 'time-stamp)
 ;; (add-hook 'org-mode-hook 'variable-pitch-mode)
 (setq org-hide-block-startup t)
@@ -147,7 +147,7 @@
 ;;   )
 (after! org
         ;; (add-to-list 'org-font-lock-extra-keywords '("^" benson/emphasis-box-face))
-        (add-to-list 'org-emphasis-alist '("_" (:inherit org-code :height 2.0)))
+        (add-to-list 'org-emphasis-alist '("_" (:inherit org-code :height 1.5)))
         (add-to-list 'org-emphasis-alist '("=" (:inherit org-verbatim :height 0.7 :box nil)))
         (push '(tags-tree . local) org-show-context-detail)
         (add-hook 'org-agenda-after-show-hook 'org-tree-to-indirect-buffer)

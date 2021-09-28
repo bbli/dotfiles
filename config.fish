@@ -8,16 +8,16 @@ end
 # Also if no number given -> just chekout as regular worktree [DONE]
 function create_worktree #-a name number
     if test (count $argv) = 2
-        set -l branch_name (string join "" "[pr_" $argv[1] "]")
+        set -l branch_name $argv[1]
         set -l number $argv[2]
 
         and cd (git rev-parse --git-dir)/..
         and git worktree add ../$branch_name HEAD
         and cd ../$branch_name
         and gh pr checkout $number
-        and tmux rename-window $branch_name
+        and tmux rename-window (string join "" "[pr_" $branch_name "]")
     else if test (count $argv) = 1
-        set -l branch_name (string join "" "[" $argv[1] "]")
+        set -l branch_name $argv[1]
 
         and cd (git rev-parse --git-dir)/..
         and git worktree add ../$branch_name $branch_name
@@ -34,7 +34,7 @@ function delete_worktree
     cd (git rev-parse --git-dir)/..
     git worktree remove .
     # 2. now exit the tmux window
-    tmux kill-window
+    # tmux kill-window
 end
 # ************** COMMAND ALIASES **************{{{1
 function j
