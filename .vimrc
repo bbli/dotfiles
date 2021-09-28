@@ -286,8 +286,8 @@ Plug 'mbbill/undotree'
 "Language Server
 Plug 'tpope/vim-projectionist' "This plugin also helps in setting file local variables, like `makerpg`
 "---
-Plug 'majutsushi/tagbar'
-" Plug 'bbli/tagbar'
+"Plug 'majutsushi/tagbar'
+Plug 'bbli/tagbar' "for changing tagbar highlight to IncSearch
 Plug 'liuchengxu/vista.vim' "Doesn't work on mac?
 Plug 'ludovicchabant/vim-gutentags' "Vista auto does this
 "Plug 'roxma/nvim-yarp'
@@ -963,6 +963,7 @@ set completeopt=noinsert,menuone,noselect
 let g:asyncrun_open = 6
 
 
+let g:tagbar_map_togglesort = ''
 let g:tagbar_autofocus = 1
 let g:tagbar_width = max([25,winwidth(0) / 4])
 " "Doesn't look as nice, which is probably why I don't like vista.vim
