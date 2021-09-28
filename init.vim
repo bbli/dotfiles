@@ -57,6 +57,7 @@ require('packer').startup(function()
   -- use 'RRethy/nvim-treesitter-textsubjects'
   use 'mizlan/iswap.nvim'
   use 'JoosepAlviste/nvim-ts-context-commentstring'
+  use 'romgrk/nvim-treesitter-context'
   -- ************  DEBUGGER  ************
   use 'mfussenegger/nvim-dap'
   use 'mfussenegger/nvim-dap-python' --Actualy, supposedly vim-ultest will cover this?
@@ -419,6 +420,10 @@ keymaps = {
   },
   },
 }
+require'treesitter-context'.setup{
+    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+    throttle = true, -- Throttles plugin updates (may improve performance)
+}
 EOF
 " ************  AutoComplete  ************{{{1
 " lua <<EOF
@@ -503,6 +508,7 @@ require'compe'.setup {
     ultisnips = false;
     luasnip = false;
     tmux = {priority = 1};
+    tags = {priority = 10};
   };
 }
 EOF
@@ -515,6 +521,8 @@ apple["coq_settings"] = {
     [ "match.proximate_lines" ] = 30,
     }
 EOF
+inoremap <expr> <C-j> pumvisible() ?"<C-n>":"<C-j>"
+inoremap <expr> <C-k> pumvisible() ?"<C-p>":"<C-k>"
 " ************  Telescope  ************{{{1
 lua <<EOF
 local actions = require('telescope.actions')

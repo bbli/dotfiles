@@ -19,6 +19,19 @@ endsnippet
 snippet pc
 std::copy(${1:container}.begin(),$1.end(),std::ostream_iterator<${2:type}>(std::cout,","));
 endsnippet
+# DEBUG
+
+snippet db
+	std::cout << "Before entering ${1:while}. Control value ${2} at" << ${3:var} << std::endl;
+endsnippet
+
+snippet dc
+	std::cout << "Entered ${1} case" << std::endl;
+endsnippet
+
+snippet da
+	std::cout << "-------------Exit-------------" << std::endl;
+endsnippet
 
 # Data Structures
 # ---------------
