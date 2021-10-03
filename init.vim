@@ -20,6 +20,8 @@ require('packer').startup(function()
       requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope.nvim'}}
       }
 
+--  use {'stevearc/qf_helper.nvim'} location tracking not working atm
+use {'tversteeg/registers.nvim'}
  -- ************  UTILITY LIBRARIES  ************
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
@@ -27,6 +29,7 @@ require('packer').startup(function()
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/nvim-compe'
   use 'andersevenrud/compe-tmux'
+  --use {'weilbith/nvim-code-action-menu'} can't seem to get working
   --use 'hrsh7th/nvim-cmp'
   --use {'quangnguyen30192/cmp-nvim-tags',
       --requires = 'hrsh7th/nvim-cmp'
@@ -65,9 +68,9 @@ require('packer').startup(function()
   use 'nvim-telescope/telescope-dap.nvim'
   --use "Pocco81/DAPInstall.nvim"
   -- ************  GIT  ************
-  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
+  --use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   use 'sindrets/diffview.nvim'
-  -- ************  MISC  ************
+  -- ************  MISC/AESTHETICS  ************
   use 'windwp/nvim-autopairs'
   use {
       "folke/zen-mode.nvim",

@@ -244,6 +244,7 @@ Plug 'gcmt/taboo.vim'
 " Below Plugin not that useful since I can use tabs for that purpose
 "Plug 'troydm/zoomwintab.vim'
 Plug 'osyo-manga/vim-over'
+" Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'unblevable/quick-scope'
 "Plug 'jiangmiao/auto-pairs'
 " Plug 'scrooloose/nerdcommenter'
@@ -308,16 +309,21 @@ Plug 'wellle/tmux-complete.vim'
 "Terminal Interactions
 "---
 Plug 'vim-test/vim-test'
-Plug 'esamattis/slimux'
-" For asynchronous make builds
+" Plug 'rcarriga/vim-ultest', { 'do': ':UpdateRemotePlugins' } "Not working atm(and probably only works with correct errorformat. ALSO NOTE I ADDING LOGGING TO THE PLUGIN ITSELF
+"Plug 'alepez/vim-gtest' "Hardcodes certain things
+"If I want to explicitly choose the window for vim test
+"Plug 'esamattis/slimux'
+" For asynchronous make builds + supposedly help vim-test out regardless
+" if chosen as strategy
 Plug 'tpope/vim-dispatch'
 "Plug 'neomake/neomake'
 Plug 'mattboehm/vim-unstack'
 "Plug 'benmills/vimux'
 "Plug 'jpalardy/vim-slime' "useful for creating specific state in script for profiling
+" used by vim-test. NOTE YOU HAVE TO LET IT CREATE THE INITAL WINDOW
 Plug 'christoomey/vim-tmux-runner'
-Plug 'skywind3000/asynctasks.vim'
-Plug 'skywind3000/asyncrun.vim'
+"Plug 'skywind3000/asynctasks.vim'
+"Plug 'skywind3000/asyncrun.vim'
 
 "Git
 "---
@@ -393,7 +399,8 @@ nnoremap <leader>ec :sign unplace<CR>
 "let g:qf_shorten_path = 0
 
 
-nmap <leader>tq <Plug>(qf_qf_toggle)
+"nmap <leader>tq <Plug>(qf_qf_toggle)
+nmap <unique> <leader>qq <Plug>(qf_qf_toggle)
 nmap <leader>qn <Plug>(qf_newer)
 nmap <leader>qN <Plug>(qf_older)
 " Don't apply g when substituting
@@ -456,6 +463,7 @@ nnoremap <leader>wp :tabprevious<CR>
 " As I can still use my pointer finger after clicking w
 " Last of all, t can be back to being "Toggle" keymaps
 nnoremap <leader>wo :tab split<CR>
+nnoremap <leader>wO <C-w>T
 nnoremap <leader>wk :tabc<CR>
 nnoremap <leader>wr :TabooRename 
 "nnoremap <leader>ws :TabooReset<CR>
@@ -653,7 +661,7 @@ vnoremap <M-j> :m '>+1<CR>gv=gv
 vnoremap <M-k> :m '<-2<CR>gv=gv
 
 nnoremap <C-w><Space> <C-w>=
-nnoremap <C-w>w <C-w>p
+nnoremap <C-w><C-w> <C-w>p
 nnoremap <C-w>m <C-w>p
 
 "nnoremap <C-h> <C-w><C-h>
@@ -753,14 +761,12 @@ cnoremap sE %s
 " nnoremap / /\<
 nnoremap <leader>/ /
 "For grep
-cnoremap cn cnext<CR>
-cnoremap cN cprev<CR>
 "cnoremap cf cfirst
 " cnoremap SB set scrollbind
 " cnoremap NSB set noscrollbind
 "cnoremap tc tabc
-cnoremap tn tabnext
-cnoremap tN tabprevious
+"cnoremap tn tabnext
+"cnoremap tN tabprevious
 "cnoremap tC tabc<CR>
 " cnoremap vsb vertical sb
 " nnoremap <leader><leader>t :tabn<CR>
@@ -1169,7 +1175,7 @@ autocmd BufWritePost * GitGutter
 let g:unstack_mapkey=''
 let g:unstack_layout="portrait"
 
-let test#strategy = "slimux"
+let test#strategy = "vtr"
 
 
 
@@ -1182,7 +1188,29 @@ let neovide_remember_window_size = v:true
 let g:vista_sidebar_width = 40
 let g:BASH_Ctrl_j = 'off'
 let g:C_Ctrl_j = 'off'
+let g:benson_lsp_status = 0
 "let g:signify_sign_show_count = 0
+" call wilder#setup({
+"       \ 'modes': [':'],
+"       \ 'next_key': '<Tab>',
+"       \ 'previous_key': '<S-Tab>',
+"       \ 'accept_key': '<Down>',
+"       \ 'reject_key': '<Up>',
+"       \ })
+" call wilder#set_option('pipeline', [
+"       \   wilder#branch(
+"       \     wilder#cmdline_pipeline({
+"       \       'language': 'python',
+"       \       'fuzzy': 1,
+"       \     }),
+"       \     wilder#python_search_pipeline({
+"       \       'pattern': wilder#python_fuzzy_pattern(),
+"       \       'sorter': wilder#python_difflib_sorter(),
+"       \       'engine': 're',
+"       \     }),
+"       \   ),
+"       \ ])
+" let g:python3_host_prog = '/usr/bin/python3'
 " ************** MY PLUGIN STUFF **************{{{1
 "let g:filter_jump_strip_characters = ["_"]
 "highlight! link SearchCurrent Red
