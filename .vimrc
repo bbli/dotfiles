@@ -343,7 +343,7 @@ Plug 'airblade/vim-gitgutter'
 "---
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'dawikur/algorithm-mnemonics.vim'
+" Plug 'dawikur/algorithm-mnemonics.vim'
 
 "Latex
 "---
@@ -399,12 +399,12 @@ nnoremap <leader>ec :sign unplace<CR>
 "let g:qf_shorten_path = 0
 
 
-"nmap <leader>tq <Plug>(qf_qf_toggle)
+nmap <leader>tq <Plug>(qf_qf_toggle)
 nmap <unique> <leader>qq <Plug>(qf_qf_toggle)
 nmap <leader>qn <Plug>(qf_newer)
 nmap <leader>qN <Plug>(qf_older)
 " Don't apply g when substituting
-nnoremap <leader>qr :OverCommandLine<CR>cdo %s/
+nnoremap <leader>qr :OverCommandLine<CR>cdo s/
 
 " coc's version is more useful as it will generate based on file path, not current
 " directory
@@ -579,6 +579,7 @@ nnoremap <leader>sf :TestFile<CR>
 "nnoremap <leader>to :VoomToggle markdown<CR>
 nnoremap <leader>tw :AirlineToggleWhitespace<CR>
 
+nnoremap <leader>tf :TSContextToggle<CR>
 nnoremap <leader>tu :UndotreeToggle<CR>
 nnoremap <leader>tt :TagbarToggle<CR>
 "nnoremap <leader>ts :set spell!<CR>
