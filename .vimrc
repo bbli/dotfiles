@@ -264,7 +264,7 @@ Plug 'machakann/vim-sandwich'
 "Plug 'goldfeld/vim-seek'
 "Plug 'jayflo/vim-skip'
 Plug 'rhysd/clever-f.vim'
-Plug 'https://gitlab.com/yorickpeterse/nvim-window.git'
+Plug 'https://gitlab.com/yorickpeterse/nvim-window.git', { 'branch': 'main'}
 
 "Special Windows
 "---
@@ -518,7 +518,7 @@ nnoremap <leader>oc :Commands<CR>
 " nnoremap <leader>ob :Files ../<CR>
 nnoremap <leader>oh :History<CR>
 nnoremap <leader>oy :CocList yank<CR>
-nnoremap <leader>or :reg<CR>
+nnoremap <leader>or :Registers<CR>
 " nnoremap <leader>op :CocList mru<CR>
 "nnoremap <leader><leader>oh :FZF ~<CR>
 

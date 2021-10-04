@@ -558,7 +558,8 @@ require('telescope').setup{
    extensions = {
     fzf = {
       fuzzy = true,                    -- false will only do exact matching
-      override_generic_sorter = true, -- override the generic sorter
+      -- "false" is better as "true" priorities file name too much
+      override_generic_sorter = false, -- override the generic sorter
       override_file_sorter = true,     -- override the file sorter
       case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
                                        -- the default case_mode is "smart_case"
@@ -714,7 +715,7 @@ nnoremap <leader>oc <cmd>Telescope commands<cr>
 nnoremap <M-;> <cmd>Telescope commands<cr>
 " TODO: Telescope way better here compared to FZF b/c of preview  -> Harpoon will probably replace though
 nnoremap <leader>ul <cmd>Telescope marks<cr>
-"TODO: why is this not filtering?
+"TODO: why is the below  not filtering?
 nnoremap <leader>or <cmd>Telescope registers<cr>
 nnoremap <leader>om <cmd>Telescope help_tags<cr>
 
