@@ -393,13 +393,13 @@ keymaps = {
  set_jumps = true, -- whether to set jumps in the jumplist
  goto_next_start = {
      ["lf"] = "@function.outer",
-     ["ll"] = "@comment.outer",
+     --["ll"] = "@comment.outer",
 
      ["C-n"] = "@statement.outer",
      ["lc"] = "@class.outer",
      },
  goto_previous_start = {
-     ["hh"] = "@comment.outer",
+     --["hh"] = "@comment.outer",
      ["hf"] = "@function.outer",
 
      ["C-p"] = "@statement.outer",
@@ -663,6 +663,28 @@ require'diffview'.setup {
   }
 }
 EOF
+" ************** Window Selection **************{{{1
+nnoremap <silent> ll :lua require('nvim-window').pick()<CR>
+lua << EOF
+require('nvim-window').setup({
+  -- The characters available for hinting windows.
+  chars = {
+      'a', 's' ,'d' ,'f'
+  },
+
+  -- A group to use for overwriting the Normal highlight group in the floating
+  -- window. This can be used to change the background color.
+  normal_hl = 'Normal',
+
+  -- The highlight group to apply to the line that contains the hint characters.
+  -- This is used to make them stand out more.
+  hint_hl = 'Bold',
+
+  -- The border style to use for the floating window.
+  border = 'single'
+})
+EOF
+
 " ************** Compiling/Running/Terminal Interaction **************{{{1
 nnoremap <leader>pp <cmd>lua require('telescope').extensions.asynctasks.all()<CR>
 nnoremap <leader>pi <cmd>AsyncTaskMacro<CR>

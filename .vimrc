@@ -264,6 +264,7 @@ Plug 'machakann/vim-sandwich'
 "Plug 'goldfeld/vim-seek'
 "Plug 'jayflo/vim-skip'
 Plug 'rhysd/clever-f.vim'
+Plug 'https://gitlab.com/yorickpeterse/nvim-window.git'
 
 "Special Windows
 "---
@@ -662,8 +663,8 @@ vnoremap <M-j> :m '>+1<CR>gv=gv
 vnoremap <M-k> :m '<-2<CR>gv=gv
 
 nnoremap <C-w><Space> <C-w>=
-nnoremap <C-w><C-w> <C-w>p
-nnoremap <C-w>m <C-w>p
+" nnoremap <C-w><C-w> <C-w>p
+nnoremap <C-w>; <C-w>p
 
 "nnoremap <C-h> <C-w><C-h>
 "nnoremap <C-j> <C-w><C-j>
