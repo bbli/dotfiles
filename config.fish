@@ -90,6 +90,10 @@ function ff
     fg
 end
 
+function attach
+    tmux a -t $argv
+end
+
 # ************** EXA **************{{{1
 function ls
     exa $argv
