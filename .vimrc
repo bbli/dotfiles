@@ -265,6 +265,7 @@ Plug 'machakann/vim-sandwich'
 "Plug 'jayflo/vim-skip'
 Plug 'rhysd/clever-f.vim'
 Plug 'https://gitlab.com/yorickpeterse/nvim-window.git', { 'branch': 'main'}
+" Plug 'https://gitlab.com/yorickpeterse/nvim-pqf.git', { 'branch': 'main'}
 
 "Special Windows
 "---
@@ -277,6 +278,7 @@ Plug 'AndrewRadev/qftools.vim', { 'branch': 'main' }
 " Plug 'mileszs/ack.vim'
 "Plug 'jremmen/vim-ripgrep', {'frozen': 1}
 Plug 'bbli/vim-ripgrep'
+" Plug 'mhinz/vim-grepper'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all','frozen':1}
 "Plug 'junegunn/fzf.vim', {'frozen': 1}
 Plug 'bbli/fzf.vim'
@@ -480,6 +482,7 @@ nmap <leader>gN <Plug>(GitGutterPrevHunk)
 nmap <leader>gf :GitGutterFold<CR>
 " nmap <leader>go <Plug>(git-messenger)
 nmap <leader>gl :Glog<CR>
+nnoremap <unique> <leader>gc :Glog --grep=
 " Above is better b/c if commit on another branch -> will have a name
 "nmap <leader>gl :VTerm<CR>git tree<CR>
 nmap <leader>gg :G<CR>
@@ -548,8 +551,8 @@ nnoremap <leader>fw :OverCommandLine<CR>Ggrep <C-r><C-w><CR>
 " ---Compling/Running Related---{{{2
 "TODO: change prefix to 'r' or 'p' for run/project?
 "nnoremap <leader>sp :SlimuxREPLConfigure<CR>
-nnoremap <leader>ss :SlimuxShellRun
-nnoremap <leader>st :TestNearest<CR>
+"nnoremap <leader>ss :SlimuxShellRun
+nnoremap <leader>ss :TestNearest<CR>
 nnoremap <leader>sl :TestLast<CR>
 nnoremap <leader>sf :TestFile<CR>
 " vim test also integrates with projectionist plugin

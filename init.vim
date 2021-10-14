@@ -721,7 +721,8 @@ nnoremap <leader>om <cmd>Telescope help_tags<cr>
 
 " These will check out the selected commit/branch
 nnoremap <leader>gb <cmd>Telescope git_branchs<CR>
-nnoremap <leader>gc <cmd>Telescope git_commits<CR>
+" Fugitive is better this quickfix does nothing
+" nnoremap <leader>gc <cmd>Telescope git_commits<CR>
 nnoremap <leader>gD :DiffviewOpen
 
 nnoremap <leader>vo <cmd>Telescope vim_options<cr>
