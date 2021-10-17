@@ -474,15 +474,17 @@ nnoremap <leader>wr :TabooRename
 " ---Git Related---{{{2
 nnoremap <leader>gm :Magit<CR>
 nmap <leader>gp <Plug>(GitGutterPreviewHunk)
-nmap <leader>gs <Plug>(GitGutterStageHunk)
-vmap <leader>gs <Plug>(GitGutterStageHunk)
+nmap gs <Plug>(GitGutterStageHunk)
+vmap gs <Plug>(GitGutterStageHunk)
 nmap <leader>gu <Plug>(GitGutterUndoHunk)
 nmap <leader>gn <Plug>(GitGutterNextHunk)
 nmap <leader>gN <Plug>(GitGutterPrevHunk)
-nmap <leader>gf :GitGutterFold<CR>
+" nmap <leader>gf :GitGutterFold<CR>
 " nmap <leader>go <Plug>(git-messenger)
 nmap <leader>gl :Glog<CR>
-nnoremap <unique> <leader>gc :Glog --grep=
+nnoremap <unique> <leader>gc :OverCommandLine<CR>:Glog --grep=
+nnoremap <unique> <leader>gs :OverCommandLine<CR>:Glog -S
+nnoremap <unique> <leader>gf :Glog -- %<CR>
 " Above is better b/c if commit on another branch -> will have a name
 "nmap <leader>gl :VTerm<CR>git tree<CR>
 nmap <leader>gg :G<CR>
