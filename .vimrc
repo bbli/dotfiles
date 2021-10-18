@@ -732,6 +732,10 @@ nnoremap ;r @:
 nnoremap <unique> gk k
 nnoremap <unique> gj j
 "nnoremap EE @
+
+nnoremap <unique> hh ^
+nnoremap <unique> ll $
+
 nnoremap <unique> C c$
 nnoremap <unique> D d$
 nnoremap <unique> Y y$

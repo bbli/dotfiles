@@ -407,7 +407,7 @@ keymaps = {
      },
  -- below don't matter as much
  goto_next_end = {
-     ["lL"] = "@statement.outer",
+     --["lL"] = "@statement.outer",
      ["lF"] = "@function.outer",
 
      --["lC"] = "@comment.outer",
@@ -665,7 +665,7 @@ require'diffview'.setup {
 }
 EOF
 " ************** Window Selection **************{{{1
-nnoremap <silent> ll :lua require('nvim-window').pick()<CR>
+nnoremap <silent> <leader>ww :lua require('nvim-window').pick()<CR>
 lua << EOF
 require('nvim-window').setup({
   -- The characters available for hinting windows.
