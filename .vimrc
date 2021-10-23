@@ -285,6 +285,7 @@ Plug 'bbli/fzf.vim'
 Plug 'mbbill/undotree'
 "Plug 'vimlab/split-term.vim'
 "Plug 'voldikss/vim-floaterm'
+Plug 'andreshazard/vim-logreview'
 
 "Plug 'vim-voom/VOoM'
 "Language Server
@@ -402,8 +403,8 @@ nnoremap <leader>ec :sign unplace<CR>
 "let g:qf_shorten_path = 0
 
 
-nmap <leader>tq <Plug>(qf_qf_toggle)
-nmap <unique> <leader>qq <Plug>(qf_qf_toggle)
+" nmap <leader>tq <Plug>(qf_qf_toggle)
+" nmap <unique> <leader>qq <Plug>(qf_qf_toggle)
 nmap <leader>qn <Plug>(qf_newer)
 nmap <leader>qN <Plug>(qf_older)
 " Don't apply g when substituting
@@ -544,6 +545,8 @@ command! -bang -nargs=* GGrep
 nnoremap <leader>ff :OverCommandLine<CR>GitRipGrep 
 nnoremap <leader>fa :OverCommandLine<CR>RipGrep 
 nnoremap <leader>fw :OverCommandLine<CR>Ggrep <C-r><C-w><CR>
+nnoremap <leader>fl :RemoveAllButClass 
+nnoremap <leader>fe :RemoveAllButERRORLogs<CR>
 
 " :'<,'>norm! @a to apply the macro only to a visual selection
 " (hit : in visual mode to switch to command mode)
@@ -795,6 +798,7 @@ onoremap S a]
 
 onoremap p i)
 onoremap P a)
+onoremap ll $
 
 " Cannot since this will override cc
 onoremap <expr> c v:operator ==# 'c' ? 'c' : 'i}'
