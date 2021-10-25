@@ -506,13 +506,12 @@ command! -bang OP call fzf#run(fzf#wrap({'source':'rg --files --hidden','sink':'
 "command! -bang OP call fzf#vim#complete#path('rg --files',{'dir':home_dir})
 "nnoremap <leader>op :call fzf#vim#complete#path('rg --files',{'dir':home_dir})<CR>
 "nnoremap <leader>op :OP<CR>
-"nnoremap <leader>oa :HFiles<CR>
 nnoremap <leader>oo :GFiles<CR>
 nnoremap <leader>os :FloatermNew<CR>
 nnoremap <leader>om :Helptags<CR>
-nnoremap <leader>oa :FZF<CR>
+"nnoremap <leader>oa :FZF<CR>
 nnoremap <leader>oa :HFiles<CR>
-nnoremap <leader>ob :CocList buffers<CR>
+"nnoremap <leader>ob :CocList buffers<CR>
 nnoremap <leader>od :BD<CR>
 " TODO: Replace with meta-;??
 nnoremap <leader>oc :Commands<CR>
@@ -810,6 +809,7 @@ onoremap C a}
 " To be honest, I don't think this is nesscary. Those keys are not awkward,
 " and I only mapped it because I was fixated on insert normal mode
 "inoremap ]] <C-c>A
+
 "make cause some issues, such as dummy -> but will be amortized zero cost with
 "autocomplete
 inoremap , ,<c-g>u
@@ -817,7 +817,8 @@ inoremap . .<c-g>u
 inoremap { {<c-g>u
 inoremap [ [<c-g>u
 
-inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files',fzf#wrap({'dir':home_dir}))
+imap <c-f> <plug>(fzf-complete-path)
+imap <c-l> <plug>(fzf-complete-line)
 "inoremap " ""<left>
 "inoremap ' ''<left>
 "inoremap ( ()<left>
@@ -1029,18 +1030,37 @@ let g:tex_flavor = 'latex'
 let g:vimtex_mappings_enabled=1
 "let g:ycm_python_binary_path = '/usr/bin/python3'
 
-" Customize fzf colors to match your color scheme
+" let g:fzf_layout = { 'window': 
+"     \ { 'width': 1,
+"     \ 'height': 0.35,
+"     \ 'yoffset': 1,
+"     \ 'border': 'rounded',
+"     \}}
+
+" An action can be a reference to a function that processes selected lines
+" Benson: Doesn't work though
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
 let g:fzf_action = {
-    \ 'ctrl-t': 'tab split',
-    \ 'ctrl-i': 'split',
-    \ 'ctrl-s': 'vsplit'
-    \ }
-let g:fzf_layout = { 'window': 
-    \ { 'width': 1,
-    \ 'height': 0.35,
-    \ 'yoffset': 1,
-    \ 'border': 'rounded',
-    \}}
+  \ 'ctrl-l': function('s:build_quickfix_list'),
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Default fzf layout
+" - Popup window
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
+" let g:fzf_layout = { 'window': 
+"     \ { 'width': 1,
+"     \ 'height': 0.35,
+"     \ 'yoffset': 1,
+"     \ 'border': 'rounded',
+"     \}}
+
+" Customize fzf colors to match your color scheme
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
 	\ 'bg':      ['bg', 'Normal'],

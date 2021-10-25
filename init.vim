@@ -338,6 +338,19 @@ require'lspconfig'.sumneko_lua.setup {
 -- python
 require'lspconfig'.pyright.setup{}
 
+--perl
+require'lspconfig'.perlpls.setup{
+cmd = { "pls" },
+    filetypes = { "perl" },
+    --root_dir = ".",
+    settings = {
+      perl = {
+        perlcritic = {
+          enabled = false
+        }
+      }
+  }
+}
 EOF
 " ************  TreeSitter  ************{{{1
 lua <<EOF
@@ -732,7 +745,8 @@ nnoremap <silent> <A-t> :Lspsaga open_floaterm<CR>
 tnoremap <silent> <A-t> <C-\><C-n>:Lspsaga close_floaterm<CR>
 " TODO: better than fzf but I seriously need to change the locking
 " behavior
-nnoremap <leader>oa <cmd>Telescope find_files<cr>
+nnoremap <leader>oa <cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' }})<cr>
+" nnoremap <leader>oa <cmd>Telescope find_files<cr>
 nnoremap <leader>oo <cmd>Telescope git_files<cr>
 "nnoremap <leader>ug <cmd>Telescope live_grep<cr>
 nnoremap <leader>ob <cmd>Telescope buffers<cr>

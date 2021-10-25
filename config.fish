@@ -163,6 +163,15 @@ end
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/benson/Software/cloud-sdk-stuff/google-cloud-sdk/path.fish.inc' ]; . '/home/benson/Software/cloud-sdk-stuff/google-cloud-sdk/path.fish.inc'; end
+# ************** PERL STUFF **************{{{1
+set -x PATH /home/benson/perl5/bin $PATH 2>/dev/null;
+set -q PERL5LIB; and set -x PERL5LIB /home/benson/perl5/lib/perl5:$PERL5LIB;
+set -q PERL5LIB; or set -x PERL5LIB /home/benson/perl5/lib/perl5;
+set -q PERL_LOCAL_LIB_ROOT; and set -x PERL_LOCAL_LIB_ROOT /home/benson/perl5:$PERL_LOCAL_LIB_ROOT;
+set -q PERL_LOCAL_LIB_ROOT; or set -x PERL_LOCAL_LIB_ROOT /home/benson/perl5;
+set -x PERL_MB_OPT --install_base\ \"/home/benson/perl5\";
+set -x PERL_MM_OPT INSTALL_BASE=/home/benson/perl5;
+
 # ************** PLUGIN CONFIGURATION **************{{{1
 # FOr some reason git_status is being ignored
 # fzf_configure_bindings --git_status=\cg
