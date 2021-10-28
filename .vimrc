@@ -323,7 +323,7 @@ Plug 'tpope/vim-dispatch'
 "Plug 'neomake/neomake'
 Plug 'mattboehm/vim-unstack'
 "Plug 'benmills/vimux'
-"Plug 'jpalardy/vim-slime' "useful for creating specific state in script for profiling
+Plug 'jpalardy/vim-slime', { 'branch': 'main'} "useful for creating specific state in script for profiling
 " used by vim-test. NOTE YOU HAVE TO LET IT CREATE THE INITAL WINDOW
 Plug 'christoomey/vim-tmux-runner'
 "Plug 'skywind3000/asynctasks.vim'
@@ -831,10 +831,8 @@ imap <c-l> <plug>(fzf-complete-line)
 "nnoremap <C-[> <C-t>
 "nnoremap <C-j> :vs<CR><C-]>
 "nnoremap <C-n> <C-^>
-"vmap <c-c><c-c> <Plug>SlimeRegionSend
-"nmap <C-c><C-l> V<Plug>SlimeRegionSend
-"nmap <C-c><C-c> <Plug>SlimeParagraphSend
-"nmap <C-c>v     <Plug>SlimeConfig
+xmap <C-e><C-e> <Plug>SlimeRegionSend
+nmap <C-e><C-e> <Plug>SlimeLineSend
 
 let g:fold_flag = 0
 function! ToggleFoldAll()
@@ -1076,12 +1074,15 @@ let g:fzf_colors =
 	\ 'header':  ['fg', 'Comment'] }
 
 let g:vimtex_view_method = 'zathura'
-"let g:slime_target = "tmux"
-"let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane": ":0.1"}
-"let g:slime_paste_file = "$HOME/.slime_paste"
+let g:slime_target = "tmux"
+let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane": ":.1"}
+let g:slime_paste_file = "$HOME/.slime_paste"
+let g:slime_no_mappings = 1
+let g:slime_dont_ask_default = 1
 "let g:slime_no_mappings = 1
 "let g:slime_python_ipython = 1
 "let g:slime_dont_ask_default = 1
+
 "let g:instant_markdown_slow=1
 "Converting markdown to pdf
 "autocmd BufWritePost *.md !markdown-pdf % -o %.pdf
