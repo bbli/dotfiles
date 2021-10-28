@@ -767,7 +767,7 @@ vnoremap > >gv
 vnoremap < <gv
 
 
-nnoremap <unique> S %
+nnoremap <unique> s %
 " nnoremap <unique> t %
 " ************** COMMAND MODE MAPS **************{{{1
 cnoremap sE %s
@@ -1251,7 +1251,7 @@ let g:benson_lsp_status = 0
 "let g:filter_jump_strip_characters = ["_"]
 "highlight! link SearchCurrent Red
 "highlight! link SearchHighlights Green
-nmap s <Plug>(FilterJump)
+nmap S <Plug>(FilterJump)
 "nmap f <Plug>(FilterJumpLineForward)
 "nmap F <Plug>(FilterJumpLineBackward)
 let g:filter_jump_keymaps = {

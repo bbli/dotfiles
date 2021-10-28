@@ -405,8 +405,9 @@ keymaps = {
  enable = true,
  set_jumps = true, -- whether to set jumps in the jumplist
  goto_next_start = {
-     ["lf"] = "@function.outer",
      --["ll"] = "@comment.outer",
+     ["lf"] = "@function.outer",
+     ["la"] = "@block.outer",
 
      ["C-n"] = "@statement.outer",
      ["lc"] = "@class.outer",
@@ -414,6 +415,7 @@ keymaps = {
  goto_previous_start = {
      --["hh"] = "@comment.outer",
      ["hf"] = "@function.outer",
+     ["ha"] = "@block.outer",
 
      ["C-p"] = "@statement.outer",
      ["hc"] = "@class.outer",
