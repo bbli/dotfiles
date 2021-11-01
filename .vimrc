@@ -151,6 +151,7 @@ else
 endif
 " ************** OPTIONS **************{{{1
 set foldmethod=marker
+" set fdo-=search "only search in unfolded text
 "set foldmarker=apple,sauce
 "set foldtext="MyFoldText()"
 "function MyFoldText()
@@ -258,6 +259,7 @@ Plug 'dohsimpson/vim-macroeditor'
 Plug 'svermeulen/vim-macrobatics'
 Plug 'svermeulen/vim-repeat'
 Plug 'machakann/vim-sandwich'
+Plug 'embear/vim-foldsearch'
 "So <C-j> works properly -> Actually still doesn't work
 "Plug '~/.vim/plugged/bash-support'
 " Plug 'justinmk/vim-sneak' -> my plugin is better
@@ -587,7 +589,15 @@ nnoremap <leader>sf :TestFile<CR>
 "nnoremap <leader>to :VoomToggle markdown<CR>
 nnoremap <leader>tw :AirlineToggleWhitespace<CR>
 
-nnoremap <leader>tf :TSContextToggle<CR>
+function! ToggleFoldSearch()
+    if &foldopen =~ "search"
+        set foldopen-=search
+    else
+        set foldopen+=search
+    endif
+endf
+nnoremap <leader>tf :call ToggleFoldSearch()<CR>
+nnoremap <leader>tc :TSContextToggle<CR>
 nnoremap <leader>tu :UndotreeToggle<CR>
 nnoremap <leader>tt :TagbarToggle<CR>
 "nnoremap <leader>ts :set spell!<CR>
