@@ -105,14 +105,14 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 " nn <silent><buffer> <C-j> :call CocLocations('ccls','$ccls/navigate',{'direction':'R'})<cr>
 " nn <silent><buffer> <C-h> :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<cr>
 
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
+" xmap if <Plug>(coc-funcobj-i)
+" omap if <Plug>(coc-funcobj-i)
+" xmap af <Plug>(coc-funcobj-a)
+" omap af <Plug>(coc-funcobj-a)
+" xmap ic <Plug>(coc-classobj-i)
+" omap ic <Plug>(coc-classobj-i)
+" xmap ac <Plug>(coc-classobj-a)
+" omap ac <Plug>(coc-classobj-a)
 
 
 " $ccls/member
@@ -265,7 +265,7 @@ Plug 'embear/vim-foldsearch'
 " Plug 'justinmk/vim-sneak' -> my plugin is better
 "Plug 'goldfeld/vim-seek'
 "Plug 'jayflo/vim-skip'
-Plug 'rhysd/clever-f.vim'
+" Plug 'rhysd/clever-f.vim' "Actually this prevents iterative f hopping
 Plug 'https://gitlab.com/yorickpeterse/nvim-window.git', { 'branch': 'main'}
 " Plug 'https://gitlab.com/yorickpeterse/nvim-pqf.git', { 'branch': 'main'}
 
@@ -484,7 +484,7 @@ nmap <leader>gn <Plug>(GitGutterNextHunk)
 nmap <leader>gN <Plug>(GitGutterPrevHunk)
 " nmap <leader>gf :GitGutterFold<CR>
 " nmap <leader>go <Plug>(git-messenger)
-nmap <leader>gl :Glog<CR>
+nmap <leader>gl :Gclog<CR>
 nnoremap <unique> <leader>gc :OverCommandLine<CR>:Glog --grep=
 nnoremap <unique> <leader>gs :OverCommandLine<CR>:Glog -S
 nnoremap <unique> <leader>gf :Glog -- %<CR>
@@ -492,6 +492,7 @@ nnoremap <unique> <leader>gf :Glog -- %<CR>
 "nmap <leader>gl :VTerm<CR>git tree<CR>
 nmap <leader>gg :G<CR>
 nnoremap <leader>gd :Gvdiff 
+nnoremap <leader>gb :Git blame<CR>
 
 " ---Open + Find Related---{{{2
 " fzf and ripgrep settings
@@ -827,8 +828,8 @@ inoremap . .<c-g>u
 inoremap { {<c-g>u
 inoremap [ [<c-g>u
 
-imap <c-f> <plug>(fzf-complete-path)
-imap <c-l> <plug>(fzf-complete-line)
+imap <C-f> <plug>(fzf-complete-path)
+imap <C-l> <C-x><C-l>
 "inoremap " ""<left>
 "inoremap ' ''<left>
 "inoremap ( ()<left>
@@ -1273,6 +1274,8 @@ let g:filter_jump_keymaps = {
 " TODO: change plugin to accept setup + teardown lambdas instead,
 " as CocDisable applies for the whole vim session, not just current buffer
 let g:filter_jump_buffer_options = []
+
+let test#custom_runners = {'cpp': ['catch2']}
 " ************** Learning **************{{{1
 " let g:value = 0
 " function ToggleValue()
