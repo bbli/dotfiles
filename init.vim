@@ -178,10 +178,10 @@ EOF
 nnoremap <unique> <leader>ot :Telescope<CR>
 
 nnoremap <leader>jd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <leader>jd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <leader>js :vs<CR>:lua vim.lsp.buf.definition()<CR>
 nnoremap <leader>jD <cmd>lua vim.lsp.buf.declaration()<CR>
-"nnoremap <leader>jr <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <leader>jr <cmd>lua vim.lsp.buf.incoming_calls()<CR>
+nnoremap <leader>jr <cmd>lua vim.lsp.buf.references()<CR>
+" nnoremap <leader>jr <cmd>lua vim.lsp.buf.incoming_calls()<CR>
 nnoremap <leader>ji <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <leader>je <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 nnoremap <leader>jE <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
@@ -339,18 +339,22 @@ require'lspconfig'.sumneko_lua.setup {
 require'lspconfig'.pyright.setup{}
 
 --perl
+--local util = require 'lspconfig/util'
 --require'lspconfig'.perlpls.setup{
---cmd = { "pls" },
+--    cmd = { "pls" },
 --    filetypes = { "perl" },
 --    --root_dir = ".",
+-- root_dir = function(fname)
+--      return util.root_pattern(".git")(fname) or vim.fn.getcwd()    
+--      end,
 --    settings = {
 --      perl = {
 --        perlcritic = {
---          enabled = false
+--          enabled = true
 --        }
 --      }
 --  }
---  }
+--}
 require'lspconfig'.perlls.setup{
     cmd = { "perl", "-MPerl::LanguageServer", "-e", "Perl::LanguageServer::run", "--", "--port 13603", "--nostdio 0", "--version 2.1.0" },
     filetypes = { "perl" },

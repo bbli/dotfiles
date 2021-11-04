@@ -409,6 +409,7 @@ nnoremap <leader>ec :sign unplace<CR>
 " nmap <unique> <leader>qq <Plug>(qf_qf_toggle)
 nmap <leader>qn <Plug>(qf_newer)
 nmap <leader>qN <Plug>(qf_older)
+nmap <leader>qq <Plug>(qf_qf_switch)
 " Don't apply g when substituting
 nnoremap <leader>qr :OverCommandLine<CR>cdo s/
 
@@ -446,7 +447,7 @@ nnoremap <leader><leader>d "+dd
 
 nnoremap <unique> <leader><leader>t :ISwapWith<CR>
 
-" Actually range + norm is so much better
+vnoremap mm :'<,'>norm @m<CR>
 nnoremap <leader>me :MacroEdit m<CR>
 " nnoremap <leader>mm @m
 nnoremap <leader><leader>m @m
@@ -1258,6 +1259,7 @@ let g:benson_lsp_status = 0
 "       \   ),
 "       \ ])
 " let g:python3_host_prog = '/usr/bin/python3'
+let g:foldsearch_disable_mappings = 1
 " ************** MY PLUGIN STUFF **************{{{1
 "let g:filter_jump_strip_characters = ["_"]
 "highlight! link SearchCurrent Red
