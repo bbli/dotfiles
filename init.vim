@@ -339,22 +339,22 @@ require'lspconfig'.sumneko_lua.setup {
 require'lspconfig'.pyright.setup{}
 
 --perl
---local util = require 'lspconfig/util'
---require'lspconfig'.perlpls.setup{
---    cmd = { "pls" },
---    filetypes = { "perl" },
---    --root_dir = ".",
--- root_dir = function(fname)
---      return util.root_pattern(".git")(fname) or vim.fn.getcwd()    
---      end,
---    settings = {
---      perl = {
---        perlcritic = {
---          enabled = true
---        }
---      }
---  }
---}
+local util = require 'lspconfig/util'
+require'lspconfig'.perlpls.setup{
+    cmd = { "pls" },
+    filetypes = { "perl" },
+    --root_dir = ".",
+ root_dir = function(fname)
+      return util.root_pattern(".git")(fname) or vim.fn.getcwd()    
+      end,
+    settings = {
+      perl = {
+        perlcritic = {
+          enabled = true
+        }
+      }
+  }
+}
 require'lspconfig'.perlls.setup{
     cmd = { "perl", "-MPerl::LanguageServer", "-e", "Perl::LanguageServer::run", "--", "--port 13603", "--nostdio 0", "--version 2.1.0" },
     filetypes = { "perl" },
