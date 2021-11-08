@@ -22,23 +22,22 @@ require('packer').startup(function()
 
   use {'stevearc/qf_helper.nvim'} --location tracking not working atm, but useful for toggling with no entries
 use {'tversteeg/registers.nvim'}
+use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
  -- ************  UTILITY LIBRARIES  ************
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
   -- ************  LSP STUFF  ************
   use 'neovim/nvim-lspconfig'
-  use 'hrsh7th/nvim-compe'
-  use 'andersevenrud/compe-tmux'
+  --use 'hrsh7th/nvim-compe'
+  --use 'andersevenrud/compe-tmux'
   --use {'weilbith/nvim-code-action-menu'} can't seem to get working
-  --use 'hrsh7th/nvim-cmp'
-  --use {'quangnguyen30192/cmp-nvim-tags',
-      --requires = 'hrsh7th/nvim-cmp'
-  --}
-  --use {'hrsh7th/cmp-buffer',
-    --requires = 'hrsh7th/nvim-cmp'
-  --}
-  --use {'andersevenrud/compe-tmux',
-      --branch = 'cmp'}
+  use'hrsh7th/cmp-nvim-lsp'
+  use'hrsh7th/cmp-buffer'
+  use'hrsh7th/cmp-path'
+  use'hrsh7th/cmp-cmdline'
+  use'hrsh7th/nvim-cmp'
+  use {'quangnguyen30192/cmp-nvim-tags', requires = 'hrsh7th/nvim-cmp' }
+  --use {'andersevenrud/compe-tmux', branch = 'cmp'}
   --use {'ms-jpq/coq_nvim',
       --branch = 'coq'}
   --use {'ms-jpq/coq.artifacts', 
@@ -306,35 +305,35 @@ local opts = {
 require('rust-tools').setup(opts)
 
 -- Lua Language Server
-local sumneko_binary = "/usr/bin/lua-language-server"
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
-require'lspconfig'.sumneko_lua.setup {
-  cmd = {sumneko_binary},
-  settings = {
-    Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-        -- Setup your lua path
-        path = runtime_path,
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
-}
+--local sumneko_binary = "/usr/bin/lua-language-server"
+--local runtime_path = vim.split(package.path, ';')
+--table.insert(runtime_path, "lua/?.lua")
+--table.insert(runtime_path, "lua/?/init.lua")
+--require'lspconfig'.sumneko_lua.setup {
+--  cmd = {sumneko_binary},
+--  settings = {
+--    Lua = {
+--      runtime = {
+--        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+--        version = 'LuaJIT',
+--        -- Setup your lua path
+--        path = runtime_path,
+--      },
+--      diagnostics = {
+--        -- Get the language server to recognize the `vim` global
+--        globals = {'vim'},
+--      },
+--      workspace = {
+--        -- Make the server aware of Neovim runtime files
+--        library = vim.api.nvim_get_runtime_file("", true),
+--      },
+--      -- Do not send telemetry data containing a randomized but unique identifier
+--      telemetry = {
+--        enable = false,
+--      },
+--    },
+--  },
+--}
 -- python
 require'lspconfig'.pyright.setup{}
 
@@ -461,91 +460,105 @@ require'treesitter-context'.setup{
 }
 EOF
 " ************  AutoComplete  ************{{{1
-" lua <<EOF
-"   -- Setup nvim-cmp.
-"   local cmp = require'cmp'
+set completeopt=menu,menuone,noselect
 
-"   cmp.setup({
-"     --snippet = {
-"       --expand = function(args)
-"         -- For `ultisnips` user.
-"         --vim.fn["UltiSnips#Anon"](args.body)
-"       --end,
-"     --},
-"     mapping = {
-"       ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-"       ['<C-f>'] = cmp.mapping.scroll_docs(4),
-"       ['<C-Space>'] = cmp.mapping.complete(),
-"       ['<C-e>'] = cmp.mapping.close(),
-"       ['<CR>'] = cmp.mapping.confirm({ select = true }),
-"     },
-"     sources = {
-"       { name = 'nvim_lsp' },
+lua <<EOF
+  -- Setup nvim-cmp.
+  local cmp = require'cmp'
 
-"       -- For ultisnips user.
-"       { name = 'ultisnips' },
+  cmp.setup({
+    snippet = {
+      -- REQUIRED - you must specify a snippet engine
+      expand = function(args)
+        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      end,
+    },
+    mapping = {
+      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+      --['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+      ['<C-e>'] = cmp.mapping({
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
+      }),
+      ['<C-f>'] = cmp.mapping.confirm({ select = true }),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+      ['<C-j>'] = cmp.mapping.select_next_item(),
+      ['<C-k>'] = cmp.mapping.select_prev_item(),
+    },
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp', keyword_length = 3, max_item_count = 5 },
+      { name = 'path'}
+      --{ name = 'ultisnips' }, -- For ultisnips users.
+    }, {
+      { name = 'buffer', keyword_length = 2 },
+    })
+  })
 
-"       --{ name = 'buffer' },
-"       { name = 'tags'},
-"       { name = 'path'}
-"     },
-" formatting = {
-"   format = function(entry, vim_item)
-"     -- set a name for each source
-"     vim_item.menu = ({
-"       buffer = "[Buffer]",
-"       nvim_lsp = "[LSP]",
-"       ultisnips = "[UltiSnips]",
-"       nvim_lua = "[Lua]",
-"       tags = "[Tags]",
-"     })[entry.source.name]
-"     return vim_item
-"   end,
-" },
-"   })
+  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+--  cmp.setup.cmdline('/', {
+--    sources = {
+--      { name = 'buffer' }
+--    }
+--  })
 
-  " -- Setup lspconfig.
-  " --require('lspconfig')[%YOUR_LSP_SERVER%].setup {
-  "  --capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  " --}
-" EOF
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+--  cmp.setup.cmdline(':', {
+--    sources = cmp.config.sources({
+--      { name = 'path' }
+--    }, {
+--      { name = 'cmdline' }
+--    })
+--  })
+
+  -- Setup lspconfig.
+  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+  require('lspconfig')['clangd'].setup { capabilities = capabilities }
+  require('lspconfig')['cmake'].setup { capabilities = capabilities }
+  require('lspconfig')['vimls'].setup { capabilities = capabilities }
+  --require('lspconfig')['rust-tools'].setup { capabilities = capabilities }
+  --require('lspconfig')['sumneko_lua'].setup { capabilities = capabilities }
+  require('lspconfig')['pyright'].setup { capabilities = capabilities }
+  require('lspconfig')['perlpls'].setup { capabilities = capabilities }
+  require('lspconfig')['perlls'].setup { capabilities = capabilities }
+EOF
 
 lua << EOF
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  resolve_timeout = 800;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = {
-    border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
-    winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-    max_width = 120,
-    min_width = 60,
-    max_height = math.floor(vim.o.lines * 0.3),
-    min_height = 1,
-  };
-
-  source = {
-    path = {priority = 3};
-    buffer = {priority = 99};
-    calc = false;
-    nvim_lsp = {priority = 5};
-    nvim_lua = true;
-    vsnip = false;
-    ultisnips = false;
-    luasnip = false;
-    tmux = {priority = 1};
-    tags = {priority = 10};
-  };
-}
+--require'compe'.setup {
+--  enabled = true;
+--  autocomplete = true;
+--  debug = false;
+--  min_length = 1;
+--  preselect = 'enable';
+--  throttle_time = 80;
+--  source_timeout = 200;
+--  resolve_timeout = 800;
+--  incomplete_delay = 400;
+--  max_abbr_width = 100;
+--  max_kind_width = 100;
+--  max_menu_width = 100;
+--  documentation = {
+--    border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
+--    winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
+--    max_width = 120,
+--    min_width = 60,
+--    max_height = math.floor(vim.o.lines * 0.3),
+--    min_height = 1,
+--  };
+--
+--  source = {
+--    path = {priority = 3};
+--    buffer = {priority = 99};
+--    calc = false;
+--    nvim_lsp = {priority = 5};
+--    nvim_lua = true;
+--    vsnip = false;
+--    ultisnips = false;
+--    luasnip = false;
+--    tmux = {priority = 1};
+--    tags = {priority = 10};
+--  };
+--}
 EOF
 
 let g:coq_settings = {}
@@ -759,6 +772,11 @@ require('nvim-autopairs').setup({
 --  map_complete = true -- it will auto insert `(` after select function or method item
 --})
 EOF
+nnoremap <leader>hh <cmd>lua require("harpoon.ui").nav_file(1)<CR>
+nnoremap <leader>hf <cmd>lua require("harpoon.ui").nav_file(2)<CR>
+
+nnoremap <leader>ha <cmd>lua require("harpoon.mark").add_file()<CR>
+nnoremap <leader>hs <cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>
 " ************  TODO  ************{{{1
 nnoremap <silent> <A-t> :Lspsaga open_floaterm<CR>
 tnoremap <silent> <A-t> <C-\><C-n>:Lspsaga close_floaterm<CR>

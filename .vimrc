@@ -392,7 +392,7 @@ let maplocalleader="-"
 " ---Misc---{{{2
 "nnoremap <leader><leader>t :MerlinTypeOf<CR>
 "nnoremap <leader><leader>i :call <SID>show_documentation()<CR>
-nnoremap <leader>l 40l
+" nnoremap <leader>l 40l
 " Override marks for now
 nnoremap <leader><leader>z :nohlsearch<CR>
 nnoremap <C-t> <C-z>
@@ -448,6 +448,7 @@ nnoremap <leader><leader>d "+dd
 nnoremap <unique> <leader><leader>t :ISwapWith<CR>
 
 vnoremap mm :'<,'>norm @m<CR>
+vnoremap : :'<,'>norm 
 nnoremap <leader>me :MacroEdit m<CR>
 " nnoremap <leader>mm @m
 nnoremap <leader><leader>m @m
@@ -1014,8 +1015,8 @@ let g:sneak#use_ic_scs = 1
 let g:clever_f_across_no_line = 1
 let g:clever_f_smart_case = 1
 let g:clever_f_highlight_timeout_ms=600
-nmap <unique> ;; <Plug>(clever-f-repeat-forward)
-nmap <unique> , <Plug>(clever-f-repeat-back)
+" nmap <unique> ;; <Plug>(clever-f-repeat-forward)
+" nmap <unique> , <Plug>(clever-f-repeat-back)
 
 
 let g:indentLine_setColors = 0
