@@ -229,147 +229,147 @@ autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
 lua << EOF
 require "lsp_signature".setup()
 EOF
-" ************  Language Servers  ************{{{1
+" ************  Language Servers(needs to be before AutoComplete)  ************{{{1
 lua <<EOF
-local lsp_status = require('lsp-status')
-lsp_status.register_progress()
--- cmake
-require'lspconfig'.cmake.setup{}
--- vimls
-require'lspconfig'.vimls.setup{}
--- clangd
-require'lspconfig'.clangd.setup{
-  handlers = lsp_status.extensions.clangd.setup(),
-  init_options = {
-    clangdFileStatus = true
-  },
-  on_attach = lsp_status.on_attach,
-  capabilities = lsp_status.capabilities,
-    default_config = {
-        cmd = {
-            "clangd", "--background-index", "--suggest-missing-includes",
-            -- "--pch-storage=memory", "--suggest-missing-includes"
-            "-j=3",
-        },
-        filetypes = {"c", "cpp", "objc", "objcpp"},
-        --root_dir = require"nvim_lsp/util".root_pattern("compile_commands.json", compile_flags.txt", .git"),
-        init_option = {
-            --clang = {
-                fallbackFlags = {
-                    "-std=c++17"} -- YEAH, STILL NOT WORKING
-             --   }
-        }
-    }
-}
-
-
--- Rust Tools
-local opts = {
-      on_attach = lsp_status.on_attach,
-  capabilities = lsp_status.capabilities,
-    tools = { -- rust-tools options
-        autoSetHints = true,
-        hover_with_actions = true,
-
-        runnables = {
-            use_telescope = true
-            -- rest of the opts are forwarded to telescope
-        },
-
-        inlay_hints = {
-            show_parameter_hints = true,
-            parameter_hints_prefix = "<- ",
-            -- prefix for all the other hints (type, chaining)
-            other_hints_prefix = "=> ",
-        },
-
-        hover_actions = {
-            -- the border that is used for the hover window
-            -- see vim.api.nvim_open_win()
-            border = {
-                {"╭", "FloatBorder"}, {"─", "FloatBorder"},
-                {"╮", "FloatBorder"}, {"│", "FloatBorder"},
-                {"╯", "FloatBorder"}, {"─", "FloatBorder"},
-                {"╰", "FloatBorder"}, {"│", "FloatBorder"}
-            },
-
-            -- whether the hover action window gets automatically focused
-            -- default: false
-            auto_focus = false
-        }
-    },
-
-    -- all the opts to send to nvim-lspconfig
-    -- these override the defaults set by rust-tools.nvim
-    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
-    server = {
-        } -- rust-analyer options
-}
-require('rust-tools').setup(opts)
-
--- Lua Language Server
---local sumneko_binary = "/usr/bin/lua-language-server"
---local runtime_path = vim.split(package.path, ';')
---table.insert(runtime_path, "lua/?.lua")
---table.insert(runtime_path, "lua/?/init.lua")
---require'lspconfig'.sumneko_lua.setup {
---  cmd = {sumneko_binary},
---  settings = {
---    Lua = {
---      runtime = {
---        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
---        version = 'LuaJIT',
---        -- Setup your lua path
---        path = runtime_path,
---      },
---      diagnostics = {
---        -- Get the language server to recognize the `vim` global
---        globals = {'vim'},
---      },
---      workspace = {
---        -- Make the server aware of Neovim runtime files
---        library = vim.api.nvim_get_runtime_file("", true),
---      },
---      -- Do not send telemetry data containing a randomized but unique identifier
---      telemetry = {
---        enable = false,
---      },
---    },
+--local lsp_status = require('lsp-status')
+--lsp_status.register_progress()
+---- cmake
+--require'lspconfig'.cmake.setup{}
+---- vimls
+--require'lspconfig'.vimls.setup{}
+---- clangd
+--require'lspconfig'.clangd.setup{
+--  handlers = lsp_status.extensions.clangd.setup(),
+--  init_options = {
+--    clangdFileStatus = true
 --  },
+--  on_attach = lsp_status.on_attach,
+--  capabilities = lsp_status.capabilities,
+--    default_config = {
+--        cmd = {
+--            "clangd", "--background-index", "--suggest-missing-includes",
+--            -- "--pch-storage=memory", "--suggest-missing-includes"
+--            "-j=3",
+--        },
+--        filetypes = {"c", "cpp", "objc", "objcpp"},
+--        --root_dir = require"nvim_lsp/util".root_pattern("compile_commands.json", compile_flags.txt", .git"),
+--        init_option = {
+--            --clang = {
+--                fallbackFlags = {
+--                    "-std=c++17"} -- YEAH, STILL NOT WORKING
+--             --   }
+--        }
+--    }
 --}
--- python
-require'lspconfig'.pyright.setup{}
-
---perl
-local util = require 'lspconfig/util'
-require'lspconfig'.perlpls.setup{
-    cmd = { "pls" },
-    filetypes = { "perl" },
-    --root_dir = ".",
- root_dir = function(fname)
-      return util.root_pattern(".git")(fname) or vim.fn.getcwd()    
-      end,
-    settings = {
-      perl = {
-        perlcritic = {
-          enabled = true
-        }
-      }
-  }
-}
-require'lspconfig'.perlls.setup{
-    cmd = { "perl", "-MPerl::LanguageServer", "-e", "Perl::LanguageServer::run", "--", "--port 13603", "--nostdio 0", "--version 2.1.0" },
-    filetypes = { "perl" },
---    root_dir = ".",
-    settings = {
-      perl = {
-        fileFilter = { ".pm", ".pl" },
-        ignoreDirs = ".git",
-        perlCmd = "perl",
-        perlInc = " "
-      }
-  }
-}
+--
+--
+---- Rust Tools
+--local opts = {
+--      on_attach = lsp_status.on_attach,
+--  capabilities = lsp_status.capabilities,
+--    tools = { -- rust-tools options
+--        autoSetHints = true,
+--        hover_with_actions = true,
+--
+--        runnables = {
+--            use_telescope = true
+--            -- rest of the opts are forwarded to telescope
+--        },
+--
+--        inlay_hints = {
+--            show_parameter_hints = true,
+--            parameter_hints_prefix = "<- ",
+--            -- prefix for all the other hints (type, chaining)
+--            other_hints_prefix = "=> ",
+--        },
+--
+--        hover_actions = {
+--            -- the border that is used for the hover window
+--            -- see vim.api.nvim_open_win()
+--            border = {
+--                {"╭", "FloatBorder"}, {"─", "FloatBorder"},
+--                {"╮", "FloatBorder"}, {"│", "FloatBorder"},
+--                {"╯", "FloatBorder"}, {"─", "FloatBorder"},
+--                {"╰", "FloatBorder"}, {"│", "FloatBorder"}
+--            },
+--
+--            -- whether the hover action window gets automatically focused
+--            -- default: false
+--            auto_focus = false
+--        }
+--    },
+--
+--    -- all the opts to send to nvim-lspconfig
+--    -- these override the defaults set by rust-tools.nvim
+--    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
+--    server = {
+--        } -- rust-analyer options
+--}
+--require('rust-tools').setup(opts)
+--
+---- Lua Language Server
+----local sumneko_binary = "/usr/bin/lua-language-server"
+----local runtime_path = vim.split(package.path, ';')
+----table.insert(runtime_path, "lua/?.lua")
+----table.insert(runtime_path, "lua/?/init.lua")
+----require'lspconfig'.sumneko_lua.setup {
+----  cmd = {sumneko_binary},
+----  settings = {
+----    Lua = {
+----      runtime = {
+----        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+----        version = 'LuaJIT',
+----        -- Setup your lua path
+----        path = runtime_path,
+----      },
+----      diagnostics = {
+----        -- Get the language server to recognize the `vim` global
+----        globals = {'vim'},
+----      },
+----      workspace = {
+----        -- Make the server aware of Neovim runtime files
+----        library = vim.api.nvim_get_runtime_file("", true),
+----      },
+----      -- Do not send telemetry data containing a randomized but unique identifier
+----      telemetry = {
+----        enable = false,
+----      },
+----    },
+----  },
+----}
+---- python
+--require'lspconfig'.pyright.setup{}
+--
+----perl
+--local util = require 'lspconfig/util'
+--require'lspconfig'.perlpls.setup{
+--    cmd = { "pls" },
+--    filetypes = { "perl" },
+--    --root_dir = ".",
+-- root_dir = function(fname)
+--      return util.root_pattern(".git")(fname) or vim.fn.getcwd()    
+--      end,
+--    settings = {
+--      perl = {
+--        perlcritic = {
+--          enabled = true
+--        }
+--      }
+--  }
+--}
+--require'lspconfig'.perlls.setup{
+--    cmd = { "perl", "-MPerl::LanguageServer", "-e", "Perl::LanguageServer::run", "--", "--port 13603", "--nostdio 0", "--version 2.1.0" },
+--    filetypes = { "perl" },
+----    root_dir = ".",
+--    settings = {
+--      perl = {
+--        fileFilter = { ".pm", ".pl" },
+--        ignoreDirs = ".git",
+--        perlCmd = "perl",
+--        perlInc = " "
+--      }
+--  }
+--}
 EOF
 " ************  TreeSitter  ************{{{1
 lua <<EOF
@@ -466,88 +466,88 @@ EOF
 set completeopt=menu,menuone,noselect
 
 lua <<EOF
-  -- Setup nvim-cmp.
-  local cmp = require'cmp'
-  local lspkind = require'lspkind'
-
-  cmp.setup({
-    snippet = {
-      -- REQUIRED - you must specify a snippet engine
-      expand = function(args)
-        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-      end,
-    },
-    mapping = {
-      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-      --['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-      ['<C-e>'] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
-      --['<C-f>'] = cmp.mapping.confirm({ select = true }),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
-      ['<Tab>'] = cmp.mapping.confirm({ select = true }),
-      ['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item(),{'i','c','s'}),
-      ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item(),{'i','c','s'}),
-    },
-    sources = cmp.config.sources({
-    { name = 'nvim_lsp'}, --, keyword_length = 2, max_item_count = 5 },
-      --{ name = 'ultisnips' }, -- For ultisnips users.
-      { name = 'buffer'},-- keyword_length = 1, max_item_count = 5,
-          --opts = {
---                keyword_pattern = [[\k\+]] -- lsp gettings sigils without this
-           --   }
-      { name = 'path', max_item_count = 3},
-    }),
-    formatting = {
-        format = require("lspkind").cmp_format({
-            with_text = true,
-            menu = ({
-                buffer = "[Buffer]",
-                nvim_lsp = "[LSP]",
-                path = "[Path]"
-                --luasnip = "[LuaSnip]",
-                --nvim_lua = "[Lua]",
-                --latex_symbols = "[Latex]",
-            })
-        }),
-    },
-    experimental = {
-        ghost_text = true,
-    }
-  })
-
-  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline('/', {
-      sources = {
-          { name = 'buffer' }
-          }
-      })
-
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
---cmp.setup.cmdline(':', {
---    completion = {
---        autocomplete = false,
---        },
+--  -- Setup nvim-cmp.
+--  local cmp = require'cmp'
+--  local lspkind = require'lspkind'
+--
+--  cmp.setup({
+--    snippet = {
+--      -- REQUIRED - you must specify a snippet engine
+--      expand = function(args)
+--        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+--      end,
+--    },
+--    mapping = {
+--      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+--      --['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+--      ['<C-e>'] = cmp.mapping({
+--        i = cmp.mapping.abort(),
+--        c = cmp.mapping.close(),
+--      }),
+--      --['<C-f>'] = cmp.mapping.confirm({ select = true }),
+--      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+--      ['<Tab>'] = cmp.mapping.confirm({ select = true }),
+--      ['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item(),{'i','c','s'}),
+--      ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item(),{'i','c','s'}),
+--    },
 --    sources = cmp.config.sources({
---      { name = 'path' },
---      { name = 'buffer' }
---    }, {
---      { name = 'cmdline' }
---    })
+--    { name = 'nvim_lsp'}, --, keyword_length = 2, max_item_count = 5 },
+--      --{ name = 'ultisnips' }, -- For ultisnips users.
+--      { name = 'buffer'},-- keyword_length = 1, max_item_count = 5,
+--          --opts = {
+----                keyword_pattern = [[\k\+]] -- lsp gettings sigils without this
+--           --   }
+--      { name = 'path', max_item_count = 3},
+--    }),
+--    formatting = {
+--        format = require("lspkind").cmp_format({
+--            with_text = true,
+--            menu = ({
+--                buffer = "[Buffer]",
+--                nvim_lsp = "[LSP]",
+--                path = "[Path]"
+--                --luasnip = "[LuaSnip]",
+--                --nvim_lua = "[Lua]",
+--                --latex_symbols = "[Latex]",
+--            })
+--        }),
+--    },
+--    experimental = {
+--        ghost_text = true,
+--    }
 --  })
-
-  -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  require('lspconfig')['clangd'].setup { capabilities = capabilities }
-  require('lspconfig')['cmake'].setup { capabilities = capabilities }
-  require('lspconfig')['vimls'].setup { capabilities = capabilities }
-  --require('lspconfig')['rust-tools'].setup { capabilities = capabilities }
-  --require('lspconfig')['sumneko_lua'].setup { capabilities = capabilities }
-  require('lspconfig')['pyright'].setup { capabilities = capabilities }
-  require('lspconfig')['perlpls'].setup { capabilities = capabilities }
-  require('lspconfig')['perlls'].setup { capabilities = capabilities }
+--
+--  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+--  cmp.setup.cmdline('/', {
+--      sources = {
+--          { name = 'buffer' }
+--          }
+--      })
+--
+--  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+----cmp.setup.cmdline(':', {
+----    completion = {
+----        autocomplete = false,
+----        },
+----    sources = cmp.config.sources({
+----      { name = 'path' },
+----      { name = 'buffer' }
+----    }, {
+----      { name = 'cmdline' }
+----    })
+----  })
+--
+--  -- Setup lspconfig.
+--  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+--  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+--  require('lspconfig')['clangd'].setup { capabilities = capabilities }
+--  require('lspconfig')['cmake'].setup { capabilities = capabilities }
+--  require('lspconfig')['vimls'].setup { capabilities = capabilities }
+--  --require('lspconfig')['rust-tools'].setup { capabilities = capabilities }
+--  --require('lspconfig')['sumneko_lua'].setup { capabilities = capabilities }
+--  require('lspconfig')['pyright'].setup { capabilities = capabilities }
+--  require('lspconfig')['perlpls'].setup { capabilities = capabilities }
+--  require('lspconfig')['perlls'].setup { capabilities = capabilities }
 EOF
 
 lua << EOF
@@ -839,3 +839,31 @@ nnoremap <leader>vl <cmd>Telescope loclist<cr>
 
 nnoremap <leader>jd <cmd>Telescope lsp_definitions<cr>
 nnoremap <leader>ji <cmd>Telescope lsp_implementations<cr>
+
+lua << EOF
+local cmp = require "cmp"
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      vim.fn['vsnip#anonymous'](args.body)
+    end
+  },
+
+  mapping = {
+    ['<CR>'] = cmp.mapping.confirm({ select = true })
+  },
+
+  sources = {
+    { name = "nvim_lsp" },
+    { name = "buffer" },
+  },
+}
+EOF
+
+lua << EOF
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+require'lspconfig'.clangd.setup {
+  capabilities = capabilities,
+}
+EOF
