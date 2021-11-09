@@ -254,7 +254,7 @@ Plug 'bronson/vim-visual-star-search'
 Plug 'Yggdroot/indentLine'
 "Plug 'tpope/vim-surround'
 Plug 'dohsimpson/vim-macroeditor'
-" using this fork so that MACROS can be repeated too
+" using this fork so that MACROS can be repeated too. Not working though?
 Plug 'svermeulen/vim-macrobatics'
 Plug 'svermeulen/vim-repeat'
 Plug 'machakann/vim-sandwich'
@@ -305,7 +305,7 @@ Plug 'ludovicchabant/vim-gutentags' "Vista auto does this
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 "Plug 'jackguo380/vim-lsp-cxx-highlight'
-Plug 'wellle/tmux-complete.vim'
+"Plug 'wellle/tmux-complete.vim'
 "Plug 'cespare/vim-toml'
 "Plug 'dag/vim-fish'
 "Plug 'pboettch/vim-cmake-syntax'

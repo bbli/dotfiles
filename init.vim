@@ -40,7 +40,7 @@ use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
   --use {'tzachar/cmp-fuzzy-buffer', requires = {'hrsh7th/nvim-cmp', 'tzachar/fuzzy.nvim'}}
 
   use {'onsails/lspkind-nvim'}
-  --use {'andersevenrud/compe-tmux', branch = 'cmp'}
+  --use {'andersevenrud/compe-tmux', branch = 'cmp'} "Not working for some reason + causes loading issues even when commented out
   --use {'ms-jpq/coq_nvim',
       --branch = 'coq'}
   --use {'ms-jpq/coq.artifacts', 
@@ -48,11 +48,11 @@ use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
   use 'glepnir/lspsaga.nvim'
   use 'kosayoda/nvim-lightbulb'
   use 'simrat39/rust-tools.nvim'
-  use "ray-x/lsp_signature.nvim"
+  --use "ray-x/lsp_signature.nvim" "I prefer snippet solution better as it doesn't clutter the above line
   -- tagbar/vista is better b/c it shows the current hovered function
   --use 'simrat39/symbols-outline.nvim'
-  use 'anott03/nvim-lspinstall'
-  use 'nvim-lua/lsp-status.nvim'
+  --use 'anott03/nvim-lspinstall'
+  --use 'nvim-lua/lsp-status.nvim'
   -- ************  TREE SITTER  ************
   use {
       'nvim-treesitter/nvim-treesitter',
@@ -60,14 +60,14 @@ use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
       }
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   -- use 'RRethy/nvim-treesitter-textsubjects'
-  use 'mizlan/iswap.nvim'
-  use 'JoosepAlviste/nvim-ts-context-commentstring'
+  --use 'mizlan/iswap.nvim'
+  --use 'JoosepAlviste/nvim-ts-context-commentstring'
   use 'romgrk/nvim-treesitter-context'
   -- ************  DEBUGGER  ************
-  use 'mfussenegger/nvim-dap'
-  use 'mfussenegger/nvim-dap-python' --Actualy, supposedly vim-ultest will cover this?
-  use 'theHamsta/nvim-dap-virtual-text'
-  use 'nvim-telescope/telescope-dap.nvim'
+  --use 'mfussenegger/nvim-dap'
+  --use 'mfussenegger/nvim-dap-python' --Actualy, supposedly vim-ultest will cover this?
+  --use 'theHamsta/nvim-dap-virtual-text'
+  --use 'nvim-telescope/telescope-dap.nvim'
   --use "Pocco81/DAPInstall.nvim"
   -- ************  GIT  ************
   --use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
@@ -226,9 +226,6 @@ vnoremap <silent><leader>ca :<C-U>lua require('lspsaga.codeaction').range_code_a
 
 autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
 
-lua << EOF
-require "lsp_signature".setup()
-EOF
 " ************  Language Servers(needs to be before AutoComplete)  ************{{{1
 lua <<EOF
 ---- Rust Tools
@@ -463,7 +460,9 @@ lua <<EOF
                 keyword_pattern = [[\k\+]] -- lsp gettings sigils without this
               }
           },
-      { name = 'path', max_item_count = 3},
+      -- {name = 'tags', max_item_count = 6}, -- only turn on if no lsp
+      {name = 'tmux', keyword_length = 2, max_item_count = 3},
+      { name = 'path', keyword_length = 2, max_item_count = 3},
     }),
     formatting = {
         format = require("lspkind").cmp_format({
@@ -471,7 +470,9 @@ lua <<EOF
             menu = ({
                 buffer = "[Buffer]",
                 nvim_lsp = "[LSP]",
-                path = "[Path]"
+                path = "[Path]",
+                tags = "[Tags]",
+                tmux = "[Tmux]"
                 --luasnip = "[LuaSnip]",
                 --nvim_lua = "[Lua]",
                 --latex_symbols = "[Latex]",
