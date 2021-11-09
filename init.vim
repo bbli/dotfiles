@@ -132,7 +132,7 @@ command! Scratch lua require'tools'.makeScratch()
 " lua text will be syntax highlighted!
 let g:vimsyn_embed = 'l'
 
-" ************  LSP configuration  ************{{{1
+" ************  LSP KeyMaps  ************{{{1
 
 " Statusline
 
@@ -231,38 +231,6 @@ require "lsp_signature".setup()
 EOF
 " ************  Language Servers(needs to be before AutoComplete)  ************{{{1
 lua <<EOF
---local lsp_status = require('lsp-status')
---lsp_status.register_progress()
----- cmake
---require'lspconfig'.cmake.setup{}
----- vimls
---require'lspconfig'.vimls.setup{}
----- clangd
---require'lspconfig'.clangd.setup{
---  handlers = lsp_status.extensions.clangd.setup(),
---  init_options = {
---    clangdFileStatus = true
---  },
---  on_attach = lsp_status.on_attach,
---  capabilities = lsp_status.capabilities,
---    default_config = {
---        cmd = {
---            "clangd", "--background-index", "--suggest-missing-includes",
---            -- "--pch-storage=memory", "--suggest-missing-includes"
---            "-j=3",
---        },
---        filetypes = {"c", "cpp", "objc", "objcpp"},
---        --root_dir = require"nvim_lsp/util".root_pattern("compile_commands.json", compile_flags.txt", .git"),
---        init_option = {
---            --clang = {
---                fallbackFlags = {
---                    "-std=c++17"} -- YEAH, STILL NOT WORKING
---             --   }
---        }
---    }
---}
---
---
 ---- Rust Tools
 --local opts = {
 --      on_attach = lsp_status.on_attach,
@@ -337,9 +305,6 @@ lua <<EOF
 ----    },
 ----  },
 ----}
----- python
---require'lspconfig'.pyright.setup{}
---
 ----perl
 --local util = require 'lspconfig/util'
 --require'lspconfig'.perlpls.setup{
@@ -462,7 +427,7 @@ require'treesitter-context'.setup{
     throttle = true, -- Throttles plugin updates (may improve performance)
 }
 EOF
-" ************  AutoComplete  ************{{{1
+" ************  CMP AutoComplete  ************{{{1
 set completeopt=menu,menuone,noselect
 
 lua <<EOF
@@ -536,18 +501,20 @@ lua <<EOF
 --      { name = 'cmdline' }
 --    })
 --  })
+EOF
 
-  -- Setup lspconfig.
+" ************** LANGUAGE SERVER AUTOCOMPLETE INTEGRATION **************{{{1
+lua<<EOF
   local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
   -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
   require('lspconfig')['clangd'].setup { capabilities = capabilities }
---  require('lspconfig')['cmake'].setup { capabilities = capabilities }
+  require('lspconfig')['cmake'].setup { capabilities = capabilities }
 --  require('lspconfig')['vimls'].setup { capabilities = capabilities }
 --  --require('lspconfig')['rust-tools'].setup { capabilities = capabilities }
 --  --require('lspconfig')['sumneko_lua'].setup { capabilities = capabilities }
---  require('lspconfig')['pyright'].setup { capabilities = capabilities }
---  require('lspconfig')['perlpls'].setup { capabilities = capabilities }
---  require('lspconfig')['perlls'].setup { capabilities = capabilities }
+  require('lspconfig')['pyright'].setup { capabilities = capabilities }
+  require('lspconfig')['perlpls'].setup { capabilities = capabilities }
+  require('lspconfig')['perlls'].setup { capabilities = capabilities }
 EOF
 
 lua << EOF
@@ -840,30 +807,3 @@ nnoremap <leader>vl <cmd>Telescope loclist<cr>
 nnoremap <leader>jd <cmd>Telescope lsp_definitions<cr>
 nnoremap <leader>ji <cmd>Telescope lsp_implementations<cr>
 
-lua << EOF
---local cmp = require "cmp"
---cmp.setup {
---  snippet = {
---    expand = function(args)
---      vim.fn['vsnip#anonymous'](args.body)
---    end
---  },
---
---  mapping = {
---    ['<CR>'] = cmp.mapping.confirm({ select = true })
---  },
---
---  sources = {
---    { name = "nvim_lsp" },
---    { name = "buffer" },
---  },
---}
---EOF
---
---lua << EOF
---local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
---
---require'lspconfig'.clangd.setup {
---  capabilities = capabilities,
---}
-EOF

@@ -1242,7 +1242,7 @@ let neovide_remember_window_size = v:true
 let g:vista_sidebar_width = 40
 let g:BASH_Ctrl_j = 'off'
 let g:C_Ctrl_j = 'off'
-let g:benson_lsp_status = 1
+let g:benson_lsp_status = 0 "No point since I removed status capability in favor of lsp capability
 "let g:signify_sign_show_count = 0
 " call wilder#setup({
 "       \ 'modes': [':'],
