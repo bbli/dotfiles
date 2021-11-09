@@ -458,10 +458,11 @@ lua <<EOF
     sources = cmp.config.sources({
     { name = 'nvim_lsp', keyword_length = 2, max_item_count = 5 },
       --{ name = 'ultisnips' }, -- For ultisnips users.
-      { name = 'buffer', keyword_length = 1, max_item_count = 5},
-          --opts = {
---                keyword_pattern = [[\k\+]] -- lsp gettings sigils without this
-           --   }
+      { name = 'buffer', keyword_length = 1, max_item_count = 5,
+          opts = {
+                keyword_pattern = [[\k\+]] -- lsp gettings sigils without this
+              }
+          },
       { name = 'path', max_item_count = 3},
     }),
     formatting = {

@@ -215,7 +215,6 @@ set autoindent
 set undofile
 "set undodir=~/.undodir/
 set colorcolumn=80
-" set iskeyword+=% "No point as I need autocomplete to recognize perl sigils
 
 " ************** PLUGINS **************{{{1
 call plug#begin('~/.vim/plugged')
@@ -758,7 +757,7 @@ nnoremap <unique> D d$
 nnoremap <unique> Y y$
 nnoremap <unique> E $
 nnoremap <unique> gE g$
-nnoremap <unique> W 0w
+"nnoremap <unique> W 0w
 " to jump between brackets/parantheses
 "nnoremap S <C-^>
 "nnoremap w W
@@ -972,9 +971,13 @@ autocmd BufNewFile,BufReadPost CMakeLists.txt set filetype=cmake "except cmake f
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 
 autocmd FileType go let b:dispatch = 'go test'
+autocmd FileType perl set iskeyword+=$
+autocmd FileType perl set iskeyword+=@-@
 autocmd FileType perl set iskeyword+=%
-autocmd FileType perl set iskeyword+=@
-autocmd FileType perl set iskeyword+=%
+
+nnoremap <leader>is Bi$<ESC>W
+nnoremap <leader>ia Bi@<ESC>W
+nnoremap <leader>ih Bi%<ESC>W
 
 """"""""Misc""""""""{{{1
 " Allow saving of files as sudo when I forgot to start vim using sudo.
