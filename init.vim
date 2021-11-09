@@ -466,81 +466,81 @@ EOF
 set completeopt=menu,menuone,noselect
 
 lua <<EOF
---  -- Setup nvim-cmp.
---  local cmp = require'cmp'
---  local lspkind = require'lspkind'
---
---  cmp.setup({
---    snippet = {
---      -- REQUIRED - you must specify a snippet engine
---      expand = function(args)
---        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
---      end,
---    },
---    mapping = {
---      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
---      --['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
---      ['<C-e>'] = cmp.mapping({
---        i = cmp.mapping.abort(),
---        c = cmp.mapping.close(),
---      }),
---      --['<C-f>'] = cmp.mapping.confirm({ select = true }),
---      ['<CR>'] = cmp.mapping.confirm({ select = true }),
---      ['<Tab>'] = cmp.mapping.confirm({ select = true }),
---      ['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item(),{'i','c','s'}),
---      ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item(),{'i','c','s'}),
---    },
+  -- Setup nvim-cmp.
+  local cmp = require'cmp'
+  local lspkind = require'lspkind'
+
+  cmp.setup({
+    snippet = {
+      -- REQUIRED - you must specify a snippet engine
+      expand = function(args)
+        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      end,
+    },
+    mapping = {
+      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+      --['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+      ['<C-e>'] = cmp.mapping({
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close(),
+      }),
+      --['<C-f>'] = cmp.mapping.confirm({ select = true }),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+      ['<Tab>'] = cmp.mapping.confirm({ select = true }),
+      ['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item(),{'i','c','s'}),
+      ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item(),{'i','c','s'}),
+    },
+    sources = cmp.config.sources({
+    { name = 'nvim_lsp', keyword_length = 2, max_item_count = 5 },
+      --{ name = 'ultisnips' }, -- For ultisnips users.
+      { name = 'buffer', keyword_length = 1, max_item_count = 5},
+          --opts = {
+--                keyword_pattern = [[\k\+]] -- lsp gettings sigils without this
+           --   }
+      { name = 'path', max_item_count = 3},
+    }),
+    formatting = {
+        format = require("lspkind").cmp_format({
+            with_text = true,
+            menu = ({
+                buffer = "[Buffer]",
+                nvim_lsp = "[LSP]",
+                path = "[Path]"
+                --luasnip = "[LuaSnip]",
+                --nvim_lua = "[Lua]",
+                --latex_symbols = "[Latex]",
+            })
+        }),
+    },
+    experimental = {
+        ghost_text = true,
+    }
+  })
+
+  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline('/', {
+      sources = {
+          { name = 'buffer' }
+          }
+      })
+
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+--cmp.setup.cmdline(':', {
+--    completion = {
+--        autocomplete = false,
+--        },
 --    sources = cmp.config.sources({
---    { name = 'nvim_lsp'}, --, keyword_length = 2, max_item_count = 5 },
---      --{ name = 'ultisnips' }, -- For ultisnips users.
---      { name = 'buffer'},-- keyword_length = 1, max_item_count = 5,
---          --opts = {
-----                keyword_pattern = [[\k\+]] -- lsp gettings sigils without this
---           --   }
---      { name = 'path', max_item_count = 3},
---    }),
---    formatting = {
---        format = require("lspkind").cmp_format({
---            with_text = true,
---            menu = ({
---                buffer = "[Buffer]",
---                nvim_lsp = "[LSP]",
---                path = "[Path]"
---                --luasnip = "[LuaSnip]",
---                --nvim_lua = "[Lua]",
---                --latex_symbols = "[Latex]",
---            })
---        }),
---    },
---    experimental = {
---        ghost_text = true,
---    }
+--      { name = 'path' },
+--      { name = 'buffer' }
+--    }, {
+--      { name = 'cmdline' }
+--    })
 --  })
---
---  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
---  cmp.setup.cmdline('/', {
---      sources = {
---          { name = 'buffer' }
---          }
---      })
---
---  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-----cmp.setup.cmdline(':', {
-----    completion = {
-----        autocomplete = false,
-----        },
-----    sources = cmp.config.sources({
-----      { name = 'path' },
-----      { name = 'buffer' }
-----    }, {
-----      { name = 'cmdline' }
-----    })
-----  })
---
---  -- Setup lspconfig.
---  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
---  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
---  require('lspconfig')['clangd'].setup { capabilities = capabilities }
+
+  -- Setup lspconfig.
+  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+  require('lspconfig')['clangd'].setup { capabilities = capabilities }
 --  require('lspconfig')['cmake'].setup { capabilities = capabilities }
 --  require('lspconfig')['vimls'].setup { capabilities = capabilities }
 --  --require('lspconfig')['rust-tools'].setup { capabilities = capabilities }
@@ -841,29 +841,29 @@ nnoremap <leader>jd <cmd>Telescope lsp_definitions<cr>
 nnoremap <leader>ji <cmd>Telescope lsp_implementations<cr>
 
 lua << EOF
-local cmp = require "cmp"
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      vim.fn['vsnip#anonymous'](args.body)
-    end
-  },
-
-  mapping = {
-    ['<CR>'] = cmp.mapping.confirm({ select = true })
-  },
-
-  sources = {
-    { name = "nvim_lsp" },
-    { name = "buffer" },
-  },
-}
-EOF
-
-lua << EOF
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-require'lspconfig'.clangd.setup {
-  capabilities = capabilities,
-}
+--local cmp = require "cmp"
+--cmp.setup {
+--  snippet = {
+--    expand = function(args)
+--      vim.fn['vsnip#anonymous'](args.body)
+--    end
+--  },
+--
+--  mapping = {
+--    ['<CR>'] = cmp.mapping.confirm({ select = true })
+--  },
+--
+--  sources = {
+--    { name = "nvim_lsp" },
+--    { name = "buffer" },
+--  },
+--}
+--EOF
+--
+--lua << EOF
+--local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+--
+--require'lspconfig'.clangd.setup {
+--  capabilities = capabilities,
+--}
 EOF
