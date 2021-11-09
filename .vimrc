@@ -215,7 +215,7 @@ set autoindent
 set undofile
 "set undodir=~/.undodir/
 set colorcolumn=80
-
+" set iskeyword+=% "No point as I need autocomplete to recognize perl sigils
 
 " ************** PLUGINS **************{{{1
 call plug#begin('~/.vim/plugged')
@@ -780,7 +780,7 @@ vnoremap > >gv
 vnoremap < <gv
 
 
-nnoremap <unique> s %
+nnoremap <unique> S %
 " nnoremap <unique> t %
 " ************** COMMAND MODE MAPS **************{{{1
 cnoremap sE %s
@@ -970,6 +970,9 @@ autocmd BufNewFile,BufReadPost CMakeLists.txt set filetype=cmake "except cmake f
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 
 autocmd FileType go let b:dispatch = 'go test'
+autocmd FileType perl set iskeyword+=%
+autocmd FileType perl set iskeyword+=@
+autocmd FileType perl set iskeyword+=%
 
 """"""""Misc""""""""{{{1
 " Allow saving of files as sudo when I forgot to start vim using sudo.
@@ -1237,7 +1240,7 @@ let neovide_remember_window_size = v:true
 let g:vista_sidebar_width = 40
 let g:BASH_Ctrl_j = 'off'
 let g:C_Ctrl_j = 'off'
-let g:benson_lsp_status = 0
+let g:benson_lsp_status = 1
 "let g:signify_sign_show_count = 0
 " call wilder#setup({
 "       \ 'modes': [':'],
@@ -1265,7 +1268,7 @@ let g:foldsearch_disable_mappings = 1
 "let g:filter_jump_strip_characters = ["_"]
 "highlight! link SearchCurrent Red
 "highlight! link SearchHighlights Green
-nmap S <Plug>(FilterJump)
+nmap s <Plug>(FilterJump)
 "nmap f <Plug>(FilterJumpLineForward)
 "nmap F <Plug>(FilterJumpLineBackward)
 let g:filter_jump_keymaps = {
@@ -1278,6 +1281,7 @@ let g:filter_jump_keymaps = {
 " as CocDisable applies for the whole vim session, not just current buffer
 let g:filter_jump_buffer_options = []
 
+autocmd FileType FilterJump lua requires('cmp').setup.buffer{enabled = false}
 let test#custom_runners = {'cpp': ['catch2']}
 " ************** Learning **************{{{1
 " let g:value = 0

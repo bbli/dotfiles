@@ -33,10 +33,13 @@ use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
   --use {'weilbith/nvim-code-action-menu'} can't seem to get working
   use'hrsh7th/cmp-nvim-lsp'
   use'hrsh7th/cmp-buffer'
-  use'hrsh7th/cmp-path'
-  use'hrsh7th/cmp-cmdline'
+  use'hrsh7th/cmp-path' -- kinda useless
+  use'hrsh7th/cmp-cmdline' -- also kinda useless
   use'hrsh7th/nvim-cmp'
   use {'quangnguyen30192/cmp-nvim-tags', requires = 'hrsh7th/nvim-cmp' }
+  --use {'tzachar/cmp-fuzzy-buffer', requires = {'hrsh7th/nvim-cmp', 'tzachar/fuzzy.nvim'}}
+
+  use {'onsails/lspkind-nvim'}
   --use {'andersevenrud/compe-tmux', branch = 'cmp'}
   --use {'ms-jpq/coq_nvim',
       --branch = 'coq'}
@@ -88,7 +91,6 @@ use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
   end
 )
 EOF
-
 
 " ************  Vimscript Functions  ************{{{1
 " No point since this is default behavior anyways
@@ -209,6 +211,7 @@ nnoremap <leader>lf <cmd>lua vim.lsp.buf.formatting()<CR>
 nnoremap <unique> <leader><leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 nnoremap <leader>ll <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
 nnoremap <unique> <leader>ls :lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>
+nnoremap <leader>lr :LspRestart<CR>
 "--nnoremap <leader>fr <cmd>lua vim.lsp.buf.rename()<CR>
 "nnoremap <leader>jt <cmd>lua vim.lsp.buf.type_definition()<CR> "What is this used for?
 "nnoremap <leader>ct <cmd>lua vim.lsp.buf.outgoing_calls()<CR> "Just one level BFS
@@ -465,6 +468,7 @@ set completeopt=menu,menuone,noselect
 lua <<EOF
   -- Setup nvim-cmp.
   local cmp = require'cmp'
+  local lspkind = require'lspkind'
 
   cmp.setup({
     snippet = {
@@ -480,31 +484,54 @@ lua <<EOF
         i = cmp.mapping.abort(),
         c = cmp.mapping.close(),
       }),
-      ['<C-f>'] = cmp.mapping.confirm({ select = true }),
+      --['<C-f>'] = cmp.mapping.confirm({ select = true }),
       ['<CR>'] = cmp.mapping.confirm({ select = true }),
-      ['<C-j>'] = cmp.mapping.select_next_item(),
-      ['<C-k>'] = cmp.mapping.select_prev_item(),
+      ['<Tab>'] = cmp.mapping.confirm({ select = true }),
+      ['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item(),{'i','c','s'}),
+      ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item(),{'i','c','s'}),
     },
     sources = cmp.config.sources({
-      { name = 'nvim_lsp', keyword_length = 3, max_item_count = 5 },
-      { name = 'path'}
+    { name = 'nvim_lsp'}, --, keyword_length = 2, max_item_count = 5 },
       --{ name = 'ultisnips' }, -- For ultisnips users.
-    }, {
-      { name = 'buffer', keyword_length = 2 },
-    })
+      { name = 'buffer'},-- keyword_length = 1, max_item_count = 5,
+          --opts = {
+--                keyword_pattern = [[\k\+]] -- lsp gettings sigils without this
+           --   }
+      { name = 'path', max_item_count = 3},
+    }),
+    formatting = {
+        format = require("lspkind").cmp_format({
+            with_text = true,
+            menu = ({
+                buffer = "[Buffer]",
+                nvim_lsp = "[LSP]",
+                path = "[Path]"
+                --luasnip = "[LuaSnip]",
+                --nvim_lua = "[Lua]",
+                --latex_symbols = "[Latex]",
+            })
+        }),
+    },
+    experimental = {
+        ghost_text = true,
+    }
   })
 
   -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
---  cmp.setup.cmdline('/', {
---    sources = {
---      { name = 'buffer' }
---    }
---  })
+  cmp.setup.cmdline('/', {
+      sources = {
+          { name = 'buffer' }
+          }
+      })
 
   -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
---  cmp.setup.cmdline(':', {
+--cmp.setup.cmdline(':', {
+--    completion = {
+--        autocomplete = false,
+--        },
 --    sources = cmp.config.sources({
---      { name = 'path' }
+--      { name = 'path' },
+--      { name = 'buffer' }
 --    }, {
 --      { name = 'cmdline' }
 --    })
