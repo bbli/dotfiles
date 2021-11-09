@@ -448,6 +448,8 @@ nnoremap <leader><leader>d "+dd
 nnoremap <unique> <leader><leader>t :ISwapWith<CR>
 
 vnoremap mm :'<,'>norm @m<CR>
+vnoremap lc :'<,'>norm 0i--<CR>
+vnoremap lC :'<,'>norm 0xx<CR>
 vnoremap : :'<,'>norm 
 nnoremap <leader>me :MacroEdit m<CR>
 " nnoremap <leader>mm @m
