@@ -16,6 +16,8 @@
 ##apt --assume-yes upgrade python3 nvm, neovim is prebuilt with python3.6
 ##apt --assume-yes install python-pip # for neovim
 #git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 
 dotfiles_path=$HOME/Dropbox/Code/dotfiles
@@ -49,3 +51,4 @@ ln -s "$dotfiles_path/init.lua" ~/.init.lua
 ln -s "$dotfiles_path/emacs/config.el" ~/.doom.d/config.el
 ln -s "$dotfiles_path/emacs/init.el" ~/.doom.d/init.el
 ln -s "$dotfiles_path/emacs/packages.el" ~/.doom.d/packages.el
+
