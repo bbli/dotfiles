@@ -18,8 +18,8 @@
 #git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 
-#dotfiles_path=$HOME/Documents/Code/dotfiles
-dotfiles_path=$HOME/dotfiles
+dotfiles_path=$HOME/Dropbox/Code/dotfiles
+#dotfiles_path=$HOME/dotfiles
 # This script will mostly just set up symbolic links
 ln -s "$dotfiles_path/.vimrc" ~/.vimrc
 ln -s "$dotfiles_path/.inputrc" ~/.inputrc

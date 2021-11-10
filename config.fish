@@ -56,7 +56,7 @@ end
 function nv
     switch (uname)
     case Linux 
-        /home/benson/.local/bin/neovim $argv
+        /usr/bin/nvim $argv
     case Darwin
         /usr/local/bin/nvim $argv
     case '*'
@@ -156,7 +156,9 @@ fish_add_path -a ~/.emacs.d/bin
 # ************** SOURCE **************{{{1
 switch (uname)
     case Linux
-        source /opt/miniconda3/etc/fish/conf.d/conda.fish
+        if [ -f '/opt/miniconda3/etc/fish/conf.d/conda.fish' ];
+            source /opt/miniconda3/etc/fish/conf.d/conda.fish
+        end
     case Darwin
     case '*'
 end
