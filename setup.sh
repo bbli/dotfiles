@@ -53,5 +53,5 @@ ln -s "$dotfiles_path/emacs/init.el" ~/.doom.d/init.el
 ln -s "$dotfiles_path/emacs/packages.el" ~/.doom.d/packages.el
 
 curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
+ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+# Finally manually install `yay` and `uctags`
