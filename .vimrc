@@ -663,6 +663,7 @@ nnoremap <localleader>n :e ~/.config/nvim/init.vim<CR>
 nnoremap <localleader>k :e ~/.config/kitty/kitty.conf<CR>
 nnoremap <localleader>f :e ~/.config/fish/config.fish<CR>
 nnoremap <localleader>l :e ~/.init.lua<CR>
+nnoremap <localleader>s :e ~/.config/starship.toml<CR>
 
 " nnoremap <localleader>c :CocConfig<CR>
 

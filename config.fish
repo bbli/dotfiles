@@ -145,12 +145,12 @@ function pack
     cd ~/.local/share/nvim/site/pack/packer/start
 end
 # ************** VARIABLES **************{{{1
-set SPACEFISH_PROMPT_ADD_NEWLINE false
-set SPACEFISH_PROMPT_SEPARATE_LINE true
-set SPACEFISH_DIR_COLOR cyan
-set SPACEFISH_PACKAGE_SHOW false
-set SPACEFISH_RUST_SHOW false
-set SPACEFISH_GOLANG_SHOW false
+# set SPACEFISH_PROMPT_ADD_NEWLINE false
+# set SPACEFISH_PROMPT_SEPARATE_LINE true
+# set SPACEFISH_DIR_COLOR cyan
+# set SPACEFISH_PACKAGE_SHOW false
+# set SPACEFISH_RUST_SHOW false
+# set SPACEFISH_GOLANG_SHOW false
 
 fish_add_path -a ~/.emacs.d/bin
 fish_add_path -a ~/perl5/bin
@@ -177,3 +177,4 @@ set -x PERL_MM_OPT INSTALL_BASE=/home/benson/perl5;
 # fzf_configure_bindings --git_status=\cg
 # fzf_configure_bindings --directory=\ct
 set fish_greeting
+starship init fish | source

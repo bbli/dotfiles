@@ -1,0 +1,41 @@
+# Just comment a section if you want to disable it
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$conda\
+$memory_usage\
+$custom\
+$cmd_duration\
+$line_break\
+$jobs\
+$time\
+$status\
+$character"""
+
+[status]
+disabled = false
+map_symbol = true #adds special icon for each error code
+
+[custom]
+disabled = true
+
+[memory_usage]
+disabled = true
+
+[git_metrics]
+disabled = true
+
+[directory]
+truncation_length = 4
+
+[character]
+# success_symbol = "[➤](bold green)" 
+
+[git_status]
+diverged = " $count "

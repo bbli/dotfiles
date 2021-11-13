@@ -51,7 +51,20 @@ ln -s "$dotfiles_path/init.lua" ~/.init.lua
 ln -s "$dotfiles_path/emacs/config.el" ~/.doom.d/config.el
 ln -s "$dotfiles_path/emacs/init.el" ~/.doom.d/init.el
 ln -s "$dotfiles_path/emacs/packages.el" ~/.doom.d/packages.el
+ln -s "$dotfiles_path/startship.toml" ~/.config/starship.toml
 
 curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-# Finally manually install `yay` and `uctags`
+sudo pacman -S ctags
+sudo pacman -S starship
+# ************  YAY SETUP  ************
+cd
+mkdir Software
+cd Software
+git clone https://aur.archlinux.org/yay-git.git
+cd yay-git
+makepkg -si
+
+# Finally manually install `yay`
+#echo 1 | yay --noconfirm nerd-fonts-source-code-pro
+yay --noconfirm --answerdiff=None nerd-fonts-source-code-pro 
