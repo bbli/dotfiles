@@ -388,7 +388,7 @@ keymaps = {
  goto_next_start = {
      --["ll"] = "@comment.outer",
      ["lf"] = "@function.outer",
-     ["la"] = "@block.outer",
+     ["lb"] = "@block.outer",
 
      ["C-n"] = "@statement.outer",
      ["lc"] = "@class.outer",
@@ -396,7 +396,7 @@ keymaps = {
  goto_previous_start = {
      --["hh"] = "@comment.outer",
      ["hf"] = "@function.outer",
-     ["ha"] = "@block.outer",
+     ["hb"] = "@block.outer",
 
      ["C-p"] = "@statement.outer",
      ["hc"] = "@class.outer",
@@ -426,6 +426,7 @@ require'treesitter-context'.setup{
 EOF
 " ************  CMP AutoComplete  ************{{{1
 set completeopt=menu,menuone,noselect
+" Sometimes cmp popup menu will not close
 
 lua <<EOF
   -- Setup nvim-cmp.
@@ -572,7 +573,7 @@ lua <<EOF
 local actions = require('telescope.actions')
 require('telescope').setup{
   defaults = {
-      file_ignore_patterns = {'build'},
+--      file_ignore_patterns = {'build'},
     mappings = {
       n = {
           [ "q" ] = actions.close,
@@ -778,7 +779,7 @@ nnoremap <silent> <A-t> :Lspsaga open_floaterm<CR>
 tnoremap <silent> <A-t> <C-\><C-n>:Lspsaga close_floaterm<CR>
 " TODO: better than fzf but I seriously need to change the locking
 " behavior
-nnoremap <leader>oa <cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' }})<cr>
+nnoremap <leader>oa <cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' , '-g', '!node_modules'}})<cr>
 " nnoremap <leader>oa <cmd>Telescope find_files<cr>
 nnoremap <leader>oo <cmd>Telescope git_files<cr>
 "nnoremap <leader>ug <cmd>Telescope live_grep<cr>

@@ -57,6 +57,7 @@ curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 sudo pacman -S ctags
 sudo pacman -S starship
+sudo pacman -S clang
 # ************  YAY SETUP  ************
 cd
 mkdir Software
@@ -68,3 +69,7 @@ makepkg -si
 # Finally manually install `yay`
 #echo 1 | yay --noconfirm nerd-fonts-source-code-pro
 yay --noconfirm --answerdiff=None nerd-fonts-source-code-pro 
+
+# ************  PIP SOFTWARE  ************{{{1
+sudp pacman -S python-pip
+pip install cmake-language-server

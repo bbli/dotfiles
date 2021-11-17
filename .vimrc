@@ -241,6 +241,7 @@ Plug 'rakr/vim-one'
 "---
 " For renaming tabs
 Plug 'gcmt/taboo.vim'
+Plug 'google/vim-searchindex'
 " Below Plugin not that useful since I can use tabs for that purpose
 "Plug 'troydm/zoomwintab.vim'
 Plug 'osyo-manga/vim-over'
@@ -848,6 +849,7 @@ imap <C-l> <C-x><C-l>
 "nnoremap <C-n> <C-^>
 xmap <C-e><C-e> <Plug>SlimeRegionSend
 nmap <C-e><C-e> <Plug>SlimeLineSend
+nmap <C-d> <C-b>
 
 let g:fold_flag = 0
 function! ToggleFoldAll()
@@ -1026,6 +1028,7 @@ let g:clever_f_smart_case = 1
 let g:clever_f_highlight_timeout_ms=600
 " nmap <unique> ;; <Plug>(clever-f-repeat-forward)
 " nmap <unique> , <Plug>(clever-f-repeat-back)
+nnoremap ;; ;
 
 
 let g:indentLine_setColors = 0
