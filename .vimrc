@@ -970,6 +970,7 @@ colorscheme edge
 
 " ************** AUTOCOMMANDS **************{{{1
 autocmd BufNewFile,BufReadPost *.fish set filetype=fish "Make vim recognize .md as markdown file
+autocmd BufNewFile,BufReadPost Rexfile set filetype=perl "Make vim recognize .md as markdown file
 autocmd FileType fish set commentstring=#%s
 autocmd FileType toml set commentstring=#%s
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown "Make vim recognize .md as markdown file
