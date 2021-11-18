@@ -162,6 +162,8 @@ set foldmethod=marker
 "Since vim will run some bash commands on startup, so make sure shell is POSIX
 "compatible.Mac has this but not /usr/bin/bash
 set shell=/bin/bash
+set iskeyword+=-
+set iskeyword+=_
 syntax enable
 " Temp for creating plugin
 "set verbosefile=verbose.txt
@@ -601,6 +603,8 @@ function! ToggleFoldSearch()
         set foldopen+=search
     endif
 endf
+nnoremap <leader>te <cmd>TroubleToggle lsp_workspace_diagnostics<CR>
+nnoremap <leader>ee <cmd>Trouble<CR>
 nnoremap <leader>tf :call ToggleFoldSearch()<CR>
 nnoremap <leader>tc :TSContextToggle<CR>
 nnoremap <leader>tu :UndotreeToggle<CR>

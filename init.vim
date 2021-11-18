@@ -73,6 +73,7 @@ use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
   --use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   use 'sindrets/diffview.nvim'
   -- ************  MISC/AESTHETICS  ************
+  use {'folke/trouble.nvim', requires = 'kyazdani42/nvim-web-devicons'}
   use 'windwp/nvim-autopairs'
   use {
       "folke/zen-mode.nvim",
@@ -167,11 +168,11 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
    -- Enable underline, use default values
    underline = true,
    -- Enable virtual text only on Warning or above, override spacing to 2
---   virtual_text = {
---     spacing = 2,
---     severity_limit = "Warning",
---   },
-   virtual_text = false,
+   virtual_text = {
+     spacing = 2,
+     severity_limit = "Warning",
+   },
+--   virtual_text = false,
    signs = true,
    update_in_insert = false,
  }
@@ -767,6 +768,8 @@ require('nvim-web-devicons').setup{default = true}
 require('nvim-autopairs').setup({
   enable_check_bracket_line = true
 })
+require('trouble').setup{
+}
 --require("nvim-autopairs.completion.compe").setup({
 --  map_cr = true, --  map <CR> on insert mode
 --  map_complete = true -- it will auto insert `(` after select function or method item
