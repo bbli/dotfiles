@@ -147,12 +147,17 @@
 ;;   )
 (after! org
         ;; (add-to-list 'org-font-lock-extra-keywords '("^" benson/emphasis-box-face))
-        (add-to-list 'org-emphasis-alist '("_" (:inherit org-code :height 1.5)))
-        (add-to-list 'org-emphasis-alist '("=" (:inherit org-verbatim :height 1.1 :box nil)))
+        (add-to-list 'org-emphasis-alist '("_" (:inherit org-code :height 1.3)))
+        (add-to-list 'org-emphasis-alist '("=" (:inherit org-verbatim :height 0.9 :box nil)))
         (push '(tags-tree . local) org-show-context-detail)
         (add-hook 'org-agenda-after-show-hook 'org-tree-to-indirect-buffer)
         (map! :map org-mode-map "C-h" nil "C-a" nil "o" nil "O" nil)
 )
+(add-hook 'org-mode-hook
+          (lambda ()
+            (font-lock-add-keywords
+             nil
+             '(("^-\\{5,\\}"  0 '(:foreground "green" :weight bold))))))
 ;; TODO:
 ;(let (org-agenda-files `(,(buffer-file-name)))
   ;;; STUFF

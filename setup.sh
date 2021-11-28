@@ -58,6 +58,7 @@ curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
 sudo pacman -S ctags
 sudo pacman -S starship
 sudo pacman -S clang
+sudo pacman -S neovim
 # ************  YAY SETUP  ************
 cd
 mkdir Software
@@ -73,3 +74,11 @@ yay --noconfirm --answerdiff=None nerd-fonts-source-code-pro
 # ************  PIP SOFTWARE  ************{{{1
 sudp pacman -S python-pip
 pip install cmake-language-server
+
+# ************  INSTALL TREESITTER(vim command line)  ************{{{1
+nvim -c ':TSInstall cmake' \
+-c ':TSInstall cpp' \
+-c ':TSInstall vim' \
+-c ':TSInstall rust' \
+-c ':TSInstall fish'
+-c ':qa'
