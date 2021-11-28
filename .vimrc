@@ -225,6 +225,12 @@ call plug#begin('~/.vim/plugged')
 " Plug '~/Dropbox/Code/Projects/my_plugin', {'do': ':UpdateRemotePlugins'}
 "Plug 'ripxorip/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
 
+"Vim Testing Frameworks
+"---
+Plug 'dhruvasagar/vim-testify' "Vimscript unit testing
+Plug 'junegunn/vader.vim' "Vimscript integration testing
+Plug 'tpope/vim-scriptease' "Vimscript error messages can be jumped to in the quickfix list
+Plug 'LucHermitte/lh-vim-lib' "For the logging library + C++ algorithms in Vimscript -> loggin to quickfix kills space though?
 "Visual
 "---
 " Plug 'vim-airline/vim-airline'
@@ -316,7 +322,8 @@ Plug 'ludovicchabant/vim-gutentags' "Vista auto does this
 
 "Terminal Interactions
 "---
-Plug 'vim-test/vim-test'
+" Plug 'vim-test/vim-test'
+Plug 'bbli/vim-test'
 " Plug 'rcarriga/vim-ultest', { 'do': ':UpdateRemotePlugins' } "Not working atm(and probably only works with correct errorformat. ALSO NOTE I ADDING LOGGING TO THE PLUGIN ITSELF
 "Plug 'alepez/vim-gtest' "Hardcodes certain things
 "If I want to explicitly choose the window for vim test
@@ -575,6 +582,8 @@ nnoremap <leader>fe :RemoveAllButERRORLogs<CR>
 nnoremap <leader>ss :TestNearest<CR>
 nnoremap <leader>sl :TestLast<CR>
 nnoremap <leader>sf :TestFile<CR>
+nnoremap <leader>sp :TestSuite<CR>
+nnoremap <leader>sm :Messages<CR>
 " vim test also integrates with projectionist plugin
 "let g:VimuxUseNearest=1
 "nnoremap <leader>sp :VimuxOpenRunner<CR>
@@ -990,6 +999,27 @@ autocmd FileType perl set iskeyword+=$
 autocmd FileType perl set iskeyword+=@-@
 autocmd FileType perl set iskeyword+=%
 
+
+" au BufReadPost quickfix :call ConcealPath() 
+nnoremap <leader>cp :call ToggleConcealPath()<CR>
+let s:quickfix_path_conceal = v:false
+function ToggleConcealPath()
+    if s:quickfix_path_conceal
+        let s:quickfix_path_conceal = v:false
+       setlocal conceallevel=0
+   else
+       let s:quickfix_path_conceal = v:true
+       syntax match ConcealedPath /\v^\/[^|]*\// conceal cchar=&
+       setlocal conceallevel=2
+       setlocal concealcursor=nvic
+   endif
+endfunction
+
+augroup quickfix
+    autocmd!
+    autocmd FileType qf setlocal wrap
+augroup END
+
 nnoremap <leader>is Bi$<ESC>W
 nnoremap <leader>ia Bi@<ESC>W
 nnoremap <leader>ih Bi%<ESC>W
@@ -1317,3 +1347,5 @@ let test#custom_runners = {'cpp': ['catch2']}
 " endf
 " inoremap <expr> <leader><leader>r ToggleValue()
 " nnoremap <expr> <leader><leader>r ToggleValue()
+" nnoremap <unique> <leader>rt :TestifyFile<CR> "vim-test already
+" covers this

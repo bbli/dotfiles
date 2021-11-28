@@ -154,6 +154,7 @@ end
 
 fish_add_path -a ~/.emacs.d/bin
 fish_add_path -a ~/perl5/bin
+fish_add_path -a ~/.gem/ruby/3.0.0/bin
 # ************** SOURCE **************{{{1
 switch (uname)
     case Linux
