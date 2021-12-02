@@ -162,7 +162,7 @@ set foldmethod=marker
 "Since vim will run some bash commands on startup, so make sure shell is POSIX
 "compatible.Mac has this but not /usr/bin/bash
 set shell=/bin/bash
-set iskeyword+=-
+" set iskeyword+=- "Since arrow operator begins with this
 set iskeyword+=_
 syntax enable
 " Temp for creating plugin
@@ -249,7 +249,7 @@ Plug 'rakr/vim-one'
 "---
 " For renaming tabs
 Plug 'gcmt/taboo.vim'
-Plug 'google/vim-searchindex'
+" Plug 'google/vim-searchindex' "Apparantly causes issues with GitRipGrep atm
 " Below Plugin not that useful since I can use tabs for that purpose
 "Plug 'troydm/zoomwintab.vim'
 Plug 'osyo-manga/vim-over'
@@ -356,7 +356,7 @@ Plug 'airblade/vim-gitgutter'
 
 "Snippets
 "---
-Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips', {'for': ['rust', 'cpp', 'vim', 'lua','python','sh','cmake','go','fish','perl']}
 Plug 'honza/vim-snippets'
 " Plug 'dawikur/algorithm-mnemonics.vim'
 
@@ -854,7 +854,8 @@ inoremap { {<c-g>u
 inoremap [ [<c-g>u
 
 imap <C-f> <plug>(fzf-complete-path)
-imap <C-l> <C-x><C-l>
+" imap <C-l> <C-x><C-l> "move one character over is used more and has same
+" mapping
 "inoremap " ""<left>
 "inoremap ' ''<left>
 "inoremap ( ()<left>

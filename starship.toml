@@ -37,5 +37,6 @@ truncation_length = 4
 [character]
 success_symbol = "[➜](bold green)" 
 
-[git_status]
-diverged = " $count "
+# [git_status]
+# not working on kitty atm?
+# diverged = " $count "

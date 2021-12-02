@@ -148,7 +148,7 @@
 (after! org
         ;; (add-to-list 'org-font-lock-extra-keywords '("^" benson/emphasis-box-face))
         (add-to-list 'org-emphasis-alist '("_" (:inherit org-code :height 1.3)))
-        (add-to-list 'org-emphasis-alist '("=" (:inherit org-verbatim :height 0.9 :box nil)))
+        (add-to-list 'org-emphasis-alist '("=" (:inherit org-verbatim :height 0.85 :box nil)))
         (push '(tags-tree . local) org-show-context-detail)
         (add-hook 'org-agenda-after-show-hook 'org-tree-to-indirect-buffer)
         (map! :map org-mode-map "C-h" nil "C-a" nil "o" nil "O" nil)
