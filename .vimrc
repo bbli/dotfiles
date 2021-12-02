@@ -420,8 +420,8 @@ nmap <leader>qn <Plug>(qf_newer)
 nmap <leader>qN <Plug>(qf_older)
 nmap <leader>qq <Plug>(qf_qf_switch)
 " Don't apply g when substituting
-" nnoremap <leader>qr :OverCommandLine<CR>cdo s/
-nnoremap <leader>qr :cdo s/
+nnoremap <leader>qr :OverCommandLine<CR>cdo s/
+" nnoremap <leader>qr :cdo s/
 
 " coc's version is more useful as it will generate based on file path, not current
 " directory
@@ -434,9 +434,9 @@ nnoremap <leader>bs <C-^>
 nnoremap <silent> <leader>bk :bwipeout<CR>
 nnoremap <leader>bm :ZenMode<CR>
 nnoremap <leader>bb <cmd>Telescope buffers<cr>
-" nnoremap <leader>br :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
-nnoremap <leader>br :%s/\<<C-r><C-w>\>/
-"nnoremap <leader>bm :OverCommandLine<CR>g/\<<C-r><C-w>\>/norm! @m<CR>
+nnoremap <leader>br :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
+" nnoremap <leader>br :%s/\<<C-r><C-w>\>/
+nnoremap <leader>bm :OverCommandLine<CR>g/\<<C-r><C-w>\>/norm! @m<CR>
 
 " ---Edit Related---{{{2
 "  stuff
@@ -500,10 +500,10 @@ nmap <leader>gN <Plug>(GitGutterPrevHunk)
 " nmap <leader>gf :GitGutterFold<CR>
 " nmap <leader>go <Plug>(git-messenger)
 nmap <leader>gl :Gclog<CR>
-" nnoremap <unique> <leader>gc :OverCommandLine<CR>:Glog --grep=
-nnoremap <unique> <leader>gc :Gclog --grep=
-" nnoremap <unique> <leader>gs :OverCommandLine<CR>:Glog -S
-nnoremap <unique> <leader>gs :Gclog -S
+nnoremap <unique> <leader>gc :OverCommandLine<CR>:Glog --grep=
+" nnoremap <unique> <leader>gc :Gclog --grep=
+nnoremap <unique> <leader>gs :OverCommandLine<CR>:Glog -S
+" nnoremap <unique> <leader>gs :Gclog -S
 nnoremap <unique> <leader>gf :Gclog -- %<CR>
 " Above is better b/c if commit on another branch -> will have a name
 "nmap <leader>gl :VTerm<CR>git tree<CR>
@@ -561,12 +561,12 @@ command! -bang -nargs=* GGrep
             \   {'dir': systemlist('git rev-parse --show-toplevel')[0]}, <bang>0)
 
 
-" nnoremap <leader>ff :OverCommandLine<CR>GitRipGrep 
-nnoremap <leader>ff :GitRipGrep 
-" nnoremap <leader>fa :OverCommandLine<CR>RipGrep 
-nnoremap <leader>fa :RipGrep 
-" nnoremap <leader>fw :OverCommandLine<CR>Ggrep <C-r><C-w><CR>
-nnoremap <leader>fw :Ggrep <C-r><C-w><CR>
+nnoremap <leader>ff :OverCommandLine<CR>GitRipGrep 
+" nnoremap <leader>ff :GitRipGrep 
+nnoremap <leader>fa :OverCommandLine<CR>RipGrep 
+" nnoremap <leader>fa :RipGrep 
+nnoremap <leader>fw :OverCommandLine<CR>Ggrep <C-r><C-w><CR>
+" nnoremap <leader>fw :Ggrep <C-r><C-w><CR>
 nnoremap <leader>fl :RemoveAllButClass 
 nnoremap <leader>fe :RemoveAllButERRORLogs<CR>
 
