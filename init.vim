@@ -89,6 +89,7 @@ use {'tversteeg/registers.nvim'}
       --require('nvim-web-devicons').setup{default = true}
       --end
       }
+  use 'folke/lsp-colors.nvim'
   --use {
 --      "folke/twilight.nvim",
  --     config = function() require("twilight").setup { } end

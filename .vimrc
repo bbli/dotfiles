@@ -568,22 +568,24 @@ nnoremap <leader>fa :OverCommandLine<CR>RipGrep
 " nnoremap <leader>fa :RipGrep 
 nnoremap <leader>fw :OverCommandLine<CR>Ggrep <C-r><C-w><CR>
 " nnoremap <leader>fw :Ggrep <C-r><C-w><CR>
-nnoremap <leader>fl :RemoveAllButClass 
-nnoremap <leader>fe :RemoveAllButERRORLogs<CR>
+autocmd FileType log nnoremap <leader>ll :RemoveAllButClass 
+autocmd FileType log nnoremap <leader>le :RemoveAllButERRORLogs<CR>
 
 " :'<,'>norm! @a to apply the macro only to a visual selection
 " (hit : in visual mode to switch to command mode)
 
 
 
-" ---Compling/Running Related---{{{2
+" ---Compling/Running/Project Related---{{{2
 "TODO: change prefix to 'r' or 'p' for run/project?
 "nnoremap <leader>sp :SlimuxREPLConfigure<CR>
 "nnoremap <leader>ss :SlimuxShellRun
-nnoremap <leader>ss :TestNearest<CR>
-nnoremap <leader>sl :TestLast<CR>
-nnoremap <leader>sf :TestFile<CR>
-nnoremap <leader>sp :TestSuite<CR>
+nnoremap <leader>pe <cmd>TroubleToggle lsp_workspace_diagnostics<CR>
+nnoremap <leader>pp :TestNearest<CR>
+nnoremap <leader>pl :TestLast<CR>
+nnoremap <leader>pf :TestFile<CR>
+nnoremap <leader>ps :TestSuite<CR>
+
 nnoremap <leader>sm :Messages<CR>
 " vim test also integrates with projectionist plugin
 "let g:VimuxUseNearest=1
@@ -620,8 +622,6 @@ function! ToggleFoldSearch()
         set foldopen+=search
     endif
 endf
-nnoremap <leader>te <cmd>TroubleToggle lsp_workspace_diagnostics<CR>
-nnoremap <leader>ee <cmd>Trouble<CR>
 nnoremap <leader>tf :call ToggleFoldSearch()<CR>
 nnoremap <leader>tc :TSContextToggle<CR>
 nnoremap <leader>tu :UndotreeToggle<CR>
