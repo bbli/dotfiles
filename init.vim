@@ -53,7 +53,7 @@ use {'tversteeg/registers.nvim'}
   -- tagbar/vista is better b/c it shows the current hovered function
   --use 'simrat39/symbols-outline.nvim'
   --use 'anott03/nvim-lspinstall'
-  --use 'nvim-lua/lsp-status.nvim'
+  use 'nvim-lua/lsp-status.nvim'
   -- ************  TREE SITTER  ************
   use {
       'nvim-treesitter/nvim-treesitter',
@@ -195,8 +195,8 @@ nnoremap <leader>jE <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <leader>fr <cmd>lua require('lspsaga.rename').rename()<CR>
 nnoremap <leader>fs <cmd>Telescope tags<cr>
 
-"nnoremap K <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
+nnoremap K <cmd>lua vim.lsp.buf.hover()<CR>
+" nnoremap K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
 nnoremap <leader>k <cmd>lua vim.lsp.buf.signature_help()<CR> "Don't really understand this
 nnoremap <silent> ls <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
 
@@ -231,112 +231,114 @@ vnoremap <silent><leader>ca :<C-U>lua require('lspsaga.codeaction').range_code_a
 
 autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
 
-" ************  Language Servers(needs to be before AutoComplete)  ************{{{1
+" ************  Language Servers  ************{{{1
 lua <<EOF
----- Rust Tools
---local opts = {
---      on_attach = lsp_status.on_attach,
---  capabilities = lsp_status.capabilities,
---    tools = { -- rust-tools options
---        autoSetHints = true,
---        hover_with_actions = true,
---
---        runnables = {
---            use_telescope = true
---            -- rest of the opts are forwarded to telescope
---        },
---
---        inlay_hints = {
---            show_parameter_hints = true,
---            parameter_hints_prefix = "<- ",
---            -- prefix for all the other hints (type, chaining)
---            other_hints_prefix = "=> ",
---        },
---
---        hover_actions = {
---            -- the border that is used for the hover window
---            -- see vim.api.nvim_open_win()
---            border = {
---                {"╭", "FloatBorder"}, {"─", "FloatBorder"},
---                {"╮", "FloatBorder"}, {"│", "FloatBorder"},
---                {"╯", "FloatBorder"}, {"─", "FloatBorder"},
---                {"╰", "FloatBorder"}, {"│", "FloatBorder"}
---            },
---
---            -- whether the hover action window gets automatically focused
---            -- default: false
---            auto_focus = false
---        }
---    },
---
---    -- all the opts to send to nvim-lspconfig
---    -- these override the defaults set by rust-tools.nvim
---    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
---    server = {
---        } -- rust-analyer options
---}
---require('rust-tools').setup(opts)
---
----- Lua Language Server
-----local sumneko_binary = "/usr/bin/lua-language-server"
-----local runtime_path = vim.split(package.path, ';')
-----table.insert(runtime_path, "lua/?.lua")
-----table.insert(runtime_path, "lua/?/init.lua")
-----require'lspconfig'.sumneko_lua.setup {
-----  cmd = {sumneko_binary},
-----  settings = {
-----    Lua = {
-----      runtime = {
-----        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-----        version = 'LuaJIT',
-----        -- Setup your lua path
-----        path = runtime_path,
-----      },
-----      diagnostics = {
-----        -- Get the language server to recognize the `vim` global
-----        globals = {'vim'},
-----      },
-----      workspace = {
-----        -- Make the server aware of Neovim runtime files
-----        library = vim.api.nvim_get_runtime_file("", true),
-----      },
-----      -- Do not send telemetry data containing a randomized but unique identifier
-----      telemetry = {
-----        enable = false,
-----      },
-----    },
-----  },
-----}
-----perl
---local util = require 'lspconfig/util'
---require'lspconfig'.perlpls.setup{
---    cmd = { "pls" },
---    filetypes = { "perl" },
---    --root_dir = ".",
--- root_dir = function(fname)
---      return util.root_pattern(".git")(fname) or vim.fn.getcwd()    
---      end,
---    settings = {
---      perl = {
---        perlcritic = {
---          enabled = true
---        }
---      }
---  }
---}
---require'lspconfig'.perlls.setup{
---    cmd = { "perl", "-MPerl::LanguageServer", "-e", "Perl::LanguageServer::run", "--", "--port 13603", "--nostdio 0", "--version 2.1.0" },
---    filetypes = { "perl" },
-----    root_dir = ".",
---    settings = {
---      perl = {
---        fileFilter = { ".pm", ".pl" },
---        ignoreDirs = ".git",
---        perlCmd = "perl",
---        perlInc = " "
---      }
---  }
---}
+-- General
+local lsp_status = require('lsp-status')
+lsp_status.register_progress()
+local temp = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local new_default_capbilities = vim.tbl_extend('keep',temp , lsp_status.capabilities)
+local new_default_on_attach = lsp_status.on_attach
+--clangd
+require'lspconfig'.clangd.setup{
+    on_attach = new_default_on_attach,
+    capabilities = new_default_capabilities,
+}
+--cmake
+require'lspconfig'.cmake.setup{
+    on_attach = new_default_on_attach,
+    capabilities = new_default_capabilities,
+}
+
+--vimls
+require'lspconfig'.vimls.setup{
+    on_attach = new_default_on_attach,
+    capabilities = new_default_capabilities,
+}
+
+-- Rust Tools
+require('rust-tools').setup({
+    server = {
+        on_attach = new_default_on_attach,
+        capabilities = new_default_capabilities,
+    }
+
+})
+
+-- Lua Language Server
+local sumneko_binary = "/usr/bin/lua-language-server"
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
+require'lspconfig'.sumneko_lua.setup {
+  cmd = {sumneko_binary},
+    on_attach = new_default_on_attach,
+    capabilities = new_default_capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+        -- Setup your lua path
+        path = runtime_path,
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = {'vim'},
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}
+--perl
+local util = require 'lspconfig/util'
+require'lspconfig'.perlpls.setup{
+    cmd = { "pls" },
+    on_attach = new_default_on_attach,
+    capabilities = new_default_capabilities,
+
+    filetypes = { "perl" },
+    --root_dir = ".",
+ root_dir = function(fname)
+      return util.root_pattern(".git")(fname) or vim.fn.getcwd()    
+      end,
+    settings = {
+      perl = {
+        perlcritic = {
+          enabled = true
+        }
+      }
+  }
+}
+require'lspconfig'.perlls.setup{
+    cmd = { "perl", "-MPerl::LanguageServer", "-e", "Perl::LanguageServer::run", "--", "--port 13603", "--nostdio 0", "--version 2.1.0" },
+    on_attach = new_default_on_attach,
+    capabilities = new_default_capabilities,
+
+    filetypes = { "perl" },
+--    root_dir = ".",
+    settings = {
+      perl = {
+        fileFilter = { ".pm", ".pl" },
+        ignoreDirs = ".git",
+        perlCmd = "perl",
+        perlInc = " "
+      }
+  }
+}
+
+--pylsp
+require'lspconfig'.pylsp.setup{
+    on_attach = new_default_on_attach,
+    capabilities = new_default_capabilities,
+}
 EOF
 " ************  TreeSitter  ************{{{1
 lua <<EOF
@@ -509,20 +511,6 @@ cmp.setup.cmdline(':', {
       { name = 'cmdline' }
     })
   })
-EOF
-
-" ************** LANGUAGE SERVER AUTOCOMPLETE INTEGRATION **************{{{1
-lua<<EOF
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  require('lspconfig')['clangd'].setup { capabilities = capabilities }
-  require('lspconfig')['cmake'].setup { capabilities = capabilities }
---  require('lspconfig')['vimls'].setup { capabilities = capabilities }
---  --require('lspconfig')['rust-tools'].setup { capabilities = capabilities }
---  --require('lspconfig')['sumneko_lua'].setup { capabilities = capabilities }
-  require('lspconfig')['pyright'].setup { capabilities = capabilities }
-  require('lspconfig')['perlpls'].setup { capabilities = capabilities }
-  require('lspconfig')['perlls'].setup { capabilities = capabilities }
 EOF
 
 lua << EOF
