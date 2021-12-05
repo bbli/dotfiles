@@ -358,6 +358,7 @@ Plug 'airblade/vim-gitgutter'
 "---
 Plug 'SirVer/ultisnips', {'for': ['rust', 'cpp', 'vim', 'lua','python','sh','cmake','go','fish','perl']}
 Plug 'honza/vim-snippets'
+" Plug 'quangnguyen30192/cmp-nvim-ultisnips', {'branch': 'main'}
 " Plug 'dawikur/algorithm-mnemonics.vim'
 
 "Latex

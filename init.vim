@@ -32,10 +32,13 @@ use {'tversteeg/registers.nvim'}
   --use 'hrsh7th/nvim-compe'
   --use 'andersevenrud/compe-tmux'
   --use {'weilbith/nvim-code-action-menu'} can't seem to get working
+  use 'andersevenrud/cmp-tmux'
   use'hrsh7th/cmp-nvim-lsp'
   use'hrsh7th/cmp-buffer'
   use'hrsh7th/cmp-path' -- kinda useless
   use'hrsh7th/cmp-cmdline' -- also kinda useless
+--  use 'hrsh7th/cmp-vsnip' -- make lsp status not show warnings
+--  use 'hrsh7th/vim-vsnip'
   use'hrsh7th/nvim-cmp'
   use {'quangnguyen30192/cmp-nvim-tags', requires = 'hrsh7th/nvim-cmp' }
   --use {'tzachar/cmp-fuzzy-buffer', requires = {'hrsh7th/nvim-cmp', 'tzachar/fuzzy.nvim'}}
@@ -444,7 +447,8 @@ lua <<EOF
     snippet = {
       -- REQUIRED - you must specify a snippet engine
       expand = function(args)
-        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+         vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+     --vim.fn["vsnip#anonymous"](args.body) 
       end,
     },
     mapping = {
@@ -471,6 +475,7 @@ lua <<EOF
       -- {name = 'tags', max_item_count = 6}, -- only turn on if no lsp
       {name = 'tmux', keyword_length = 2, max_item_count = 3},
       { name = 'path', keyword_length = 2, max_item_count = 3},
+    --{ name = 'vsnip', max_item_count = 3 },
     }),
     formatting = {
         format = require("lspkind").cmp_format({
