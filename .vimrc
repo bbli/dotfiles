@@ -58,7 +58,6 @@ command! -nargs=0 Format :call CocAction('format')
  " Remap keys for applying codeAction to the current buffer.
 nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
-"nmap <leader>qf  <Plug>(coc-fix-current)
 "" Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
 "nmap <silent> <TAB> <Plug>(coc-range-select)
 "xmap <silent> <TAB> <Plug>(coc-range-select)
@@ -228,7 +227,7 @@ call plug#begin('~/.vim/plugged')
 "Vim Testing Frameworks
 "---
 Plug 'dhruvasagar/vim-testify' "Vimscript unit testing
-Plug 'junegunn/vader.vim' "Vimscript integration testing
+" Plug 'junegunn/vader.vim' "Vimscript integration testing
 Plug 'tpope/vim-scriptease' "Vimscript error messages can be jumped to in the quickfix list
 Plug 'LucHermitte/lh-vim-lib' "For the logging library + C++ algorithms in Vimscript -> loggin to quickfix kills space though?
 "Visual
@@ -305,6 +304,7 @@ Plug 'tpope/vim-projectionist' "This plugin also helps in setting file local var
 Plug 'bbli/tagbar' "for changing tagbar highlight to IncSearch
 Plug 'liuchengxu/vista.vim' "Doesn't work on mac?
 Plug 'ludovicchabant/vim-gutentags' "Vista auto does this
+"Plug 'm-pilia/vim-ccls'
 "Plug 'roxma/nvim-yarp'
 "Plug 'ncm2/ncm2'
 "Plug 'ncm2/ncm2-ultisnips'
@@ -331,14 +331,14 @@ Plug 'bbli/vim-test'
 " For asynchronous make builds + supposedly help vim-test out regardless
 " if chosen as strategy
 Plug 'tpope/vim-dispatch'
-"Plug 'neomake/neomake'
+" Plug 'neomake/neomake'
 Plug 'mattboehm/vim-unstack'
 "Plug 'benmills/vimux'
 Plug 'jpalardy/vim-slime', { 'branch': 'main'} "useful for creating specific state in script for profiling
 " used by vim-test. NOTE YOU HAVE TO LET IT CREATE THE INITAL WINDOW
 Plug 'christoomey/vim-tmux-runner'
-"Plug 'skywind3000/asynctasks.vim'
-"Plug 'skywind3000/asyncrun.vim'
+" Plug 'skywind3000/asynctasks.vim'
+Plug 'skywind3000/asyncrun.vim'
 
 "Git
 "---
@@ -417,7 +417,11 @@ nnoremap <leader>ec :sign unplace<CR>
 
 " nmap <leader>tq <Plug>(qf_qf_toggle)
 " nmap <unique> <leader>qq <Plug>(qf_qf_toggle)
+" Also OSL+j
 nmap <leader>qn <Plug>(qf_newer)
+" Also OSL +k
+let g:qf_mapping_ack_style = 1
+let g:qf_nowrap=0
 nmap <leader>qN <Plug>(qf_older)
 nmap <leader>qq <Plug>(qf_qf_switch)
 " Don't apply g when substituting
@@ -644,7 +648,7 @@ nmap <leader>tl <Plug>(qf_loc_toggle)
 " nmap <leader>jj <Plug>(coc-funcobj-a)
 
 " ---Jump Related---{{{2
-nmap <leader>jf <Plug>(coc-float-jump)
+" nmap <leader>jf <Plug>(coc-float-jump)
 nmap <leader>jq <Plug>(qf_qf_switch)
 nmap <leader>jd <Plug>(coc-definition)
 nmap <leader>ji <Plug>(coc-implementation)
@@ -1030,6 +1034,12 @@ nnoremap <leader>ih Bi%<ESC>W
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
 """"""""Plugin related variables""""""""{{{1
+" let g:neomake_open_list = 2
+" let g:yggdrasil_no_default_maps = 1
+" au FileType yggdrasil nmap <silent> <buffer> o <Plug>(yggdrasil-toggle-node)
+" au FileType yggdrasil nmap <silent> <buffer> <CR> <Plug>(yggdrasil-execute-node)
+"let g:ccls_log_file = expand('~/my_log_file.txt')
+
 " TODO:I still don't really understand the purpose of "type" key-value,but w.e
 let g:projectionist_heuristics = {
             \ '*' : {
@@ -1321,7 +1331,7 @@ let g:foldsearch_disable_mappings = 1
 "let g:filter_jump_strip_characters = ["_"]
 "highlight! link SearchCurrent Red
 "highlight! link SearchHighlights Green
-nmap s <Plug>(FilterJump)
+" nmap s <Plug>(FilterJump)
 "nmap f <Plug>(FilterJumpLineForward)
 "nmap F <Plug>(FilterJumpLineBackward)
 let g:filter_jump_keymaps = {
@@ -1354,3 +1364,4 @@ let test#custom_runners = {'cpp': ['catch2']}
 " VIM LOGGER
 " call lh#log#set_logger('qf')
 " lh#log#this()
+let g:test#again=0
