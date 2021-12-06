@@ -29,6 +29,7 @@ use {'tversteeg/registers.nvim'}
   use 'nvim-lua/plenary.nvim'
   -- ************  LSP STUFF  ************
   use 'neovim/nvim-lspconfig'
+--  use 'ldelossa/calltree.nvim'
   --use 'hrsh7th/nvim-compe'
   --use 'andersevenrud/compe-tmux'
   --use {'weilbith/nvim-code-action-menu'} can't seem to get working
@@ -200,6 +201,8 @@ nnoremap <leader>fr <cmd>lua require('lspsaga.rename').rename()<CR>
 nnoremap <leader>fs <cmd>Telescope tags<cr>
 
 nnoremap K <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <leader>jj <cmd>lua vim.lsp.buf.outgoing_calls()<CR>
+nnoremap <leader>jR <cmd>lua vim.lsp.buf.incoming_calls()<CR> "though references is better -> will also show from test files too
 " nnoremap K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
 nnoremap <leader>k <cmd>lua vim.lsp.buf.signature_help()<CR> "Don't really understand this
 nnoremap <silent> ls <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
@@ -238,16 +241,26 @@ autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
 " ************  Language Servers  ************{{{1
 lua <<EOF
 -- General
+--require('calltree').setup({})
 local lsp_status = require('lsp-status')
 lsp_status.register_progress()
 local temp = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-local new_default_capbilities = vim.tbl_extend('keep',temp , lsp_status.capabilities)
+local new_default_capabilities = vim.tbl_extend('keep',temp , lsp_status.capabilities)
 local new_default_on_attach = lsp_status.on_attach
 --clangd
 require'lspconfig'.clangd.setup{
     on_attach = new_default_on_attach,
     capabilities = new_default_capabilities,
 }
+--require'lspconfig'.ccls.setup {
+--    on_attach = new_default_on_attach,
+--    capabilities = new_default_capabilities,
+--  init_options = {
+--    cache = {
+--      directory = ".ccls-cache";
+--    };
+--  }
+--}
 --cmake
 require'lspconfig'.cmake.setup{
     on_attach = new_default_on_attach,
@@ -754,9 +767,9 @@ require'qf_helper'.setup({
 })
 EOF
 " ************** Compiling/Running/Terminal Interaction **************{{{1
-nnoremap <leader>pp <cmd>lua require('telescope').extensions.asynctasks.all()<CR>
-nnoremap <leader>pi <cmd>AsyncTaskMacro<CR>
-nnoremap <localleader>a :AsyncTaskEdit<CR>
+" nnoremap <leader>pp <cmd>lua require('telescope').extensions.asynctasks.all()<CR>
+" nnoremap <leader>pi <cmd>AsyncTaskMacro<CR>
+" nnoremap <localleader>a :AsyncTaskEdit<CR>
 " ************  Rest  ************{{{1
 lua << EOF
 require('nvim-web-devicons').setup{default = true}
