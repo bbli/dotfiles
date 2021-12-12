@@ -30,9 +30,6 @@ use {'tversteeg/registers.nvim'}
   -- ************  LSP STUFF  ************
   use 'neovim/nvim-lspconfig'
 --  use 'ldelossa/calltree.nvim'
-  --use 'hrsh7th/nvim-compe'
-  --use 'andersevenrud/compe-tmux'
-  --use {'weilbith/nvim-code-action-menu'} can't seem to get working
   use 'andersevenrud/cmp-tmux'
   use'hrsh7th/cmp-nvim-lsp'
   use'hrsh7th/cmp-buffer'
@@ -50,9 +47,10 @@ use {'tversteeg/registers.nvim'}
       --branch = 'coq'}
   --use {'ms-jpq/coq.artifacts', 
       --branch = 'artifacts'}
-  use 'glepnir/lspsaga.nvim'
+  --use 'glepnir/lspsaga.nvim'
   use 'kosayoda/nvim-lightbulb'
   use 'simrat39/rust-tools.nvim'
+  use 'bbli/nvim-code-action-menu' --Need docs on how to make customize -> specifically larger floating window by default
   --use "ray-x/lsp_signature.nvim" "I prefer snippet solution better as it doesn't clutter the above line
   -- tagbar/vista is better b/c it shows the current hovered function
   --use 'simrat39/symbols-outline.nvim'
@@ -197,7 +195,7 @@ nnoremap <leader>ji <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <leader>je <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 nnoremap <leader>jE <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 
-nnoremap <leader>fr <cmd>lua require('lspsaga.rename').rename()<CR>
+nnoremap <leader>fr <cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <leader>fs <cmd>Telescope tags<cr>
 
 nnoremap K <cmd>lua vim.lsp.buf.hover()<CR>
@@ -205,7 +203,7 @@ nnoremap <leader>jj <cmd>lua vim.lsp.buf.outgoing_calls()<CR>
 nnoremap <leader>jR <cmd>lua vim.lsp.buf.incoming_calls()<CR> "though references is better -> will also show from test files too
 " nnoremap K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
 nnoremap <leader>k <cmd>lua vim.lsp.buf.signature_help()<CR> "Don't really understand this
-nnoremap <silent> ls <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
+" nnoremap <silent> ls <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
 
 "nnoremap <leader>wa <cmd>lua vim.lsp.buf.add_workspace_folder()<CR>
 "nnoremap <leader>wl <cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>
@@ -232,8 +230,9 @@ nnoremap <leader>lr :LspRestart<CR>
 "autocmd BufWritePre *.js lua vim.lsp.buf.formatting_sync(nil, 100)
 "autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting_sync(nil, 100)
 "autocmd BufWritePre *.py lua vim.lsp.buf.formatting_sync(nil, 100)
-nnoremap <silent><leader>ca <cmd>lua require('lspsaga.codeaction').code_action()<CR>
-vnoremap <silent><leader>ca :<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>
+" nnoremap <leader>ca <cmd>Telescope lsp_code_actions<CR>
+nnoremap <leader>ca <cmd>CodeActionMenu<CR>
+vnoremap <leader>ca <cmd>CodeActionMenu<CR>
 "nnoremap <leader>fc <cmd>lua require'telescope.builtin'.lsp_workspace_symbols{prompt_prefix=" ", default_text=" :class: "}<CR>
 
 autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
@@ -774,7 +773,8 @@ EOF
 lua << EOF
 require('nvim-web-devicons').setup{default = true}
 require('nvim-autopairs').setup({
-  enable_check_bracket_line = true
+  enable_check_bracket_line = true,
+disable_filetype = { "TelescopePrompt" , "guihua", "guihua_rust", "clap_input" },
 })
 require('trouble').setup{
 }
@@ -789,8 +789,8 @@ EOF
 " nnoremap <leader>ha <cmd>lua require("harpoon.mark").add_file()<CR>
 " nnoremap <leader>hs <cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>
 " ************  TODO  ************{{{1
-nnoremap <silent> <A-t> :Lspsaga open_floaterm<CR>
-tnoremap <silent> <A-t> <C-\><C-n>:Lspsaga close_floaterm<CR>
+" nnoremap <silent> <A-t> :Lspsaga open_floaterm<CR>
+" tnoremap <silent> <A-t> <C-\><C-n>:Lspsaga close_floaterm<CR>
 " TODO: better than fzf but I seriously need to change the locking
 " behavior
 nnoremap <leader>oa <cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' , '-g', '!node_modules'}})<cr>

@@ -6,6 +6,8 @@ function chk -d "Checkout local git branch, sorted by recent"
 end
 # Assumes you have already created a new tmux window which opens in the same directory as the previous pane
 # Also if no number given -> just chekout as regular worktree [DONE]
+
+# BENSON: remember to check out locally first ->> so don't create "nested" directories
 function create_worktree #-a name number
     if test (count $argv) = 2
         set -l branch_name $argv[1]
@@ -29,6 +31,7 @@ function create_worktree #-a name number
     end
 end
 
+# BENSON: has to be manually since (git rev-parse --git-dir)/.. will just go to original repo
 function delete_worktree
     # 1. first cd to proj root
     cd (git rev-parse --git-dir)/..
