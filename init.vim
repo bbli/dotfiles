@@ -55,7 +55,8 @@ use {'tversteeg/registers.nvim'}
   -- tagbar/vista is better b/c it shows the current hovered function
   --use 'simrat39/symbols-outline.nvim'
   --use 'anott03/nvim-lspinstall'
-  use 'nvim-lua/lsp-status.nvim'
+  --use 'nvim-lua/lsp-status.nvim'
+  use 'bbli/lsp-status.nvim' -- until I switch over to neovim 0.6
   -- ************  TREE SITTER  ************
   use {
       'nvim-treesitter/nvim-treesitter',
