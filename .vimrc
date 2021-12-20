@@ -632,7 +632,21 @@ nnoremap <leader>tu :UndotreeToggle<CR>
 nnoremap <leader>tt :TagbarToggle<CR>
 "nnoremap <leader>ts :set spell!<CR>
 nnoremap <leader>ts :FloatermToggle<CR>
-nnoremap <leader>tn :NERDTreeToggle<CR>
+let s:nerdtree_open = 0
+function! ToggleNerdTree()
+    " NOTE: an aside, but notice that we have the choice here of setting
+    " before activating or vice versa -> from RLE
+    if s:nerdtree_open
+        let s:nerdtree_open = 0
+        echom "close"
+        execute "NERDTreeToggle"
+    else
+        let s:nerdtree_open = 1
+        echom "open"
+        execute "NERDTreeFind"
+    endif
+endf
+nnoremap <leader>tn :call ToggleNerdTree()<CR>
 "nnoremap <leader>tp :set paste!<CR>
 
 "nnoremap <leader>ti :IndentGuidesToggle<CR>
@@ -993,6 +1007,7 @@ colorscheme edge
 " ************** AUTOCOMMANDS **************{{{1
 autocmd BufNewFile,BufReadPost *.fish set filetype=fish "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost Rexfile set filetype=perl "Make vim recognize .md as markdown file
+autocmd BufNewFile,BufReadPost *.t set filetype=perl "Make vim recognize .t as perl test file
 autocmd FileType fish set commentstring=#%s
 autocmd FileType toml set commentstring=#%s
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown "Make vim recognize .md as markdown file
