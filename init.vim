@@ -19,6 +19,12 @@ require('packer').startup(function()
       'GustavoKatel/telescope-asynctasks.nvim',
       requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope.nvim'}}
       }
+use { "AckslD/nvim-neoclip.lua", 
+    requires = { 
+        {'tami5/sqlite.lua', module = 'sqlite'},
+        {'nvim-telescope/telescope.nvim'},
+    },
+}
 
   use {'stevearc/qf_helper.nvim'} --location tracking not working atm, but useful for toggling with no entries
 use {'tversteeg/registers.nvim'}
@@ -621,6 +627,35 @@ require('telescope').setup{
   }
 }
 require('telescope').load_extension('fzf')
+require('telescope').load_extension('neoclip')
+require('neoclip').setup({
+      history = 50,
+      enable_persistant_history = true,
+      db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
+      filter = nil,
+      preview = true,
+      default_register = '"',
+      content_spec_column = false,
+      on_paste = {
+        set_reg = false,
+      },
+      keys = {
+        telescope = {
+          i = {
+            select = '<cr>',
+            paste = '<c-f>',
+            paste_behind = '<c-h>',
+            custom = {},
+          },
+          n = {
+            select = '<c-f>',
+            paste = 'p',
+            paste_behind = 'P',
+            custom = {},
+          },
+        },
+      },
+    })
 EOF
 " ************  Debugger  ************{{{1
 " lua <<EOF
@@ -805,7 +840,7 @@ nnoremap <M-;> <cmd>Telescope commands<cr>
 " TODO: Telescope way better here compared to FZF b/c of preview  -> Harpoon will probably replace though
 nnoremap <leader>ul <cmd>Telescope marks<cr>
 "TODO: why is the below  not filtering?
-nnoremap <leader>or <cmd>Telescope registers<cr>
+nnoremap <leader>or <cmd>Telescope neoclip<cr>
 nnoremap <leader>om <cmd>Telescope help_tags<cr>
 
 " These will check out the selected commit/branch
