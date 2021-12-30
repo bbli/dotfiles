@@ -849,6 +849,7 @@ nnoremap <M-;> <cmd>Telescope commands<cr>
 nnoremap <leader>ul <cmd>Telescope marks<cr>
 "TODO: why is the below  not filtering?
 nnoremap <leader>or <cmd>Telescope neoclip<cr>
+nnoremap <leader>oy <cmd>Telescope neoclip<cr>
 nnoremap <leader>om <cmd>Telescope help_tags<cr>
 
 " These will check out the selected commit/branch
