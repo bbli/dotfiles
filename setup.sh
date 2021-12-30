@@ -80,5 +80,6 @@ nvim -c ':TSInstall cmake' \
 -c ':TSInstall cpp' \
 -c ':TSInstall vim' \
 -c ':TSInstall rust' \
+-c ':TSInstall haskell' \
 -c ':TSInstall fish'
 -c ':qa'

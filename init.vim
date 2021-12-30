@@ -288,6 +288,14 @@ require('rust-tools').setup({
 
 })
 
+-- Haskell
+require'lspconfig'.hls.setup{
+    server = {
+    on_attach = new_default_on_attach,
+    capabilities = new_default_capabilities,
+    } 
+}
+
 -- Lua Language Server
 local sumneko_binary = "/usr/bin/lua-language-server"
 local runtime_path = vim.split(package.path, ';')

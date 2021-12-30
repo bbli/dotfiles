@@ -547,8 +547,8 @@ nnoremap <leader>oc :Commands<CR>
 " nnoremap <leader>oi :HFiles<CR>
 " nnoremap <leader>ob :Files ../<CR>
 nnoremap <leader>oh :History<CR>
-nnoremap <leader>oy :CocList yank<CR>
 nnoremap <leader>or :Registers<CR>
+nnoremap <leader>oy :Registers<CR>
 " nnoremap <leader>op :CocList mru<CR>
 "nnoremap <leader><leader>oh :FZF ~<CR>
 
@@ -795,7 +795,7 @@ nnoremap <unique> ll $
 
 nnoremap <unique> C c$
 nnoremap <unique> D d$
-nnoremap <unique> Y y$
+nnoremap Y y$
 nnoremap <unique> E $
 nnoremap <unique> gE g$
 "nnoremap <unique> W 0w

@@ -18,6 +18,12 @@
 (package! poet-theme)
 (package! outshine)
 
+(package! gitconfig-mode
+	  :recipe (:host github :repo "magit/git-modes"
+			 :files ("gitconfig-mode.el")))
+(package! gitignore-mode
+	  :recipe (:host github :repo "magit/git-modes"
+			 :files ("gitignore-mode.el")))
 ; For EAF, though "s" and "deferred" seem to already be used by Doom
 (package! s)
 (package! deferred)
