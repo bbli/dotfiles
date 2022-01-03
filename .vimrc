@@ -356,7 +356,7 @@ Plug 'airblade/vim-gitgutter'
 
 "Snippets
 "---
-Plug 'SirVer/ultisnips', {'for': ['rust', 'cpp', 'vim', 'lua','python','sh','cmake','go','fish','perl']}
+Plug 'SirVer/ultisnips', {'for': ['rust', 'cpp', 'vim', 'lua','python','sh','cmake','go','fish','perl', 'haskell']}
 Plug 'honza/vim-snippets'
 " Plug 'quangnguyen30192/cmp-nvim-ultisnips', {'branch': 'main'}
 " Plug 'dawikur/algorithm-mnemonics.vim'
@@ -585,10 +585,11 @@ autocmd FileType log nnoremap <leader>le :RemoveAllButERRORLogs<CR>
 "nnoremap <leader>sp :SlimuxREPLConfigure<CR>
 "nnoremap <leader>ss :SlimuxShellRun
 nnoremap <leader>pe <cmd>TroubleToggle lsp_workspace_diagnostics<CR>
-nnoremap <leader>pp :TestNearest<CR>
-nnoremap <leader>pl :TestLast<CR>
-nnoremap <leader>pf :TestFile<CR>
-nnoremap <leader>ps :TestSuite<CR>
+nnoremap <leader>se <cmd>TroubleToggle lsp_workspace_diagnostics<CR>
+nnoremap <leader>ss :TestNearest<CR>
+nnoremap <leader>sl :TestLast<CR>
+nnoremap <leader>sf :TestFile<CR>
+nnoremap <leader>sp :TestSuite<CR>
 
 nnoremap <leader>sm :Messages<CR>
 " vim test also integrates with projectionist plugin
