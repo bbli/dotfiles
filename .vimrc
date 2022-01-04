@@ -248,6 +248,7 @@ Plug 'rakr/vim-one'
 "---
 " For renaming tabs
 Plug 'gcmt/taboo.vim'
+Plug 'dbakker/vim-projectroot'
 " Plug 'google/vim-searchindex' "Apparantly causes issues with GitRipGrep atm
 " Below Plugin not that useful since I can use tabs for that purpose
 "Plug 'troydm/zoomwintab.vim'
@@ -586,10 +587,10 @@ autocmd FileType log nnoremap <leader>le :RemoveAllButERRORLogs<CR>
 "nnoremap <leader>ss :SlimuxShellRun
 nnoremap <leader>pe <cmd>TroubleToggle lsp_workspace_diagnostics<CR>
 nnoremap <leader>se <cmd>TroubleToggle lsp_workspace_diagnostics<CR>
-nnoremap <leader>ss :TestNearest<CR>
-nnoremap <leader>sl :TestLast<CR>
-nnoremap <leader>sf :TestFile<CR>
-nnoremap <leader>sp :TestSuite<CR>
+nnoremap <leader>ss :ProjectRootExe TestNearest<CR>
+nnoremap <leader>sl :ProjectRootExe TestLast<CR>
+nnoremap <leader>sf :ProjectRootExe TestFile<CR>
+nnoremap <leader>sp :ProjectRootExe TestSuite<CR>
 
 nnoremap <leader>sm :Messages<CR>
 " vim test also integrates with projectionist plugin
