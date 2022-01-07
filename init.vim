@@ -293,7 +293,7 @@ require'lspconfig'.hls.setup{
     server = {
     on_attach = new_default_on_attach,
     capabilities = new_default_capabilities,
-    } 
+    }
 }
 
 -- Lua Language Server
