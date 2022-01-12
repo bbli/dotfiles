@@ -1,4 +1,8 @@
 # I will manually installed plugins
+# ************  Stuff to Manually Install on Old Linux Distros  ************{{{1
+# 1. fish
+# 2. fzf
+# 3. starship
 
 ## This part installs the nesscary software
 #apt update 
@@ -23,35 +27,36 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
 dotfiles_path=$HOME/Dropbox/Code/dotfiles
 #dotfiles_path=$HOME/dotfiles
 # This script will mostly just set up symbolic links
-ln -s "$dotfiles_path/.vimrc" ~/.vimrc
-ln -s "$dotfiles_path/.inputrc" ~/.inputrc
+ln -sf "$dotfiles_path/.vimrc" ~/.vimrc
+ln -sf "$dotfiles_path/.inputrc" ~/.inputrc
 ## ubuntu image already has a bashrc that sources the .bash_aliases file
-#ln -s "$dotfiles_path/.bashrc" ~/.bashrc
-ln -s "$dotfiles_path/.bash_aliases" ~/.bash_aliases
-ln -s "$dotfiles_path/.gitconfig" ~/.gitconfig
-ln -s "$dotfiles_path/.shell_prompt.sh" ~/.shell_prompt.sh
-ln -s "$dotfiles_path/.tmux.conf" ~/.tmux.conf
-ln -s "$dotfiles_path/config.fish" ~/.config/fish/config.fish
-ln -s "$dotfiles_path/kitty.conf" ~/.config/kitty/kitty.conf
+#ln -sf "$dotfiles_path/.bashrc" ~/.bashrc
+ln -sf "$dotfiles_path/.bash_aliases" ~/.bash_aliases
+ln -sf "$dotfiles_path/.gitconfig" ~/.gitconfig
+ln -sf "$dotfiles_path/.shell_prompt.sh" ~/.shell_prompt.sh
+ln -sf "$dotfiles_path/.tmux.conf" ~/.tmux.conf
+mv ~/.config/fish/config.fish ~/.config/fish/config.fish.old
+ln -sf "$dotfiles_path/config.fish" ~/.config/fish/config.fish
+ln -sf "$dotfiles_path/kitty.conf" ~/.config/kitty/kitty.conf
 
 mkdir -p ~/.vim
 mkdir -p ~/.vim/autoload
 mkdir -p ~/.vim/plugged
-ln -s "$dotfiles_path/plug.vim" ~/.vim/autoload/plug.vim
+ln -sf "$dotfiles_path/plug.vim" ~/.vim/autoload/plug.vim
 mkdir -p ~/.local/share/nvim/site/autoload
-ln -s "$dotfiles_path/plug.vim" ~/.local/share/nvim/site/autoload/plug.vim
-ln -s "$dotfiles_path/colors" ~/.vim/colors
+ln -sf "$dotfiles_path/plug.vim" ~/.local/share/nvim/site/autoload/plug.vim
+ln -sf "$dotfiles_path/colors" ~/.vim/colors
 
 #touch ~/.vim_config
 
 ### If neovim enabled
 mkdir -p ~/.config/nvim
-ln -s "$dotfiles_path/init.vim" ~/.config/nvim/init.vim
-ln -s "$dotfiles_path/init.lua" ~/.init.lua
-ln -s "$dotfiles_path/emacs/config.el" ~/.doom.d/config.el
-ln -s "$dotfiles_path/emacs/init.el" ~/.doom.d/init.el
-ln -s "$dotfiles_path/emacs/packages.el" ~/.doom.d/packages.el
-ln -s "$dotfiles_path/startship.toml" ~/.config/starship.toml
+ln -sf "$dotfiles_path/init.vim" ~/.config/nvim/init.vim
+ln -sf "$dotfiles_path/init.lua" ~/.init.lua
+ln -sf "$dotfiles_path/emacs/config.el" ~/.doom.d/config.el
+ln -sf "$dotfiles_path/emacs/init.el" ~/.doom.d/init.el
+ln -sf "$dotfiles_path/emacs/packages.el" ~/.doom.d/packages.el
+ln -sf "$dotfiles_path/startship.toml" ~/.config/starship.toml
 
 curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
