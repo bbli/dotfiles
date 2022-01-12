@@ -416,8 +416,8 @@ nnoremap <leader>ec :sign unplace<CR>
 "let g:qf_shorten_path = 0
 
 
-" nmap <leader>tq <Plug>(qf_qf_toggle)
-" nmap <unique> <leader>qq <Plug>(qf_qf_toggle)
+nmap <leader>tq <Plug>(qf_qf_toggle)
+nmap <unique> <leader>qq <Plug>(qf_qf_toggle)
 " Also OSL+j
 nmap <leader>qn <Plug>(qf_newer)
 " Also OSL +k

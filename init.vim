@@ -26,7 +26,7 @@ use { "AckslD/nvim-neoclip.lua",
     },
 }
 
-  use {'stevearc/qf_helper.nvim'} --location tracking not working atm, but useful for toggling with no entries
+  --use {'stevearc/qf_helper.nvim'} --location tracking not working atm, but useful for toggling with no entries
 use {'tversteeg/registers.nvim'}
 -- TODO: the issue with harpoon is that I need to show it on some UI
 --use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
@@ -533,17 +533,16 @@ lua <<EOF
       })
 
   -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-    completion = {
-        autocomplete = true,
-        },
-    sources = cmp.config.sources({
-      { name = 'path' },
-      { name = 'buffer' }
-    }, {
-      { name = 'cmdline' }
-    })
-  })
+--cmp.setup.cmdline(':', { completion = {
+--        autocomplete = true,
+--        },
+--    sources = cmp.config.sources({
+--      { name = 'path' },
+--      { name = 'buffer' }
+--    }, {
+--      { name = 'cmdline' }
+--    })
+--  })
 EOF
 
 lua << EOF
@@ -784,30 +783,9 @@ require('nvim-window').setup({
 EOF
 
 " ************** QuickFix **************{{{1
-nnoremap <leader>tq :QFToggle<CR>
+" nnoremap <leader>tq :QFToggle<CR>
 lua << EOF
 -- require('pqf').setup()
-require'qf_helper'.setup({
-  --prefer_loclist = true,       -- Used for QNext/QPrev (see Commands below)
-  sort_lsp_diagnostics = true, -- Sort LSP diagnostic results
-  quickfix = {
-    autoclose = true,          -- Autoclose qf if it's the only open window
-    default_bindings = true,   -- Set up recommended bindings in qf window
-    default_options = true,    -- Set recommended buffer and window options
-    max_height = 10,           -- Max qf height when using open() or toggle()
-    min_height = 1,            -- Min qf height when using open() or toggle()
-    track_location = 'cursor', -- Keep qf updated with your current location
-                               -- Use `true` to update position as well
-  },
-  loclist = {                  -- The same options, but for the loclist
-    autoclose = true,
-    default_bindings = true,
-    default_options = true,
-    max_height = 10,
-    min_height = 1,
-    track_location = 'cursor',
-  },
-})
 EOF
 " ************** Compiling/Running/Terminal Interaction **************{{{1
 " nnoremap <leader>pp <cmd>lua require('telescope').extensions.asynctasks.all()<CR>
