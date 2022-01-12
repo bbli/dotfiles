@@ -496,7 +496,7 @@ lua <<EOF
     { name = 'nvim_lsp', keyword_length = 2, max_item_count = 5 },
       --{ name = 'ultisnips' }, -- For ultisnips users.
       { name = 'buffer', keyword_length = 1, max_item_count = 5,
-          opts = {
+          option = {
                 keyword_pattern = [[\k\+]] -- lsp gettings sigils without this
               }
           },

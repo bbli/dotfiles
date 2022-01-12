@@ -1008,6 +1008,7 @@ colorscheme edge
 
 " ************** AUTOCOMMANDS **************{{{1
 autocmd BufNewFile,BufReadPost *.fish set filetype=fish "Make vim recognize .md as markdown file
+autocmd BufNewFile,BufReadPost xmobarrc set filetype=haskell "Make vim recognize xmobarrc as a haskell file
 autocmd BufNewFile,BufReadPost Rexfile set filetype=perl "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost *.t set filetype=perl "Make vim recognize .t as perl test file
 autocmd FileType fish set commentstring=#%s
