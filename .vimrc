@@ -406,7 +406,7 @@ let maplocalleader="-"
 " nnoremap <leader>l 40l
 " Override marks for now
 nnoremap <leader><leader>z :nohlsearch<CR>
-nnoremap <C-t> <C-z>
+" nnoremap <C-t> <C-z>
 " <C-^> switches between two files
 nnoremap <leader>el :UnstackFromTmux<CR>
 nnoremap <leader>ec :sign unplace<CR>
