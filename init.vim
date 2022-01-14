@@ -288,13 +288,13 @@ require('rust-tools').setup({
 
 })
 
--- Haskell
-require'lspconfig'.hls.setup{
-    server = {
-    on_attach = new_default_on_attach,
-    capabilities = new_default_capabilities,
-    }
-}
+-- Haskell: NOTE: turn off for now since doesn't really work with xmonad + uses a lot of memory
+--require'lspconfig'.hls.setup{
+--    server = {
+--    on_attach = new_default_on_attach,
+--    capabilities = new_default_capabilities,
+--    }
+--}
 
 -- Lua Language Server
 local sumneko_binary = "/usr/bin/lua-language-server"

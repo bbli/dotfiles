@@ -2,7 +2,9 @@
 # ************  Stuff to Manually Install on Old Linux Distros  ************{{{1
 # 1. fish
 # 2. fzf
-# 3. starship
+# 3. rust
+    # - starship
+    # - exa
 
 ## This part installs the nesscary software
 #apt update 

@@ -9,3 +9,24 @@ endsnippet
 snippet dc
 ### ****Entered ${1} case
 endsnippet
+
+snippet pm
+use strict;
+use warnings;
+use autodie;
+use Smart::Comments;
+use Carp;
+${1}
+endsnippet
+
+snippet pt
+use strict;
+use warnings;
+use autodie;
+use Smart::Comments;
+use Carp;
+
+use Test::More;
+use Test::Exception;
+${1}
+endsnippet
