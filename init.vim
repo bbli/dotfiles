@@ -5,7 +5,7 @@ source ~/.vimrc
 set inccommand=nosplit
 " TO INSPECT A LUA TABLE
 " print(vim.inspect)
-" ************  Neovim 0.5 Specific Plugins  ************{{{1
+" ************  Neovim 0.5 Specific Plugins  ************%%%1
 lua << EOF
 require('packer').startup(function()
   -- Packer can manage itself
@@ -84,6 +84,7 @@ use {'tversteeg/registers.nvim'}
   use 'sindrets/diffview.nvim'
   -- ************  MISC/AESTHETICS  ************
   use {'folke/trouble.nvim', requires = 'kyazdani42/nvim-web-devicons'}
+  --use { "folke/todo-comments.nvim", requires = "nvim-lua/plenary.nvim" }
   use 'windwp/nvim-autopairs'
   use {
       "folke/zen-mode.nvim",
@@ -102,9 +103,10 @@ use {'tversteeg/registers.nvim'}
   --}
   end
 )
+--require("todo-comments").setup {}
 EOF
 
-" ************  Vimscript Functions  ************{{{1
+" ************  Vimscript Functions  ************%%%1
 " No point since this is default behavior anyways
 " Aka existing vim instance will not be updated b/c it
 " only reads once during startup
@@ -119,7 +121,7 @@ EOF
 "   call insert(v:oldfiles, a:file, 0)
 " endfunction
 
-" ************  Misc Neovim Specific Things  ************{{{1
+" ************  Misc Neovim Specific Things  ************%%%1
 
 "tnoremap ;c <C-\><C-n>
 " number of old files needs to be set higher given I use vim as manpager
@@ -144,7 +146,7 @@ command! Scratch lua require'tools'.makeScratch()
 " lua text will be syntax highlighted!
 let g:vimsyn_embed = 'l'
 
-" ************  LSP KeyMaps  ************{{{1
+" ************  LSP KeyMaps  ************%%%1
 
 " Statusline
 
@@ -244,7 +246,7 @@ vnoremap <leader>ca <cmd>CodeActionMenu<CR>
 
 autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
 
-" ************  Language Servers  ************{{{1
+" ************  Language Servers  ************%%%1
 lua <<EOF
 -- General
 --require('calltree').setup({})
@@ -289,12 +291,12 @@ require('rust-tools').setup({
 })
 
 -- Haskell: NOTE: turn off for now since doesn't really work with xmonad + uses a lot of memory
---require'lspconfig'.hls.setup{
---    server = {
---    on_attach = new_default_on_attach,
---    capabilities = new_default_capabilities,
---    }
---}
+require'lspconfig'.hls.setup{
+    server = {
+    on_attach = new_default_on_attach,
+    capabilities = new_default_capabilities,
+    }
+}
 
 -- Lua Language Server
 local sumneko_binary = "/usr/bin/lua-language-server"
@@ -330,24 +332,24 @@ require'lspconfig'.sumneko_lua.setup {
 }
 --perl
 local util = require 'lspconfig/util'
-require'lspconfig'.perlpls.setup{
-    cmd = { "pls" },
-    on_attach = new_default_on_attach,
-    capabilities = new_default_capabilities,
-
-    filetypes = { "perl" },
-    --root_dir = ".",
- root_dir = function(fname)
-      return util.root_pattern(".git")(fname) or vim.fn.getcwd()    
-      end,
-    settings = {
-      perl = {
-        perlcritic = {
-          enabled = true
-        }
-      }
-  }
-}
+--require'lspconfig'.perlpls.setup{
+--    cmd = { "pls" },
+--    on_attach = new_default_on_attach,
+--    capabilities = new_default_capabilities,
+--
+--    filetypes = { "perl" },
+--    --root_dir = ".",
+-- root_dir = function(fname)
+--      return util.root_pattern(".git")(fname) or vim.fn.getcwd()    
+--      end,
+--    settings = {
+--      perl = {
+--        perlcritic = {
+--          enabled = true
+--        }
+--      }
+--  }
+--}
 require'lspconfig'.perlls.setup{
     cmd = { "perl", "-MPerl::LanguageServer", "-e", "Perl::LanguageServer::run", "--", "--port 13603", "--nostdio 0", "--version 2.1.0" },
     on_attach = new_default_on_attach,
@@ -371,7 +373,7 @@ require'lspconfig'.pylsp.setup{
     capabilities = new_default_capabilities,
 }
 EOF
-" ************  TreeSitter  ************{{{1
+" ************  TreeSitter  ************%%%1
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
     highlight = {
@@ -462,7 +464,7 @@ require'treesitter-context'.setup{
     throttle = true, -- Throttles plugin updates (may improve performance)
 }
 EOF
-" ************  CMP AutoComplete  ************{{{1
+" ************  CMP AutoComplete  ************%%%1
 set completeopt=menu,menuone,noselect
 " Sometimes cmp popup menu will not close
 
@@ -593,7 +595,7 @@ apple["coq_settings"] = {
 EOF
 inoremap <expr> <C-j> pumvisible() ?"<C-n>":"<C-j>"
 inoremap <expr> <C-k> pumvisible() ?"<C-p>":"<C-k>"
-" ************  Telescope  ************{{{1
+" ************  Telescope  ************%%%1
 lua <<EOF
 local actions = require('telescope.actions')
 require('telescope').setup{
@@ -664,7 +666,7 @@ require('neoclip').setup({
       },
     })
 EOF
-" ************  Debugger  ************{{{1
+" ************  Debugger  ************%%%1
 " lua <<EOF
 " --require('telescope').load_extension('dap') -- NOTE: needs to be called after telescope setup
 " local dap = require('dap')
@@ -719,7 +721,7 @@ EOF
 "4. Inspecting the state via the built-in REPL: :lua require'dap'.repl.open() or using the widget UI (:help dap-widgets)
 
 let g:dap_virtual_text = 'all_frames'
-" ************  Diffview  ************{{{1
+" ************  Diffview  ************%%%1
 lua << EOF
 local cb = require'diffview.config'.diffview_callback
 
@@ -760,7 +762,7 @@ require'diffview'.setup {
         }
     }
 EOF
-" ************** Window Selection **************{{{1
+" ************** Window Selection **************%%%1
 nnoremap <silent> <leader>ww :lua require('nvim-window').pick()<CR>
 lua << EOF
 require('nvim-window').setup({
@@ -782,16 +784,16 @@ require('nvim-window').setup({
 })
 EOF
 
-" ************** QuickFix **************{{{1
+" ************** QuickFix **************%%%1
 " nnoremap <leader>tq :QFToggle<CR>
 lua << EOF
 -- require('pqf').setup()
 EOF
-" ************** Compiling/Running/Terminal Interaction **************{{{1
+" ************** Compiling/Running/Terminal Interaction **************%%%1
 " nnoremap <leader>pp <cmd>lua require('telescope').extensions.asynctasks.all()<CR>
 " nnoremap <leader>pi <cmd>AsyncTaskMacro<CR>
 " nnoremap <localleader>a :AsyncTaskEdit<CR>
-" ************  Rest  ************{{{1
+" ************  Rest  ************%%%1
 lua << EOF
 require('nvim-web-devicons').setup{default = true}
 require('nvim-autopairs').setup({
@@ -805,12 +807,13 @@ require('trouble').setup{
 --  map_complete = true -- it will auto insert `(` after select function or method item
 --})
 EOF
+" Use for jumping to the current TODO -> in TDD
 " nnoremap <leader>hh <cmd>lua require("harpoon.ui").nav_file(1)<CR>
-" nnoremap <leader>hf <cmd>lua require("harpoon.ui").nav_file(2)<CR>
+" " nnoremap <leader>hf <cmd>lua require("harpoon.ui").nav_file(2)<CR>
 
 " nnoremap <leader>ha <cmd>lua require("harpoon.mark").add_file()<CR>
 " nnoremap <leader>hs <cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>
-" ************  TODO  ************{{{1
+" ************  TODO  ************%%%1
 " nnoremap <silent> <A-t> :Lspsaga open_floaterm<CR>
 " tnoremap <silent> <A-t> <C-\><C-n>:Lspsaga close_floaterm<CR>
 " TODO: better than fzf but I seriously need to change the locking

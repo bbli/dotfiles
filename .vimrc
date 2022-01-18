@@ -1,6 +1,6 @@
 " set verbose=15
 " set verbosefile=filename.txt
-" ************** COC STUFF **************{{{1
+" ************** COC STUFF **************%%%1
 " 1.if hidden is not set, TextEdit might fail.
 set hidden
 " Some servers have issues with backup files, see #649
@@ -130,7 +130,7 @@ nn <silent> <leader>xm :call CocLocations('ccls','$ccls/member')<cr>
 " nnoremap <leader>cr :CocListResume<CR>
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
 " Check settings on this website: https://github.com/neoclide/coc.nvim/blob/master/data/schema.json
-" ************** MAC SENSITIVE **************{{{1
+" ************** MAC SENSITIVE **************%%%1
 if !exists("g:os")
     if has("win64") || has("win32") || has("win16")
         let g:os = "Windows"
@@ -148,10 +148,10 @@ else
     set runtimepath+=~/Documents/Code/Projects/my_plugin
     set runtimepath+=~/dotfiles/my-snippets
 endif
-" ************** OPTIONS **************{{{1
+" ************** OPTIONS **************%%%1
 set foldmethod=marker
 " set fdo-=search "only search in unfolded text
-"set foldmarker=apple,sauce
+set foldmarker=%%%,^^^
 "set foldtext="MyFoldText()"
 "function MyFoldText()
   "let line = getline(v:foldstart)
@@ -217,7 +217,7 @@ set undofile
 "set undodir=~/.undodir/
 set colorcolumn=80
 
-" ************** PLUGINS **************{{{1
+" ************** PLUGINS **************%%%1
 call plug#begin('~/.vim/plugged')
 "Plug 'ThePrimeagen/vim-be-good'
 " Plug 'bbli/filter-jump.nvim', {'do': ':UpdateRemotePlugins'}
@@ -399,7 +399,7 @@ for i in range(97,122)
 let mapleader=" "
 let maplocalleader="-"
 
-" ************** LEADER MAPS **************{{{1
+" ************** LEADER MAPS **************%%%1
 " ---Misc---{{{2
 "nnoremap <leader><leader>t :MerlinTypeOf<CR>
 "nnoremap <leader><leader>i :call <SID>show_documentation()<CR>
@@ -519,6 +519,7 @@ nnoremap <leader>gb :Git blame<CR>
 
 " ---Open + Find Related---{{{2
 " fzf and ripgrep settings
+let g:rg_highlight = 1
 command! -bang -nargs=? -complete=dir HFiles
   "\ call fzf#vim#files(<q-args>, {'source': 'rg --hidden --ignore .git -g ""'}, <bang>0)
   "\ call fzf#vim#files(<q-args>, fzf#wrap({'source': 'rg --hidden --ignore --hidden .git'}), <bang>0)
@@ -586,6 +587,8 @@ autocmd FileType log nnoremap <leader>le :RemoveAllButERRORLogs<CR>
 "nnoremap <leader>sp :SlimuxREPLConfigure<CR>
 "nnoremap <leader>ss :SlimuxShellRun
 nnoremap <leader>pe <cmd>TroubleToggle lsp_workspace_diagnostics<CR>
+" For some reason need to do two escapes
+nnoremap <leader>pt :GitRipGrep TODO\\|NOTE<CR>
 nnoremap <leader>se <cmd>TroubleToggle lsp_workspace_diagnostics<CR>
 nnoremap <leader>ss :ProjectRootExe TestNearest<CR>
 nnoremap <leader>sl :ProjectRootExe TestLast<CR>
@@ -696,7 +699,7 @@ nnoremap <leader>dp dp
 
 "autocmd BufEnter *.py  nnoremap <buffer> <leader>c I#<esc>
 "autocmd BufEnter *.m  nnoremap <buffer> <leader>c I%<esc>
-" ************** LOCAL LEADER MAPS **************{{{1
+" ************** LOCAL LEADER MAPS **************%%%1
 nnoremap <localleader>v :e ~/.vimrc<CR>
 nnoremap <localleader>b :e ~/.bash_aliases<CR>
 nnoremap <localleader>t :e ~/.tmux.conf<CR>
@@ -717,7 +720,7 @@ nnoremap <localleader>s :e ~/.config/starship.toml<CR>
 "nmap <localleader>e <Plug>(processing-run)
 
 "nnoremap <localleader>t <C-W>T
-" ************** META MAPS **************{{{1
+" ************** META MAPS **************%%%1
 "To move lines intuitively
 "Alt and Shift combos won't work with K
 "But Ctrl will mess up window specific mappings
@@ -737,7 +740,7 @@ nnoremap <C-w>; <C-w>p
 
 map <M-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
-" ************  FN MAPS  ************{{{1
+" ************  FN MAPS  ************%%%1
 "nnoremap <F2> :TagbarToggle<CR>
 "nnoremap <F3> :AirlineToggleWhitespace<CR>
 
@@ -747,7 +750,7 @@ map <M-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 "nnoremap <silent> <F8> :NERDTreeToggle<CR>
 "nnoremap <F10> :set nopaste
 
-" ************** SEMI COLON MAPS **************{{{1
+" ************** SEMI COLON MAPS **************%%%1
 inoremap ;c <C-c>
 vnoremap ;c <C-c>
 inoremap ;; ;
@@ -785,7 +788,7 @@ nnoremap ;t :MtaJumpToOtherTag<CR>
 nnoremap ;o <C-^>
 nnoremap ;r @:
 
-" ************** NORMAL MODE MAPS **************{{{1
+" ************** NORMAL MODE MAPS **************%%%1
 " nnoremap <unique> k gk
 " nnoremap <unique> j gj
 nnoremap <unique> gk k
@@ -826,7 +829,7 @@ vnoremap < <gv
 
 nnoremap <unique> S %
 " nnoremap <unique> t %
-" ************** COMMAND MODE MAPS **************{{{1
+" ************** COMMAND MODE MAPS **************%%%1
 cnoremap sE %s
 " nnoremap / /\<
 nnoremap <leader>/ /
@@ -842,7 +845,7 @@ nnoremap <leader>/ /
 " nnoremap <leader><leader>t :tabn<CR>
 
 
-" ************** OPERATOR MODE MAPS **************{{{1
+" ************** OPERATOR MODE MAPS **************%%%1
 "onoremap w W
 "onoremap W w
 "onoremap b B
@@ -862,7 +865,7 @@ onoremap C a}
 " So instead
 " onoremap b i}
 " onoremap B i}
-" ************** INSERT MODE MAPS **************{{{1
+" ************** INSERT MODE MAPS **************%%%1
 " To be honest, I don't think this is nesscary. Those keys are not awkward,
 " and I only mapped it because I was fixated on insert normal mode
 "inoremap ]] <C-c>A
@@ -882,7 +885,7 @@ imap <C-f> <plug>(fzf-complete-path)
 "inoremap ( ()<left>
 "inoremap [ []<left>
 "inoremap { {}<left>
-" ************** CONTROL/SPECIAL KEY(TAB,etc) MAPS **************{{{1
+" ************** CONTROL/SPECIAL KEY(TAB,etc) MAPS **************%%%1
 "This may be dangerous as vim has a lot of built in control key maps
 "Only do to overide
 "nnoremap <C-]> :vs<CR><C-]>
@@ -916,7 +919,7 @@ nnoremap <Space> <Nop>
 " nnoremap <Down> <Nop>
 " nnoremap <Left> <Nop>
 " nnoremap <Right> <Nop>
-" ************** COLORS **************{{{1
+" ************** COLORS **************%%%1
 "makes vim colorscheme the same as the terminal
 
 if exists('+termguicolors')
@@ -1006,7 +1009,7 @@ colorscheme edge
     "autocmd BufEnter *.clj color gruvbox
 "augroup END
 
-" ************** AUTOCOMMANDS **************{{{1
+" ************** AUTOCOMMANDS **************%%%1
 autocmd BufNewFile,BufReadPost *.fish set filetype=fish "Make vim recognize .md as markdown file
 autocmd BufNewFile,BufReadPost xmobarrc set filetype=haskell "Make vim recognize xmobarrc as a haskell file
 autocmd BufNewFile,BufReadPost Rexfile set filetype=perl "Make vim recognize .md as markdown file
@@ -1048,10 +1051,10 @@ nnoremap <leader>is Bi$<ESC>W
 nnoremap <leader>ia Bi@<ESC>W
 nnoremap <leader>ih Bi%<ESC>W
 
-""""""""Misc""""""""{{{1
+""""""""Misc""""""""%%%1
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
-""""""""Plugin related variables""""""""{{{1
+""""""""Plugin related variables""""""""%%%1
 " let g:neomake_open_list = 2
 " let g:yggdrasil_no_default_maps = 1
 " au FileType yggdrasil nmap <silent> <buffer> o <Plug>(yggdrasil-toggle-node)
@@ -1345,7 +1348,7 @@ let g:benson_lsp_status = 1
 "       \ ])
 " let g:python3_host_prog = '/usr/bin/python3'
 let g:foldsearch_disable_mappings = 1
-" ************** MY PLUGIN STUFF **************{{{1
+" ************** MY PLUGIN STUFF **************%%%1
 "let g:filter_jump_strip_characters = ["_"]
 "highlight! link SearchCurrent Red
 "highlight! link SearchHighlights Green
@@ -1364,7 +1367,7 @@ let g:filter_jump_buffer_options = []
 
 autocmd FileType FilterJump lua requires('cmp').setup.buffer{enabled = false}
 let test#custom_runners = {'cpp': ['catch2']}
-" ************** Learning **************{{{1
+" ************** Learning **************%%%1
 " let g:value = 0
 " function ToggleValue()
 "     if g:value % 2 == 0
