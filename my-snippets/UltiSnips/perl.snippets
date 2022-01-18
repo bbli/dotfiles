@@ -1,5 +1,5 @@
 snippet sd
-### ************  ${1}  ************
+### ************  ${1}  ************ %%%1
 endsnippet
 
 snippet db
@@ -14,19 +14,14 @@ snippet pm
 use strict;
 use warnings;
 use autodie;
-use Smart::Comments;
+use DDP;
 use Carp;
-${1}
-endsnippet
+use feature qw(signatures);
+no warnings qw(experimental::signatures);
+use Class::Struct;
+use Method::Delegation;
 
-snippet pt
-use strict;
-use warnings;
-use autodie;
-use Smart::Comments;
-use Carp;
-
-use Test::More;
+use Test::More 'no_plan';
 use Test::Exception;
 ${1}
 endsnippet

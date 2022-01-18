@@ -253,6 +253,7 @@ Plug 'dbakker/vim-projectroot'
 " Below Plugin not that useful since I can use tabs for that purpose
 "Plug 'troydm/zoomwintab.vim'
 Plug 'osyo-manga/vim-over'
+Plug 'MattesGroeger/vim-bookmarks'
 " Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'unblevable/quick-scope'
 "Plug 'jiangmiao/auto-pairs'
@@ -580,6 +581,10 @@ autocmd FileType log nnoremap <leader>le :RemoveAllButERRORLogs<CR>
 " :'<,'>norm! @a to apply the macro only to a visual selection
 " (hit : in visual mode to switch to command mode)
 
+function! JumpToBookMark()
+    execute('BookmarkShowAll')  
+   call feedkeys("\<CR>")
+endfunction
 
 
 " ---Compling/Running/Project Related---{{{2
@@ -589,6 +594,8 @@ autocmd FileType log nnoremap <leader>le :RemoveAllButERRORLogs<CR>
 nnoremap <leader>pe <cmd>TroubleToggle lsp_workspace_diagnostics<CR>
 " For some reason need to do two escapes
 nnoremap <leader>pt :GitRipGrep TODO\\|NOTE<CR>
+nnoremap <leader>jt :call JumpToBookMark()<CR>
+" mm to toggle a bookmark
 nnoremap <leader>se <cmd>TroubleToggle lsp_workspace_diagnostics<CR>
 nnoremap <leader>ss :ProjectRootExe TestNearest<CR>
 nnoremap <leader>sl :ProjectRootExe TestLast<CR>

@@ -1,4 +1,19 @@
-# I will manually installed plugins
+## Fail on first error
+# ************  Bash Behavior Configuration  ************{{{1
+set -e
+exit_on_error() {
+    exit_code=$1
+    last_command=${@:2}
+    if [ $exit_code -ne 0 ]; then
+        >&2 echo "\"${last_command}\" command failed with exit code ${exit_code}."
+        exit $exit_code
+    fi
+}
+# enable !! command completion
+set -o history -o histexpand
+# Example Usage
+# ls --fake-option
+# exit_on_error $? !!
 # ************  Stuff to Manually Install on Old Linux Distros  ************{{{1
 # 1. fish
 # 2. fzf
@@ -21,47 +36,50 @@
 #apt --assume-yes install tree
 ##apt --assume-yes upgrade python3 nvm, neovim is prebuilt with python3.6
 ##apt --assume-yes install python-pip # for neovim
-#git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+#git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 git clone --depth 1 https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+ $HOME/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 
 dotfiles_path=$HOME/Dropbox/Code/dotfiles
 #dotfiles_path=$HOME/dotfiles
 # This script will mostly just set up symbolic links
-ln -sf "$dotfiles_path/.vimrc" ~/.vimrc
-ln -sf "$dotfiles_path/.inputrc" ~/.inputrc
+ln -sf "$dotfiles_path/.vimrc" $HOME/.vimrc
+ln -sf "$dotfiles_path/.inputrc" $HOME/.inputrc
 ## ubuntu image already has a bashrc that sources the .bash_aliases file
-#ln -sf "$dotfiles_path/.bashrc" ~/.bashrc
-ln -sf "$dotfiles_path/.bash_aliases" ~/.bash_aliases
-ln -sf "$dotfiles_path/.gitconfig" ~/.gitconfig
-ln -sf "$dotfiles_path/.shell_prompt.sh" ~/.shell_prompt.sh
-ln -sf "$dotfiles_path/.tmux.conf" ~/.tmux.conf
-mv ~/.config/fish/config.fish ~/.config/fish/config.fish.old
-ln -sf "$dotfiles_path/config.fish" ~/.config/fish/config.fish
-ln -sf "$dotfiles_path/kitty.conf" ~/.config/kitty/kitty.conf
+#ln -sf "$dotfiles_path/.bashrc" $HOME/.bashrc
+ln -sf "$dotfiles_path/.bash_aliases" $HOME/.bash_aliases
+ln -sf "$dotfiles_path/.gitconfig" $HOME/.gitconfig
+ln -sf "$dotfiles_path/.shell_prompt.sh" $HOME/.shell_prompt.sh
+ln -sf "$dotfiles_path/.tmux.conf" $HOME/.tmux.conf
+mkdir -p $HOME/.config/fish
+mkdir -p $HOME/.config/kitty
+# mv $HOME/.config/fish/config.fish $HOME/.config/fish/config.fish.old
+ln -sf "$dotfiles_path/config.fish" $HOME/.config/fish/config.fish
+ln -sf "$dotfiles_path/kitty.conf" $HOME/.config/kitty/kitty.conf
 
-mkdir -p ~/.vim
-mkdir -p ~/.vim/autoload
-mkdir -p ~/.vim/plugged
-ln -sf "$dotfiles_path/plug.vim" ~/.vim/autoload/plug.vim
-mkdir -p ~/.local/share/nvim/site/autoload
-ln -sf "$dotfiles_path/plug.vim" ~/.local/share/nvim/site/autoload/plug.vim
-ln -sf "$dotfiles_path/colors" ~/.vim/colors
+mkdir -p $HOME/.vim
+mkdir -p $HOME/.vim/autoload
+mkdir -p $HOME/.vim/plugged
+ln -sf "$dotfiles_path/plug.vim" $HOME/.vim/autoload/plug.vim
+mkdir -p $HOME/.local/share/nvim/site/autoload
+ln -sf "$dotfiles_path/plug.vim" $HOME/.local/share/nvim/site/autoload/plug.vim
+ln -sf "$dotfiles_path/colors" $HOME/.vim/colors
 
-#touch ~/.vim_config
+#touch $HOME/.vim_config
 
 ### If neovim enabled
-mkdir -p ~/.config/nvim
-ln -sf "$dotfiles_path/init.vim" ~/.config/nvim/init.vim
-ln -sf "$dotfiles_path/init.lua" ~/.init.lua
-ln -sf "$dotfiles_path/emacs/config.el" ~/.doom.d/config.el
-ln -sf "$dotfiles_path/emacs/init.el" ~/.doom.d/init.el
-ln -sf "$dotfiles_path/emacs/packages.el" ~/.doom.d/packages.el
-ln -sf "$dotfiles_path/startship.toml" ~/.config/starship.toml
+mkdir -p $HOME/.config/nvim
+ln -sf "$dotfiles_path/init.vim" $HOME/.config/nvim/init.vim
+ln -sf "$dotfiles_path/init.lua" $HOME/.init.lua
+mkdir -p $HOME/.doom.d
+ln -sf "$dotfiles_path/emacs/config.el" $HOME/.doom.d/config.el
+ln -sf "$dotfiles_path/emacs/init.el" $HOME/.doom.d/init.el
+ln -sf "$dotfiles_path/emacs/packages.el" $HOME/.doom.d/packages.el
+ln -sf "$dotfiles_path/startship.toml" $HOME/.config/starship.toml
 
 curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
- git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+ git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 sudo pacman -S ctags
 sudo pacman -S starship
 sudo pacman -S clang
@@ -70,7 +88,7 @@ sudo pacman -S neovim
 cd
 mkdir Software
 cd Software
-git clone https://aur.archlinux.org/yay-git.git
+git clone https://aur.archlinux.org/yay-git.git --depth 1
 cd yay-git
 makepkg -si
 
