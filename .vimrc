@@ -575,8 +575,8 @@ nnoremap <leader>fa :OverCommandLine<CR>RipGrep
 " nnoremap <leader>fa :RipGrep 
 nnoremap <leader>fw :OverCommandLine<CR>Ggrep <C-r><C-w><CR>
 " nnoremap <leader>fw :Ggrep <C-r><C-w><CR>
-autocmd FileType log nnoremap <leader>fl :RemoveAllButClass 
-autocmd FileType log nnoremap <leader>fe :RemoveAllButERRORLogs<CR>
+autocmd FileType logreview nnoremap <leader>fl :RemoveAllButClass 
+autocmd FileType logreview nnoremap <leader>fe :RemoveAllButERRORLogs<CR>
 
 " :'<,'>norm! @a to apply the macro only to a visual selection
 " (hit : in visual mode to switch to command mode)
