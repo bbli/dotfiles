@@ -575,8 +575,8 @@ nnoremap <leader>fa :OverCommandLine<CR>RipGrep
 " nnoremap <leader>fa :RipGrep 
 nnoremap <leader>fw :OverCommandLine<CR>Ggrep <C-r><C-w><CR>
 " nnoremap <leader>fw :Ggrep <C-r><C-w><CR>
-autocmd FileType log nnoremap <leader>ll :RemoveAllButClass 
-autocmd FileType log nnoremap <leader>le :RemoveAllButERRORLogs<CR>
+autocmd FileType log nnoremap <leader>fl :RemoveAllButClass 
+autocmd FileType log nnoremap <leader>fe :RemoveAllButERRORLogs<CR>
 
 " :'<,'>norm! @a to apply the macro only to a visual selection
 " (hit : in visual mode to switch to command mode)
@@ -593,7 +593,8 @@ endfunction
 "nnoremap <leader>ss :SlimuxShellRun
 nnoremap <leader>pe <cmd>TroubleToggle lsp_workspace_diagnostics<CR>
 " For some reason need to do two escapes
-nnoremap <leader>pt :GitRipGrep TODO\\|NOTE<CR>
+" nnoremap <leader>pt :GitRipGrep TODO\\|NOTE<CR>
+nnoremap <leader>pt :GitRipGrep TODO<CR>
 nnoremap <leader>jt :call JumpToBookMark()<CR>
 " mm to toggle a bookmark
 nnoremap <leader>se <cmd>TroubleToggle lsp_workspace_diagnostics<CR>
@@ -714,6 +715,7 @@ nnoremap <localleader>g :e ~/.gitconfig<CR>
 nnoremap <localleader>n :e ~/.config/nvim/init.vim<CR>
 nnoremap <localleader>k :e ~/.config/kitty/kitty.conf<CR>
 nnoremap <localleader>f :e ~/.config/fish/config.fish<CR>
+nnoremap <localleader>x :e ~/.config/xmonad/xmonad.hs<CR>
 nnoremap <localleader>l :e ~/.init.lua<CR>
 nnoremap <localleader>s :e ~/.config/starship.toml<CR>
 

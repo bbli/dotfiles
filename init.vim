@@ -382,7 +382,7 @@ require'nvim-treesitter.configs'.setup {
             -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
             -- ["keyword"] = "TSString", -- for testing if tresitter works
             --},
-        additional_vim_regex_highlighting = false,
+        additional_vim_regex_highlighting = true,
     },
 --  context_commentstring = {
 --    enable = true
