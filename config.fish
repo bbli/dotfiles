@@ -169,12 +169,12 @@ switch (uname)
 end
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/benson/Software/cloud-sdk-stuff/google-cloud-sdk/path.fish.inc' ]; . '/home/benson/Software/cloud-sdk-stuff/google-cloud-sdk/path.fish.inc'; end
+if [ -f '~/Software/cloud-sdk-stuff/google-cloud-sdk/path.fish.inc' ]; . '~/Software/cloud-sdk-stuff/google-cloud-sdk/path.fish.inc'; end
 # ************** PERL STUFF **************{{{1
-set -x PERL5LIB /home/benson/perl5/lib/perl5;
-set -x PERL_LOCAL_LIB_ROOT /home/benson/perl5;
-set -x PERL_MB_OPT --install_base\ \"/home/benson/perl5\";
-set -x PERL_MM_OPT INSTALL_BASE=/home/benson/perl5;
+set -x PERL5LIB ~/perl5/lib/perl5;
+set -x PERL_LOCAL_LIB_ROOT ~/perl5;
+set -x PERL_MB_OPT --install_base\ \"~/perl5\";
+set -x PERL_MM_OPT INSTALL_BASE=~/perl5;
 
 # ************** PLUGIN CONFIGURATION **************{{{1
 # FOr some reason git_status is being ignored
