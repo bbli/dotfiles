@@ -12,13 +12,6 @@ endsnippet
 snippet test std::cout << ${1:hi} << $2 << $2 << std::endl;
 endsnippet
 
-snippet sd
-// ************  ${1}  ************ %%%1
-endsnippet
-
-snippet hd
-// ${1}   %%%2
-endsnippet
 
 snippet pc
 std::copy(${1:container}.begin(),$1.end(),std::ostream_iterator<${2:type}>(std::cout,","));
@@ -92,5 +85,6 @@ using namespace std;
 //**Brute Force**//
 endsnippet
 
-1.
-require("luasnip.loaders.from_snipmate").load({ include = { "c" } }
+snippet sd
+// ************  ${1}  ************ %%%1
+endsnippet

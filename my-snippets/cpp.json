@@ -224,8 +224,22 @@
   },
   "tt": {
     "prefix": "tt",
-    "body": ["TEST_CASE('${1}', ''){" , "\t}"],
+    "body": ["TEST_CASE(\"${1}\", \"\"){" , "\t}"],
     "description": "Catch2 TEST_CASE Macro"
+  },
+  "dd": {
+    "prefix": "dd",
+    "body": [
+	"std::cout << \"Before Entering. Control value: \" << ${2} << std::endl;"
+        ],
+    "description": "Vim Section"
+  },
+  "dc": {
+    "prefix": "dc",
+    "body": [
+	"std::cout Entering Case: << ${1} << std::endl;"
+        ],
+    "description": "Vim Section"
   },
   "sd": {
     "prefix": "sd",
