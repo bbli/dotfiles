@@ -76,7 +76,7 @@ mkdir -p $HOME/.doom.d
 ln -sf "$dotfiles_path/emacs/config.el" $HOME/.doom.d/config.el
 ln -sf "$dotfiles_path/emacs/init.el" $HOME/.doom.d/init.el
 ln -sf "$dotfiles_path/emacs/packages.el" $HOME/.doom.d/packages.el
-ln -sf "$dotfiles_path/startship.toml" $HOME/.config/starship.toml
+ln -sf "$dotfiles_path/starship.toml" $HOME/.config/starship.toml
 
 curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
  git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
