@@ -29,7 +29,8 @@ use { "AckslD/nvim-neoclip.lua",
   --use {'stevearc/qf_helper.nvim'} --location tracking not working atm, but useful for toggling with no entries
 use {'tversteeg/registers.nvim'}
 -- TODO: the issue with harpoon is that I need to show it on some UI
---use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
+    -- using it for now as better vim-projectionist
+use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
  -- ************  UTILITY LIBRARIES  ************
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
@@ -808,11 +809,11 @@ require('trouble').setup{
 --})
 EOF
 " Use for jumping to the current TODO -> in TDD
-" nnoremap <leader>hh <cmd>lua require("harpoon.ui").nav_file(1)<CR>
-" " nnoremap <leader>hf <cmd>lua require("harpoon.ui").nav_file(2)<CR>
+nnoremap <leader>ha <cmd>lua require("harpoon.ui").nav_file(1)<CR>
+nnoremap <leader>hs <cmd>lua require("harpoon.ui").nav_file(2)<CR>
 
-" nnoremap <leader>ha <cmd>lua require("harpoon.mark").add_file()<CR>
-" nnoremap <leader>hs <cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>
+nnoremap <leader>hh <cmd>lua require("harpoon.mark").add_file()<CR>
+nnoremap <leader>hj <cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>
 " ************  TODO  ************%%%1
 " nnoremap <silent> <A-t> :Lspsaga open_floaterm<CR>
 " tnoremap <silent> <A-t> <C-\><C-n>:Lspsaga close_floaterm<CR>
