@@ -1,4 +1,4 @@
-# ************** FUNCTIONS **************{{{1
+# ************** FUNCTIONS ************** %%%1
 function chk -d "Checkout local git branch, sorted by recent"
   git branch -vv | read -z branches; 
   set branch (echo "$branches" | fzf +m) ;
@@ -39,7 +39,7 @@ function delete_worktree
     # 2. now exit the tmux window
     # tmux kill-window
 end
-# ************** COMMAND ALIASES **************{{{1
+# ************** COMMAND ALIASES ************** %%%1
 function j
     z $argv
 end
@@ -97,7 +97,7 @@ function attach
     tmux a -t $argv
 end
 
-# ************** EXA **************{{{1
+# ************** EXA ************** %%%1
 function ls
     exa $argv
 end
@@ -110,7 +110,7 @@ function tree
     exa --tree $argv
 end
 
-# ************** PYTHON VIRTUAL ENV **************{{{1
+# ************** PYTHON VIRTUAL ENV ************** %%%1
 function act
     source activate $argv
 end
@@ -123,7 +123,7 @@ function py
     python3 $argv
 end
 
-# ************** DIRECTORIES **************{{{1
+# ************** DIRECTORIES ************** %%%1
 function code
     cd ~/Dropbox/Code
 end
@@ -147,7 +147,7 @@ end
 function pack
     cd ~/.local/share/nvim/site/pack/packer/start
 end
-# ************** VARIABLES **************{{{1
+# ************** VARIABLES ************** %%%1
 # set SPACEFISH_PROMPT_ADD_NEWLINE false
 # set SPACEFISH_PROMPT_SEPARATE_LINE true
 # set SPACEFISH_DIR_COLOR cyan
@@ -158,7 +158,7 @@ end
 fish_add_path -a ~/.emacs.d/bin
 fish_add_path -a ~/perl5/bin
 fish_add_path -a ~/.gem/ruby/3.0.0/bin
-# ************** SOURCE **************{{{1
+# ************** SOURCE ************** %%%1
 switch (uname)
     case Linux
         if [ -f '/opt/miniconda3/etc/fish/conf.d/conda.fish' ];
@@ -170,13 +170,13 @@ end
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '~/Software/cloud-sdk-stuff/google-cloud-sdk/path.fish.inc' ]; . '~/Software/cloud-sdk-stuff/google-cloud-sdk/path.fish.inc'; end
-# ************** PERL STUFF **************{{{1
+# ************** PERL STUFF ************** %%%1
 set -x PERL5LIB ~/perl5/lib/perl5;
 set -x PERL_LOCAL_LIB_ROOT ~/perl5;
 set -x PERL_MB_OPT --install_base\ \"~/perl5\";
 set -x PERL_MM_OPT INSTALL_BASE=~/perl5;
 
-# ************** PLUGIN CONFIGURATION **************{{{1
+# ************** PLUGIN CONFIGURATION ************** %%%1
 # FOr some reason git_status is being ignored
 # fzf_configure_bindings --git_status=\cg
 # fzf_configure_bindings --directory=\ct

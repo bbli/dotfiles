@@ -1,5 +1,5 @@
 ## Fail on first error
-# ************  Bash Behavior Configuration  ************{{{1
+# ************  Bash Behavior Configuration  ************ %%%1
 set -e
 exit_on_error() {
     exit_code=$1
@@ -14,7 +14,7 @@ set -o history -o histexpand
 # Example Usage
 # ls --fake-option
 # exit_on_error $? !!
-# ************  Stuff to Manually Install on Old Linux Distros  ************{{{1
+# ************  Stuff to Manually Install on Old Linux Distros  ************ %%%1
 # 1. fish
 # 2. fzf
 # 3. rust
@@ -96,11 +96,11 @@ makepkg -si
 #echo 1 | yay --noconfirm nerd-fonts-source-code-pro
 yay --noconfirm --answerdiff=None nerd-fonts-source-code-pro 
 
-# ************  PIP SOFTWARE  ************{{{1
+# ************  PIP SOFTWARE  ************ %%%1
 sudp pacman -S python-pip
 pip install cmake-language-server
 
-# ************  INSTALL TREESITTER(vim command line)  ************{{{1
+# ************  INSTALL TREESITTER(vim command line)  ************ %%%1
 nvim -c ':TSInstall cmake' \
 -c ':TSInstall cpp' \
 -c ':TSInstall vim' \

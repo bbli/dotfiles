@@ -10,3 +10,5 @@ cpanm Scope::Guard
 cpanm Cwd;
 cpanm File::chdir
 cpanm Net::OpenSSH
+cpanm Capture::Tiny
+cpanm Path::Tiny

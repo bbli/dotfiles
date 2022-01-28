@@ -401,7 +401,7 @@ let mapleader=" "
 let maplocalleader="-"
 
 " ************** LEADER MAPS **************%%%1
-" ---Misc---{{{2
+" ---Misc--- %%%2
 "nnoremap <leader><leader>t :MerlinTypeOf<CR>
 "nnoremap <leader><leader>i :call <SID>show_documentation()<CR>
 " nnoremap <leader>l 40l
@@ -445,7 +445,7 @@ nnoremap <leader>br :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
 " nnoremap <leader>br :%s/\<<C-r><C-w>\>/
 nnoremap <leader>bm :OverCommandLine<CR>g/\<<C-r><C-w>\>/norm! @m<CR>
 
-" ---Edit Related---{{{2
+" ---Edit Related--- %%%2
 "  stuff
 " nmap gc <Plug>NERDCommenterToggle
 " vmap gc <Plug>NERDCommenterToggle
@@ -480,7 +480,7 @@ nmap <leader>mf <plug>(Mac_SearchForNamedMacroAndPlay)
 
 nmap <leader>md <plug>(Mac_SearchForNamedMacroAndDelete)
 nmap <leader>mo <plug>(Mac_SearchForNamedMacroAndOverwrite)
-" ---Workspace Related---{{{2
+" ---Workspace Related--- %%%2
 nnoremap <leader>ws :mks ~/.vim/sessions/default.vim<CR>
 nnoremap <leader>wl :source ~/.vim/sessions/default.vim<CR>
 
@@ -496,7 +496,7 @@ nnoremap <leader>wk :tabc<CR>
 nnoremap <leader>wr :TabooRename 
 "nnoremap <leader>ws :TabooReset<CR>
 
-" ---Git Related---{{{2
+" ---Git Related--- %%%2
 nnoremap <leader>gm :Magit<CR>
 nmap <leader>gp <Plug>(GitGutterPreviewHunk)
 nmap gs <Plug>(GitGutterStageHunk)
@@ -518,7 +518,7 @@ nmap <leader>gg :G<CR>
 nnoremap <leader>gd :Gvdiff 
 nnoremap <leader>gb :Git blame<CR>
 
-" ---Open + Find Related---{{{2
+" ---Open + Find Related--- %%%2
 " fzf and ripgrep settings
 let g:rg_highlight = 1
 command! -bang -nargs=? -complete=dir HFiles
@@ -587,7 +587,7 @@ function! JumpToBookMark()
 endfunction
 
 
-" ---Compling/Running/Project Related---{{{2
+" ---Compling/Running/Project Related--- %%%2
 "TODO: change prefix to 'r' or 'p' for run/project?
 "nnoremap <leader>sp :SlimuxREPLConfigure<CR>
 "nnoremap <leader>ss :SlimuxShellRun
@@ -628,7 +628,7 @@ nnoremap <leader>sm :Messages<CR>
 "nnoremap <leader>sd :VtrSendCtrlD<CR>
 "nnoremap <leader>ss %
 
-" ---Toggles---{{{2
+" ---Toggles--- %%%2
 "nnoremap <leader>to :VoomToggle markdown<CR>
 nnoremap <leader>tw :AirlineToggleWhitespace<CR>
 
@@ -674,7 +674,7 @@ nmap <leader>tl <Plug>(qf_loc_toggle)
 " nmap <leader>ji <Plug>(coc-funcobj-i)
 " nmap <leader>jj <Plug>(coc-funcobj-a)
 
-" ---Jump Related---{{{2
+" ---Jump Related--- %%%2
 " nmap <leader>jf <Plug>(coc-float-jump)
 nmap <leader>jq <Plug>(qf_qf_switch)
 nmap <leader>jd <Plug>(coc-definition)
@@ -695,7 +695,7 @@ nnoremap <leader>jC g,
 " nnoremap <leader>jm `M
 " nnoremap <leader>mm mM
 
-" ---Diff View Related---{{{2
+" ---Diff View Related--- %%%2
 nnoremap <leader>dn ]c
 nnoremap <leader>dN [c
 "nnoremap <leader>dl :.diffput<CR>
