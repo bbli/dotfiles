@@ -4,12 +4,12 @@ snippet tt
 TEST_CASE("${1}",""){
 }
 endsnippet
+
 snippet dd
 	std::cout << "${1}: " << ${2} << std::endl;
 endsnippet
 
-snippet test
-	std::cout << ${1:hi} << $2 << $2 << std::endl;
+snippet test std::cout << ${1:hi} << $2 << $2 << std::endl;
 endsnippet
 
 snippet sd
@@ -91,3 +91,6 @@ using namespace std;
 
 //**Brute Force**//
 endsnippet
+
+1.
+require("luasnip.loaders.from_snipmate").load({ include = { "c" } }

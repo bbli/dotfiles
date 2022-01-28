@@ -141,12 +141,14 @@ endif
 if g:os == "Linux"
     let home_dir = "/home/benson"
     set runtimepath+=~/Dropbox/Code/Projects/my_plugin
-    set runtimepath+=~/Dropbox/Code/dotfiles/my-snippets
+    let g:vsnip_snippet_dir = expand('~/Dropbox/Code/dotfiles/my-snippets')
+    " set runtimepath+=~/Dropbox/Code/dotfiles/my-snippets
     "Remember to call :UpdateRemotePlugins manually
 else
     let home_dir = "/Users/benson"
     set runtimepath+=~/Documents/Code/Projects/my_plugin
-    set runtimepath+=~/dotfiles/my-snippets
+    " set runtimepath+=~/dotfiles/my-snippets
+    let g:vsnip_snippet_dir = expand('~/dotfiles/my-snippets')
 endif
 " ************** OPTIONS **************%%%1
 set foldmethod=marker
@@ -358,7 +360,9 @@ Plug 'airblade/vim-gitgutter'
 
 "Snippets
 "---
-Plug 'SirVer/ultisnips', {'for': ['rust', 'cpp', 'vim', 'lua','python','sh','cmake','go','fish','perl', 'haskell']}
+" Plug 'SirVer/ultisnips', {'for': ['rust', 'cpp', 'vim', 'lua','python','sh','cmake','go','fish','perl', 'haskell']}
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'honza/vim-snippets'
 " Plug 'quangnguyen30192/cmp-nvim-ultisnips', {'branch': 'main'}
 " Plug 'dawikur/algorithm-mnemonics.vim'
@@ -451,7 +455,6 @@ nnoremap <leader>bm :OverCommandLine<CR>g/\<<C-r><C-w>\>/norm! @m<CR>
 " vmap gc <Plug>NERDCommenterToggle
 vmap <unique> <leader>c  <Plug>Commentary
 vmap <unique> <leader><leader>c  <Plug>Commentary
-nmap <unique> <leader>c  <Plug>Commentary
 omap <unique> <leader>c  <Plug>Commentary
 nmap <unique> <leader>cc <Plug>CommentaryLine
 nmap <unique> <leader><leader>c <Plug>CommentaryLine
@@ -1197,9 +1200,38 @@ let g:slime_dont_ask_default = 1
 "autocmd BufWritePost *.md !markdown-pdf % -o %.pdf
 "let g:vimwiki_hl_headers = 1
 
-let g:UltiSnipsExpandTrigger = "zz" 
-let g:UltiSnipsJumpForwardTrigger = "<leader><leader>"
-let g:UltiSnipsJumpBackwardTrigger = "<c-j>"
+" let g:UltiSnipsExpandTrigger = "zz" 
+" let g:UltiSnipsJumpForwardTrigger = "<leader><leader>"
+" let g:UltiSnipsJumpBackwardTrigger = "<c-j>"
+" NOTE: You can use other key to expand snippet.
+
+" Expand
+imap <leader>zz   <Plug>(vsnip-expand)
+smap zz   <Plug>(vsnip-expand)
+
+
+" Expand or jump
+" imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+smap <leader><leader>   <Plug>(vsnip-jump-next)
+
+" " Jump forward or backward
+" imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+" smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+" imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+" smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+
+" Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
+" See https://github.com/hrsh7th/vim-vsnip/pull/50
+" nmap        s   <Plug>(vsnip-select-text)
+" xmap        s   <Plug>(vsnip-select-text)
+" nmap        S   <Plug>(vsnip-cut-text)
+" xmap        S   <Plug>(vsnip-cut-text)
+
+" If you want to use snippet for multiple filetypes, you can `g:vsnip_filetypes` for it.
+let g:vsnip_extra_mapping = v:false
+" let g:vsnip_filetypes = {}
+" let g:vsnip_filetypes.javascriptreact = ['javascript']
+" let g:vsnip_filetypes.typescriptreact = ['typescript']
 
 "let g:mkdp_path_to_chrome = "firefox"
 "let g:mkdp_auto_start = 0
