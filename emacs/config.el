@@ -516,13 +516,13 @@ See URL `https://github.com/ProofGeneral/PG/issues/427'."
 ;; From Jethro's blod who says that otherwise Doom will force line breaks
 ;; (remove-hook 'text-mode-hook #'auto-fill-mode)
 ;; (add-hook 'message-mode-hook #'word-wrap-mode)
-;(custom-set-faces!
-  ;'(outline-1 :weight extra-bold :height 1.0)
-  ;'(outline-2 :weight bold :height 1.35)
-  ;'(outline-3 :weight bold :height 1.15)
-  ;'(outline-4 :weight semi-bold :height 1.05)
-  ;'(outline-5 :weight semi-bold :height 1.0)
-;)
+(custom-set-faces!
+  '(outline-1 :weight extra-bold :height 1.0)
+  '(outline-2 :weight bold :height 1.0)
+  '(outline-3 :weight bold :height 1.0)
+  '(outline-4 :weight semi-bold :height 1.0)
+  '(outline-5 :weight semi-bold :height 1.0)
+)
 ;; This makes headings white, which I don't want given I will be in a light background.
 ;; Otherwise the way it sets the heights is pretty good
 ;; (let* ((variable-tuple (cond ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))

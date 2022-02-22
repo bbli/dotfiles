@@ -1,3 +1,17 @@
+snippet tt
+{my $t='${1}';
+
+    ${2}
+}
+endsnippet
+
+snippet hh
+${1:key} => ${2:value},
+endsnippet
+snippet dd
+p(${1}) if $DEBUG;
+endsnippet
+
 snippet sd
 ### ************  ${1}  ************ %%%1
 endsnippet
@@ -60,11 +74,4 @@ ${1}
 ### ************  Helper Functions  ************ %%%1
 ### ************  Main  ************ %%%1
 
-endsnippet
-
-snippet tt
-{my $t='${1}';
-
-    ${2}
-}
 endsnippet

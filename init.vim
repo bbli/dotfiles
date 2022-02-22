@@ -102,6 +102,16 @@ use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
 --      "folke/twilight.nvim",
  --     config = function() require("twilight").setup { } end
   --}
+--use { 'pwntester/octo.nvim',
+--  requires = {
+--    'nvim-lua/plenary.nvim',
+--    'nvim-telescope/telescope.nvim',
+--    'kyazdani42/nvim-web-devicons',
+--  },
+--  config = function ()
+--    require"octo".setup()
+--  end
+--} 
   end
 )
 --require("todo-comments").setup {}
@@ -370,6 +380,11 @@ require'lspconfig'.perlls.setup{
 
 --pylsp
 require'lspconfig'.pylsp.setup{
+    on_attach = new_default_on_attach,
+    capabilities = new_default_capabilities,
+}
+--gopls
+require'lspconfig'.gopls.setup{
     on_attach = new_default_on_attach,
     capabilities = new_default_capabilities,
 }
