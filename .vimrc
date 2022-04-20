@@ -151,6 +151,11 @@ else
     let g:vsnip_snippet_dir = expand('~/dotfiles/my-snippets')
 endif
 " ************** OPTIONS **************%%%1
+" Always put regexes in function rather than as expr 
+    " -> vim will do weird escapes otherwise
+" function! MatchComment()
+"     let thisline = getline(v:lnum)
+"     return thisline =~# '\v^\s{-}\/\/'
 set foldmethod=marker
 " set fdo-=search "only search in unfolded text
 set foldmarker=%%%,^^^
