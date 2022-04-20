@@ -518,7 +518,7 @@ See URL `https://github.com/ProofGeneral/PG/issues/427'."
 ;; (add-hook 'message-mode-hook #'word-wrap-mode)
 (custom-set-faces!
   '(outline-1 :weight extra-bold :height 1.0)
-  '(outline-2 :weight bold :height 1.0)
+  '(outline-2 :weight bold :height 1.2)
   '(outline-3 :weight bold :height 1.0)
   '(outline-4 :weight semi-bold :height 1.0)
   '(outline-5 :weight semi-bold :height 1.0)

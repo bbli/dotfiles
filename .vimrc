@@ -323,11 +323,12 @@ Plug 'ludovicchabant/vim-gutentags' "Vista auto does this
 "Plug 'dag/vim-fish'
 "Plug 'pboettch/vim-cmake-syntax'
 "Plug 'rhysd/vim-llvm'
+Plug 'Raku/vim-raku'
 
 "Terminal Interactions
 "---
 " Plug 'vim-test/vim-test'
-Plug 'bbli/vim-test'
+Plug 'bbli/vim-test', {'branch': 'benson-catch'}
 " Plug 'rcarriga/vim-ultest', { 'do': ':UpdateRemotePlugins' } "Not working atm(and probably only works with correct errorformat. ALSO NOTE I ADDING LOGGING TO THE PLUGIN ITSELF
 "Plug 'alepez/vim-gtest' "Hardcodes certain things
 "If I want to explicitly choose the window for vim test
@@ -840,7 +841,7 @@ vnoremap > >gv
 vnoremap < <gv
 
 
-nnoremap <unique> S %
+" nnoremap <unique> S %
 " nnoremap <unique> t %
 " ************** COMMAND MODE MAPS **************%%%1
 cnoremap sE %s
@@ -865,8 +866,8 @@ nnoremap <leader>/ /
 "onoremap B b
 "onoremap ) i)
 "onoremap ] i]
-onoremap s i]
-onoremap S a]
+" onoremap s i]
+" onoremap S a]
 
 onoremap p i)
 onoremap P a)
@@ -1390,6 +1391,7 @@ let g:benson_lsp_status = 1
 "       \ ])
 " let g:python3_host_prog = '/usr/bin/python3'
 let g:foldsearch_disable_mappings = 1
+" let g:raku_unicode_abbrevs = 1
 " ************** MY PLUGIN STUFF **************%%%1
 "let g:filter_jump_strip_characters = ["_"]
 "highlight! link SearchCurrent Red
@@ -1428,3 +1430,4 @@ let test#custom_runners = {'cpp': ['catch2']}
 " call lh#log#set_logger('qf')
 " lh#log#this()
 let g:test#again=0
+" let g:test#runner_commands = ['Catch2']

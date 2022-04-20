@@ -25,7 +25,7 @@ use { "AckslD/nvim-neoclip.lua",
         {'nvim-telescope/telescope.nvim'},
     },
 }
-
+use "ggandor/lightspeed.nvim"
   --use {'stevearc/qf_helper.nvim'} --location tracking not working atm, but useful for toggling with no entries
 use {'tversteeg/registers.nvim'}
 -- TODO: the issue with harpoon is that I need to show it on some UI

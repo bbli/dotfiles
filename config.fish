@@ -158,6 +158,7 @@ end
 fish_add_path -a ~/.emacs.d/bin
 fish_add_path -a ~/perl5/bin
 fish_add_path -a ~/.gem/ruby/3.0.0/bin
+fish_add_path -a ~/Software/comma-community-2022.01.0/bin
 # ************** SOURCE ************** %%%1
 switch (uname)
     case Linux
