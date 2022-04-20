@@ -115,8 +115,11 @@ use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
   end
 )
 --require("todo-comments").setup {}
-EOF
+require'lightspeed'.setup {
+    ignore_case = true,
 
+    }
+EOF
 " ************  Vimscript Functions  ************%%%1
 " No point since this is default behavior anyways
 " Aka existing vim instance will not be updated b/c it
