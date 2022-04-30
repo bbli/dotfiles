@@ -70,6 +70,7 @@ use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
       run = ':TSUpdate'
       }
   use 'nvim-treesitter/nvim-treesitter-textobjects'
+  --use 'haringsrob/nvim_context_vt'
   -- use 'RRethy/nvim-treesitter-textsubjects'
   --use 'mizlan/iswap.nvim'
   --use 'JoosepAlviste/nvim-ts-context-commentstring'
@@ -117,9 +118,13 @@ use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
 --require("todo-comments").setup {}
 require'lightspeed'.setup {
     ignore_case = true,
-
     }
+require('nvim_context_vt').setup({})
 EOF
+nmap l <Plug>Lightspeed_s
+nmap h <Plug>Lightspeed_S
+let g:lightspeed_no_default_keymaps = 1
+let g:registers_normal_mode = 0
 " ************  Vimscript Functions  ************%%%1
 " No point since this is default behavior anyways
 " Aka existing vim instance will not be updated b/c it

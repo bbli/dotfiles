@@ -506,6 +506,8 @@ nnoremap <leader>wr :TabooRename
 "nnoremap <leader>ws :TabooReset<CR>
 
 " ---Git Related--- %%%2
+autocmd FileType magit nnoremap <buffer> <leader>gy "gyy
+autocmd FileType magit nnoremap <buffer> <leader>gp "gp
 nnoremap <leader>gm :Magit<CR>
 nmap <leader>gp <Plug>(GitGutterPreviewHunk)
 nmap gs <Plug>(GitGutterStageHunk)
@@ -516,9 +518,9 @@ nmap <leader>gN <Plug>(GitGutterPrevHunk)
 " nmap <leader>gf :GitGutterFold<CR>
 " nmap <leader>go <Plug>(git-messenger)
 nmap <leader>gl :Gclog<CR>
-nnoremap <unique> <leader>gc :OverCommandLine<CR>:Glog --grep=
+nnoremap <unique> <leader>gc :OverCommandLine<CR>:Gclog --grep=
 " nnoremap <unique> <leader>gc :Gclog --grep=
-nnoremap <unique> <leader>gs :OverCommandLine<CR>:Glog -S
+nnoremap <unique> <leader>gs :OverCommandLine<CR>:Gclog -S
 " nnoremap <unique> <leader>gs :Gclog -S
 nnoremap <unique> <leader>gf :Gclog -- %<CR>
 " Above is better b/c if commit on another branch -> will have a name
@@ -814,9 +816,6 @@ nnoremap <unique> gk k
 nnoremap <unique> gj j
 "nnoremap EE @
 
-nnoremap <unique> hh ^
-nnoremap <unique> ll $
-
 nnoremap <unique> C c$
 nnoremap <unique> D d$
 nnoremap Y y$
@@ -824,7 +823,7 @@ nnoremap <unique> E $
 nnoremap <unique> gE g$
 "nnoremap <unique> W 0w
 " to jump between brackets/parantheses
-"nnoremap S <C-^>
+nnoremap S %
 "nnoremap w W
 "nnoremap W w
 "nnoremap b B
@@ -845,9 +844,6 @@ vnoremap <unique> <C-g> <ESC>
 vnoremap > >gv
 vnoremap < <gv
 
-
-" nnoremap <unique> S %
-" nnoremap <unique> t %
 " ************** COMMAND MODE MAPS **************%%%1
 cnoremap sE %s
 " nnoremap / /\<
@@ -1397,6 +1393,10 @@ let g:benson_lsp_status = 1
 " let g:python3_host_prog = '/usr/bin/python3'
 let g:foldsearch_disable_mappings = 1
 " let g:raku_unicode_abbrevs = 1
+nnoremap f f
+nnoremap F F
+nnoremap t t
+nnoremap T T
 " ************** MY PLUGIN STUFF **************%%%1
 "let g:filter_jump_strip_characters = ["_"]
 "highlight! link SearchCurrent Red
