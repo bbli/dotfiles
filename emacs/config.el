@@ -130,8 +130,8 @@
 (setq org-hide-block-startup t)
 (setq org-noter-notes-search-path `(,org-directory))
 (setq org-startup-with-inline-images t)
-(setq org-refile-targets '((nil :maxlevel . 1)
-                                (org-agenda-files :maxlevel . 1)))
+;;(setq org-refile-targets '((nil :maxlevel . 1)
+                                ;(org-agenda-files :maxlevel . 1)))
 ;; TODO: call restart?? But already seems to work
 (use-package! org-superstar
             :config (org-superstar-configure-like-org-bullets)

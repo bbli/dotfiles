@@ -1322,10 +1322,12 @@ let g:tmuxline_preset = {
 " source ~/.vim_config
 "this only works when calling vimdiff from command line
 "so its useless for comparing different versions with git
-highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+" NOTE: guicolors are what chages things -> as I have "termguicolors"  set
+highlight DiffAdd    cterm=none ctermfg=none ctermbg=Green gui=none guifg=none guibg=Green
+highlight DiffDelete cterm=none ctermfg=none ctermbg=Red gui=none guifg=none guibg=Red
+highlight DiffChange cterm=none ctermfg=none ctermbg=DarkCyan gui=none guifg=none guibg=DarkCyan
+highlight DiffText   cterm=bold ctermfg=none ctermbg=none gui=bold guifg=none guibg=SlateBlue
+"let g:gitgutter_highlight_lines = 1
 
 "For tmux runner
 let g:VtrStripLeadingWhitespace = 0
@@ -1435,4 +1437,4 @@ let test#custom_runners = {'cpp': ['catch2']}
 " call lh#log#set_logger('qf')
 " lh#log#this()
 let g:test#again=0
-" let g:test#runner_commands = ['Catch2']
+let g:test#runner_commands = ['Catch2']

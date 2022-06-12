@@ -119,7 +119,6 @@ use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
 require'lightspeed'.setup {
     ignore_case = true,
     }
-require('nvim_context_vt').setup({})
 EOF
 nmap l <Plug>Lightspeed_s
 nmap h <Plug>Lightspeed_S
