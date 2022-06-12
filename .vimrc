@@ -343,10 +343,10 @@ Plug 'bbli/vim-test', {'branch': 'benson-catch'}
 Plug 'tpope/vim-dispatch'
 " Plug 'neomake/neomake'
 Plug 'mattboehm/vim-unstack'
-"Plug 'benmills/vimux'
-Plug 'jpalardy/vim-slime', { 'branch': 'main'} "useful for creating specific state in script for profiling
+Plug 'benmills/vimux'
+"Plug 'jpalardy/vim-slime', { 'branch': 'main'} "useful for creating specific state in script for profiling
 " used by vim-test. NOTE YOU HAVE TO LET IT CREATE THE INITAL WINDOW
-Plug 'christoomey/vim-tmux-runner'
+"Plug 'christoomey/vim-tmux-runner'
 " Plug 'skywind3000/asynctasks.vim'
 Plug 'skywind3000/asyncrun.vim'
 
@@ -616,8 +616,8 @@ nnoremap <leader>sp :ProjectRootExe TestSuite<CR>
 
 nnoremap <leader>sm :Messages<CR>
 " vim test also integrates with projectionist plugin
-"let g:VimuxUseNearest=1
-"nnoremap <leader>sp :VimuxOpenRunner<CR>
+let g:VimuxUseNearest=1
+nnoremap <leader>sp :VimuxOpenRunner<CR>
 
 "nnoremap <leader>sl :VimuxPromptCommand<CR>
 "nnoremap <leader>ss :VimuxRunLastCommand<CR>
@@ -1357,7 +1357,10 @@ autocmd BufWritePost * GitGutter
 let g:unstack_mapkey=''
 let g:unstack_layout="portrait"
 
-let test#strategy = "vtr"
+let test#strategy = "vimux"
+let g:tslime_always_current_session = 1
+let g:tslime_always_current_window = 1
+let g:tslime_autoset_pane = 0
 
 
 
