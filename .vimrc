@@ -585,6 +585,7 @@ nnoremap <leader>ff :OverCommandLine<CR>GitRipGrep
 nnoremap <leader>fa :OverCommandLine<CR>RipGrep 
 " nnoremap <leader>fa :RipGrep 
 nnoremap <leader>fw :OverCommandLine<CR>Ggrep <C-r><C-w><CR>
+nnoremap <leader>fs :Fs<CR>
 " nnoremap <leader>fw :Ggrep <C-r><C-w><CR>
 autocmd FileType logreview nnoremap <leader>fl :RemoveAllButClass 
 autocmd FileType logreview nnoremap <leader>fe :RemoveAllButERRORLogs<CR>

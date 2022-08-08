@@ -223,7 +223,7 @@ nnoremap <leader>je <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 nnoremap <leader>jE <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 
 nnoremap <leader>fr <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <leader>fs <cmd>Telescope tags<cr>
+" nnoremap <leader>fs <cmd>Telescope tags<cr>
 
 nnoremap K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <leader>jj <cmd>lua vim.lsp.buf.outgoing_calls()<CR>
