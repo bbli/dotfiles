@@ -186,7 +186,7 @@ set showbreak=↪>\
 set timeoutlen=600 "Any smaller and copy to global register will be too slow
 set nocompatible
 set hidden
-set number relativenumber
+"set number relativenumber
 set showcmd "To show keys pressed in normal mode; useful for completing Vim sentences
 filetype on
 filetype plugin on
@@ -233,10 +233,10 @@ call plug#begin('~/.vim/plugged')
 
 "Vim Testing Frameworks
 "---
-Plug 'dhruvasagar/vim-testify' "Vimscript unit testing
+" Plug 'dhruvasagar/vim-testify' "Vimscript unit testing
 " Plug 'junegunn/vader.vim' "Vimscript integration testing
-Plug 'tpope/vim-scriptease' "Vimscript error messages can be jumped to in the quickfix list
-Plug 'LucHermitte/lh-vim-lib' "For the logging library + C++ algorithms in Vimscript -> loggin to quickfix kills space though?
+" Plug 'tpope/vim-scriptease' "Vimscript error messages can be jumped to in the quickfix list
+" Plug 'LucHermitte/lh-vim-lib' "For the logging library + C++ algorithms in Vimscript -> loggin to quickfix kills space though?
 "Visual
 "---
 " Plug 'vim-airline/vim-airline'
@@ -259,7 +259,7 @@ Plug 'dbakker/vim-projectroot'
 " Plug 'google/vim-searchindex' "Apparantly causes issues with GitRipGrep atm
 " Below Plugin not that useful since I can use tabs for that purpose
 "Plug 'troydm/zoomwintab.vim'
-Plug 'osyo-manga/vim-over'
+" Plug 'osyo-manga/vim-over'
 Plug 'MattesGroeger/vim-bookmarks'
 " Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'unblevable/quick-scope'
@@ -282,7 +282,7 @@ Plug 'embear/vim-foldsearch'
 "Plug 'goldfeld/vim-seek'
 "Plug 'jayflo/vim-skip'
 " Plug 'rhysd/clever-f.vim' "Actually this prevents iterative f hopping
-Plug 'https://gitlab.com/yorickpeterse/nvim-window.git', { 'branch': 'main'}
+" Plug 'https://gitlab.com/yorickpeterse/nvim-window.git', { 'branch': 'main'} "I rather use motions to move rather than labels
 " Plug 'https://gitlab.com/yorickpeterse/nvim-pqf.git', { 'branch': 'main'}
 
 "Special Windows
@@ -329,6 +329,7 @@ Plug 'ludovicchabant/vim-gutentags' "Vista auto does this
 "Plug 'pboettch/vim-cmake-syntax'
 "Plug 'rhysd/vim-llvm'
 Plug 'Raku/vim-raku'
+Plug 'elixir-editors/vim-elixir'
 
 "Terminal Interactions
 "---
@@ -437,7 +438,7 @@ let g:qf_nowrap=0
 nmap <leader>qN <Plug>(qf_older)
 nmap <leader>qq <Plug>(qf_qf_switch)
 " Don't apply g when substituting
-nnoremap <leader>qr :OverCommandLine<CR>cdo s/
+nnoremap <leader>qr :cdo s/
 " nnoremap <leader>qr :cdo s/
 
 " coc's version is more useful as it will generate based on file path, not current
@@ -449,11 +450,11 @@ nnoremap <F9> :!ctags -R --sort=yes .<CR>
 nnoremap <leader>ba :A<CR>
 nnoremap <leader>bs <C-^>
 nnoremap <silent> <leader>bk :bwipeout<CR>
-nnoremap <leader>bm :ZenMode<CR>
+nnoremap <leader>bz :ZenMode<CR>
 nnoremap <leader>bb <cmd>Telescope buffers<cr>
-nnoremap <leader>br :OverCommandLine<CR>%s/\<<C-r><C-w>\>/
+nnoremap <leader>br :%s/\<<C-r><C-w>\>/
 " nnoremap <leader>br :%s/\<<C-r><C-w>\>/
-nnoremap <leader>bm :OverCommandLine<CR>g/\<<C-r><C-w>\>/norm! @m<CR>
+nnoremap <leader>bm :g/\<<C-r><C-w>\>/norm! @m<CR>
 
 " ---Edit Related--- %%%2
 "  stuff
@@ -518,9 +519,9 @@ nmap <leader>gN <Plug>(GitGutterPrevHunk)
 " nmap <leader>gf :GitGutterFold<CR>
 " nmap <leader>go <Plug>(git-messenger)
 nmap <leader>gl :Gclog<CR>
-nnoremap <unique> <leader>gc :OverCommandLine<CR>:Gclog --grep=
+nnoremap <unique> <leader>gc :Gclog --grep=
 " nnoremap <unique> <leader>gc :Gclog --grep=
-nnoremap <unique> <leader>gs :OverCommandLine<CR>:Gclog -S
+nnoremap <unique> <leader>gs :Gclog -S
 " nnoremap <unique> <leader>gs :Gclog -S
 nnoremap <unique> <leader>gf :Gclog -- %<CR>
 " Above is better b/c if commit on another branch -> will have a name
@@ -580,11 +581,11 @@ command! -bang -nargs=* GGrep
             \   {'dir': systemlist('git rev-parse --show-toplevel')[0]}, <bang>0)
 
 
-nnoremap <leader>ff :OverCommandLine<CR>GitRipGrep 
+nnoremap <leader>ff :GitRipGrep 
 " nnoremap <leader>ff :GitRipGrep 
-nnoremap <leader>fa :OverCommandLine<CR>RipGrep 
+nnoremap <leader>fa :RipGrep 
 " nnoremap <leader>fa :RipGrep 
-nnoremap <leader>fw :OverCommandLine<CR>Ggrep <C-r><C-w><CR>
+nnoremap <leader>fw :Ggrep <C-r><C-w><CR>
 nnoremap <leader>fs :Fs<CR>
 " nnoremap <leader>fw :Ggrep <C-r><C-w><CR>
 autocmd FileType logreview nnoremap <leader>fl :RemoveAllButClass 
@@ -614,6 +615,8 @@ nnoremap <leader>ss :ProjectRootExe TestNearest<CR>
 nnoremap <leader>sl :ProjectRootExe TestLast<CR>
 nnoremap <leader>sf :ProjectRootExe TestFile<CR>
 nnoremap <leader>sp :ProjectRootExe TestSuite<CR>
+nmap <leader><leader>t <Plug>PlenaryTestFile
+nmap <leader><leader>r <Plug>LuaRun
 
 nnoremap <leader>sm :Messages<CR>
 " vim test also integrates with projectionist plugin
@@ -1329,6 +1332,7 @@ highlight DiffDelete cterm=none ctermfg=none ctermbg=Red gui=none guifg=none gui
 highlight DiffChange cterm=none ctermfg=none ctermbg=DarkCyan gui=none guifg=none guibg=DarkCyan
 highlight DiffText   cterm=bold ctermfg=none ctermbg=none gui=bold guifg=none guibg=SlateBlue
 "let g:gitgutter_highlight_lines = 1
+"hi CursorLine cterm=underline term=underline ctermbg=Grey40 guibg=Grey40
 
 "For tmux runner
 let g:VtrStripLeadingWhitespace = 0
@@ -1374,7 +1378,7 @@ let neovide_remember_window_size = v:true
 let g:vista_sidebar_width = 40
 let g:BASH_Ctrl_j = 'off'
 let g:C_Ctrl_j = 'off'
-let g:benson_lsp_status = 1
+let g:benson_lsp_status = 0
 "let g:signify_sign_show_count = 0
 " call wilder#setup({
 "       \ 'modes': [':'],

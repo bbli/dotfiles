@@ -3,95 +3,133 @@ let &packpath = &runtimepath
 source ~/.vimrc
 " Only available in neovim
 set inccommand=nosplit
-" TO INSPECT A LUA TABLE
-" print(vim.inspect)
+" ************** Helper Functions **************%%%1
+lua << EOF
+P = function(v)
+        print(vim.inspect(v))
+        return
+    end
+EOF
+nnoremap <leader><leader>e :source %<CR>
+
 " ************  Neovim 0.5 Specific Plugins  ************%%%1
 lua << EOF
 require('packer').startup(function()
-  -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
-  use {
-      'nvim-telescope/telescope.nvim',
-      requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
-      }
-  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-  use {
-      'GustavoKatel/telescope-asynctasks.nvim',
-      requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope.nvim'}}
-      }
-use { "AckslD/nvim-neoclip.lua", 
-    requires = { 
+use '~/Desktop/random_things/lua_plugin'
+-- Packer can manage itself
+use 'wbthomason/packer.nvim'
+-- ************  UTILITY LIBRARIES  ************ %%%2
+  use 'nvim-lua/popup.nvim'
+  use 'nvim-lua/plenary.nvim'
+-- ************  Workflows  ************ %%%2
+use {'nvim-telescope/telescope.nvim',
+    config = function() require("plugins.telescope") end,
+    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+  }
+use {'nvim-telescope/telescope-fzf-native.nvim',
+    run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+    config = function() require("plugins.telescope-fzf-native") end,
+    after = 'telescope.nvim',
+    requires = {'nvim-telescope/telescope.nvim'}
+    }
+--use {'GustavoKatel/telescope-asynctasks.nvim',
+--  requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope.nvim'}}
+--  }
+
+use {"AckslD/nvim-neoclip.lua", 
+    config = function () require("plugins.nvim-neoclip") end,
+    requires = {
         {'tami5/sqlite.lua', module = 'sqlite'},
         {'nvim-telescope/telescope.nvim'},
     },
 }
-use "ggandor/lightspeed.nvim"
-  --use {'stevearc/qf_helper.nvim'} --location tracking not working atm, but useful for toggling with no entries
-use {'tversteeg/registers.nvim'}
--- TODO: the issue with harpoon is that I need to show it on some UI
-    -- using it for now as better vim-projectionist
-use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
- -- ************  UTILITY LIBRARIES  ************
-  use 'nvim-lua/popup.nvim'
-  use 'nvim-lua/plenary.nvim'
-  -- ************  LSP STUFF  ************
-  use 'neovim/nvim-lspconfig'
---  use 'ldelossa/calltree.nvim'
-  use 'andersevenrud/cmp-tmux'
-  use'hrsh7th/cmp-nvim-lsp'
-  use'hrsh7th/cmp-buffer'
-  use'hrsh7th/cmp-path' -- kinda useless
-  use'hrsh7th/cmp-cmdline' -- also kinda useless
+
+--use {'stevearc/qf_helper.nvim'} --location tracking not working atm, but useful for toggling with no entries
+
+-- the issue with harpoon is that I need to show it on some UI
+-- use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
+-- ************  Motions  ************ %%%2
+use {"ggandor/lightspeed.nvim", 
+    config = function() require("plugins.lightspeed") end,
+}
+
+-- ************  LSP STUFF  ************ %%%2
+-- TODO: check that mason-lspconfig works on mac, where language servers made not be installed?
+use {"williamboman/mason.nvim",
+    config = function() require("plugins.mason") end,
+}
+use {"williamboman/mason-lspconfig.nvim",
+    config = function() require("plugins.mason-lspconfig") end,
+    after = 'mason.nvim',
+}
+use {'neovim/nvim-lspconfig',
+    config = function() require("plugins.nvim-lspconfig") end,
+    after = 'mason-lspconfig.nvim',
+}
+-- use 'ldelossa/calltree.nvim'
+use 'andersevenrud/cmp-tmux'
+use'hrsh7th/cmp-nvim-lsp'
+use'hrsh7th/cmp-buffer'
+use'hrsh7th/cmp-path' -- kinda useless
+use'hrsh7th/cmp-cmdline' -- also kinda useless
 --  use 'hrsh7th/cmp-vsnip' -- make lsp status not show warnings
 --  use 'hrsh7th/vim-vsnip'
-  use'hrsh7th/nvim-cmp'
-  use {'quangnguyen30192/cmp-nvim-tags', requires = 'hrsh7th/nvim-cmp' }
+use {'hrsh7th/nvim-cmp',
+    config = function() require("plugins.nvim-cmp") end,
+}
+use {'quangnguyen30192/cmp-nvim-tags', requires = 'hrsh7th/nvim-cmp' }
   --use {'tzachar/cmp-fuzzy-buffer', requires = {'hrsh7th/nvim-cmp', 'tzachar/fuzzy.nvim'}}
 
-  use {'onsails/lspkind-nvim'}
-  --use {'andersevenrud/compe-tmux', branch = 'cmp'} "Not working for some reason + causes loading issues even when commented out
-  --use {'ms-jpq/coq_nvim',
-      --branch = 'coq'}
-  --use {'ms-jpq/coq.artifacts', 
-      --branch = 'artifacts'}
-  --use 'glepnir/lspsaga.nvim'
-  use 'kosayoda/nvim-lightbulb'
-  use 'simrat39/rust-tools.nvim'
-  use 'bbli/nvim-code-action-menu' --Need docs on how to make customize -> specifically larger floating window by default
-  --use "ray-x/lsp_signature.nvim" "I prefer snippet solution better as it doesn't clutter the above line
-  -- tagbar/vista is better b/c it shows the current hovered function
-  --use 'simrat39/symbols-outline.nvim'
-  --use 'anott03/nvim-lspinstall'
-  --use 'nvim-lua/lsp-status.nvim'
-  use 'bbli/lsp-status.nvim' -- until I switch over to neovim 0.6
-  -- ************  TREE SITTER  ************
-  use {
-      'nvim-treesitter/nvim-treesitter',
-      run = ':TSUpdate'
-      }
-  use 'nvim-treesitter/nvim-treesitter-textobjects'
-  --use 'haringsrob/nvim_context_vt'
-  -- use 'RRethy/nvim-treesitter-textsubjects'
-  --use 'mizlan/iswap.nvim'
-  --use 'JoosepAlviste/nvim-ts-context-commentstring'
-  use 'romgrk/nvim-treesitter-context'
-  -- ************  DEBUGGER  ************
+use {'onsails/lspkind-nvim'}
+--use 'glepnir/lspsaga.nvim'
+use {'kosayoda/nvim-lightbulb',
+    config = function() require("plugins.nvim-lightbulb") end,
+}
+use 'simrat39/rust-tools.nvim'
+use {'bbli/nvim-code-action-menu',
+    config = function() require("plugins.nvim-code-action-menu") end,
+}
+--use "ray-x/lsp_signature.nvim" "I prefer snippet solution better as it doesn't clutter the above line
+-- tagbar/vista is better b/c it shows the current hovered function
+--use 'simrat39/symbols-outline.nvim'
+-- ************  TREE SITTER  ************ %%%2
+use {
+    'nvim-treesitter/nvim-treesitter',
+    config = function() require('plugins.nvim-treesitter') end,
+    run = ':TSUpdate'
+    }
+use 'nvim-treesitter/nvim-treesitter-textobjects'
+--use 'haringsrob/nvim_context_vt'
+-- use 'RRethy/nvim-treesitter-textsubjects'
+--use 'mizlan/iswap.nvim'
+--use 'JoosepAlviste/nvim-ts-context-commentstring'
+use {'romgrk/nvim-treesitter-context',
+    config = function() require('plugins.nvim-treesitter-context') end,
+}
+  -- ************  DEBUGGER  ************ %%%2
   --use 'mfussenegger/nvim-dap'
   --use 'mfussenegger/nvim-dap-python' --Actualy, supposedly vim-ultest will cover this?
   --use 'theHamsta/nvim-dap-virtual-text'
   --use 'nvim-telescope/telescope-dap.nvim'
   --use "Pocco81/DAPInstall.nvim"
-  -- ************  GIT  ************
+  -- ************  GIT  ************ %%%2
   --use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   use 'sindrets/diffview.nvim'
-  -- ************  MISC/AESTHETICS  ************
-  use {'folke/trouble.nvim', requires = 'kyazdani42/nvim-web-devicons'}
-  --use { "folke/todo-comments.nvim", requires = "nvim-lua/plenary.nvim" }
-  use 'windwp/nvim-autopairs'
-  use {
-      "folke/zen-mode.nvim",
-      config = function() require("zen-mode").setup { } end
+  -- ************  LUA PLUGIN DEVELOPMENT  ************ %%%2
+  use 'euclidianAce/BetterLua.vim'
+  use 'rafcamlet/nvim-luapad'
+  use 'folke/lua-dev.nvim'
+  -- ************  MISC/AESTHETICS  ************ %%%2
+use {'folke/trouble.nvim', requires = 'kyazdani42/nvim-web-devicons'}
+use {'folke/todo-comments.nvim',
+    config = function() require"plugins.todo-comments" end,
+    requires = "nvim-lua/plenary.nvim"
     }
+use 'windwp/nvim-autopairs'
+use {
+  "folke/zen-mode.nvim",
+  config = function() require("zen-mode").setup { } end
+}
   use {
       'kyazdani42/nvim-web-devicons', -- forgot which plugin is optionally dependent on this
       --config = function()
@@ -99,6 +137,7 @@ use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
       --end
       }
   use 'folke/lsp-colors.nvim'
+  use {'j-hui/fidget.nvim'} -- lsp status as virtual text at bottom left
   --use {
 --      "folke/twilight.nvim",
  --     config = function() require("twilight").setup { } end
@@ -115,15 +154,7 @@ use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
 --} 
   end
 )
---require("todo-comments").setup {}
-require'lightspeed'.setup {
-    ignore_case = true,
-    }
 EOF
-nmap l <Plug>Lightspeed_s
-nmap h <Plug>Lightspeed_S
-let g:lightspeed_no_default_keymaps = 1
-let g:registers_normal_mode = 0
 " ************  Vimscript Functions  ************%%%1
 " No point since this is default behavior anyways
 " Aka existing vim instance will not be updated b/c it
@@ -258,437 +289,13 @@ nnoremap <leader>lr :LspRestart<CR>
 "autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting_sync(nil, 100)
 "autocmd BufWritePre *.py lua vim.lsp.buf.formatting_sync(nil, 100)
 " nnoremap <leader>ca <cmd>Telescope lsp_code_actions<CR>
-nnoremap <leader>ca <cmd>CodeActionMenu<CR>
-vnoremap <leader>ca <cmd>CodeActionMenu<CR>
 "nnoremap <leader>fc <cmd>lua require'telescope.builtin'.lsp_workspace_symbols{prompt_prefix=" ", default_text=" :class: "}<CR>
 
-autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
 
-" ************  Language Servers  ************%%%1
-lua <<EOF
--- General
---require('calltree').setup({})
-local lsp_status = require('lsp-status')
-lsp_status.register_progress()
-local temp = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-local new_default_capabilities = vim.tbl_extend('keep',temp , lsp_status.capabilities)
-local new_default_on_attach = lsp_status.on_attach
---clangd
-require'lspconfig'.clangd.setup{
-    on_attach = new_default_on_attach,
-    capabilities = new_default_capabilities,
-}
---require'lspconfig'.ccls.setup {
---    on_attach = new_default_on_attach,
---    capabilities = new_default_capabilities,
---  init_options = {
---    cache = {
---      directory = ".ccls-cache";
---    };
---  }
---}
---cmake
-require'lspconfig'.cmake.setup{
-    on_attach = new_default_on_attach,
-    capabilities = new_default_capabilities,
-}
-
---vimls
-require'lspconfig'.vimls.setup{
-    on_attach = new_default_on_attach,
-    capabilities = new_default_capabilities,
-}
-
--- Rust Tools
-require('rust-tools').setup({
-    server = {
-        on_attach = new_default_on_attach,
-        capabilities = new_default_capabilities,
-    }
-
-})
-
--- Haskell: NOTE: turn off for now since doesn't really work with xmonad + uses a lot of memory
-require'lspconfig'.hls.setup{
-    server = {
-    on_attach = new_default_on_attach,
-    capabilities = new_default_capabilities,
-    }
-}
-
--- Lua Language Server
-local sumneko_binary = "/usr/bin/lua-language-server"
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
-require'lspconfig'.sumneko_lua.setup {
-  cmd = {sumneko_binary},
-    on_attach = new_default_on_attach,
-    capabilities = new_default_capabilities,
-  settings = {
-    Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-        -- Setup your lua path
-        path = runtime_path,
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
-}
---perl
-local util = require 'lspconfig/util'
---require'lspconfig'.perlpls.setup{
---    cmd = { "pls" },
---    on_attach = new_default_on_attach,
---    capabilities = new_default_capabilities,
---
---    filetypes = { "perl" },
---    --root_dir = ".",
--- root_dir = function(fname)
---      return util.root_pattern(".git")(fname) or vim.fn.getcwd()    
---      end,
---    settings = {
---      perl = {
---        perlcritic = {
---          enabled = true
---        }
---      }
---  }
---}
-require'lspconfig'.perlls.setup{
-    cmd = { "perl", "-MPerl::LanguageServer", "-e", "Perl::LanguageServer::run", "--", "--port 13603", "--nostdio 0", "--version 2.1.0" },
-    on_attach = new_default_on_attach,
-    capabilities = new_default_capabilities,
-
-    filetypes = { "perl" },
---    root_dir = ".",
-    settings = {
-      perl = {
-        fileFilter = { ".pm", ".pl" },
-        ignoreDirs = ".git",
-        perlCmd = "perl",
-        perlInc = " "
-      }
-  }
-}
-
---pylsp
-require'lspconfig'.pylsp.setup{
-    on_attach = new_default_on_attach,
-    capabilities = new_default_capabilities,
-}
---gopls
-require'lspconfig'.gopls.setup{
-    on_attach = new_default_on_attach,
-    capabilities = new_default_capabilities,
-}
-EOF
-" ************  TreeSitter  ************%%%1
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-    highlight = {
-        enable = true,
-        --custom_captures = {
-            -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-            -- ["keyword"] = "TSString", -- for testing if tresitter works
-            --},
-        additional_vim_regex_highlighting = true,
-    },
---  context_commentstring = {
---    enable = true
---  },
-incremental_selection = {
-enable = true,
-keymaps = {
-    init_selection = "gnn",
-    node_incremental = "grn",
-    scope_incremental = "grc",
-    node_decremental = "grm",
-    },
-},
-  indent = {
-  enable = true
-  },
-  -- since I don't use operator pending that often/when I do want exact
-     -- textsubjects = {
-     -- enable = true,
-     -- keymaps = {
-     --     ['t'] = 'textsubjects-smart',
-     --     ['T'] = 'textsubjects-container-outer',
-     --     }
-     -- },
- textobjects = {
-     select = {
-     enable = true,
-     lookahead = true,
-
-     keymaps = {
-         ["af"] = "@function.outer",
-         ["if"] = "@function.inner",
-         ["ac"] = "@class.outer",
-         ["ic"] = "@class.inner",
-         ["ab"] = "@block.outer",
-         ["ib"] = "@block.inner",
-         },
-     },
-
- move = {
- enable = true,
- set_jumps = true, -- whether to set jumps in the jumplist
- goto_next_start = {
-     --["ll"] = "@comment.outer",
-     ["lf"] = "@function.outer",
-     ["lb"] = "@block.outer",
-
-     ["C-n"] = "@statement.outer",
-     ["lc"] = "@class.outer",
-     },
- goto_previous_start = {
-     --["hh"] = "@comment.outer",
-     ["hf"] = "@function.outer",
-     ["hb"] = "@block.outer",
-
-     ["C-p"] = "@statement.outer",
-     ["hc"] = "@class.outer",
-     },
- -- below don't matter as much
- goto_next_end = {
-     --["lL"] = "@statement.outer",
-     ["lF"] = "@function.outer",
-
-     --["lC"] = "@comment.outer",
-     ["lC"] = "@class.outer",
-     },
- goto_previous_end = {
-     ["[M"] = "@function.outer",
-     ["[]"] = "@class.outer",
-     },
- },
-  context_commentstring = {
-    enable = true
-  },
-  },
-}
-require'treesitter-context'.setup{
-    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-    throttle = true, -- Throttles plugin updates (may improve performance)
-}
-EOF
-" ************  CMP AutoComplete  ************%%%1
-set completeopt=menu,menuone,noselect
 " Sometimes cmp popup menu will not close
-
-lua <<EOF
-  -- Setup nvim-cmp.
-  local cmp = require'cmp'
-  local lspkind = require'lspkind'
-
-  cmp.setup({
-    snippet = {
-      -- REQUIRED - you must specify a snippet engine
-      expand = function(args)
-         vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-     --vim.fn["vsnip#anonymous"](args.body) 
-      end,
-    },
-    mapping = {
-      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-      --['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-      ['<C-e>'] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
-      --['<C-f>'] = cmp.mapping.confirm({ select = true }),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
-      ['<Tab>'] = cmp.mapping.confirm({ select = true }),
-      ['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item(),{'i','c','s'}),
-      ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item(),{'i','c','s'}),
-    },
-    sources = cmp.config.sources({
-    { name = 'nvim_lsp', keyword_length = 2, max_item_count = 5 },
-      --{ name = 'ultisnips' }, -- For ultisnips users.
-      { name = 'buffer', keyword_length = 1, max_item_count = 5,
-          option = {
-                keyword_pattern = [[\k\+]] -- lsp gettings sigils without this
-              }
-          },
-      -- {name = 'tags', max_item_count = 6}, -- only turn on if no lsp
-      {name = 'tmux', keyword_length = 2, max_item_count = 3},
-      { name = 'path', keyword_length = 2, max_item_count = 3},
-    --{ name = 'vsnip', max_item_count = 3 },
-    }),
-    formatting = {
-        format = require("lspkind").cmp_format({
-            with_text = true,
-            menu = ({
-                buffer = "[Buffer]",
-                nvim_lsp = "[LSP]",
-                path = "[Path]",
-                tags = "[Tags]",
-                tmux = "[Tmux]"
-                --luasnip = "[LuaSnip]",
-                --nvim_lua = "[Lua]",
-                --latex_symbols = "[Latex]",
-            })
-        }),
-    },
-    experimental = {
-        ghost_text = true,
-    }
-  })
-
-  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline('/', {
-      sources = {
-          { name = 'buffer' }
-          }
-      })
-
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
---cmp.setup.cmdline(':', { completion = {
---        autocomplete = true,
---        },
---    sources = cmp.config.sources({
---      { name = 'path' },
---      { name = 'buffer' }
---    }, {
---      { name = 'cmdline' }
---    })
---  })
-EOF
-
-lua << EOF
---require'compe'.setup {
---  enabled = true;
---  autocomplete = true;
---  debug = false;
---  min_length = 1;
---  preselect = 'enable';
---  throttle_time = 80;
---  source_timeout = 200;
---  resolve_timeout = 800;
---  incomplete_delay = 400;
---  max_abbr_width = 100;
---  max_kind_width = 100;
---  max_menu_width = 100;
---  documentation = {
---    border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
---    winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
---    max_width = 120,
---    min_width = 60,
---    max_height = math.floor(vim.o.lines * 0.3),
---    min_height = 1,
---  };
---
---  source = {
---    path = {priority = 3};
---    buffer = {priority = 99};
---    calc = false;
---    nvim_lsp = {priority = 5};
---    nvim_lua = true;
---    vsnip = false;
---    ultisnips = false;
---    luasnip = false;
---    tmux = {priority = 1};
---    tags = {priority = 10};
---  };
---}
-EOF
-
-let g:coq_settings = {}
-lua << EOF
-local apple = vim.g
-apple["coq_settings"] = {
-    auto_start = true,
-    [ "match.proximate_lines" ] = 30,
-    }
-EOF
+set completeopt=menu,menuone,noselect
 inoremap <expr> <C-j> pumvisible() ?"<C-n>":"<C-j>"
 inoremap <expr> <C-k> pumvisible() ?"<C-p>":"<C-k>"
-" ************  Telescope  ************%%%1
-lua <<EOF
-local actions = require('telescope.actions')
-require('telescope').setup{
-  defaults = {
---      file_ignore_patterns = {'build'},
-    mappings = {
-      n = {
-          [ "q" ] = actions.close,
-          ["<C-f>"] = actions.preview_scrolling_up,
-          ["<C-b>"] = actions.preview_scrolling_down,
-      },
-     i = {
-          [ "<C-g>" ] = actions.close,
-          [ "<C-j>" ] = actions.move_selection_next,
-          [ "<C-k>" ] = actions.move_selection_previous,
-          [ "<C-l>" ] = actions.smart_send_to_qflist + actions.open_qflist,
-          [ "<C-h>" ] = actions.complete_tag,
-          [ "<C-u>" ] = false,
-          [ "<C-d>" ] = false,
-          [ "<C-b>" ] = actions.preview_scrolling_up,
-          [ "<C-f>" ] = actions.preview_scrolling_down,
-
-     },
-    },
-      layout_config = {
-          preview_width = 75
-      }
-  },
-   extensions = {
-    fzf = {
-      fuzzy = true,                    -- false will only do exact matching
-      -- "false" is better as "true" priorities file name too much
-      override_generic_sorter = false, -- override the generic sorter
-      override_file_sorter = true,     -- override the file sorter
-      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                       -- the default case_mode is "smart_case"
-    }
-  }
-}
-require('telescope').load_extension('fzf')
-require('telescope').load_extension('neoclip')
-require('neoclip').setup({
-      history = 50,
-      enable_persistant_history = true,
-      db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
-      filter = nil,
-      preview = true,
-      default_register = '"',
-      content_spec_column = false,
-      on_paste = {
-        set_reg = false,
-      },
-      keys = {
-        telescope = {
-          i = {
-            select = '<cr>',
-            paste = '<c-f>',
-            paste_behind = '<c-h>',
-            custom = {},
-          },
-          n = {
-            select = '<c-f>',
-            paste = 'p',
-            paste_behind = 'P',
-            custom = {},
-          },
-        },
-      },
-    })
-EOF
 " ************  Debugger  ************%%%1
 " lua <<EOF
 " --require('telescope').load_extension('dap') -- NOTE: needs to be called after telescope setup
@@ -730,7 +337,6 @@ EOF
 " nnoremap <silent> <localleader>dr :lua require'dap'.repl.open()<CR>
 " nnoremap <silent> <localleader>dl :lua require'dap'.run_last()<CR>
 " nnoremap <silent> <localleader>dq :lua require'dap'.stop()<CR>
-"TODO create command for running to cursor?
 
 ":Telescope dap commands
 ":Telescope dap configurations
@@ -785,27 +391,6 @@ require'diffview'.setup {
         }
     }
 EOF
-" ************** Window Selection **************%%%1
-nnoremap <silent> <leader>ww :lua require('nvim-window').pick()<CR>
-lua << EOF
-require('nvim-window').setup({
-  -- The characters available for hinting windows.
-  chars = {
-      'a', 's' ,'d' ,'f'
-  },
-
-  -- A group to use for overwriting the Normal highlight group in the floating
-  -- window. This can be used to change the background color.
-  normal_hl = 'Normal',
-
-  -- The highlight group to apply to the line that contains the hint characters.
-  -- This is used to make them stand out more.
-  hint_hl = 'Bold',
-
-  -- The border style to use for the floating window.
-  border = 'single'
-})
-EOF
 
 " ************** QuickFix **************%%%1
 " nnoremap <leader>tq :QFToggle<CR>
@@ -836,10 +421,7 @@ nnoremap <leader>hs <cmd>lua require("harpoon.ui").nav_file(2)<CR>
 
 nnoremap <leader>hh <cmd>lua require("harpoon.mark").add_file()<CR>
 nnoremap <leader>hj <cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>
-" ************  TODO  ************%%%1
-" nnoremap <silent> <A-t> :Lspsaga open_floaterm<CR>
-" tnoremap <silent> <A-t> <C-\><C-n>:Lspsaga close_floaterm<CR>
-" TODO: better than fzf but I seriously need to change the locking
+" NOTE: 
 " behavior
 nnoremap <leader>oa <cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' , '-g', '!node_modules'}})<cr>
 " nnoremap <leader>oa <cmd>Telescope find_files<cr>
@@ -847,14 +429,14 @@ nnoremap <leader>oo <cmd>Telescope git_files<cr>
 "nnoremap <leader>ug <cmd>Telescope live_grep<cr>
 nnoremap <leader>ob <cmd>Telescope buffers<cr>
 nnoremap <leader>oh <cmd>Telescope oldfiles<cr>
-nnoremap <leader>oc <cmd>Telescope commands<cr>
+" nnoremap <leader>oc <cmd>Telescope commands<cr>
 nnoremap <M-;> <cmd>Telescope commands<cr>
 " TODO: Telescope way better here compared to FZF b/c of preview  -> Harpoon will probably replace though
 nnoremap <leader>ul <cmd>Telescope marks<cr>
 "TODO: why is the below  not filtering?
 nnoremap <leader>or <cmd>Telescope neoclip<cr>
 nnoremap <leader>oy <cmd>Telescope neoclip<cr>
-nnoremap <leader>om <cmd>Telescope help_tags<cr>
+" nnoremap <leader>ok <cmd>Telescope keymaps<cr>
 
 " These will check out the selected commit/branch
 " nnoremap <leader>gb <cmd>Telescope git_branchs<CR>
@@ -862,13 +444,12 @@ nnoremap <leader>om <cmd>Telescope help_tags<cr>
 " nnoremap <leader>gc <cmd>Telescope git_commits<CR>
 nnoremap <leader>gD :DiffviewOpen
 
-nnoremap <leader>vo <cmd>Telescope vim_options<cr>
-nnoremap <leader>vc <cmd>Telescope autocommands<cr>
-nnoremap <leader>vk <cmd>Telescope keymaps<cr>
-nnoremap <leader>vm <cmd>Telescope help_tags<cr>
+nnoremap <leader>ov <cmd>Telescope vim_options<cr>
+nnoremap <leader>ok <cmd>Telescope keymaps<cr>
+nnoremap <leader>om <cmd>Telescope help_tags<cr>
 "Use after ripgrep for faster narrowing!
-nnoremap <leader>vv <cmd>Telescope quickfix<cr>
-nnoremap <leader>vl <cmd>Telescope loclist<cr>
+" nnoremap <leader>vv <cmd>Telescope quickfix<cr>
+" nnoremap <leader>vl <cmd>Telescope loclist<cr>
 
 nnoremap <leader>jd <cmd>Telescope lsp_definitions<cr>
 nnoremap <leader>ji <cmd>Telescope lsp_implementations<cr>
