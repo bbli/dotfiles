@@ -22,6 +22,9 @@ use 'wbthomason/packer.nvim'
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
 -- ************  Workflows  ************ %%%2
+use {'sindrets/winshift.nvim',
+    config = function() require("plugins.winshift") end,
+}
 use {'nvim-telescope/telescope.nvim',
     config = function() require("plugins.telescope") end,
     requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
@@ -46,8 +49,12 @@ use {"AckslD/nvim-neoclip.lua",
 
 --use {'stevearc/qf_helper.nvim'} --location tracking not working atm, but useful for toggling with no entries
 
--- the issue with harpoon is that I need to show it on some UI
--- use {'thePrimeagen/harpoon', requires = 'nvim-lua/plenary.nvim'}
+-- the issue with harpoon is that I need to show it on some UI -> aka Telescope!
+use {'thePrimeagen/harpoon',
+    config = function() require("plugins.harpoon") end,
+    requires = 'nvim-lua/plenary.nvim',
+    after = 'telescope.nvim',
+}
 -- ************  Motions  ************ %%%2
 use {"ggandor/lightspeed.nvim", 
     config = function() require("plugins.lightspeed") end,
@@ -72,6 +79,7 @@ use'hrsh7th/cmp-nvim-lsp'
 use'hrsh7th/cmp-buffer'
 use'hrsh7th/cmp-path' -- kinda useless
 use'hrsh7th/cmp-cmdline' -- also kinda useless
+use 'hrsh7th/cmp-nvim-lsp-signature-help'
 --  use 'hrsh7th/cmp-vsnip' -- make lsp status not show warnings
 --  use 'hrsh7th/vim-vsnip'
 use {'hrsh7th/nvim-cmp',
@@ -89,7 +97,9 @@ use 'simrat39/rust-tools.nvim'
 use {'bbli/nvim-code-action-menu',
     config = function() require("plugins.nvim-code-action-menu") end,
 }
---use "ray-x/lsp_signature.nvim" "I prefer snippet solution better as it doesn't clutter the above line
+--use {"ray-x/lsp_signature.nvim",
+--    config = function() require("lsp_signature").setup() end,
+--} --I prefer snippet solution better as it doesn't clutter the above line -> but snippet doesn't always work
 -- tagbar/vista is better b/c it shows the current hovered function
 --use 'simrat39/symbols-outline.nvim'
 -- ************  TREE SITTER  ************ %%%2
@@ -111,33 +121,43 @@ use {'romgrk/nvim-treesitter-context',
   --use 'mfussenegger/nvim-dap-python' --Actualy, supposedly vim-ultest will cover this?
   --use 'theHamsta/nvim-dap-virtual-text'
   --use 'nvim-telescope/telescope-dap.nvim'
-  --use "Pocco81/DAPInstall.nvim"
+
   -- ************  GIT  ************ %%%2
   --use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
-  use 'sindrets/diffview.nvim'
+use {'sindrets/diffview.nvim',
+    config = function() require("plugins.diffview") end,
+  }
   -- ************  LUA PLUGIN DEVELOPMENT  ************ %%%2
   use 'euclidianAce/BetterLua.vim'
   use 'rafcamlet/nvim-luapad'
   use 'folke/lua-dev.nvim'
   -- ************  MISC/AESTHETICS  ************ %%%2
-use {'folke/trouble.nvim', requires = 'kyazdani42/nvim-web-devicons'}
+use {'folke/trouble.nvim',
+    config = function() require("plugins.trouble") end,
+    requires = 'kyazdani42/nvim-web-devicons'
+}
 use {'folke/todo-comments.nvim',
     config = function() require"plugins.todo-comments" end,
     requires = "nvim-lua/plenary.nvim"
     }
-use 'windwp/nvim-autopairs'
+use {'windwp/nvim-autopairs',
+    config = function() require("plugins.nvim-autopairs") end,
+}
 use {
   "folke/zen-mode.nvim",
   config = function() require("zen-mode").setup { } end
 }
-  use {
-      'kyazdani42/nvim-web-devicons', -- forgot which plugin is optionally dependent on this
-      --config = function()
-      --require('nvim-web-devicons').setup{default = true}
-      --end
-      }
-  use 'folke/lsp-colors.nvim'
-  use {'j-hui/fidget.nvim'} -- lsp status as virtual text at bottom left
+use {
+    'kyazdani42/nvim-web-devicons',
+    config = function() require('nvim-web-devicons').setup{default = true} end,
+}
+use {'folke/lsp-colors.nvim',
+    config = function() require("lsp-colors").setup() end,
+}
+-- lsp status as virtual text at bottom left
+use {'j-hui/fidget.nvim',
+    config = function() require("plugins.fidget") end,
+} 
   --use {
 --      "folke/twilight.nvim",
  --     config = function() require("twilight").setup { } end
@@ -195,7 +215,7 @@ command! Scratch lua require'tools'.makeScratch()
 " lua text will be syntax highlighted!
 let g:vimsyn_embed = 'l'
 
-" ************  LSP KeyMaps  ************%%%1
+" ************  LSP Highlights  ************%%%1
 
 " Statusline
 
@@ -260,7 +280,7 @@ nnoremap K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <leader>jj <cmd>lua vim.lsp.buf.outgoing_calls()<CR>
 nnoremap <leader>jR <cmd>lua vim.lsp.buf.incoming_calls()<CR> "though references is better -> will also show from test files too
 " nnoremap K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
-nnoremap <leader>k <cmd>lua vim.lsp.buf.signature_help()<CR> "Don't really understand this
+" nnoremap <leader>k <cmd>lua vim.lsp.buf.signature_help()<CR> "Don't really understand this
 " nnoremap <silent> ls <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
 
 "nnoremap <leader>wa <cmd>lua vim.lsp.buf.add_workspace_folder()<CR>
@@ -273,11 +293,11 @@ nnoremap <leader>k <cmd>lua vim.lsp.buf.signature_help()<CR> "Don't really under
 " using indirection since TSBufEnable won't be available until vim fully finishes starting up
 " -> Or can put this in an "after directory"?
 let @T = "write | edit | TSBufEnable highlight"
-nnoremap <leader>lc :<C-R>T<CR>
-nnoremap <leader>lt :GutentagsUpdate!<CR>
-nnoremap <leader>lf <cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <leader>lt :<C-R>T<CR>
+" nnoremap <leader>lt :GutentagsUpdate!<CR>
+" nnoremap <leader>lf <cmd>lua vim.lsp.buf.formatting()<CR>
 nnoremap <unique> <leader><leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
-nnoremap <leader>ll <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
+" nnoremap <leader>ll <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
 nnoremap <unique> <leader>ls :lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>
 nnoremap <leader>lr :LspRestart<CR>
 "--nnoremap <leader>fr <cmd>lua vim.lsp.buf.rename()<CR>
@@ -296,133 +316,13 @@ nnoremap <leader>lr :LspRestart<CR>
 set completeopt=menu,menuone,noselect
 inoremap <expr> <C-j> pumvisible() ?"<C-n>":"<C-j>"
 inoremap <expr> <C-k> pumvisible() ?"<C-p>":"<C-k>"
-" ************  Debugger  ************%%%1
-" lua <<EOF
-" --require('telescope').load_extension('dap') -- NOTE: needs to be called after telescope setup
-" local dap = require('dap')
-" dap.adapters.lldb = {
-"   type = 'executable',
-"   command = '/usr/bin/lldb-vscode', -- adjust as needed
-"   name = "lldb"
-" }
-" dap.configurations.cpp = {
-"   {
-"     name = "Launch",
-"     type = "lldb",
-"     request = "launch",
-"     program = function()
-"       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-"     end,
-"     cwd = '${workspaceFolder}',
-"     stopOnEntry = false,
-"     args = {},
 
-"     runInTerminal = false,
-"   },
-" }
-" dap.configurations.c = dap.configurations.cpp
-" dap.configurations.rust = dap.configurations.cpp
-" dap.defaults.fallback.terminal_win_cmd = '50vsplit new'
-
-" vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''})
-" EOF
-" au FileType dap-repl lua require('dap.ext.autocompl').attach()
-" nnoremap <silent> <localleader>dc :lua require'dap'.continue()<CR>
-" nnoremap <silent> <localleader>ds :lua require'dap'.step_over()<CR>
-" nnoremap <silent> <localleader>di :lua require'dap'.step_into()<CR>
-" nnoremap <silent> <localleader>do :lua require'dap'.step_out()<CR>
-" nnoremap <silent> <localleader>db :lua require'dap'.toggle_breakpoint()<CR>
-" nnoremap <silent> <localleader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
-" nnoremap <silent> <localleader>dp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
-" nnoremap <silent> <localleader>dr :lua require'dap'.repl.open()<CR>
-" nnoremap <silent> <localleader>dl :lua require'dap'.run_last()<CR>
-" nnoremap <silent> <localleader>dq :lua require'dap'.stop()<CR>
-
-":Telescope dap commands
-":Telescope dap configurations
-":Telescope dap list_breakpoints
-":Telescope dap variables
-":Telescope dap frames
-"A typical debug flow consists of:
-"1.Setting breakpoints via :lua require'dap'.toggle_breakpoint().
-"2. Launching debug sessions and resuming execution via :lua require'dap'.continue().
-"3. Stepping through code via :lua require'dap'.step_over() and :lua require'dap'.step_into().
-"4. Inspecting the state via the built-in REPL: :lua require'dap'.repl.open() or using the widget UI (:help dap-widgets)
-
-let g:dap_virtual_text = 'all_frames'
-" ************  Diffview  ************%%%1
-lua << EOF
-local cb = require'diffview.config'.diffview_callback
-
-require'diffview'.setup {
-    use_icons = true,        -- Requires nvim-web-devicons
-    diff_binaries = false,    -- Show diffs for binaries
-    file_panel = {
-        width = 35,
-        },
-    key_bindings = {
-        disable_defaults = true,                   -- Disable the default key bindings
-        -- The `view` bindings are active in the diff buffers, only when the current
-        -- tabpage is a Diffview.
-        view = {
-            -- Use <leader>gn to go to next diff
-            ["<leader>dn"]     = cb("select_next_entry"),  -- Open the diff for the next file 
-            ["<leader>dN"]   = cb("select_prev_entry"),  -- Open the diff for the previous file
-            ["<leader>df"] = cb("focus_files"),        -- Bring focus to the files panel
-            ["<leader>dd"] = cb("toggle_files"),       -- Toggle the files panel.
-            },
-        file_panel = {
-            ["j"]             = cb("next_entry"),         -- Bring the cursor to the next file entry
-            ["<down>"]        = cb("next_entry"),
-            ["k"]             = cb("prev_entry"),         -- Bring the cursor to the previous file entry.
-            ["<up>"]          = cb("prev_entry"),
-            ["<cr>"]          = cb("select_entry"),       -- Open the diff for the selected entry.
-            ["o"]             = cb("select_entry"),
-            ["<2-LeftMouse>"] = cb("select_entry"),
-            ["-"]             = cb("toggle_stage_entry"), -- Stage / unstage the selected entry.
-            ["S"]             = cb("stage_all"),          -- Stage all entries.
-            ["U"]             = cb("unstage_all"),        -- Unstage all entries.
-            ["R"]             = cb("refresh_files"),      -- Update stats and entries in the file list.
-            ["<tab>"]         = cb("select_next_entry"),
-            ["<s-tab>"]       = cb("select_prev_entry"),
-            ["<leader>df"]     = cb("focus_files"),
-            ["<leader>dd"]     = cb("toggle_files"),
-            }
-        }
-    }
-EOF
-
-" ************** QuickFix **************%%%1
-" nnoremap <leader>tq :QFToggle<CR>
-lua << EOF
--- require('pqf').setup()
-EOF
 " ************** Compiling/Running/Terminal Interaction **************%%%1
 " nnoremap <leader>pp <cmd>lua require('telescope').extensions.asynctasks.all()<CR>
 " nnoremap <leader>pi <cmd>AsyncTaskMacro<CR>
 " nnoremap <localleader>a :AsyncTaskEdit<CR>
 " ************  Rest  ************%%%1
-lua << EOF
-require('nvim-web-devicons').setup{default = true}
-require('nvim-autopairs').setup({
-  enable_check_bracket_line = true,
-disable_filetype = { "TelescopePrompt" , "guihua", "guihua_rust", "clap_input" },
-})
-require('trouble').setup{
-}
---require("nvim-autopairs.completion.compe").setup({
---  map_cr = true, --  map <CR> on insert mode
---  map_complete = true -- it will auto insert `(` after select function or method item
---})
-EOF
-" Use for jumping to the current TODO -> in TDD
-nnoremap <leader>ha <cmd>lua require("harpoon.ui").nav_file(1)<CR>
-nnoremap <leader>hs <cmd>lua require("harpoon.ui").nav_file(2)<CR>
 
-nnoremap <leader>hh <cmd>lua require("harpoon.mark").add_file()<CR>
-nnoremap <leader>hj <cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>
-" NOTE: 
-" behavior
 nnoremap <leader>oa <cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' , '-g', '!node_modules'}})<cr>
 " nnoremap <leader>oa <cmd>Telescope find_files<cr>
 nnoremap <leader>oo <cmd>Telescope git_files<cr>
@@ -442,7 +342,6 @@ nnoremap <leader>oy <cmd>Telescope neoclip<cr>
 " nnoremap <leader>gb <cmd>Telescope git_branchs<CR>
 " Fugitive is better this quickfix does nothing
 " nnoremap <leader>gc <cmd>Telescope git_commits<CR>
-nnoremap <leader>gD :DiffviewOpen
 
 nnoremap <leader>ov <cmd>Telescope vim_options<cr>
 nnoremap <leader>ok <cmd>Telescope keymaps<cr>

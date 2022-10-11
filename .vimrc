@@ -349,7 +349,7 @@ Plug 'benmills/vimux'
 " used by vim-test. NOTE YOU HAVE TO LET IT CREATE THE INITAL WINDOW
 "Plug 'christoomey/vim-tmux-runner'
 " Plug 'skywind3000/asynctasks.vim'
-Plug 'skywind3000/asyncrun.vim'
+" Plug 'skywind3000/asyncrun.vim'
 
 "Git
 "---
