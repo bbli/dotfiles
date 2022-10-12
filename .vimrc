@@ -367,10 +367,10 @@ Plug 'airblade/vim-gitgutter'
 
 "Snippets
 "---
-Plug 'SirVer/ultisnips', {'for': ['rust', 'cpp', 'vim', 'lua','python','sh','cmake','go','fish','perl', 'haskell']}
+" Plug 'SirVer/ultisnips', {'for': ['rust', 'cpp', 'vim', 'lua','python','sh','cmake','go','fish','perl', 'haskell']}
 " Plug 'hrsh7th/vim-vsnip'
 " Plug 'hrsh7th/vim-vsnip-integ'
-Plug 'honza/vim-snippets'
+" Plug 'honza/vim-snippets'
 " Plug 'quangnguyen30192/cmp-nvim-ultisnips', {'branch': 'main'}
 " Plug 'dawikur/algorithm-mnemonics.vim'
 
@@ -584,9 +584,9 @@ command! -bang -nargs=* GGrep
 nnoremap <leader>ff :GitRipGrep 
 " nnoremap <leader>ff :GitRipGrep 
 nnoremap <leader>fa :RipGrep 
-" nnoremap <leader>fa :RipGrep 
 nnoremap <leader>fw :Ggrep <C-r><C-w><CR>
-nnoremap <leader>fs :Fs<CR>
+" Doesn't really work
+nnoremap <leader>fs :tabnew %<CR>:Fw<CR> 
 " nnoremap <leader>fw :Ggrep <C-r><C-w><CR>
 autocmd FileType logreview nnoremap <leader>fl :RemoveAllButClass 
 autocmd FileType logreview nnoremap <leader>fe :RemoveAllButERRORLogs<CR>
