@@ -79,21 +79,21 @@ ln -sf "$dotfiles_path/starship.toml" $HOME/.config/starship.toml
 
 curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
  git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
-sudo pacman -S ctags
-sudo pacman -S starship
-sudo pacman -S clang
-sudo pacman -S neovim
+# sudo pacman -S ctags
+# sudo pacman -S starship
+# sudo pacman -S clang
+# sudo pacman -S neovim
 # ************  YAY SETUP  ************
-cd
-mkdir Software
-cd Software
-git clone https://aur.archlinux.org/yay-git.git --depth 1
-cd yay-git
-makepkg -si
+# cd
+# mkdir Software
+# cd Software
+# git clone https://aur.archlinux.org/yay-git.git --depth 1
+# cd yay-git
+# makepkg -si
 
 # Finally manually install `yay`
 #echo 1 | yay --noconfirm nerd-fonts-source-code-pro
-yay --noconfirm --answerdiff=None nerd-fonts-source-code-pro 
+# yay --noconfirm --answerdiff=None nerd-fonts-source-code-pro 
 
 # ************  PIP SOFTWARE  ************ %%%1
 sudp pacman -S python-pip
