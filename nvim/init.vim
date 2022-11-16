@@ -59,9 +59,9 @@ use {'thePrimeagen/harpoon',
 use {"ggandor/lightspeed.nvim", 
     config = function() require("plugins.lightspeed") end,
 }
-use {"L3MON4D3/LuaSnip",
-    config = function() require("plugins.LuaSnip") end,
-}
+-- use {"L3MON4D3/LuaSnip",
+    -- config = function() require("plugins.LuaSnip") end,
+--}
 
 -- ************  LSP STUFF  ************ %%%2
 -- TODO: check that mason-lspconfig works on mac, where language servers made not be installed?

@@ -450,6 +450,7 @@ nnoremap <F9> :!ctags -R --sort=yes .<CR>
 nnoremap <leader>ba :A<CR>
 nnoremap <leader>bs <C-^>
 nnoremap <silent> <leader>bk :bwipeout<CR>
+nnoremap <leader>bf :ZenMode<CR>
 nnoremap <leader>bz :ZenMode<CR>
 nnoremap <leader>bb <cmd>Telescope buffers<cr>
 nnoremap <leader>br :%s/\<<C-r><C-w>\>/
