@@ -69,7 +69,6 @@ ln -sf "$dotfiles_path/colors" $HOME/.vim/colors
 #touch $HOME/.vim_config
 
 ### If neovim enabled
-mkdir -p $HOME/.config/nvim
 ln -sf "$dotfiles_path/nvim" $HOME/.config/nvim
 mkdir -p $HOME/.doom.d
 ln -sf "$dotfiles_path/emacs/config.el" $HOME/.doom.d/config.el
