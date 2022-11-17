@@ -133,7 +133,7 @@ use {'sindrets/diffview.nvim',
   -- ************  LUA PLUGIN DEVELOPMENT  ************ %%%2
   use 'euclidianAce/BetterLua.vim'
   use 'rafcamlet/nvim-luapad'
-  use 'folke/lua-dev.nvim'
+  use 'folke/neodev.nvim'
   -- ************  MISC/AESTHETICS  ************ %%%2
 use {'folke/trouble.nvim',
     config = function() require("plugins.trouble") end,
