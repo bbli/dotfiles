@@ -56,15 +56,15 @@ function du
     /usr/bin/du -h $argv
 end
 
-# function nv
-#     switch (uname)
-#     case Linux 
-#         nvim $argv
-#     case Darwin
-#         /usr/local/bin/nvim $argv
-#     case '*'
-#     end
-# end
+function nv
+    switch (uname)
+    case Linux 
+        nvim $argv
+    case Darwin
+        /usr/local/bin/nvim $argv
+    case '*'
+    end
+end
 
 function vi
     vim $argv
