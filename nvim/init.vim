@@ -59,9 +59,9 @@ use {'thePrimeagen/harpoon',
 use {"ggandor/lightspeed.nvim", 
     config = function() require("plugins.lightspeed") end,
 }
--- use {"L3MON4D3/LuaSnip",
-    -- config = function() require("plugins.LuaSnip") end,
---}
+use {"L3MON4D3/LuaSnip",
+    config = function() require("plugins.LuaSnip") end,
+}
 
 -- ************  LSP STUFF  ************ %%%2
 -- TODO: check that mason-lspconfig works on mac, where language servers made not be installed?
@@ -273,8 +273,8 @@ nnoremap <leader>jD <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <leader>jr <cmd>lua vim.lsp.buf.references()<CR>
 " nnoremap <leader>jr <cmd>lua vim.lsp.buf.incoming_calls()<CR>
 nnoremap <leader>ji <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <leader>je <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-nnoremap <leader>jE <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <leader>je <cmd>lua vim.diagnostic.goto_next()<CR>
+nnoremap <leader>jE <cmd>lua vim.diagnostic.goto_prev()<CR>
 
 nnoremap <leader>fr <cmd>lua vim.lsp.buf.rename()<CR>
 
