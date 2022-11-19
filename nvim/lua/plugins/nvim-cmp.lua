@@ -5,8 +5,9 @@ cmp.setup({
     snippet = {
         -- REQUIRED - you must specify a snippet engine
         expand = function(args)
-            vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+            -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
             --vim.fn["vsnip#anonymous"](args.body) 
+            require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
         end,
     },
     mapping = {
@@ -23,6 +24,7 @@ cmp.setup({
         ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item(),{'i','c','s'}),
     },
     sources = cmp.config.sources({
+        { name = 'luasnip', keyword_length = 2},
         { name = 'nvim_lsp_signature_help'},
         { name = 'nvim_lsp', keyword_length = 2, max_item_count = 5 },
         --{ name = 'ultisnips' }, -- For ultisnips users.
@@ -44,8 +46,8 @@ cmp.setup({
                 nvim_lsp = "[LSP]",
                 path = "[Path]",
                 tags = "[Tags]",
-                tmux = "[Tmux]"
-                --luasnip = "[LuaSnip]",
+                tmux = "[Tmux]",
+                luasnip = "[LuaSnip]",
                 --nvim_lua = "[Lua]",
                 --latex_symbols = "[Latex]",
             })

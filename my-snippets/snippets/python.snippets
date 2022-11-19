@@ -2,7 +2,6 @@
 snippet se
 	################ **${1}** ##################
 	${0}
-endsnippet
 
 snippet fd
 	'''
@@ -11,16 +10,13 @@ snippet fd
 	Returns: ${3}
 	'''
 	${4}
-endsnippet
 
 snippet sd
 	################ **${1}** ##################
 	${0}
-endsnippet
 
 snippet cc
 	########################${0}
-endsnippet
 
 # snippet ass
 # 	def ${1:method}(self, $2):
@@ -29,16 +25,14 @@ endsnippet
 # 				super().$1($2)
 # 		else:
 # 			super().$1($2)
-#endsnippet
 
 snippet ass
-def ${1:method}(self,$2):
-	if self._result is not None and self._batch:
-		try:
+	def ${1:method}(self,$2):
+		if self._result is not None and self._batch:
+			try:
+				return super(TestBase,self).$1($2)
+			except self.failureException:
+				self._result.addFailure(self, sys.exc_info())
+				self._batchSuccess = False
+		else:
 			return super(TestBase,self).$1($2)
-		except self.failureException:
-			self._result.addFailure(self, sys.exc_info())
-			self._batchSuccess = False
-	else:
-		return super(TestBase,self).$1($2)
-endsnippet

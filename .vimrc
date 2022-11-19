@@ -447,6 +447,8 @@ nnoremap <F9> :!ctags -R --sort=yes .<CR>
 
 
 " ---Buffer Related---{{2
+command! BufOnly silent! :%bd|e#|bd#<CR>
+nnoremap <leader>bD :BufOnly<CR>
 nnoremap <leader>ba :A<CR>
 nnoremap <leader>bs <C-^>
 nnoremap <silent> <leader>bk :bwipeout<CR>

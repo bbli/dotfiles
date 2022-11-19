@@ -60,8 +60,13 @@ use {"ggandor/lightspeed.nvim",
     config = function() require("plugins.lightspeed") end,
 }
 use {"L3MON4D3/LuaSnip",
+    after = "nvim-cmp",
     config = function() require("plugins.LuaSnip") end,
 }
+-- since above was hard to configure for my own snippets
+--use {"dcampos/nvim-snippy",
+ --   config = function() require("plugins.nvim-snippy") end,
+--}
 
 -- ************  LSP STUFF  ************ %%%2
 -- TODO: check that mason-lspconfig works on mac, where language servers made not be installed?
@@ -85,6 +90,7 @@ use'hrsh7th/cmp-cmdline' -- also kinda useless
 use 'hrsh7th/cmp-nvim-lsp-signature-help'
 --  use 'hrsh7th/cmp-vsnip' -- make lsp status not show warnings
 --  use 'hrsh7th/vim-vsnip'
+use 'saadparwaiz1/cmp_luasnip'
 use {'hrsh7th/nvim-cmp',
     config = function() require("plugins.nvim-cmp") end,
 }
@@ -355,3 +361,4 @@ nnoremap <leader>om <cmd>Telescope help_tags<cr>
 nnoremap <leader>jd <cmd>Telescope lsp_definitions<cr>
 nnoremap <leader>ji <cmd>Telescope lsp_implementations<cr>
 
+" imap <silent> zz <cmd>lua require'luasnip'expand()<Cr>
