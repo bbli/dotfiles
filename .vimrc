@@ -584,12 +584,13 @@ command! -bang -nargs=* GGrep
             \   {'dir': systemlist('git rev-parse --show-toplevel')[0]}, <bang>0)
 
 
-nnoremap <leader>ff :GitRipGrep 
+nnoremap <leader>ff :Telescope live_grep<CR>
 " nnoremap <leader>ff :GitRipGrep 
-nnoremap <leader>fa :RipGrep 
+nnoremap <leader>fa :RipGrep
 nnoremap <leader>fw :Ggrep <C-r><C-w><CR>
+nnoremap <leader>fs :Telescope 
 " Doesn't really work
-nnoremap <leader>fs :tabnew %<CR>:Fw<CR> 
+" nnoremap <leader>fs :tabnew %<CR>:Fw<CR> 
 " nnoremap <leader>fw :Ggrep <C-r><C-w><CR>
 autocmd FileType logreview nnoremap <leader>fl :RemoveAllButClass 
 autocmd FileType logreview nnoremap <leader>fe :RemoveAllButERRORLogs<CR>

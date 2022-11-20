@@ -22,6 +22,12 @@ use 'wbthomason/packer.nvim'
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
 -- ************  Workflows  ************ %%%2
+use {'simrat39/symbols-outline.nvim',
+    config = function() require("plugins.symbols-outline") end,
+}
+use {"akinsho/toggleterm.nvim", tag = '*', config = function()
+  require("toggleterm").setup()
+end}
 use {'sindrets/winshift.nvim',
     config = function() require("plugins.winshift") end,
 }
@@ -29,6 +35,12 @@ use {'nvim-telescope/telescope.nvim',
     config = function() require("plugins.telescope") end,
     requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
   }
+--use {
+--  "princejoogie/dir-telescope.nvim",
+--  -- telescope.nvim is a required dependency
+--  requires = {"nvim-telescope/telescope.nvim"},
+--  config = function() require("plugins.dir-telescope") end,
+--}
 use {'nvim-telescope/telescope-fzf-native.nvim',
     run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
     config = function() require("plugins.telescope-fzf-native") end,
@@ -329,8 +341,11 @@ inoremap <expr> <C-k> pumvisible() ?"<C-p>":"<C-k>"
 " nnoremap <leader>pp <cmd>lua require('telescope').extensions.asynctasks.all()<CR>
 " nnoremap <leader>pi <cmd>AsyncTaskMacro<CR>
 " nnoremap <localleader>a :AsyncTaskEdit<CR>
+" ************** Terminal Stuff ************** %%%1
+tnoremap <Esc> <C-\><C-n>
+tnoremap ;c <C-\><C-n>
+let g:terminal_scrollback_buffer_size = 50000
 " ************  Rest  ************%%%1
-
 nnoremap <leader>oa <cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' , '-g', '!node_modules'}})<cr>
 " nnoremap <leader>oa <cmd>Telescope find_files<cr>
 nnoremap <leader>oo <cmd>Telescope git_files<cr>
