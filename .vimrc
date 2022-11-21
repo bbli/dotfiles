@@ -512,16 +512,18 @@ nnoremap <leader>wr :TabooRename
 " ---Git Related--- %%%2
 autocmd FileType magit nnoremap <buffer> <leader>gy "gyy
 autocmd FileType magit nnoremap <buffer> <leader>gp "gp
-nnoremap <leader>gm :Magit<CR>
 nmap <leader>gp <Plug>(GitGutterPreviewHunk)
 nmap gs <Plug>(GitGutterStageHunk)
 vmap gs <Plug>(GitGutterStageHunk)
 nmap <leader>gu <Plug>(GitGutterUndoHunk)
 nmap <leader>gn <Plug>(GitGutterNextHunk)
 nmap <leader>gN <Plug>(GitGutterPrevHunk)
+
+nnoremap <leader>gm :Magit<CR>
 " nmap <leader>gf :GitGutterFold<CR>
 " nmap <leader>go <Plug>(git-messenger)
 nmap <leader>gl :Gclog<CR>
+
 nnoremap <unique> <leader>gc :Gclog --grep=
 " nnoremap <unique> <leader>gc :Gclog --grep=
 nnoremap <unique> <leader>gs :Gclog -S
@@ -534,10 +536,22 @@ nnoremap <leader>gd :Gvdiff
 nnoremap <leader>gb :Git blame<CR>
 
 " ---Terminal Related --- %%%2
-nnoremap <leader>so :FloatermToggle<CR>
-nnoremap <leader>os :FloatermToggle<CR>
+"  <root> option only works with FloattermToggl
+let g:term_count = 0
+function! ToggleFloatTerm()
+    if g:term_count == 0
+        let g:term_count = 1
+        execute "FloatermNew --cwd=<root>"
+    else
+        execute "FloatermToggle"
+    endif
+endfunction
+nnoremap <leader>so :call ToggleFloatTerm()<CR>
+nnoremap <leader>os :call ToggleFloatTerm()<CR>
 " Use <C-e> to not run -> and edit instead
 nnoremap <leader>sh :Telescope command_history<CR>
+let g:floaterm_width = 0.8
+let g:floaterm_height = 0.95
 " Rerun last command
 " nnoremap <leader>ss
 " Run a specific command
@@ -676,7 +690,7 @@ nnoremap <leader>tc :TSContextToggle<CR>
 nnoremap <leader>tu :UndotreeToggle<CR>
 " nnoremap <leader>tt :TagbarToggle<CR>
 "nnoremap <leader>ts :set spell!<CR>
-nnoremap <leader>ts :FloatermToggle<CR>
+" nnoremap <leader>ts :FloatermToggle<CR>
 let s:nerdtree_open = 0
 function! ToggleNerdTree()
     " NOTE: an aside, but notice that we have the choice here of setting
