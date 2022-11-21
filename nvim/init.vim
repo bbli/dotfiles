@@ -25,9 +25,6 @@ use 'wbthomason/packer.nvim'
 use {'simrat39/symbols-outline.nvim',
     config = function() require("plugins.symbols-outline") end,
 }
-use {"akinsho/toggleterm.nvim", tag = '*', config = function()
-  require("toggleterm").setup()
-end}
 use {'sindrets/winshift.nvim',
     config = function() require("plugins.winshift") end,
 }
@@ -35,6 +32,17 @@ use {'nvim-telescope/telescope.nvim',
     config = function() require("plugins.telescope") end,
     requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
   }
+-- need nvim 0.8
+--use {
+--    "cbochs/grapple.nvim",
+--    config = function()
+--        require("grapple").setup({
+--            -- Your configuration goes here
+--            -- Leave empty to use the default configuration
+--            -- Please see the Configuration section below for more information
+--        })
+--    end
+--}
 --use {
 --  "princejoogie/dir-telescope.nvim",
 --  -- telescope.nvim is a required dependency
@@ -286,7 +294,8 @@ EOF
 nnoremap <unique> <leader>ot :Telescope<CR>
 
 nnoremap <leader>jd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <leader>js :vs<CR>:lua vim.lsp.buf.definition()<CR>
+" nnoremap <leader>js :vs<CR>:lua vim.lsp.buf.definition()<CR>
+nnoremap <leader>js <cmd>lua require("benson").smartJumpSplit()<CR>
 nnoremap <leader>jD <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <leader>jr <cmd>lua vim.lsp.buf.references()<CR>
 " nnoremap <leader>jr <cmd>lua vim.lsp.buf.incoming_calls()<CR>
@@ -359,6 +368,7 @@ nnoremap <leader>ul <cmd>Telescope marks<cr>
 "TODO: why is the below  not filtering?
 nnoremap <leader>or <cmd>Telescope neoclip<cr>
 nnoremap <leader>oy <cmd>Telescope neoclip<cr>
+nnoremap <leader>ot <cmd>TodoTrouble<CR>
 " nnoremap <leader>ok <cmd>Telescope keymaps<cr>
 
 " These will check out the selected commit/branch

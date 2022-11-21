@@ -302,7 +302,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all','frozen':1}
 Plug 'bbli/fzf.vim'
 Plug 'mbbill/undotree'
 "Plug 'vimlab/split-term.vim'
-"Plug 'voldikss/vim-floaterm'
+Plug 'voldikss/vim-floaterm'
 Plug 'andreshazard/vim-logreview'
 
 "Plug 'vim-voom/VOoM'
@@ -533,6 +533,16 @@ nmap <leader>gg :G<CR>
 nnoremap <leader>gd :Gvdiff 
 nnoremap <leader>gb :Git blame<CR>
 
+" ---Terminal Related --- %%%2
+nnoremap <leader>so :FloatermToggle<CR>
+nnoremap <leader>os :FloatermToggle<CR>
+" Use <C-e> to not run -> and edit instead
+nnoremap <leader>sh :Telescope command_history<CR>
+" Rerun last command
+" nnoremap <leader>ss
+" Run a specific command
+" nnoremap <leader>s
+
 " ---Open + Find Related--- %%%2
 " fzf and ripgrep settings
 let g:rg_highlight = 1
@@ -544,13 +554,13 @@ command! -bang -nargs=? -complete=dir HFiles
   "\ call fzf#vim#files(<q-args>, {'source': 'rg --ignore .git -g ""'}, <bang>0)
 "fix this
 "2
+
 command! -bang OP call fzf#run(fzf#wrap({'source':'rg --files --hidden','sink':'' 'dir':"~/"}))<CR>
 "1
 "command! -bang OP call fzf#vim#complete#path('rg --files',{'dir':home_dir})
 "nnoremap <leader>op :call fzf#vim#complete#path('rg --files',{'dir':home_dir})<CR>
 "nnoremap <leader>op :OP<CR>
 nnoremap <leader>oo :GFiles<CR>
-nnoremap <leader>os :FloatermNew<CR>
 nnoremap <leader>om :Helptags<CR>
 "nnoremap <leader>oa :FZF<CR>
 nnoremap <leader>oa :HFiles<CR>
@@ -569,6 +579,7 @@ nnoremap <leader>or :Registers<CR>
 nnoremap <leader>oy :Registers<CR>
 " nnoremap <leader>op :CocList mru<CR>
 "nnoremap <leader><leader>oh :FZF ~<CR>
+nmap <leader>oq <Plug>(qf_qf_toggle)
 
 "My wrapper so that I don't need to modify the plugin itself
 "fun
@@ -588,12 +599,14 @@ nnoremap <leader>ff :Telescope live_grep<CR>
 " nnoremap <leader>ff :GitRipGrep 
 nnoremap <leader>fa :RipGrep
 nnoremap <leader>fw :Ggrep <C-r><C-w><CR>
-nnoremap <leader>fs :Telescope 
+nnoremap <leader>fs :Telescope lsp_dynamic_workspace_symbols<CR> 
 " Doesn't really work
 " nnoremap <leader>fs :tabnew %<CR>:Fw<CR> 
 " nnoremap <leader>fw :Ggrep <C-r><C-w><CR>
 autocmd FileType logreview nnoremap <leader>fl :RemoveAllButClass 
-autocmd FileType logreview nnoremap <leader>fe :RemoveAllButERRORLogs<CR>
+autocmd FileType logreview nnoremap <leader>fe :RemoveAllButClass BENSON_DEBUG<CR>
+autocmd FileType log nnoremap <leader>fl :RemoveAllButClass 
+autocmd FileType log nnoremap <leader>fe :RemoveAllButClass BENSON_DEBUG<CR>
 
 " :'<,'>norm! @a to apply the macro only to a visual selection
 " (hit : in visual mode to switch to command mode)
@@ -614,18 +627,18 @@ nnoremap <leader>pe <cmd>TroubleToggle lsp_workspace_diagnostics<CR>
 nnoremap <leader>pt :GitRipGrep TODO<CR>
 nnoremap <leader>jt :call JumpToBookMark()<CR>
 " mm to toggle a bookmark
-nnoremap <leader>se <cmd>TroubleToggle lsp_workspace_diagnostics<CR>
-nnoremap <leader>ss :ProjectRootExe TestNearest<CR>
-nnoremap <leader>sl :ProjectRootExe TestLast<CR>
-nnoremap <leader>sf :ProjectRootExe TestFile<CR>
-nnoremap <leader>sp :ProjectRootExe TestSuite<CR>
+" nnoremap <leader>se <cmd>TroubleToggle lsp_workspace_diagnostics<CR>
+" nnoremap <leader>ss :ProjectRootExe TestNearest<CR>
+" nnoremap <leader>sl :ProjectRootExe TestLast<CR>
+" nnoremap <leader>sf :ProjectRootExe TestFile<CR>
+" nnoremap <leader>sp :ProjectRootExe TestSuite<CR>
 nmap <leader><leader>t <Plug>PlenaryTestFile
 nmap <leader><leader>r <Plug>LuaRun
 
-nnoremap <leader>sm :Messages<CR>
+" nnoremap <leader>sm :Messages<CR>
 " vim test also integrates with projectionist plugin
 let g:VimuxUseNearest=1
-nnoremap <leader>sp :VimuxOpenRunner<CR>
+" nnoremap <leader>sp :VimuxOpenRunner<CR>
 
 "nnoremap <leader>sl :VimuxPromptCommand<CR>
 "nnoremap <leader>ss :VimuxRunLastCommand<CR>
@@ -661,7 +674,7 @@ endf
 nnoremap <leader>tf :call ToggleFoldSearch()<CR>
 nnoremap <leader>tc :TSContextToggle<CR>
 nnoremap <leader>tu :UndotreeToggle<CR>
-nnoremap <leader>tt :TagbarToggle<CR>
+" nnoremap <leader>tt :TagbarToggle<CR>
 "nnoremap <leader>ts :set spell!<CR>
 nnoremap <leader>ts :FloatermToggle<CR>
 let s:nerdtree_open = 0
@@ -695,18 +708,7 @@ nmap <leader>tl <Plug>(qf_loc_toggle)
 
 " ---Jump Related--- %%%2
 " nmap <leader>jf <Plug>(coc-float-jump)
-nmap <leader>jq <Plug>(qf_qf_switch)
-nmap <leader>jd <Plug>(coc-definition)
-nmap <leader>ji <Plug>(coc-implementation)
-"nmap <leader>jt :tab split<CR><Plug>(coc-definition)
 " nnoremap <leader>jb <C-t>
-nmap <leader>js :vs<CR><Plug>(coc-definition)
-nmap <leader>jr <Plug>(coc-references)
-"nmap <leader>jD <Plug>(coc-declaration)
-nmap <leader>jD :CocCommand clangd.switchSourceHeader<cr>
-"nmap <leader>ji <Plug>(coc-implementation)
-nmap <leader>jE <Plug>(coc-diagnostic-prev)
-nmap <leader>je <Plug>(coc-diagnostic-next)
 nnoremap <leader>jc g;
 nnoremap <leader>jC g,
 

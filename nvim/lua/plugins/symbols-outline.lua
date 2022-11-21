@@ -17,7 +17,7 @@ require("symbols-outline").setup({
   keymaps = { -- These keymaps can be a string or a table for multiple keys
     close = {"<Esc>", "q"},
     goto_location = "<Cr>",
-    focus_location = "o",
+    focus_location = {"o", "p"},
     fold = "h",
     unfold = "l",
 

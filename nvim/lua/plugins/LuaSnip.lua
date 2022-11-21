@@ -65,7 +65,6 @@ local m = extras.match
 local n = extras.nonempty
 local dl = extras.dynamic_lambda
 local fmt = require("luasnip.extras.fmt").fmt
-local fmta = require("luasnip.extras.fmt").fmta
 local conds = require("luasnip.extras.expand_conditions")
 local postfix = require("luasnip.extras.postfix").postfix
 local types = require("luasnip.util.types")
@@ -73,24 +72,28 @@ local parse = require("luasnip.util.parser").parse_snippet
 
 local date = function() return {os.date('%Y-%m-%d')} end
 
+-- Example of creating a function node
+local same = function(index)
+    return f(
+        function(arg) return arg[1] end, -- takes function as first parameter
+        {index} -- and TABLE of INDEX/INDEXES to pass to the first paramter function(will be in value form)
+    )
+end
 ls.add_snippets(nil, {
     all = {
-        snip({
-            trig = "date",
-            namr = "Date",
-            dscr = "Date in the form of YYYY-MM-DD",
-        }, {
-            func(date, {}),
-        }),
+        snip({ trig = "date", namr = "Date", dscr = "Date in the form of YYYY-MM-DD", },
+            { func(date, {}),}
+        ),
+        -- Example of passing a function
+        snip("sametest",
+            fmt("example: {}, function: {} ",{i(1),same(1)})
+        ),
     },
     lua = {
-        snip({
-            trig = "asdfd",
-            dscr = "Top Level Comment with Vim Level 1 Fold Marker",
-        }, {
-                i(1), t"text", i(2), t"text again", i(3)
-            }
-        )
+        -- Example of using rep(), which is a higher order function
+        snip({ trig = "asdfd", dscr = "Top Level Comment with Vim Level 1 Fold Marker"}, 
+            fmt("Text to insert {} and stuff {}",{i(1,"default"),rep(1)})
+        ),
     },
     raku = {
     },
