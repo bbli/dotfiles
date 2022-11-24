@@ -45,25 +45,19 @@ function j
 end
 
 function rm
-    /bin/rm -i $argv
+    rm -i $argv
 end
 
 function df
-    /usr/bin/df -h $argv
+    df -h $argv
 end
 
 function du
-    /usr/bin/du -h $argv
+    du -h $argv
 end
 
 function nv
-    switch (uname)
-    case Linux 
-        nvim $argv
-    case Darwin
-        /usr/local/bin/nvim $argv
-    case '*'
-    end
+    nvim $argv
 end
 
 function vi

@@ -69,7 +69,8 @@ ln -sf "$dotfiles_path/colors" $HOME/.vim/colors
 #touch $HOME/.vim_config
 
 ### If neovim enabled
-ln -sf "$dotfiles_path/nvim" $HOME/.config/nvim
+## MANUALLY DO THIS AS WE MAY ACCIDENTLY WIPE CONFIG DIRECTORY
+# ln -sf "$dotfiles_path/nvim" $HOME/.config/
 mkdir -p $HOME/.doom.d
 ln -sf "$dotfiles_path/emacs/config.el" $HOME/.doom.d/config.el
 ln -sf "$dotfiles_path/emacs/init.el" $HOME/.doom.d/init.el
