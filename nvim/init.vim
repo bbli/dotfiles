@@ -78,7 +78,7 @@ use {"AckslD/nvim-neoclip.lua",
 --}
 use {'lewis6991/gitsigns.nvim',
     tag = "v0.5",
-    --config = function() require('plugins.gitsigns_fake').setup() end,
+    config = function() require('plugins.gitsigns') end,
 }
 -- ************  Text Manipulation/Movement  ************ %%%2
 use {"ggandor/lightspeed.nvim", 
