@@ -45,15 +45,15 @@ function j
 end
 
 function rm
-    rm -i $argv
+    env rm -i $argv
 end
 
 function df
-    df -h $argv
+    env df -h $argv
 end
 
 function du
-    du -h $argv
+    env du -h $argv
 end
 
 function nv

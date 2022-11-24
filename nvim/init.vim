@@ -176,6 +176,9 @@ use {
   "folke/zen-mode.nvim",
   config = function() require("zen-mode").setup { } end
 }
+use {"lukas-reineke/indent-blankline.nvim",
+    config = function() require("plugins.blankline.nvim") end
+}
 use {
     'kyazdani42/nvim-web-devicons',
     config = function() require('nvim-web-devicons').setup{default = true} end,
