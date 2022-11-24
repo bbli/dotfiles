@@ -3,6 +3,7 @@ let &packpath = &runtimepath
 source ~/.vimrc
 " Only available in neovim
 set inccommand=nosplit
+let g:vimsyn_embed= 'l'
 " ************** Helper Functions **************%%%1
 lua << EOF
 P = function(v)
@@ -19,8 +20,8 @@ use '~/Desktop/random_things/lua_plugin'
 -- Packer can manage itself
 use 'wbthomason/packer.nvim'
 -- ************  UTILITY LIBRARIES  ************ %%%2
-  use 'nvim-lua/popup.nvim'
-  use 'nvim-lua/plenary.nvim'
+use 'nvim-lua/popup.nvim'
+use 'nvim-lua/plenary.nvim'
 -- ************  Workflows  ************ %%%2
 use {'simrat39/symbols-outline.nvim',
     config = function() require("plugins.symbols-outline") end,
@@ -33,16 +34,16 @@ use {'nvim-telescope/telescope.nvim',
     requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
   }
 -- need nvim 0.8
---use {
---    "cbochs/grapple.nvim",
---    config = function()
---        require("grapple").setup({
---            -- Your configuration goes here
---            -- Leave empty to use the default configuration
---            -- Please see the Configuration section below for more information
---        })
---    end
---}
+use {
+    "cbochs/grapple.nvim",
+    config = function()
+        require("grapple").setup({
+            -- Your configuration goes here
+            -- Leave empty to use the default configuration
+            -- Please see the Configuration section below for more information
+        })
+    end
+}
 --use {
 --  "princejoogie/dir-telescope.nvim",
 --  -- telescope.nvim is a required dependency
@@ -70,10 +71,14 @@ use {"AckslD/nvim-neoclip.lua",
 --use {'stevearc/qf_helper.nvim'} --location tracking not working atm, but useful for toggling with no entries
 
 -- the issue with harpoon is that I need to show it on some UI -> aka Telescope!
-use {'thePrimeagen/harpoon',
-    config = function() require("plugins.harpoon") end,
-    requires = 'nvim-lua/plenary.nvim',
-    after = 'telescope.nvim',
+--use {'thePrimeagen/harpoon',
+--    config = function() require("plugins.harpoon") end,
+--    requires = 'nvim-lua/plenary.nvim',
+--    after = 'telescope.nvim',
+--}
+use {'lewis6991/gitsigns.nvim',
+    tag = "v0.5",
+    --config = function() require('plugins.gitsigns_fake').setup() end,
 }
 -- ************  Text Manipulation/Movement  ************ %%%2
 use {"ggandor/lightspeed.nvim", 
@@ -101,6 +106,13 @@ use {'neovim/nvim-lspconfig',
     config = function() require("plugins.nvim-lspconfig") end,
     after = 'mason-lspconfig.nvim',
 }
+
+use({
+  "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  config = function()
+    require("lsp_lines").setup()
+  end,
+})
 -- use 'ldelossa/calltree.nvim'
 use 'andersevenrud/cmp-tmux'
 use'hrsh7th/cmp-nvim-lsp'
@@ -145,6 +157,7 @@ use 'nvim-treesitter/nvim-treesitter-textobjects'
 use {'romgrk/nvim-treesitter-context',
     config = function() require('plugins.nvim-treesitter-context') end,
 }
+require("benson-lsp")
   -- ************  DEBUGGER  ************ %%%2
   --use 'mfussenegger/nvim-dap'
   --use 'mfussenegger/nvim-dap-python' --Actualy, supposedly vim-ultest will cover this?
@@ -175,6 +188,9 @@ use {'windwp/nvim-autopairs',
 use {
   "folke/zen-mode.nvim",
   config = function() require("zen-mode").setup { } end
+}
+use {"lukas-reineke/indent-blankline.nvim",
+    config = function() require("plugins.blankline.nvim") end
 }
 use {
     'kyazdani42/nvim-web-devicons',
@@ -244,51 +260,38 @@ command! Scratch lua require'tools'.makeScratch()
 " lua text will be syntax highlighted!
 let g:vimsyn_embed = 'l'
 
-" ************  LSP Highlights  ************%%%1
 
-" Statusline
+""From: https://www.reddit.com/r/neovim/comments/l00zzb/improve_style_of_builtin_lsp_diagnostic_messages/
+"" Errors in Red
+"hi LspDiagnosticsVirtualTextError guifg=Red ctermfg=Red
+"" Warnings in Yellow
+"hi LspDiagnosticsVirtualTextWarning guifg=Yellow ctermfg=Yellow
+"" Info and Hints in White
+"hi LspDiagnosticsVirtualTextInformation guifg=White ctermfg=White
+"hi LspDiagnosticsVirtualTextHint guifg=White ctermfg=White
 
-""set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
-""set statusline^=%{StatuslineLsp()}
+"" Underline the offending code
+"hi LspDiagnosticsUnderlineError guifg=NONE ctermfg=NONE cterm=underline gui=underline
+"hi LspDiagnosticsUnderlineWarning guifg=NONE ctermfg=NONE cterm=underline gui=underline
+"hi LspDiagnosticsUnderlineInformation guifg=NONE ctermfg=NONE cterm=underline gui=underline
+"hi LspDiagnosticsUnderlineHint guifg=NONE ctermfg=NONE cterm=underline gui=underline
 
-lua << EOF
---nah, as these don't have colors
---vim.fn.sign_define("LspDiagnosticsSignError", {text = "", numhl = "LspDiagnosticsDefaultError"})
---vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "", numhl = "LspDiagnosticsDefaultWarning"})
---vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "", numhl = "LspDiagnosticsDefaultInformation"})
---vim.fn.sign_define("LspDiagnosticsSignHint", {text = "", numhl = "LspDiagnosticsDefaultHint"})
-EOF
-"From: https://www.reddit.com/r/neovim/comments/l00zzb/improve_style_of_builtin_lsp_diagnostic_messages/
-" Errors in Red
-hi LspDiagnosticsVirtualTextError guifg=Red ctermfg=Red
-" Warnings in Yellow
-hi LspDiagnosticsVirtualTextWarning guifg=Yellow ctermfg=Yellow
-" Info and Hints in White
-hi LspDiagnosticsVirtualTextInformation guifg=White ctermfg=White
-hi LspDiagnosticsVirtualTextHint guifg=White ctermfg=White
-
-" Underline the offending code
-hi LspDiagnosticsUnderlineError guifg=NONE ctermfg=NONE cterm=underline gui=underline
-hi LspDiagnosticsUnderlineWarning guifg=NONE ctermfg=NONE cterm=underline gui=underline
-hi LspDiagnosticsUnderlineInformation guifg=NONE ctermfg=NONE cterm=underline gui=underline
-hi LspDiagnosticsUnderlineHint guifg=NONE ctermfg=NONE cterm=underline gui=underline
-
-lua << EOF
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
- vim.lsp.diagnostic.on_publish_diagnostics, {
-   -- Enable underline, use default values
-   underline = true,
-   -- Enable virtual text only on Warning or above, override spacing to 2
-   virtual_text = {
-     spacing = 2,
-     severity_limit = "Warning",
-   },
---   virtual_text = false,
-   signs = true,
-   update_in_insert = false,
- }
-)
-EOF
+" lua << EOF
+" vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+"  vim.lsp.diagnostic.on_publish_diagnostics, {
+"    -- Enable underline, use default values
+"    underline = true,
+"    -- Enable virtual text only on Warning or above, override spacing to 2
+"    virtual_text = {
+"      spacing = 2,
+"      severity_limit = "Warning",
+"    },
+" --   virtual_text = false,
+"    signs = true,
+"    update_in_insert = false,
+"  }
+" )
+" EOF
 
 "autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
 nnoremap <unique> <leader>ot :Telescope<CR>
@@ -332,13 +335,6 @@ nnoremap <leader>lr :LspRestart<CR>
 "--nnoremap <leader>fr <cmd>lua vim.lsp.buf.rename()<CR>
 "nnoremap <leader>jt <cmd>lua vim.lsp.buf.type_definition()<CR> "What is this used for?
 "nnoremap <leader>ct <cmd>lua vim.lsp.buf.outgoing_calls()<CR> "Just one level BFS
-"
-" auto-format
-"autocmd BufWritePre *.js lua vim.lsp.buf.formatting_sync(nil, 100)
-"autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting_sync(nil, 100)
-"autocmd BufWritePre *.py lua vim.lsp.buf.formatting_sync(nil, 100)
-" nnoremap <leader>ca <cmd>Telescope lsp_code_actions<CR>
-"nnoremap <leader>fc <cmd>lua require'telescope.builtin'.lsp_workspace_symbols{prompt_prefix=" ", default_text=" :class: "}<CR>
 
 
 " Sometimes cmp popup menu will not close
@@ -368,7 +364,8 @@ nnoremap <leader>ul <cmd>Telescope marks<cr>
 "TODO: why is the below  not filtering?
 nnoremap <leader>or <cmd>Telescope neoclip<cr>
 nnoremap <leader>oy <cmd>Telescope neoclip<cr>
-nnoremap <leader>ot <cmd>TodoTrouble<CR>
+"Disable since this is laggy when called at work
+" nnoremap <leader>ot <cmd>TodoTrouble<CR>
 " nnoremap <leader>ok <cmd>Telescope keymaps<cr>
 
 " These will check out the selected commit/branch
