@@ -303,8 +303,8 @@ nnoremap <leader>jD <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <leader>jr <cmd>lua vim.lsp.buf.references()<CR>
 " nnoremap <leader>jr <cmd>lua vim.lsp.buf.incoming_calls()<CR>
 nnoremap <leader>ji <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <leader>je <cmd>lua vim.diagnostic.goto_next()<CR>
-nnoremap <leader>jE <cmd>lua vim.diagnostic.goto_prev()<CR>
+nnoremap <leader>je <cmd>lua vim.diagnostic.goto_next({float=false})<CR>
+nnoremap <leader>jE <cmd>lua vim.diagnostic.goto_prev({float=false})<CR>
 
 nnoremap <leader>fr <cmd>lua vim.lsp.buf.rename()<CR>
 
