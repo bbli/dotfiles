@@ -86,3 +86,5 @@ alias tb='tensorboard'
 #source ~/Software/fzf-obc/bin/fzf-obc.bash
 
 #alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+export term=xterm-256color
+fish
