@@ -190,7 +190,7 @@ use {
   config = function() require("zen-mode").setup { } end
 }
 use {"lukas-reineke/indent-blankline.nvim",
-    config = function() require("plugins.blankline.nvim") end
+    config = function() require("plugins.blankline") end
 }
 use {
     'kyazdani42/nvim-web-devicons',
