@@ -49,28 +49,28 @@ require'nvim-treesitter.configs'.setup{
             set_jumps = true, -- whether to set jumps in the jumplist
             goto_next_start = {
                 --["ll"] = "@comment.outer",
-                ["<leader>lf"] = "@function.outer",
-                ["<leader>lb"] = "@block.outer",
+                ["lf"] = "@function.outer",
+                ["lb"] = "@block.outer",
 
                 ["C-n"] = "@statement.outer",
-                ["<leader>lc"] = "@class.outer",
+                ["lc"] = "@class.outer",
             },
             goto_previous_start = {
                 --["hh"] = "@comment.outer",
-                ["<leader>hf"] = "@function.outer",
-                ["<leader>hb"] = "@block.outer",
+                ["hf"] = "@function.outer",
+                ["hb"] = "@block.outer",
 
                 ["C-p"] = "@statement.outer",
-                ["<leader>hc"] = "@class.outer",
+                ["hc"] = "@class.outer",
             },
 
             -- below don't matter as much
             goto_next_end = {
                 --["lL"] = "@statement.outer",
-                ["<leader>lF"] = "@function.outer",
+                ["lF"] = "@function.outer",
 
                 --["lC"] = "@comment.outer",
-                ["<leader>lC"] = "@class.outer",
+                ["lC"] = "@class.outer",
             },
             goto_previous_end = {
                 ["[M"] = "@function.outer",
