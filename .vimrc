@@ -1,6 +1,5 @@
 " set verbose=15
 " set verbosefile=filename.txt
-" ************** COC STUFF **************%%%1
 " 1.if hidden is not set, TextEdit might fail.
 set hidden
 " Some servers have issues with backup files, see #649
@@ -13,7 +12,7 @@ set updatetime=200
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
 " gutter space for lsp info on left
-set signcolumn=yes
+set signcolumn=auto:2
 
 "" 2.Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -24,112 +23,6 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
-"" Highlight symbol under cursor on CursorHold
-" the highlight is too shallow(just white-clear), so nah
-"autocmd CursorHold * silent call CocActionAsync('highlight')
-
-
-"" 3.Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
-"" Remap for format selected region
-" xmap <leader>cf  <Plug>(coc-format-selected)
-" nmap <leader>cf  :call CocAction('format')<CR>
-"autocmd BufWritePre :call CocAction('format')<CR>
-
-" 4. Use <C-SPACE> to trigger completion(if for some reason it doesn't
-" auto start)
-"if has('nvim')
-  "inoremap <silent><expr> <c-space> coc#refresh()
-"else
-  "inoremap <silent><expr> <c-@> coc#refresh()
-"endif
-
-"augroup mygroup
-  "autocmd!
-  "" Setup formatexpr specified filetype(s).
-  "autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  "" Update signature help on jump placeholder
-  "autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-"augroup end
-
-"" 5.Code Actions
- xmap <leader>a  <Plug>(coc-codeaction-selected)
- nmap <leader>a  <Plug>(coc-codeaction-selected)
- " Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Apply AutoFix to problem on the current line.
-"" Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-"nmap <silent> <TAB> <Plug>(coc-range-select)
-"xmap <silent> <TAB> <Plug>(coc-range-select)
-
-" 6. Movement in Coc windows(Seems to be built in already)
-" Remap <C-f> and <C-b> for scroll float windows/popups.
-"if has('nvim-0.4.0') || has('patch-8.2.0750')
-  "nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  "nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  "inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  "inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  "vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  "vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-"endif
-
-
-"" Use `:Fold` to fold current buffer
-"command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-"" use `:OR` for organize import of current buffer
-"command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-"" Add status line support, for integration with other plugin, checkout `:h coc-status`
-"TODO: same with lsp?
-"set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-"" Using CocList
-"" Show all diagnostics
-"nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-"" Manage extensions
-"nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-"" Show commands
-"nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-"" Find symbol of current document
-"nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-"" Search workspace symbols
-"nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-"" Do default action for next item.
-"nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-"" Do default action for previous item.
-"nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-"" Resume latest coc list
-"nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-" nn <silent><buffer> <C-l> :call CocLocations('ccls','$ccls/navigate',{'direction':'D'})<cr>
-" nn <silent><buffer> <C-k> :call CocLocations('ccls','$ccls/navigate',{'direction':'L'})<cr>
-" nn <silent><buffer> <C-j> :call CocLocations('ccls','$ccls/navigate',{'direction':'R'})<cr>
-" nn <silent><buffer> <C-h> :call CocLocations('ccls','$ccls/navigate',{'direction':'U'})<cr>
-
-" xmap if <Plug>(coc-funcobj-i)
-" omap if <Plug>(coc-funcobj-i)
-" xmap af <Plug>(coc-funcobj-a)
-" omap af <Plug>(coc-funcobj-a)
-" xmap ic <Plug>(coc-classobj-i)
-" omap ic <Plug>(coc-classobj-i)
-" xmap ac <Plug>(coc-classobj-a)
-" omap ac <Plug>(coc-classobj-a)
-
-
-" $ccls/member
-" member variables / variables in a namespace
-" Aka where all the variables are declared first
-nn <silent> <leader>xm :call CocLocations('ccls','$ccls/member')<cr>
-"autocmd BufCreate *py :CocCommand python.enableLinting
-
-" How to debug Coc
-" nn <leader>ci :CocInfo<CR>
-" nn <leader>co :CocOpenLog<CR>
-" nnoremap <leader>cd :CocCommand workspace.showOutput<CR>
-" nnoremap <leader>cl :CocList<CR>
-" nnoremap <leader>cc :CocList commands<CR>
-" nnoremap <leader>cm :CocList marketplace<CR>
-" nnoremap <leader>cr :CocListResume<CR>
-autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
-" Check settings on this website: https://github.com/neoclide/coc.nvim/blob/master/data/schema.json
 " ************** MAC SENSITIVE **************%%%1
 if !exists("g:os")
     if has("win64") || has("win32") || has("win16")
@@ -260,7 +153,7 @@ Plug 'dbakker/vim-projectroot'
 " Below Plugin not that useful since I can use tabs for that purpose
 "Plug 'troydm/zoomwintab.vim'
 " Plug 'osyo-manga/vim-over'
-Plug 'MattesGroeger/vim-bookmarks'
+"Plug 'MattesGroeger/vim-bookmarks'
 " Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'unblevable/quick-scope'
 "Plug 'jiangmiao/auto-pairs'
@@ -268,11 +161,11 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'AndrewRadev/bufferize.vim' "To show messages in a real buffer
 Plug 'tpope/vim-commentary'
 Plug 'bronson/vim-visual-star-search'
-Plug 'Yggdroot/indentLine'
+" Plug 'Yggdroot/indentLine'
 "Plug 'tpope/vim-surround'
-Plug 'dohsimpson/vim-macroeditor'
+" Plug 'dohsimpson/vim-macroeditor'
 " using this fork so that MACROS can be repeated too. Not working though?
-Plug 'svermeulen/vim-macrobatics'
+" Plug 'svermeulen/vim-macrobatics'
 Plug 'svermeulen/vim-repeat'
 Plug 'machakann/vim-sandwich'
 Plug 'embear/vim-foldsearch'
@@ -311,7 +204,7 @@ Plug 'tpope/vim-projectionist' "This plugin also helps in setting file local var
 "---
 "Plug 'majutsushi/tagbar'
 Plug 'bbli/tagbar' "for changing tagbar highlight to IncSearch
-Plug 'liuchengxu/vista.vim' "Doesn't work on mac?
+" Plug 'liuchengxu/vista.vim' "Doesn't work on mac?
 Plug 'ludovicchabant/vim-gutentags' "Vista auto does this
 "Plug 'm-pilia/vim-ccls'
 "Plug 'roxma/nvim-yarp'
@@ -344,7 +237,7 @@ Plug 'bbli/vim-test', {'branch': 'benson-catch'}
 Plug 'tpope/vim-dispatch'
 " Plug 'neomake/neomake'
 Plug 'mattboehm/vim-unstack'
-Plug 'benmills/vimux'
+" Plug 'benmills/vimux'
 "Plug 'jpalardy/vim-slime', { 'branch': 'main'} "useful for creating specific state in script for profiling
 " used by vim-test. NOTE YOU HAVE TO LET IT CREATE THE INITAL WINDOW
 "Plug 'christoomey/vim-tmux-runner'
@@ -356,7 +249,7 @@ Plug 'benmills/vimux'
 "For Gvsplit and co
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 " This plugin cannot stage hunks
 "Plug 'mhinz/vim-signify'
 
@@ -455,6 +348,7 @@ nnoremap <silent> <leader>bk :bwipeout<CR>
 nnoremap <leader>bf :ZenMode<CR>
 nnoremap <leader>bz :ZenMode<CR>
 nnoremap <leader>bb <cmd>Telescope buffers<cr>
+
 nnoremap <leader>br :%s/\<<C-r><C-w>\>/
 " nnoremap <leader>br :%s/\<<C-r><C-w>\>/
 nnoremap <leader>bm :g/\<<C-r><C-w>\>/norm! @m<CR>
@@ -512,23 +406,23 @@ nnoremap <leader>wr :TabooRename
 " ---Git Related--- %%%2
 autocmd FileType magit nnoremap <buffer> <leader>gy "gyy
 autocmd FileType magit nnoremap <buffer> <leader>gp "gp
-nmap <leader>gp <Plug>(GitGutterPreviewHunk)
-nmap gs <Plug>(GitGutterStageHunk)
-vmap gs <Plug>(GitGutterStageHunk)
-nmap <leader>gu <Plug>(GitGutterUndoHunk)
-nmap <leader>gn <Plug>(GitGutterNextHunk)
-nmap <leader>gN <Plug>(GitGutterPrevHunk)
+" nmap <leader>gp <Plug>(GitGutterPreviewHunk)
+" nmap gs <Plug>(GitGutterStageHunk)
+" vmap gs <Plug>(GitGutterStageHunk)
+" nmap <leader>gu <Plug>(GitGutterUndoHunk)
+" nmap <leader>gn <Plug>(GitGutterNextHunk)
+" nmap <leader>gN <Plug>(GitGutterPrevHunk)
 
 nnoremap <leader>gm :Magit<CR>
 " nmap <leader>gf :GitGutterFold<CR>
 " nmap <leader>go <Plug>(git-messenger)
-nmap <leader>gl :Gclog<CR>
+nmap <leader>gl :Gclog -10000<CR>
 
-nnoremap <unique> <leader>gc :Gclog --grep=
+nnoremap <unique> <leader>gc :Gclog -10000 --grep=
 " nnoremap <unique> <leader>gc :Gclog --grep=
-nnoremap <unique> <leader>gs :Gclog -S
+nnoremap <unique> <leader>gs :Gclog -10000 -S 
 " nnoremap <unique> <leader>gs :Gclog -S
-nnoremap <unique> <leader>gf :Gclog -- %<CR>
+nnoremap <unique> <leader>gf :Gclog -10000 -- %<CR>
 " Above is better b/c if commit on another branch -> will have a name
 "nmap <leader>gl :VTerm<CR>git tree<CR>
 nmap <leader>gg :G<CR>
@@ -1377,7 +1271,7 @@ highlight LspCxxHlSymStructMethod ctermfg=White
 " highlight LspCxxHlSymFunction ctermfg=White
 
 "
-autocmd BufWritePost * GitGutter
+" autocmd BufWritePost * GitGutter
 
 let g:unstack_mapkey=''
 let g:unstack_layout="portrait"
