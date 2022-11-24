@@ -688,7 +688,7 @@ endf
 nnoremap <leader>tf :call ToggleFoldSearch()<CR>
 nnoremap <leader>tc :TSContextToggle<CR>
 nnoremap <leader>tu :UndotreeToggle<CR>
-" nnoremap <leader>tt :TagbarToggle<CR>
+nnoremap <leader>tt :TagbarToggle<CR>
 "nnoremap <leader>ts :set spell!<CR>
 " nnoremap <leader>ts :FloatermToggle<CR>
 let s:nerdtree_open = 0
