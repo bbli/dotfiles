@@ -249,8 +249,8 @@ endif
 
 " for treesitter
 "luafile ~/.init.lua
-"set foldmethod=expr
-"set foldexpr=nvim_treesitter#foldexpr()
+" set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()
 "nnoremap <leader>lt :write | edit | TSBufEnable highlight
 
 
@@ -377,7 +377,7 @@ nnoremap <leader>oy <cmd>Telescope neoclip<cr>
 
 " nnoremap <leader>ov <cmd>Telescope vim_options<cr>
 nnoremap <leader>ok <cmd>Telescope keymaps<cr>
-nnoremap <leader>om <cmd>Telescope help_tags<cr>
+nnoremap <leader>od <cmd>Telescope help_tags<cr>
 "Use after ripgrep for faster narrowing!
 " nnoremap <leader>vv <cmd>Telescope quickfix<cr>
 " nnoremap <leader>vl <cmd>Telescope loclist<cr>

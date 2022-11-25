@@ -46,12 +46,22 @@ endif
 " ************** OPTIONS **************%%%1
 " Always put regexes in function rather than as expr 
     " -> vim will do weird escapes otherwise
-" function! MatchComment()
-"     let thisline = getline(v:lnum)
-"     return thisline =~# '\v^\s{-}\/\/'
-set foldmethod=marker
+" 1. First let me fold line comments
+function! MatchComment()
+    let thisline = getline(v:lnum)
+    if (thisline =~# '\v^\s{-}\/\/')
+        return 1
+        " if (thisline =~# '\v\s{-}')
+    endif
+    return 0
+endfunction
+" set foldmethod=marker
+set foldmethod=expr
+set foldexpr=MatchComment()
+" set foldexpr=getline(v:lnum)=~'^\\s*'.&commentstring[0]
 " set fdo-=search "only search in unfolded text
-set foldmarker=%%%,^^^
+" set foldmarker=%%%,^^^
+" autocmd FileType cpp setlocal foldmethod=expr foldexpr=getline(v:lnum)=~'^\\s*//'
 "set foldtext="MyFoldText()"
 "function MyFoldText()
   "let line = getline(v:foldstart)
@@ -196,7 +206,7 @@ Plug 'bbli/fzf.vim'
 Plug 'mbbill/undotree'
 "Plug 'vimlab/split-term.vim'
 Plug 'voldikss/vim-floaterm'
-Plug 'andreshazard/vim-logreview'
+Plug 'bbli/vim-logreview'
 
 "Plug 'vim-voom/VOoM'
 "Language Server

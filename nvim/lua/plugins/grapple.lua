@@ -7,13 +7,13 @@ require("grapple").setup({
 vim.keymap.set('n','<leader>rr',
     function() require("grapple").untag() end
     )
-vim.keymap.set('n','<leader>gg',
+vim.keymap.set('n','<leader>hg',
     function() require("grapple").popup_tags() end
     )
 
 -- grapple log -> gl
 -- open log
-vim.keymap.set('n','<leader>gl',
+vim.keymap.set('n','<leader>hl',
     function() require("grapple").tag({key="log"}) end
     )
 vim.keymap.set('n','<leader>ol',
@@ -25,7 +25,7 @@ vim.keymap.set('n','<leader>rl',
 
 -- grapple main(for inserting debug) -> gm
 -- open main
-vim.keymap.set('n','<leader>gm',
+vim.keymap.set('n','<leader>hm',
     function() require("grapple").tag({key="main"}) end
     )
 vim.keymap.set('n','<leader>om',
@@ -37,7 +37,7 @@ vim.keymap.set('n','<leader>rm',
 
 -- grapple test -> gt
 -- open test
-vim.keymap.set('n','<leader>gt',
+vim.keymap.set('n','<leader>ht',
     function() require("grapple").tag({key="test"}) end
     )
 vim.keymap.set('n','<leader>ot',
@@ -50,7 +50,7 @@ vim.keymap.set('n','<leader>rt',
 -- grapple file -> gg
 -- open file
 
-vim.keymap.set('n','<leader>gf',
+vim.keymap.set('n','<leader>hf',
     function() require("grapple").tag({key="file"}) end
     )
 vim.keymap.set('n','<leader>of',
