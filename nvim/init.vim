@@ -36,13 +36,7 @@ use {'nvim-telescope/telescope.nvim',
 -- need nvim 0.8
 use {
     "cbochs/grapple.nvim",
-    config = function()
-        require("grapple").setup({
-            -- Your configuration goes here
-            -- Leave empty to use the default configuration
-            -- Please see the Configuration section below for more information
-        })
-    end
+    config = function() require("plugins.grapple") end
 }
 --use {
 --  "princejoogie/dir-telescope.nvim",

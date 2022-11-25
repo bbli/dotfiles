@@ -135,7 +135,7 @@ call plug#begin('~/.vim/plugged')
 " Plug 'vim-airline/vim-airline'
 " Plug 'bbli/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
-Plug 'edkolev/tmuxline.vim'
+" Plug 'edkolev/tmuxline.vim'
 Plug 'edkolev/promptline.vim'
 Plug 'mhinz/vim-startify'
 Plug 'gruvbox-community/gruvbox'
@@ -463,7 +463,7 @@ function! ToggleVifm()
         " open
     endif
 endfunction
-nnoremap <leader>so :call ToggleFloatTerm()<CR>
+nnoremap <leader>ts :call ToggleFloatTerm()<CR>
 nnoremap <leader>os :call ToggleFloatTerm()<CR>
 nnoremap <leader>tn :call ToggleVifm()<CR>
 nnoremap <leader>ov :call ToggleVifm()
