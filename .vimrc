@@ -47,21 +47,37 @@ endif
 " Always put regexes in function rather than as expr 
     " -> vim will do weird escapes otherwise
 " 1. First let me fold line comments
-function! MatchComment()
+function! CheckSingleLineComment()
     let thisline = getline(v:lnum)
-    if (thisline =~# '\v^\s{-}\/\/')
-        return 1
-        " if (thisline =~# '\v\s{-}')
-    endif
-    return 0
+    return thisline =~# '\v^\s{-}\/\/'
 endfunction
-" set foldmethod=marker
-set foldmethod=expr
-set foldexpr=MatchComment()
+let g:in_multiline_comment = 0
+" function! MatchComment()
+
+"     if (g:in_multiline_comment)
+"         if (end_of_multiline(v:lnum))
+"             let g:in_multiline_comment = 0
+"             return 1
+"         else
+"             return 1
+"         endif
+"     else
+"         if (start_of_multiline(v:lnum))
+"             let g:in_multiline_comment = 1
+"             return 1
+"         else 
+"             return CheckSingleLineComment(v:lnum)
+"         endif
+"     endif
+" endfunction
+" set foldmethod=expr
+set foldexpr=CheckSingleLineComment()
+autocmd FileType *.cpp,*.c,*.h,*.java syn region myCComment start="/\*" end="\*/" fold keepend transparent
 " set foldexpr=getline(v:lnum)=~'^\\s*'.&commentstring[0]
 " set fdo-=search "only search in unfolded text
+set foldmethod=marker
 " set foldmarker=%%%,^^^
-" autocmd FileType cpp setlocal foldmethod=expr foldexpr=getline(v:lnum)=~'^\\s*//'
+autocmd FileType cpp setlocal foldmethod=expr
 "set foldtext="MyFoldText()"
 "function MyFoldText()
   "let line = getline(v:foldstart)
@@ -515,7 +531,7 @@ command! -bang OP call fzf#run(fzf#wrap({'source':'rg --files --hidden','sink':'
 "nnoremap <leader>op :call fzf#vim#complete#path('rg --files',{'dir':home_dir})<CR>
 "nnoremap <leader>op :OP<CR>
 nnoremap <leader>oo :GFiles<CR>
-nnoremap <leader>om :Helptags<CR>
+" nnoremap <leader>om :Helptags<CR>
 "nnoremap <leader>oa :FZF<CR>
 nnoremap <leader>oa :HFiles<CR>
 "nnoremap <leader>ob :CocList buffers<CR>

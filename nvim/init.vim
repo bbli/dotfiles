@@ -296,7 +296,7 @@ let g:vimsyn_embed = 'l'
 " EOF
 
 "autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
-nnoremap <unique> <leader>ot :Telescope<CR>
+" nnoremap <unique> <leader>ot :Telescope<CR>
 
 nnoremap <leader>jd <cmd>lua vim.lsp.buf.definition()<CR>
 " nnoremap <leader>js :vs<CR>:lua vim.lsp.buf.definition()<CR>
