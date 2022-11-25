@@ -180,7 +180,7 @@ Plug 'embear/vim-foldsearch'
 
 "Special Windows
 "---
-Plug 'scrooloose/nerdtree'
+" Plug 'scrooloose/nerdtree'
 "Plug 'tpope/vim-vinegar'
 "Plug 'milkypostman/vim-togglelist'
 "Plug 'jceb/vim-editqf'
@@ -431,17 +431,53 @@ nnoremap <leader>gb :Git blame<CR>
 
 " ---Terminal Related --- %%%2
 "  <root> option only works with FloattermToggl
-let g:term_count = 0
+let g:term_toggle = 0
 function! ToggleFloatTerm()
-    if g:term_count == 0
-        let g:term_count = 1
+    if g:term_toggle == 0
+        let g:term_toggle = 1
         execute "FloatermNew --cwd=<root>"
     else
         execute "FloatermToggle"
     endif
 endfunction
+let g:vifm_count = 0
+function! ToggleVifm()
+    if g:vifm_count == 0
+        let g:vifm_count = 1
+        " execute "FloatermKill vifm"
+        echo "vifm_count = " .. g:vifm_count
+        execute "FloatermNew --name=vifm --cwd=<buffer> vifm"
+    else
+        let g:vifm_count = 0
+        echo "vifm_count = " .. g:vifm_count
+        let output = execute("FloatermKill vifm")
+        " echo output
+        " Means we need to open instead
+        if output != ""
+            execute "FloatermNew --name=vifm --cwd=<buffer> vifm"
+        endif
+        " 1.Open Vifm
+        " 2. Click Enter
+        " 3. Vifm is now closed, but vifm_count still 1
+        " 4. Try to call ToggleVifm again, will call "FloatermKill" instead of
+        " open
+    endif
+endfunction
 nnoremap <leader>so :call ToggleFloatTerm()<CR>
 nnoremap <leader>os :call ToggleFloatTerm()<CR>
+nnoremap <leader>tn :call ToggleVifm()<CR>
+nnoremap <leader>ov :call ToggleVifm()
+function s:open_in_normal_window() abort
+  let f = findfile(expand('<cfile>'))
+  if !empty(f) && has_key(nvim_win_get_config(win_getid()), 'anchor')
+    FloatermHide
+    execute 'e ' . f
+  endif
+endfunction
+
+autocmd FileType floaterm nnoremap <silent><buffer> gf :call <SID>open_in_normal_window()<CR>
+let g:floaterm_opener="edit"
+let g:floaterm_autoclose=0
 " Use <C-e> to not run -> and edit instead
 nnoremap <leader>sh :Telescope command_history<CR>
 let g:floaterm_width = 0.8
@@ -599,7 +635,7 @@ function! ToggleNerdTree()
         execute "NERDTreeFind"
     endif
 endf
-nnoremap <leader>tn :call ToggleNerdTree()<CR>
+" nnoremap <leader>tn :call ToggleNerdTree()<CR>
 "nnoremap <leader>tp :set paste!<CR>
 
 "nnoremap <leader>ti :IndentGuidesToggle<CR>

@@ -64,7 +64,7 @@ alias ptime='python -m cProfile -s cumulative'
 alias attach='tmux a -t'
 alias switch='tmux switch-client -t'
 alias tkill='tmux kill-ses -t'
-alias nv='~/.local/bin/neovim'
+#alias nv='~/.local/bin/neovim'
 alias vi='vim'
 
 ## Docker

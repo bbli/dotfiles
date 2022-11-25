@@ -381,7 +381,7 @@ nnoremap <leader>oy <cmd>Telescope neoclip<cr>
 " Fugitive is better this quickfix does nothing
 " nnoremap <leader>gc <cmd>Telescope git_commits<CR>
 
-nnoremap <leader>ov <cmd>Telescope vim_options<cr>
+" nnoremap <leader>ov <cmd>Telescope vim_options<cr>
 nnoremap <leader>ok <cmd>Telescope keymaps<cr>
 nnoremap <leader>om <cmd>Telescope help_tags<cr>
 "Use after ripgrep for faster narrowing!
