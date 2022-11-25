@@ -133,8 +133,8 @@ call plug#begin('~/.vim/plugged')
 "Visual
 "---
 " Plug 'vim-airline/vim-airline'
-Plug 'bbli/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'bbli/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 Plug 'edkolev/promptline.vim'
 Plug 'mhinz/vim-startify'
@@ -147,7 +147,7 @@ Plug 'rakr/vim-one'
 "Conveniences
 "---
 " For renaming tabs
-Plug 'gcmt/taboo.vim'
+" Plug 'gcmt/taboo.vim'
 Plug 'dbakker/vim-projectroot'
 " Plug 'google/vim-searchindex' "Apparantly causes issues with GitRipGrep atm
 " Below Plugin not that useful since I can use tabs for that purpose
@@ -400,7 +400,7 @@ nnoremap <leader>wp :tabprevious<CR>
 nnoremap <leader>wo :tab split<CR>
 nnoremap <leader>wO <C-w>T
 nnoremap <leader>wk :tabc<CR>
-nnoremap <leader>wr :TabooRename 
+" nnoremap <leader>wr :TabooRename 
 "nnoremap <leader>ws :TabooReset<CR>
 
 " ---Git Related--- %%%2
@@ -878,7 +878,7 @@ if (empty($TMUX))
   endif
 endif
 
-let g:taboo_tabline = 0
+" let g:taboo_tabline = 0
 
 if has('termguicolors')
     set termguicolors

@@ -196,6 +196,14 @@ use {
     'kyazdani42/nvim-web-devicons',
     config = function() require('nvim-web-devicons').setup{default = true} end,
 }
+use {'nvim-lualine/lualine.nvim',
+  requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+  config = function() require("plugins.lualine") end
+}
+use {'kdheepak/tabline.nvim',
+    requires = {  'nvim-lualine/lualine.nvim', 'kyazdani42/nvim-web-devicons' },
+    config = function() require("plugins.tabline") end
+}
 use {'folke/lsp-colors.nvim',
     config = function() require("lsp-colors").setup() end,
 }
