@@ -1,13 +1,15 @@
 # GENERAL
 # -------
+snippet incc
+	#include <${1:iostream}>${0}
+
 snippet tt
 	TEST_CASE("${1}",""){
 	}
 
 
 snippet dd
-	std::cout << "BENSON_DEBUG:: " << __FILE__ << ":" << __LINE__ << "   " <<
-	"${1}" << std::endl;
+	std::cout << "BENSON_DEBUG:: " << __FILE__ << ":" << __LINE__ << "   " << "${1}" << std::endl;
 
 
 snippet test

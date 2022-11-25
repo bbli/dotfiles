@@ -1422,3 +1422,17 @@ let test#custom_runners = {'cpp': ['catch2']}
 " lh#log#this()
 let g:test#again=0
 let g:test#runner_commands = ['Catch2']
+function! TestOpenLog()
+    execute "vs"
+    call feedkeys("/BENSON_DEBUG\n")
+endfunction
+function! JumpToFile()
+    let cword = expand("<cWord>")
+    let fileline = trim(cword,":")
+    echom fileline
+    let filename=split(fileLine,":")[0]
+    let linenumber=split(fileLine,":")[1]
+    " FloatTermHide
+    execute "edit +" . linenumber . " " . filename
+endfunction
+nnoremap <leader>zz :call JumptoFile()<CR>
