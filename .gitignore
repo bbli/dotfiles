@@ -1,3 +1,4 @@
 .vimrc.bare
 fish
 tags
+packer_compiled.lua

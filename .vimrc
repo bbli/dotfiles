@@ -1438,4 +1438,4 @@ function! JumpToFile()
     " FloatTermHide
     execute "edit +" . linenumber . " " . filename
 endfunction
-nnoremap <leader>zz :call JumptoFile()<CR>
+nnoremap <leader>zz :call JumpToFile()<CR>
