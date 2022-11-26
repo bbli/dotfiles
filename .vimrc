@@ -457,13 +457,13 @@ nnoremap <leader>gb :Git blame<CR>
 
 " ---Terminal Related --- %%%2
 "  <root> option only works with FloattermToggl
-let g:term_toggle = 0
-function! ToggleFloatTerm()
-    if g:term_toggle == 0
-        let g:term_toggle = 1
-        execute "FloatermNew --cwd=<root>"
+let g:shell_toggle = 0
+function! ToggleShell()
+    if g:shell_toggle == 0
+        let g:shell_toggle = 1
+        execute "FloatermNew --cwd=<root> --name=shell"
     else
-        execute "FloatermToggle"
+        execute "FloatermToggle shell"
     endif
 endfunction
 let g:vifm_count = 0
@@ -489,8 +489,8 @@ function! ToggleVifm()
         " open
     endif
 endfunction
-nnoremap <leader>ts :call ToggleFloatTerm()<CR>
-nnoremap <leader>os :call ToggleFloatTerm()<CR>
+nnoremap <leader>ts :call ToggleShell()<CR>
+nnoremap <leader>os :call ToggleShell()<CR>
 nnoremap <leader>tn :call ToggleVifm()<CR>
 nnoremap <leader>ov :call ToggleVifm()
 function s:open_in_normal_window() abort
@@ -508,8 +508,14 @@ let g:floaterm_autoclose=0
 nnoremap <leader>sh :Telescope command_history<CR>
 let g:floaterm_width = 0.8
 let g:floaterm_height = 0.95
+nnoremap <leader>sn <cmd>FloatermNext
+nnoremap <leader>sN <cmd>FloatermPrev
 " Rerun last command
-" nnoremap <leader>ss
+function OpenShellAndSendLastCommand()
+    execute "FloatermShow shell"
+    lua require'benson-term'.send_last_string_to_term()
+endfunction
+nnoremap <leader>ss :call OpenShellAndSendLastCommand()<CR>
 " Run a specific command
 " nnoremap <leader>s
 
@@ -1436,3 +1442,4 @@ function! JumpToFile()
     execute "edit +" . linenumber . " " . filename
 endfunction
 nnoremap <leader>zz :call JumptoFile()<CR>
+command -nargs=+ BensonFloatTermSend :call v:lua.require'benson-term'.send_string_to_term(<q-args>)

@@ -75,9 +75,9 @@ use {'lewis6991/gitsigns.nvim',
     config = function() require('plugins.gitsigns') end,
 }
 -- ************  Text Manipulation/Movement  ************ %%%2
-use {"ggandor/lightspeed.nvim", 
-    config = function() require("plugins.lightspeed") end,
-}
+--use {"ggandor/lightspeed.nvim", 
+--    config = function() require("plugins.lightspeed") end,
+--}
 use {"L3MON4D3/LuaSnip",
     after = "nvim-cmp",
     config = function() require("plugins.LuaSnip") end,
@@ -356,6 +356,7 @@ let g:terminal_scrollback_buffer_size = 50000
 nnoremap <leader>oa <cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' , '-g', '!node_modules'}})<cr>
 " nnoremap <leader>oa <cmd>Telescope find_files<cr>
 nnoremap <leader>oo <cmd>Telescope git_files<cr>
+nnoremap <leader>oc <cmd>Telescope commands<cr>
 "nnoremap <leader>ug <cmd>Telescope live_grep<cr>
 nnoremap <leader>ob <cmd>Telescope buffers<cr>
 nnoremap <leader>oh <cmd>Telescope oldfiles<cr>

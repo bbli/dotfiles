@@ -21,5 +21,8 @@ vim.cmd[[
   set sessionoptions+=tabpages,globals " store tabpages and globals in session
 ]]
 vim.cmd[[
-nnoremap <leader>tr :Telescope<CR> 
+nnoremap <leader>tr :TablineTabRename 
+]]
+vim.cmd[[
+nnoremap <leader>wr :TablineTabRename 
 ]]
