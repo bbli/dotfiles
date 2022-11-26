@@ -45,7 +45,7 @@ use {
 --  config = function() require("plugins.dir-telescope") end,
 --}
 use {'nvim-telescope/telescope-fzf-native.nvim',
-    run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+    run = 'make',
     config = function() require("plugins.telescope-fzf-native") end,
     after = 'telescope.nvim',
     requires = {'nvim-telescope/telescope.nvim'}
