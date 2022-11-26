@@ -13,6 +13,7 @@ set updatetime=200
 set shortmess+=c
 " gutter space for lsp info on left
 set signcolumn=auto:2
+set cedit=<C-e>
 
 "" 2.Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -206,7 +207,7 @@ Plug 'embear/vim-foldsearch'
 
 "Special Windows
 "---
-" Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 "Plug 'tpope/vim-vinegar'
 "Plug 'milkypostman/vim-togglelist'
 "Plug 'jceb/vim-editqf'
@@ -1438,4 +1439,4 @@ function! JumpToFile()
     " FloatTermHide
     execute "edit +" . linenumber . " " . filename
 endfunction
-nnoremap <leader>zz :call JumpToFile()<CR>
+nnoremap gf :call JumpToFile()<CR>
