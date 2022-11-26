@@ -9,12 +9,14 @@ function length(array)
     return cnt
 end
 
-function get_window_count_of_current_tab()
-    return length(api.nvim_tabpage_list_wins(api.nvim_get_current_tabpage()))
+function GetWindowCountOfCurrentTab()
+    local wins = api.nvim_tabpage_list_wins(api.nvim_get_current_tabpage())
+    P(wins)
+    return length(wins)
 end
 
 function M.smartJumpSplit()
-    if (get_window_count_of_current_tab() > 1) then
+    if (GetWindowCountOfCurrentTab() > 1) then
         print "make a horizontal split"
         api.nvim_command("split")
         vim.cmd [[wincmd p]]

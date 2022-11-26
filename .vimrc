@@ -105,7 +105,7 @@ set showbreak=↪>\
 set timeoutlen=600 "Any smaller and copy to global register will be too slow
 set nocompatible
 set hidden
-"set number relativenumber
+set number relativenumber
 set showcmd "To show keys pressed in normal mode; useful for completing Vim sentences
 filetype on
 filetype plugin on
@@ -123,7 +123,7 @@ set foldlevel=0
 set ruler
 set splitright
 "set splitbelow
-set number ""relativenumber
+" set number ""relativenumber
 set title
 set cursorline
 set autoread "doesn't work in terminal atm
@@ -504,20 +504,17 @@ endfunction
 autocmd FileType floaterm nnoremap <silent><buffer> gf :call <SID>open_in_normal_window()<CR>
 let g:floaterm_opener="edit"
 let g:floaterm_autoclose=0
-" Use <C-e> to not run -> and edit instead
-nnoremap <leader>sh :Telescope command_history<CR>
 let g:floaterm_width = 0.8
 let g:floaterm_height = 0.95
 nnoremap <leader>sn <cmd>FloatermNext
 nnoremap <leader>sN <cmd>FloatermPrev
 " Rerun last command
-function OpenShellAndSendLastCommand()
-    execute "FloatermShow shell"
-    lua require'benson-term'.send_last_string_to_term()
-endfunction
-nnoremap <leader>ss :call OpenShellAndSendLastCommand()<CR>
+command -nargs=+ BensonFloatTermSend :call v:lua.require'benson-term'.benson_floaterm_send(<q-args>)
+nnoremap <leader>ss <cmd>lua require('benson-term').send_last_string_to_term()<CR>
 " Run a specific command
-" nnoremap <leader>s
+nnoremap <leader>sl :BensonFloatTermSend 
+nnoremap <leader>sh <cmd>lua require('benson-term').send_string_from_history()<CR>
+
 
 " ---Open + Find Related--- %%%2
 " fzf and ripgrep settings
@@ -573,7 +570,7 @@ command! -bang -nargs=* GGrep
 
 nnoremap <leader>ff :Telescope live_grep<CR>
 " nnoremap <leader>ff :GitRipGrep 
-nnoremap <leader>fa :RipGrep
+nnoremap <leader>fa :RipGrep 
 nnoremap <leader>fw :Ggrep <C-r><C-w><CR>
 nnoremap <leader>fs :Telescope lsp_dynamic_workspace_symbols<CR> 
 " Doesn't really work
@@ -715,7 +712,7 @@ nnoremap <localleader>f :e ~/.config/fish/config.fish<CR>
 nnoremap <localleader>x :e ~/.config/xmonad/xmonad.hs<CR>
 nnoremap <localleader>l :e ~/.init.lua<CR>
 " nnoremap <localleader>s :e ~/.config/starship.toml<CR>
-nnoremap <localleader>s :VsnipOpen!<CR>
+" nnoremap <localleader>s :VsnipOpen!<CR>
 
 " nnoremap <localleader>c :CocConfig<CR>
 
@@ -1442,4 +1439,3 @@ function! JumpToFile()
     execute "edit +" . linenumber . " " . filename
 endfunction
 nnoremap <leader>zz :call JumptoFile()<CR>
-command -nargs=+ BensonFloatTermSend :call v:lua.require'benson-term'.send_string_to_term(<q-args>)
