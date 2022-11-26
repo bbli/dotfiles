@@ -7,7 +7,7 @@ require("grapple").setup({
 vim.keymap.set('n','<leader>rr',
     function() require("grapple").untag() end
     )
-vim.keymap.set('n','<leader>hg',
+vim.keymap.set('n','<leader>hh',
     function() require("grapple").popup_tags() end
     )
 
