@@ -8,7 +8,7 @@
   (progn
       (setq code-directory "~/Documents/Code")
       (setq org-directory "~/Documents/Org")
-      (setq dotfiles-directory "~/dotfiles")
+      (setq dotfiles-directory "~/Dropbox/Code/dotfiles")
       ; (add-to-list process-environment "LD_LIBRARY_PATH=/usr/local/lib")
     )
   ; Linux specific things
