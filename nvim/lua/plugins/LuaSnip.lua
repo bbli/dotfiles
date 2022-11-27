@@ -39,8 +39,12 @@ snoremap <silent> <C-k> <cmd>lua require('luasnip').jump(-1)<Cr>
 
 
 -- For changing choices in choiceNodes (not strictly necessary for a basic setup).
--- imap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
--- smap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
+vim.cmd[[
+imap <silent><expr> <C-l> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-l>'
+]]
+vim.cmd[[
+smap <silent><expr> <C-l> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-l>'
+]]
 
 local ls = require("luasnip")
 -- some shorthands...
@@ -98,6 +102,14 @@ ls.add_snippets(nil, {
     raku = {
     },
     cpp = {
-
+        -- Choice node for debugging
+        snip("dd",
+            fmt([[std::cout << "BENSON_DEBUG:: " << __FILE__ << ":" << __LINE__ << "   " << {} << std::endl;]]
+                ,{c(1,
+                    {fmt([["{}"]],{i(1,"log string")}) -- NOTE: [[]] so we can print actual quoted string in snippet
+                    ,fmt([["{}=" << {} ]],{i(1,"var"),rep(1)})}
+                )}
+            )
+        ),
     }
 })
