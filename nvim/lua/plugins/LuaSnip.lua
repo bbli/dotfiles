@@ -23,27 +23,27 @@ luasnip.config.set_config{
 
 
 vim.cmd[[
-inoremap <silent> <C-j> <cmd>lua require'luasnip'.jump(1)<Cr>
+inoremap <silent> <C-l> <cmd>lua require'luasnip'.jump(1)<Cr>
 ]]
 vim.cmd[[
-inoremap <silent> <C-k> <cmd>lua require'luasnip'.jump(-1)<Cr>
+inoremap <silent> <C-h> <cmd>lua require'luasnip'.jump(-1)<Cr>
 ]]
 
 
 vim.cmd[[
-snoremap <silent> <C-j> <cmd>lua require('luasnip').jump(1)<Cr>
+snoremap <silent> <C-l> <cmd>lua require('luasnip').jump(1)<Cr>
 ]]
 vim.cmd[[
-snoremap <silent> <C-k> <cmd>lua require('luasnip').jump(-1)<Cr>
+snoremap <silent> <C-h> <cmd>lua require('luasnip').jump(-1)<Cr>
 ]]
 
 
 -- For changing choices in choiceNodes (not strictly necessary for a basic setup).
 vim.cmd[[
-imap <silent><expr> <C-l> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-l>'
+imap <silent><expr> <C-e> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-e>'
 ]]
 vim.cmd[[
-smap <silent><expr> <C-l> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-l>'
+smap <silent><expr> <C-e> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-e>'
 ]]
 
 local ls = require("luasnip")
