@@ -1431,12 +1431,25 @@ function! TestOpenLog()
     call feedkeys("/BENSON_DEBUG\n")
 endfunction
 function! JumpToFile()
-    let cword = expand("<cWord>")
+    let cword = expand("<cWORD>")
+    echom cword
     let fileline = trim(cword,":")
-    echom fileline
-    let filename=split(fileLine,":")[0]
-    let linenumber=split(fileLine,":")[1]
-    " FloatTermHide
-    execute "edit +" . linenumber . " " . filename
+    let array = split(fileline,':')
+    if len(array) > 1
+        " echom "file and line"
+        let filename = array[0]
+        let linenumber=array[1]
+        FloatermHide
+        let s = "edit +" . linenumber . " " . filename
+        " echom s
+        execute s
+    else
+        " echom "just file"
+        let filename = array[0]
+        FloatermHide
+        let s = "edit " .. filename
+        " echom s
+        execute s
+    endif
 endfunction
 nnoremap gf :call JumpToFile()<CR>
