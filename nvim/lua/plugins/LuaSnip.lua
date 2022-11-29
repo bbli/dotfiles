@@ -23,18 +23,18 @@ luasnip.config.set_config{
 
 
 vim.cmd[[
-inoremap <silent> <C-l> <cmd>lua require'luasnip'.jump(1)<Cr>
+inoremap <silent> <C-n> <cmd>lua require'luasnip'.jump(1)<Cr>
 ]]
 vim.cmd[[
-inoremap <silent> <C-h> <cmd>lua require'luasnip'.jump(-1)<Cr>
+inoremap <silent> <C-p> <cmd>lua require'luasnip'.jump(-1)<Cr>
 ]]
 
 
 vim.cmd[[
-snoremap <silent> <C-l> <cmd>lua require('luasnip').jump(1)<Cr>
+snoremap <silent> <C-n> <cmd>lua require('luasnip').jump(1)<Cr>
 ]]
 vim.cmd[[
-snoremap <silent> <C-h> <cmd>lua require('luasnip').jump(-1)<Cr>
+snoremap <silent> <C-p> <cmd>lua require('luasnip').jump(-1)<Cr>
 ]]
 
 
