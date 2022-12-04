@@ -1082,6 +1082,7 @@ let g:asyncrun_open = 6
 
 let g:tagbar_map_togglesort = ''
 let g:tagbar_autofocus = 1
+let g:tagbar_sort = 0
 let g:tagbar_width = max([25,winwidth(0) / 4])
 " "Doesn't look as nice, which is probably why I don't like vista.vim
 " let g:tagbar_compact = 1 
