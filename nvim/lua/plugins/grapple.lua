@@ -13,13 +13,13 @@ vim.keymap.set('n','<leader>hh',
 
 -- grapple log -> gl
 -- open log
-vim.keymap.set('n','<leader>hl',
+vim.keymap.set('n','<leader>ho',
     function() require("grapple").tag({key="log"}) end
     )
-vim.keymap.set('n','<leader>jl',
+vim.keymap.set('n','<leader>jo',
     function() require("grapple").select({key="log"}) end
     )
-vim.keymap.set('n','<leader>rl',
+vim.keymap.set('n','<leader>ro',
     function() require("grapple").untag({key="log"}) end
     )
 
