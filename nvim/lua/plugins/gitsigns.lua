@@ -41,7 +41,7 @@ require('gitsigns').setup {
     },
 }
 vim.keymap.set('n','<leader>gp',
-    "<cmd>Gitsigns preview_hunk_inline<CR>"
+    "<cmd>Gitsigns preview_hunk<CR>"
 )
 vim.keymap.set('n','<leader>tb',
     "<cmd>Gitsigns toggle_current_line_blame<CR>"

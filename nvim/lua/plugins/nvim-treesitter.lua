@@ -82,3 +82,6 @@ require'nvim-treesitter.configs'.setup{
         },
     },
 }
+vim.cmd[[
+autocmd BufEnter * TSBufEnable highlight
+]]

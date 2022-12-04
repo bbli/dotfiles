@@ -16,7 +16,7 @@ vim.keymap.set('n','<leader>hh',
 vim.keymap.set('n','<leader>hl',
     function() require("grapple").tag({key="log"}) end
     )
-vim.keymap.set('n','<leader>ol',
+vim.keymap.set('n','<leader>jl',
     function() require("grapple").select({key="log"}) end
     )
 vim.keymap.set('n','<leader>rl',
@@ -28,7 +28,7 @@ vim.keymap.set('n','<leader>rl',
 vim.keymap.set('n','<leader>hm',
     function() require("grapple").tag({key="main"}) end
     )
-vim.keymap.set('n','<leader>om',
+vim.keymap.set('n','<leader>jm',
     function() require("grapple").select({key="main"}) end
     )
 vim.keymap.set('n','<leader>rm',
@@ -40,7 +40,7 @@ vim.keymap.set('n','<leader>rm',
 vim.keymap.set('n','<leader>ht',
     function() require("grapple").tag({key="test"}) end
     )
-vim.keymap.set('n','<leader>ot',
+vim.keymap.set('n','<leader>jt',
     function() require("grapple").select({key="test"}) end
     )
 vim.keymap.set('n','<leader>rt',
@@ -53,7 +53,7 @@ vim.keymap.set('n','<leader>rt',
 vim.keymap.set('n','<leader>hf',
     function() require("grapple").tag({key="file"}) end
     )
-vim.keymap.set('n','<leader>of',
+vim.keymap.set('n','<leader>jf',
     function() require("grapple").select({key="file"}) end
     )
 vim.keymap.set('n','<leader>rf',

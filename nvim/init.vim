@@ -356,11 +356,11 @@ let g:terminal_scrollback_buffer_size = 50000
 nnoremap <leader>oa <cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' , '-g', '!node_modules'}})<cr>
 " nnoremap <leader>oa <cmd>Telescope find_files<cr>
 nnoremap <leader>oo <cmd>Telescope git_files<cr>
-nnoremap <leader>oc <cmd>Telescope commands<cr>
 "nnoremap <leader>ug <cmd>Telescope live_grep<cr>
 nnoremap <leader>ob <cmd>Telescope buffers<cr>
 nnoremap <leader>oh <cmd>Telescope oldfiles<cr>
-" nnoremap <leader>oc <cmd>Telescope commands<cr>
+nnoremap <leader>om <cmd>Telescope help_tags<cr>
+nnoremap <leader>oc <cmd>Telescope commands<cr>
 nnoremap <M-;> <cmd>Telescope commands<cr>
 " TODO: Telescope way better here compared to FZF b/c of preview  -> Harpoon will probably replace though
 nnoremap <leader>ul <cmd>Telescope marks<cr>
@@ -378,7 +378,6 @@ nnoremap <leader>oy <cmd>Telescope neoclip<cr>
 
 " nnoremap <leader>ov <cmd>Telescope vim_options<cr>
 nnoremap <leader>ok <cmd>Telescope keymaps<cr>
-nnoremap <leader>od <cmd>Telescope help_tags<cr>
 "Use after ripgrep for faster narrowing!
 " nnoremap <leader>vv <cmd>Telescope quickfix<cr>
 " nnoremap <leader>vl <cmd>Telescope loclist<cr>

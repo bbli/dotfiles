@@ -535,7 +535,6 @@ command! -bang OP call fzf#run(fzf#wrap({'source':'rg --files --hidden','sink':'
 "nnoremap <leader>op :call fzf#vim#complete#path('rg --files',{'dir':home_dir})<CR>
 "nnoremap <leader>op :OP<CR>
 nnoremap <leader>oo :GFiles<CR>
-" nnoremap <leader>om :Helptags<CR>
 "nnoremap <leader>oa :FZF<CR>
 nnoremap <leader>oa :HFiles<CR>
 "nnoremap <leader>ob :CocList buffers<CR>
