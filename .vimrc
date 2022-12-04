@@ -458,11 +458,13 @@ nnoremap <leader>gb :Git blame<CR>
 
 " ---Terminal Related --- %%%2
 "  <root> option only works with FloattermToggl
-let g:shell_toggle = 0
+let g:shell_count = 0
 function! ToggleShell()
-    if g:shell_toggle == 0
-        let g:shell_toggle = 1
+    if g:shell_count == 0
+        let g:shell_count = 1
         execute "FloatermNew --cwd=<root> --name=shell"
+        execute "bn"
+        execute "normal \<C-o>"
     else
         execute "FloatermToggle shell"
     endif
