@@ -1454,4 +1454,5 @@ function! JumpToFile()
         execute s
     endif
 endfunction
-nnoremap gf :call JumpToFile()<CR>
+nnoremap gl :call JumpToFile()<CR>
+nnoremap <leader>pp :echo expand('%:p')<CR>
