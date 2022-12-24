@@ -44,6 +44,9 @@ use {
 --  requires = {"nvim-telescope/telescope.nvim"},
 --  config = function() require("plugins.dir-telescope") end,
 --}
+--use {'LukasPietzschmann/telescope-tabs',
+--    config = function() require("plugins.telescope-tabs") end,
+--    }
 use {'nvim-telescope/telescope-fzf-native.nvim',
     run = 'make',
     config = function() require("plugins.telescope-fzf-native") end,

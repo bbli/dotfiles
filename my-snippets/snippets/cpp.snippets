@@ -3,9 +3,18 @@
 snippet incc
 	#include <${1:iostream}>${0}
 
+# snippet tt
+# 	TEST_CASE("${1}",""){
+# 	}
+
+snippet th
+	// BENSON_TODO_HACK: ${0}
+
 snippet tt
-	TEST_CASE("${1}",""){
-	}
+	// BENSON_TODO_${1}: ${0}
+
+snippet tn
+	// BENSON_TODO_NOW: ${0}
 
 
 # snippet dd
