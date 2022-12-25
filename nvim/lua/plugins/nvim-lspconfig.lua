@@ -114,7 +114,7 @@ require'lspconfig'.perlls.setup{
 }
 
 --pylsp
-require'lspconfig'.pylsp.setup{
+require'lspconfig'.pyright.setup{
     -- on_attach = new_default_on_attach,
     capabilities = new_default_capabilities,
 }

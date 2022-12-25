@@ -258,14 +258,14 @@ Plug 'bbli/vim-test', {'branch': 'benson-catch'}
 " Plug 'rcarriga/vim-ultest', { 'do': ':UpdateRemotePlugins' } "Not working atm(and probably only works with correct errorformat. ALSO NOTE I ADDING LOGGING TO THE PLUGIN ITSELF
 "Plug 'alepez/vim-gtest' "Hardcodes certain things
 "If I want to explicitly choose the window for vim test
-"Plug 'esamattis/slimux'
+" Plug 'esamattis/slimux'
 " For asynchronous make builds + supposedly help vim-test out regardless
 " if chosen as strategy
 Plug 'tpope/vim-dispatch'
 " Plug 'neomake/neomake'
 Plug 'mattboehm/vim-unstack'
 " Plug 'benmills/vimux'
-"Plug 'jpalardy/vim-slime', { 'branch': 'main'} "useful for creating specific state in script for profiling
+" Plug 'jpalardy/vim-slime', { 'branch': 'main'} "useful for creating specific state in script for profiling
 " used by vim-test. NOTE YOU HAVE TO LET IT CREATE THE INITAL WINDOW
 "Plug 'christoomey/vim-tmux-runner'
 " Plug 'skywind3000/asynctasks.vim'

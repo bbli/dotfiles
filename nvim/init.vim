@@ -23,6 +23,8 @@ use 'wbthomason/packer.nvim'
 use 'nvim-lua/popup.nvim'
 use 'nvim-lua/plenary.nvim'
 -- ************  Workflows  ************ %%%2
+use { 'michaelb/sniprun', run = 'bash ./install.sh'}
+use 'metakirby5/codi.vim'
 use {'simrat39/symbols-outline.nvim',
     config = function() require("plugins.symbols-outline") end,
 }
