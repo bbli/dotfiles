@@ -24,6 +24,10 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+if executable("rg")
+  set grepprg=rg\ --engine\ auto\ --vimgrep\ --smart-case\ --hidden
+  set grepformat=%f:%l:%c:%m
+endif
 " ************** MAC SENSITIVE **************%%%1
 if !exists("g:os")
     if has("win64") || has("win32") || has("win16")
@@ -572,7 +576,16 @@ command! -bang -nargs=* GGrep
 
 nnoremap <leader>ff :Telescope live_grep<CR>
 " nnoremap <leader>ff :GitRipGrep 
-nnoremap <leader>fa :RipGrep 
+" Search in git repo
+function! s:find_git_root()
+    return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+endfunction
+function! RipGrepProjectHelper(pattern)
+    execute "grep " .. a:pattern .. " " .. s:find_git_root()
+endfunction
+command! -nargs=1 RipGrepProject call RipGrepProjectHelper(<q-args>)
+nnoremap <leader>fp :RipGrepProject 
+nnoremap <leader>fa :grep 
 nnoremap <leader>fw :Ggrep <C-r><C-w><CR>
 nnoremap <leader>fs :Telescope lsp_dynamic_workspace_symbols<CR> 
 " Doesn't really work

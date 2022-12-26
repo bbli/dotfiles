@@ -313,7 +313,7 @@ nnoremap <leader>ji <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <leader>je <cmd>lua vim.diagnostic.goto_next({float=false})<CR>
 nnoremap <leader>jE <cmd>lua vim.diagnostic.goto_prev({float=false})<CR>
 
-nnoremap <leader>fr <cmd>lua vim.lsp.buf.rename()<CR>
+" nnoremap <leader>fr <cmd>lua vim.lsp.buf.rename()<CR>
 
 nnoremap K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <leader>jj <cmd>lua vim.lsp.buf.outgoing_calls()<CR>
