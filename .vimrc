@@ -581,7 +581,9 @@ function! s:find_git_root()
     return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
 function! RipGrepProjectHelper(pattern)
-    execute "grep " .. a:pattern .. " " .. s:find_git_root()
+    " shellescape so we get the pattern surrounded by quotes on the command
+    " line
+    execute "grep " .. shellescape(a:pattern) .. " " .. s:find_git_root()
 endfunction
 command! -nargs=1 RipGrepProject call RipGrepProjectHelper(<q-args>)
 nnoremap <leader>fp :RipGrepProject 

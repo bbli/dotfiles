@@ -25,6 +25,11 @@ use 'nvim-lua/plenary.nvim'
 -- ************  Workflows  ************ %%%2
 use { 'michaelb/sniprun', run = 'bash ./install.sh'}
 use 'metakirby5/codi.vim'
+use {'ldelossa/litee.nvim'}
+use {'ldelossa/litee-calltree.nvim',
+    config = function() require("plugins.litee") end,
+    requires = {{'ldelossa/litee.nvim'}}
+    }
 use {'simrat39/symbols-outline.nvim',
     config = function() require("plugins.symbols-outline") end,
 }
@@ -103,7 +108,6 @@ use {"williamboman/mason-lspconfig.nvim",
 }
 use {'neovim/nvim-lspconfig',
     config = function() require("plugins.nvim-lspconfig") end,
-    after = 'mason-lspconfig.nvim',
 }
 
 use({
