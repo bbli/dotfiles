@@ -11,7 +11,7 @@ end
 
 function GetWindowCountOfCurrentTab()
     local wins = api.nvim_tabpage_list_wins(api.nvim_get_current_tabpage())
-    P(wins)
+    -- P(wins)
     return length(wins)
 end
 
@@ -25,6 +25,11 @@ function M.smartJumpSplit()
         print "make a vertical split"
         api.nvim_command("vs")
         lsp.buf.definition()
+    end
+end
+function M.autoZenMode()
+    if (GetWindowCountOfCurrentTab() == 1) then
+        require("zen-mode").open()
     end
 end
 return M

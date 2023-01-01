@@ -245,7 +245,7 @@ EOF
 "   endif
 "   call insert(v:oldfiles, a:file, 0)
 " endfunction
-
+autocmd BufEnter *  lua require("benson").autoZenMode()
 " ************  Misc Neovim Specific Things  ************%%%1
 
 "tnoremap ;c <C-\><C-n>
