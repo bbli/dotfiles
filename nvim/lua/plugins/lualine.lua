@@ -31,6 +31,13 @@ local bubbles_theme = {
         c = { fg = colors.black, bg = colors.black },
     },
 }
+local function eventIgnore()
+    if vim.g.evenignore_toggle == 1 then
+        return "I"
+    else
+        return ""
+    end
+end
 
 require('lualine').setup {
     options = {
@@ -42,8 +49,8 @@ require('lualine').setup {
         lualine_a = {
             { 'mode', separator = { left = '' }, right_padding = 2 },
         },
-        lualine_b = { 'grapple', 'filename','branch'},
-        lualine_c = {},
+        lualine_b = { eventIgnore, 'branch'},
+        lualine_c = { {require('grapple').key, cond=require("grapple").exists}},
         lualine_x = {},
         lualine_y = { 'filetype', 'progress' },
         lualine_z = {
@@ -63,7 +70,7 @@ require('lualine').setup {
         lualine_b = {'windows'},
         -- lualine_c = { require'tabline'.tabline_buffers },
         -- lualine_c = { require'tabline'.tabline_tabs },
-        lualine_x = { require'tabline'.tabline_tabs },
+        lualine_x = { {require'tabline'.tabline_tabs ,max_length=500}},
         lualine_y = {},
         lualine_z = {},
     },

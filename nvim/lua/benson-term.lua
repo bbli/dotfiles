@@ -44,7 +44,7 @@ function M.send_string_from_history(opts)
         local item = history_list[i]
         local _, finish = string.find(item, "%d+ +")
         local actual_cmd_string = string.sub(item,finish+1)
-        if string.find(actual_cmd_string,"FloatTerm") then
+        if string.find(actual_cmd_string,"ShellSend") then
             table.insert(results, string.sub(item, finish + 1))
         end
     end

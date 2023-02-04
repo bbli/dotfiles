@@ -10,16 +10,23 @@ vim.keymap.set('n','<leader>rr',
 vim.keymap.set('n','<leader>hh',
     function() require("grapple").popup_tags() end
     )
+-- grapple root -> for jumping to def
+vim.keymap.set('n','<leader>hr',
+    function() require("grapple").tag({key="root"}) end,{}
+    )
+vim.keymap.set('n','<leader>hr',
+    function() require("grapple").select({key="root"}) end,{}
+    )
 
 -- grapple log -> gl
 -- open log
-vim.keymap.set('n','<leader>ho',
+vim.keymap.set('n','<leader>hl',
     function() require("grapple").tag({key="log"}) end
     )
-vim.keymap.set('n','<leader>jo',
+vim.keymap.set('n','<leader>jl',
     function() require("grapple").select({key="log"}) end
     )
-vim.keymap.set('n','<leader>ro',
+vim.keymap.set('n','<leader>rl',
     function() require("grapple").untag({key="log"}) end
     )
 

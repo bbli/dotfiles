@@ -516,10 +516,10 @@ let g:floaterm_height = 0.95
 nnoremap <leader>sn <cmd>FloatermNext
 nnoremap <leader>sN <cmd>FloatermPrev
 " Rerun last command
-command -nargs=+ BensonFloatTermSend :call v:lua.require'benson-term'.benson_floaterm_send(<q-args>)
+command -nargs=+ ShellSend :call v:lua.require'benson-term'.benson_floaterm_send(<q-args>)
 nnoremap <leader>ss <cmd>lua require('benson-term').send_last_string_to_term()<CR>
 " Run a specific command
-nnoremap <leader>sl :BensonFloatTermSend 
+nnoremap <leader>sl :ShellSend 
 nnoremap <leader>sh <cmd>lua require('benson-term').send_string_from_history()<CR>
 
 
@@ -588,7 +588,7 @@ endfunction
 command! -nargs=1 RipGrepProject call RipGrepProjectHelper(<q-args>)
 nnoremap <leader>fp :RipGrepProject 
 nnoremap <leader>fa :grep 
-nnoremap <leader>fw :Ggrep <C-r><C-w><CR>
+nnoremap <leader>fw :Ggrep \b<C-r><C-w>\b<CR>
 nnoremap <leader>fs :Telescope lsp_dynamic_workspace_symbols<CR> 
 " Doesn't really work
 " nnoremap <leader>fs :tabnew %<CR>:Fw<CR> 
@@ -597,6 +597,18 @@ autocmd FileType logreview nnoremap <leader>fl :RemoveAllButClass
 autocmd FileType logreview nnoremap <leader>fe :RemoveAllButClass BENSON_DEBUG<CR>
 autocmd FileType log nnoremap <leader>fl :RemoveAllButClass 
 autocmd FileType log nnoremap <leader>fe :RemoveAllButClass BENSON_DEBUG<CR>
+
+let g:eventignore_toggle = 0
+function! SetEventIgnore()
+    if g:eventignore_toggle == 0
+        let g:eventignore_toggle = 1
+        setlocal eventignore=all
+    else
+        let g:eventignore_toggle = 0
+        setlocal eventignore=
+    endif
+endfunction
+nnoremap <leader>te :call SetEventIgnore()<CR>
 
 " :'<,'>norm! @a to apply the macro only to a visual selection
 " (hit : in visual mode to switch to command mode)
