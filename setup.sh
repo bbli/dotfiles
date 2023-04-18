@@ -45,6 +45,7 @@ dotfiles_path=$HOME/Dropbox/Code/dotfiles
 #dotfiles_path=$HOME/dotfiles
 # This script will mostly just set up symbolic links
 ln -sf "$dotfiles_path/.vimrc" $HOME/.vimrc
+ln -sf "$dotfiles_path/.init.vim" $HOME/.config/nvim/init.vim
 ln -sf "$dotfiles_path/.inputrc" $HOME/.inputrc
 ## ubuntu image already has a bashrc that sources the .bash_aliases file
 #ln -sf "$dotfiles_path/.bashrc" $HOME/.bashrc
@@ -79,7 +80,7 @@ ln -sf "$dotfiles_path/starship.toml" $HOME/.config/starship.toml
 
 curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
  git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
-# sudo pacman -S ctags
+sudo pacman -S ctags
 # sudo pacman -S starship
 # sudo pacman -S clang
 # sudo pacman -S neovim
@@ -96,7 +97,7 @@ curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
 # yay --noconfirm --answerdiff=None nerd-fonts-source-code-pro 
 
 # ************  PIP SOFTWARE  ************ %%%1
-sudp pacman -S python-pip
+sudo pacman -S python-pip
 pip install cmake-language-server
 
 # ************  INSTALL TREESITTER(vim command line)  ************ %%%1

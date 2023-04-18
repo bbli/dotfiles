@@ -19,8 +19,8 @@
        ;;japanese
        ;;layout            ; auie,ctsrnm is the superior home row
 
-       :completion
-       (company +childframe)           ; the ultimate code completion backend
+       ;:completion
+       ;(company +childframe)           ; the ultimate code completion backend
        ;; (helm +fuzzy +icons +childframe)              ; the *other*
        ;; search engine for love and life
        ;;ido               ; the other *other* search engine...
