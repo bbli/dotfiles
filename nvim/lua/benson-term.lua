@@ -19,13 +19,15 @@ function M.benson_floaterm_send(term_string)
 
     -- 3. And finally forward it to FloatTermSend 
         -- SC: grep pack directory to see if anyone else uses "nvim_cmd"!!!
-    vim.api.nvim_command("FloatermShow shell")
-    vim.api.nvim_cmd({cmd="FloatermSend",args={term_string}},{})
+    vim.api.nvim_command("FloatermShow test")
+    vim.api.nvim_command("FloatermSend --name=test " .. term_string)
+    -- vim.api.nvim_cmd({cmd="FloatermSend",args={term_string}},{})
 end
 
 function M.send_last_string_to_term()
     vim.api.nvim_command("FloatermShow shell")
-    vim.api.nvim_cmd({cmd="FloatermSend",args={Last_Term_String}},{})
+    vim.api.nvim_command("FloatermSend --name=test " .. Last_Term_String)
+    -- vim.api.nvim_cmd({cmd="FloatermSend",args={Last_Term_String}},{})
 end
 
 -- SC: How does Telescope command_history remember current session + old commands?

@@ -32,7 +32,7 @@ local bubbles_theme = {
     },
 }
 local function eventIgnore()
-    if vim.g.evenignore_toggle == 1 then
+    if vim.g.eventignore_toggle == 1 then
         return "I"
     else
         return ""

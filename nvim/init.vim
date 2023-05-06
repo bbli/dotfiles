@@ -246,6 +246,7 @@ EOF
 "   call insert(v:oldfiles, a:file, 0)
 " endfunction
 autocmd BufEnter *  lua require("benson").autoZenMode()
+nnoremap <leader>tz :ZenMode<CR>
 " ************  Misc Neovim Specific Things  ************%%%1
 
 "tnoremap ;c <C-\><C-n>
@@ -307,21 +308,22 @@ let g:vimsyn_embed = 'l'
 "autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
 " nnoremap <unique> <leader>ot :Telescope<CR>
 
-nnoremap <leader>jd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <leader>jd <cmd>Telescope lsp_definitions<CR>
 " nnoremap <leader>js :vs<CR>:lua vim.lsp.buf.definition()<CR>
 nnoremap <leader>js <cmd>lua require("benson").smartJumpSplit()<CR>
 nnoremap <leader>jD <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <leader>jr <cmd>lua vim.lsp.buf.references()<CR>
 " nnoremap <leader>jr <cmd>lua vim.lsp.buf.incoming_calls()<CR>
-nnoremap <leader>ji <cmd>lua vim.lsp.buf.implementation()<CR>
+" nnoremap <leader>ji <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <leader>je <cmd>lua vim.diagnostic.goto_next({float=false})<CR>
 nnoremap <leader>jE <cmd>lua vim.diagnostic.goto_prev({float=false})<CR>
+nnoremap <leader>ca <cmd>lua vim.lsp.buf.code_action()<CR>
 
 " nnoremap <leader>fr <cmd>lua vim.lsp.buf.rename()<CR>
 
 nnoremap K <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <leader>jj <cmd>lua vim.lsp.buf.outgoing_calls()<CR>
-nnoremap <leader>jR <cmd>lua vim.lsp.buf.incoming_calls()<CR> "though references is better -> will also show from test files too
+nnoremap <leader>jo <cmd>lua vim.lsp.buf.outgoing_calls()<CR>
+nnoremap <leader>ji <cmd>lua vim.lsp.buf.incoming_calls()<CR> "though references is better -> will also show from test files too
 " nnoremap K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
 " nnoremap <leader>k <cmd>lua vim.lsp.buf.signature_help()<CR> "Don't really understand this
 " nnoremap <silent> ls <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
@@ -350,8 +352,8 @@ nnoremap <leader>lr :LspRestart<CR>
 
 " Sometimes cmp popup menu will not close
 set completeopt=menu,menuone,noselect
-inoremap <expr> <C-j> pumvisible() ?"<C-n>":"<C-j>"
-inoremap <expr> <C-k> pumvisible() ?"<C-p>":"<C-k>"
+" inoremap <expr> <C-j> pumvisible() ?"<C-n>":"<C-j>"
+" inoremap <expr> <C-k> pumvisible() ?"<C-p>":"<C-k>"
 
 " ************** Compiling/Running/Terminal Interaction **************%%%1
 " nnoremap <leader>pp <cmd>lua require('telescope').extensions.asynctasks.all()<CR>
@@ -362,7 +364,7 @@ tnoremap <Esc> <C-\><C-n>
 tnoremap ;c <C-\><C-n>
 let g:terminal_scrollback_buffer_size = 50000
 " ************  Rest  ************%%%1
-nnoremap <leader>oa <cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' , '-g', '!node_modules'}})<cr>
+nnoremap <leader>oa <cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--no-ignore-vcs', '--files', '--hidden', '-g', '!.git' , '-g', '!node_modules'}})<cr>
 " nnoremap <leader>oa <cmd>Telescope find_files<cr>
 nnoremap <leader>oo <cmd>Telescope git_files<cr>
 "nnoremap <leader>ug <cmd>Telescope live_grep<cr>
@@ -390,8 +392,4 @@ nnoremap <leader>ok <cmd>Telescope keymaps<cr>
 "Use after ripgrep for faster narrowing!
 " nnoremap <leader>vv <cmd>Telescope quickfix<cr>
 " nnoremap <leader>vl <cmd>Telescope loclist<cr>
-
-nnoremap <leader>jd <cmd>Telescope lsp_definitions<cr>
-nnoremap <leader>ji <cmd>Telescope lsp_implementations<cr>
-
 " imap <silent> zz <cmd>lua require'luasnip'expand()<Cr>

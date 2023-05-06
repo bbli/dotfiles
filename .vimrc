@@ -180,6 +180,7 @@ Plug 'rakr/vim-one'
 " For renaming tabs
 " Plug 'gcmt/taboo.vim'
 Plug 'dbakker/vim-projectroot'
+Plug 'roxma/vim-tmux-clipboard'
 " Plug 'google/vim-searchindex' "Apparantly causes issues with GitRipGrep atm
 " Below Plugin not that useful since I can use tabs for that purpose
 "Plug 'troydm/zoomwintab.vim'
@@ -192,6 +193,7 @@ Plug 'dbakker/vim-projectroot'
 Plug 'AndrewRadev/bufferize.vim' "To show messages in a real buffer
 Plug 'tpope/vim-commentary'
 Plug 'bronson/vim-visual-star-search'
+Plug 'andymass/vim-matchup'
 " Plug 'Yggdroot/indentLine'
 "Plug 'tpope/vim-surround'
 " Plug 'dohsimpson/vim-macroeditor'
@@ -280,6 +282,7 @@ Plug 'mattboehm/vim-unstack'
 "For Gvsplit and co
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
+Plug 'f-person/git-blame.nvim'
 " Plug 'airblade/vim-gitgutter'
 " This plugin cannot stage hunks
 "Plug 'mhinz/vim-signify'
@@ -350,13 +353,20 @@ nnoremap <leader>ec :sign unplace<CR>
 "let g:qf_auto_open_quickfix = 0
 "let g:qf_auto_open_loclist = 0
 "let g:qf_shorten_path = 0
+let g:toggle_qf = 0
+function! ToggleQuickfixList()
+    if g:toggle_qf == 0
+        let g:toggle_qf = 1
+        execute "copen"
+    else
+        let g:toggle_qf = 1
+        execute "cclose"
+    endif
+endfunction
 
 
-nmap <leader>tq <Plug>(qf_qf_toggle)
-nmap <unique> <leader>qq <Plug>(qf_qf_toggle)
-" Also OSL+j
+nmap <leader>tq :call ToggleQuickfixList()<CR>
 nmap <leader>qn <Plug>(qf_newer)
-" Also OSL +k
 let g:qf_mapping_ack_style = 1
 let g:qf_nowrap=0
 nmap <leader>qN <Plug>(qf_older)
@@ -461,7 +471,7 @@ nnoremap <leader>gd :Gvdiff
 nnoremap <leader>gb :Git blame<CR>
 
 " ---Terminal Related --- %%%2
-"  <root> option only works with FloattermToggl
+"  <root> option only works with FloattermToggle
 let g:shell_count = 0
 function! ToggleShell()
     if g:shell_count == 0
@@ -471,6 +481,18 @@ function! ToggleShell()
         execute "normal \<C-o>"
     else
         execute "FloatermToggle shell"
+    endif
+endfunction
+
+let g:test_shell_count = 0
+function! ToggleTestShell()
+    if g:test_shell_count == 0
+        let g:test_shell_count = 1
+        execute "FloatermNew --cwd=<root> --name=test"
+        execute "bn"
+        execute "normal \<C-o>"
+    else
+        execute "FloatermToggle test"
     endif
 endfunction
 let g:vifm_count = 0
@@ -498,6 +520,7 @@ function! ToggleVifm()
 endfunction
 nnoremap <leader>ts :call ToggleShell()<CR>
 nnoremap <leader>os :call ToggleShell()<CR>
+nnoremap <leader>ot :call ToggleTestShell()<CR>
 nnoremap <leader>tn :call ToggleVifm()<CR>
 nnoremap <leader>ov :call ToggleVifm()
 function s:open_in_normal_window() abort
@@ -581,9 +604,9 @@ function! s:find_git_root()
     return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
 function! RipGrepProjectHelper(pattern)
-    " shellescape so we get the pattern surrounded by quotes on the command
-    " line
-    execute "grep " .. shellescape(a:pattern) .. " " .. s:find_git_root()
+    " we cannot use shell escape b/c it will SINGLE QUOTE the pattern ->
+    " which prevents passing ADDITIONAL ARGUMENTS
+    execute "grep " .. a:pattern .. " " .. s:find_git_root()
 endfunction
 command! -nargs=1 RipGrepProject call RipGrepProjectHelper(<q-args>)
 nnoremap <leader>fp :RipGrepProject 
@@ -674,6 +697,7 @@ function! ToggleFoldSearch()
     endif
 endf
 nnoremap <leader>tf :call ToggleFoldSearch()<CR>
+nnoremap <leader>tg :GitBlameToggle<CR>
 nnoremap <leader>tc :TSContextToggle<CR>
 nnoremap <leader>tu :UndotreeToggle<CR>
 nnoremap <leader>tt :TagbarToggle<CR>
@@ -1483,3 +1507,4 @@ function! JumpToFile()
 endfunction
 nnoremap gl :call JumpToFile()<CR>
 nnoremap <leader>pp :echo expand('%:p')<CR>
+nnoremap <leader>pd :echo getcwd()<CR>

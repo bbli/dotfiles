@@ -30,7 +30,7 @@ vim.keymap.set('n','<leader>rl',
     function() require("grapple").untag({key="log"}) end
     )
 
--- grapple main(for inserting debug) -> gm
+-- grapple main(for inserting debug/pinning before a bunch of jump to definition calls) -> gm
 -- open main
 vim.keymap.set('n','<leader>hm',
     function() require("grapple").tag({key="main"}) end
